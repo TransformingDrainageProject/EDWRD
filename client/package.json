@@ -10,7 +10,7 @@
     "react-dom": "^16.9.0",
     "react-leaflet": "^2.4.0",
     "react-scripts": "3.1.1",
-    "react-strap": "^0.0.1",
+    "reactstrap": "^8.0.1",
     "yup": "^0.27.0"
   },
   "scripts": {
