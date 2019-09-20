@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Header from './Header';
+
 const App = () => {
-  return <h1>edwrd</h1>;
+  return (
+    <div className="container">
+      <Header />
+    </div>
+  );
 };
 
 export default App;
