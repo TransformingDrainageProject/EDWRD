@@ -1,13 +1,17 @@
 import React from 'react';
-import tdpHeader from '../assets/images/tdp_header.png';
+
+import edwrdLogo from '../assets/images/tdp_header.png';
 
 const Header = () => {
   return (
-    <img
-      src={tdpHeader}
-      alt="Evaluating Drainage Water Recycling Decisions (EDWRD) Logo"
-      style={{ width: '100%' }}
-    />
+    <div className="row">
+      <img
+        src={edwrdLogo}
+        className="mx-auto d-block"
+        alt="Evaluating Drainage Water Recycling Decisions (EDWRD) Logo"
+        style={{ padding: '15px', width: '100%' }}
+      />
+    </div>
   );
 };
 
