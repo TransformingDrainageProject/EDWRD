@@ -1,16 +1,8 @@
 import './FormContainer.css';
 import React, { useState } from 'react';
-import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Button,
-  Row,
-  Col
-} from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
+import Form from './Form';
 import Map from './Map';
 
 const FormContainer = () => {
@@ -39,7 +31,9 @@ const FormContainer = () => {
       <TabContent activeTab={activeTab}>
         <TabPane tabId="formTab">
           <div className="row">
-            <div className="col-md-12">Form inputs</div>
+            <div className="col-md-12">
+              <Form />
+            </div>
           </div>
         </TabPane>
         <TabPane tabId="mapTab">
