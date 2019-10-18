@@ -8,10 +8,12 @@ import UserDataForm from './UserDataForm';
 // initial values
 import fieldReservoirInitialValues from './FieldReservoirForm/initialValues';
 import cropManagementInitialValues from './CropManagementForm/initialValues';
+import userDataInitialValues from './UserDataForm/initialValues';
 
 const initialValues = {
   ...fieldReservoirInitialValues,
-  ...cropManagementInitialValues
+  ...cropManagementInitialValues,
+  ...userDataInitialValues
 };
 
 const FormContainer = () => {
@@ -56,6 +58,7 @@ const FormContainer = () => {
             </div>
             <div className="row justify-content-center">
               <Button
+                className="mb-4"
                 type="submit"
                 disabled={isSubmitting}
                 style={{ backgroundColor: '#007cb3', height: '75px' }}
