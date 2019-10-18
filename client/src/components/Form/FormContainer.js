@@ -7,8 +7,12 @@ import CropManagementForm from './CropManagementForm';
 import UserDataForm from './UserDataForm';
 // initial values
 import fieldReservoirInitialValues from './FieldReservoirForm/initialValues';
+import cropManagementInitialValues from './CropManagementForm/initialValues';
 
-const initialValues = { ...fieldReservoirInitialValues };
+const initialValues = {
+  ...fieldReservoirInitialValues,
+  ...cropManagementInitialValues
+};
 
 const FormContainer = () => {
   return (
@@ -23,7 +27,7 @@ const FormContainer = () => {
           }, 400);
         }}
       >
-        {({ errors, status, isSubmitting, values }) => (
+        {({ errors, status, isSubmitting, touched, values }) => (
           <Form>
             <div className="row">
               <h1>2. Describe your field and reservoir:</h1>
@@ -35,7 +39,11 @@ const FormContainer = () => {
               <h1>3. Describe your crop and management</h1>
             </div>
             <div className="row">
-              <CropManagementForm />
+              <CropManagementForm
+                errors={errors}
+                touched={touched}
+                values={values}
+              />
             </div>
             <div className="row">
               <h1>

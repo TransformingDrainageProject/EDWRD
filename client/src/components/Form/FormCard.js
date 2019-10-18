@@ -5,7 +5,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 const FormCard = props => {
-  const { label } = props;
+  const { label, hideHelp } = props;
 
   return (
     <Card
@@ -18,7 +18,7 @@ const FormCard = props => {
       }}
     >
       <CardTitle className="text-center">
-        {label} <FontAwesomeIcon icon={faQuestionCircle} />
+        {label} {!hideHelp ? <FontAwesomeIcon icon={faQuestionCircle} /> : null}
       </CardTitle>
       <CardBody>{props.children}</CardBody>
     </Card>

@@ -8,7 +8,7 @@ import UnitGroup from '../../UnitGroup';
 const FieldReservoirForm = () => {
   return (
     <div className="container-fluid">
-      <div className="row">
+      <div className="row mb-4">
         <div className="col-sm-4">
           <FormCard label="What is the soil type?">
             <Field className="form-control" component="select" name="soilType">
@@ -41,7 +41,7 @@ const FieldReservoirForm = () => {
           </FormCard>
         </div>
       </div>
-      <div className="row" style={{ marginTop: '1rem' }}>
+      <div className="row mb-4">
         <div className="col-sm-8">
           <FormCard label="How large of a reservoir would you like to evaluate?">
             <div className="row">
