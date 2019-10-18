@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field } from 'formik';
 
-import Checkbox from '../Checkbox';
+import Checkbox from '../../Checkbox';
 import FormCard from '../FormCard';
-import UnitGroup from '../UnitGroup';
+import UnitGroup from '../../UnitGroup';
 
 const FieldReservoirForm = () => {
   return (
@@ -55,7 +55,7 @@ const FieldReservoirForm = () => {
                 </UnitGroup>
               </div>
               <div className="col-md-6">
-                <UnitGroup unit="avg. depth(ft)">
+                <UnitGroup unit="avg. depth (ft)">
                   <Field
                     className="form-control"
                     type="number"
