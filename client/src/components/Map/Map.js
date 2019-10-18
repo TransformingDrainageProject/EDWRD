@@ -13,7 +13,6 @@ const Map = () => {
 
   return (
     <div className="container">
-      <h1>1. Click a location to drop a pin at your field:</h1>
       <LeafletMap
         center={[origin.latitude, origin.longitude]}
         zoom={origin.zoom}

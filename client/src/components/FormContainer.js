@@ -1,49 +1,63 @@
-import './FormContainer.css';
-import React, { useState } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import React from 'react';
+import { Button } from 'reactstrap';
+import { Formik, Form } from 'formik';
+// forms
+import FieldReservoirForm from './FieldReservoirForm';
+import CropManagementForm from './CropManagementForm';
+import UserDataForm from './UserDataForm';
+// initial values
+import fieldReservoirInitialValues from './FieldReservoirForm/initialValues';
 
-import Form from './Form';
-import Map from './Map';
+const initialValues = { ...fieldReservoirInitialValues };
 
 const FormContainer = () => {
-  const [activeTab, toggleActiveTab] = useState('formTab');
-
   return (
     <div className="container">
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={activeTab === 'formTab' ? 'active' : null}
-            onClick={() => toggleActiveTab('formTab')}
-          >
-            Inputs and Results
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={activeTab === 'mapTab' ? 'active' : null}
-            onClick={() => toggleActiveTab('mapTab')}
-          >
-            Map
-          </NavLink>
-        </NavItem>
-      </Nav>
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="formTab">
-          <div className="row">
-            <div className="col-md-12">
-              <Form />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={{}}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({ errors, status, isSubmitting, values }) => (
+          <Form>
+            <div className="row">
+              <h1>2. Describe your field and reservoir:</h1>
             </div>
-          </div>
-        </TabPane>
-        <TabPane tabId="mapTab">
-          <div className="row">
-            <div className="col-md-12">
-              <Map />
+            <div className="row">
+              <FieldReservoirForm />
             </div>
-          </div>
-        </TabPane>
-      </TabContent>
+            <div className="row">
+              <h1>3. Describe your crop and management</h1>
+            </div>
+            <div className="row">
+              <CropManagementForm />
+            </div>
+            <div className="row">
+              <h1>
+                4. Do you have your own daily weather, tile drain flow, and
+                nutrient concentration data to upload?
+              </h1>
+            </div>
+            <div className="row">
+              <UserDataForm />
+            </div>
+            <div className="row justify-content-center">
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                style={{ backgroundColor: '#007cb3', height: '75px' }}
+              >
+                <strong>CLICK HERE TO RUN EDWRD</strong>
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
