@@ -14,7 +14,8 @@ const FormCard = props => {
       style={{
         backgroundColor: '#007cb3',
         borderColor: '#007cb3',
-        height: '100%'
+        height: '100%',
+        padding: '.75rem'
       }}
     >
       <CardTitle className="text-center">
