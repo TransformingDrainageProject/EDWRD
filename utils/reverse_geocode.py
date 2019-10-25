@@ -8,7 +8,7 @@ def main(args):
     states = gpd.read_file("./utils/midwest_states.geojson")
     latitude = args.latitude
     longitude = args.longitude
-    field = Point(latitude, longitude)
+    field = Point(longitude, latitude)
 
     state = states.loc[states["geometry"].contains(field), "STUSPS"]
 

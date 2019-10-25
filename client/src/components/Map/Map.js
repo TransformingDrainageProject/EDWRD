@@ -1,6 +1,7 @@
 import './Map.css';
 import React from 'react';
 import { GeoJSON, Map as LeafletMap, Marker, TileLayer } from 'react-leaflet';
+import axios from 'axios';
 
 import regionalGrid from './grid.json';
 
@@ -11,6 +12,23 @@ const Map = () => {
     zoom: 6
   };
 
+  function onDragend(e) {
+    const coords = e.target.getLatLng();
+    axios
+      .get('/api/geocode', {
+        params: {
+          lat: coords.lat,
+          lon: coords.lng
+        }
+      })
+      .then(response => {
+        console.log(response.data.state);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="container">
       <LeafletMap
@@ -20,6 +38,7 @@ const Map = () => {
         <Marker
           position={[origin.latitude, origin.longitude]}
           draggable={true}
+          onDragend={onDragend}
         />
         <GeoJSON
           data={regionalGrid}
