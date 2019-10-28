@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Header from './Header';
 import Introduction from './Introduction';
@@ -8,12 +8,14 @@ import FormContainer from './Form/FormContainer';
 import Footer from './Footer';
 
 const App = () => {
+  const [unitType, setUnitType] = useState('us');
+
   return (
     <div className="container-fluid">
       <Header />
-      <Introduction />
+      <Introduction setUnitType={setUnitType} unitType={unitType} />
       <MapContainer />
-      <FormContainer />
+      <FormContainer unitType={unitType} />
       <Footer />
     </div>
   );

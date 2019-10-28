@@ -6,21 +6,43 @@ import FieldReservoirForm from './FieldReservoirForm';
 import CropManagementForm from './CropManagementForm';
 import UserDataForm from './UserDataForm';
 // initial values
-import fieldReservoirInitialValues from './FieldReservoirForm/initialValues';
-import cropManagementInitialValues from './CropManagementForm/initialValues';
-import userDataInitialValues from './UserDataForm/initialValues';
+import {
+  fieldMetricInitialValues,
+  fieldUSInitialValues
+} from './FieldReservoirForm/initialValues';
+import {
+  cropMetricInitialValues,
+  cropUSInitialValues
+} from './CropManagementForm/initialValues';
+import {
+  userMetricInitialValues,
+  userUSInitialValues
+} from './UserDataForm/initialValues';
 
-const initialValues = {
-  ...fieldReservoirInitialValues,
-  ...cropManagementInitialValues,
-  ...userDataInitialValues
+let metricInitialValues = {
+  ...fieldMetricInitialValues,
+  ...cropMetricInitialValues,
+  ...userMetricInitialValues
 };
 
-const FormContainer = () => {
+let usInitialValues = {
+  ...fieldUSInitialValues,
+  ...cropUSInitialValues,
+  ...userUSInitialValues
+};
+
+const FormContainer = props => {
+  const { unitType } = props;
+
   return (
     <div className="container">
       <Formik
-        initialValues={initialValues}
+        initialValues={
+          unitType === 'us'
+            ? { unitType, ...usInitialValues }
+            : { unitType, ...metricInitialValues }
+        }
+        enableReinitialize={true}
         validationSchema={{}}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -35,7 +57,7 @@ const FormContainer = () => {
               <h1>2. Describe your field and reservoir:</h1>
             </div>
             <div className="row">
-              <FieldReservoirForm />
+              <FieldReservoirForm unitType={unitType} />
             </div>
             <div className="row">
               <h1>3. Describe your crop and management</h1>

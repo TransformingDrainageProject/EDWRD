@@ -5,7 +5,9 @@ import Checkbox from '../../Checkbox';
 import FormCard from '../FormCard';
 import UnitGroup from '../../UnitGroup';
 
-const FieldReservoirForm = () => {
+const FieldReservoirForm = props => {
+  const { unitType } = props;
+
   return (
     <div className="container-fluid">
       <div className="row mb-4">
@@ -18,14 +20,14 @@ const FieldReservoirForm = () => {
         </div>
         <div className="col-sm-4">
           <FormCard label="What is the average depth to the tile drains?">
-            <UnitGroup unit="depth (ft)">
+            <UnitGroup unit="feet" unitLabel="depth" unitType={unitType}>
               <Field className="form-control" type="number" name="depthTile" />
             </UnitGroup>
           </FormCard>
         </div>
         <div className="col-sm-4">
           <FormCard label="How much of the field is drained?">
-            <UnitGroup unit="acres">
+            <UnitGroup unit="acres" unitType={unitType}>
               <Field
                 className="form-control"
                 type="number"
@@ -46,7 +48,7 @@ const FieldReservoirForm = () => {
           <FormCard label="How large of a reservoir would you like to evaluate?">
             <div className="row">
               <div className="col-md-6">
-                <UnitGroup unit="acres">
+                <UnitGroup unit="acres" unitType={unitType}>
                   <Field
                     className="form-control"
                     type="number"
@@ -55,7 +57,11 @@ const FieldReservoirForm = () => {
                 </UnitGroup>
               </div>
               <div className="col-md-6">
-                <UnitGroup unit="avg. depth (ft)">
+                <UnitGroup
+                  unit="feet"
+                  unitLabel="avg. depth"
+                  unitType={unitType}
+                >
                   <Field
                     className="form-control"
                     type="number"
@@ -68,7 +74,7 @@ const FieldReservoirForm = () => {
         </div>
         <div className="col-sm-4">
           <FormCard label="How much of the field will be irrigated?">
-            <UnitGroup unit="acres">
+            <UnitGroup unit="acres" unitType={unitType}>
               <Field className="form-control" type="number" name="irrigated" />
             </UnitGroup>
           </FormCard>

@@ -1,4 +1,4 @@
-const initialValues = {
+export const fieldUSInitialValues = {
   soilType: '',
   depthTile: 0,
   fieldDrained: 0,
@@ -8,4 +8,12 @@ const initialValues = {
   irrigated: 0
 };
 
-export default initialValues;
+export const fieldMetricInitialValues = {
+  soilType: '',
+  depthTile: 10,
+  fieldDrained: 10,
+  surfaceRunoff: false,
+  evaluateAcre: 10,
+  evaluateAvgDepth: 10,
+  irrigated: 10
+};

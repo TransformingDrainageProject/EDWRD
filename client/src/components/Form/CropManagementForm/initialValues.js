@@ -1,7 +1,11 @@
-const initialValues = {
+export const cropUSInitialValues = {
   cropSelection: 'corn',
   irrigateAmount: 1,
   waterDepletionFactor: 0
 };
 
-export default initialValues;
+export const cropMetricInitialValues = {
+  cropSelection: 'corn',
+  irrigateAmount: 10,
+  waterDepletionFactor: 10
+};

@@ -1,5 +1,7 @@
-const initialValues = {
+export const userUSInitialValues = {
   dailyUpload: false
 };
 
-export default initialValues;
+export const userMetricInitialValues = {
+  dailyUpload: false
+};
