@@ -67,6 +67,7 @@ const FormContainer = props => {
                 errors={errors}
                 touched={touched}
                 values={values}
+                unitType={unitType}
               />
             </div>
             <div className="row">

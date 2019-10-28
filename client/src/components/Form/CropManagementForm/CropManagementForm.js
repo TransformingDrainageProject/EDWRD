@@ -4,9 +4,10 @@ import { Button } from 'reactstrap';
 
 import FormCard from '../FormCard';
 import { RadioButton, RadioButtonGroup } from '../../RadioInput';
+import UnitGroup from '../../UnitGroup';
 
 const CropManagementForm = props => {
-  const { errors, touched, values } = props;
+  const { errors, touched, values, unitType } = props;
 
   return (
     <div className="container-fluid">
@@ -37,13 +38,15 @@ const CropManagementForm = props => {
         </div>
         <div className="col-md-4">
           <FormCard label="How much do you want to irrigate each time?">
-            <Field
-              className="form-control"
-              component="select"
-              name="irrigateAmount"
-            >
-              <option value="1">1 inch</option>
-            </Field>
+            <UnitGroup unit="inches" unitType={unitType}>
+              <Field
+                className="form-control"
+                component="select"
+                name="irrigateAmount"
+              >
+                <option value="1">1</option>
+              </Field>
+            </UnitGroup>
           </FormCard>
         </div>
         <div className="col-md-4 text-center">

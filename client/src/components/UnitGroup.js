@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const unitConversion = {
   acres: { us: 'acres', metric: 'hectares' },
+  inches: { us: 'in', metric: 'mm' },
   feet: { us: 'ft', metric: 'm' }
 };
 
