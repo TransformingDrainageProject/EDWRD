@@ -38,4 +38,28 @@ module.exports = app => {
       res.send({ state: data.toString() });
     });
   });
+
+  app.get(
+    '/api/extract_point_value',
+    checkSchema(geocodeSchema),
+    (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const lat = req.query.lat;
+      const lon = req.query.lon;
+
+      const pythonExtract = spawn(pythonPath, [
+        './utils/extract_point_value.py',
+        lat,
+        lon
+      ]);
+
+      pythonExtract.stdout.on('data', data => {
+        res.send({ values: data.toString() });
+      });
+    }
+  );
 };
