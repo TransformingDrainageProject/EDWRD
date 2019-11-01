@@ -25,22 +25,22 @@ module.exports = app => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const lat = req.query.lat;
     const lon = req.query.lon;
+    const lat = req.query.lat;
 
     const pythonGeocoder = spawn(pythonPath, [
       './utils/reverse_geocode.py',
-      lat,
-      lon
+      lon,
+      lat
     ]);
 
     pythonGeocoder.stdout.on('data', data => {
-      res.send({ state: data.toString() });
+      res.send({ results: data.toString() });
     });
   });
 
   app.get(
-    '/api/extract_point_value',
+    '/api/get_freeze_and_thaw',
     checkSchema(geocodeSchema),
     (req, res) => {
       const errors = validationResult(req);
@@ -48,17 +48,17 @@ module.exports = app => {
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const lat = req.query.lat;
       const lon = req.query.lon;
+      const lat = req.query.lat;
 
       const pythonExtract = spawn(pythonPath, [
-        './utils/extract_point_value.py',
-        lat,
-        lon
+        './utils/get_freeze_and_thaw.py',
+        lon,
+        lat
       ]);
 
       pythonExtract.stdout.on('data', data => {
-        res.send({ values: data.toString() });
+        res.send({ results: JSON.parse(data.toString()) });
       });
     }
   );
