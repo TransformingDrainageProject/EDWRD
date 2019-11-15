@@ -1,8 +1,8 @@
 import React from 'react';
 import { Field } from 'formik';
-import { Button } from 'reactstrap';
 
 import FormCard from '../FormCard';
+import AdvancedSettings from '../AdvancedSettings';
 import { RadioButton, RadioButtonGroup } from '../../RadioInput';
 import UnitGroup from '../../UnitGroup';
 
@@ -51,9 +51,7 @@ const CropManagementForm = props => {
         </div>
         <div className="col-md-4 text-center">
           <FormCard label="Show crop growth and other advanced inputs">
-            <Button style={{ backgroundColor: '#edb229', height: '75px' }}>
-              <strong>Open Advanced Settings</strong>
-            </Button>
+            <AdvancedSettings />
           </FormCard>
         </div>
       </div>
