@@ -49,8 +49,8 @@ const AdvancedSettings = props => {
         <ModalHeader toggle={toggle}>Advanced Settings</ModalHeader>
         <ModalBody>
           <Container>
-            <Row>
-              <Col md="3">
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+              <Col>
                 <Row>
                   <Col>
                     <h4>
@@ -59,7 +59,7 @@ const AdvancedSettings = props => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  <Col md="4">
                     <AdvancedLabel
                       name="dep1"
                       text="Reservoir seepage rate (in/day)"
@@ -72,6 +72,10 @@ const AdvancedSettings = props => {
                     </AdvancedLabel>
                   </Col>
                 </Row>
+              </Col>
+            </Row>
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+              <Col>
                 <Row>
                   <Col>
                     <h4>
@@ -92,8 +96,6 @@ const AdvancedSettings = props => {
                       />
                     </AdvancedLabel>
                   </Col>
-                </Row>
-                <Row>
                   <Col>
                     <AdvancedLabel
                       name="dep3"
@@ -106,8 +108,6 @@ const AdvancedSettings = props => {
                       />
                     </AdvancedLabel>
                   </Col>
-                </Row>
-                <Row>
                   <Col>
                     <AdvancedLabel
                       name="dep4"
@@ -134,8 +134,6 @@ const AdvancedSettings = props => {
                       />
                     </AdvancedLabel>
                   </Col>
-                </Row>
-                <Row>
                   <Col>
                     <AdvancedLabel
                       name="dep6"
@@ -148,8 +146,6 @@ const AdvancedSettings = props => {
                       />
                     </AdvancedLabel>
                   </Col>
-                </Row>
-                <Row>
                   <Col>
                     <AdvancedLabel name="dep7" text="Readily evaporable water">
                       <Field
@@ -161,51 +157,14 @@ const AdvancedSettings = props => {
                   </Col>
                 </Row>
               </Col>
-              <Col md="9">
+            </Row>
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+              <Col>
                 <Row>
                   <Col>
-                    <h4>
-                      <u>Field, Crop, and Management Settings</u>
-                    </h4>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <AdvancedLabel name="dep8" text="Runoff curve number">
-                      <Field
-                        className="form-control"
-                        type="number"
-                        name="dep8"
-                      />
-                    </AdvancedLabel>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <AdvancedLabel name="dep9" text="Irrigation type">
-                      <Field className="form-control" type="text" name="dep9" />
-                    </AdvancedLabel>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <AdvancedLabel
-                      name="dep10"
-                      text="Residue cover during the non-growing season (%)"
-                    >
-                      <Field
-                        className="form-control"
-                        type="number"
-                        name="dep10"
-                      />
-                    </AdvancedLabel>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <h5 className="text-center">
+                    <h4 className="text-center">
                       Growing and Non-growing Seasons
-                    </h5>
+                    </h4>
                   </Col>
                 </Row>
                 <Row>
@@ -223,12 +182,18 @@ const AdvancedSettings = props => {
                       <tbody>
                         <tr>
                           <th>Planting Date</th>
-                          <th></th>
                           <th>
                             <Field
                               className="form-control"
                               type="date"
-                              name="dep11"
+                              name="dep31"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep12"
                             />
                           </th>
                           <th></th>
@@ -336,7 +301,13 @@ const AdvancedSettings = props => {
                         </tr>
                         <tr>
                           <th>Harvest date</th>
-                          <th></th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep32"
+                            />
+                          </th>
                           <th>
                             <Field
                               className="form-control"
@@ -344,13 +315,7 @@ const AdvancedSettings = props => {
                               name="dep24"
                             />
                           </th>
-                          <th>
-                            <Field
-                              className="form-control"
-                              type="number"
-                              name="dep25"
-                            />
-                          </th>
+                          <th></th>
                           <th></th>
                           <th></th>
                         </tr>
@@ -370,13 +335,7 @@ const AdvancedSettings = props => {
                               name="dep27"
                             />
                           </th>
-                          <th>
-                            <Field
-                              className="form-control"
-                              type="number"
-                              name="dep28"
-                            />
-                          </th>
+                          <th></th>
                           <th></th>
                         </tr>
                       </tbody>
@@ -385,8 +344,8 @@ const AdvancedSettings = props => {
                 </Row>
               </Col>
             </Row>
-            <Row>
-              <Col md="4">
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+              <Col>
                 <AdvancedLabel
                   name="dep29"
                   text="Upload .txt file with your own custom input settings"

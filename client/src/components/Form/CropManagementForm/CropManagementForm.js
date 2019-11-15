@@ -49,13 +49,6 @@ const CropManagementForm = props => {
             </UnitGroup>
           </FormCard>
         </div>
-        <div className="col-md-4 text-center">
-          <FormCard label="Show crop growth and other advanced inputs">
-            <AdvancedSettings />
-          </FormCard>
-        </div>
-      </div>
-      <div className="row mb-4">
         <div className="col-md-4">
           <FormCard label="Water Depletion Factor">
             <Field
@@ -63,6 +56,13 @@ const CropManagementForm = props => {
               type="number"
               name="waterDepletionFactor"
             />
+          </FormCard>
+        </div>
+      </div>
+      <div className="row mb-4">
+        <div className="col-md-4 text-center">
+          <FormCard label="Show crop growth and other advanced inputs">
+            <AdvancedSettings />
           </FormCard>
         </div>
       </div>
