@@ -2,29 +2,30 @@ import React, { useState } from 'react';
 import { Field } from 'formik';
 import {
   Button,
+  Col,
   Container,
+  FormGroup,
+  Label,
   Modal,
   ModalBody,
   ModalHeader,
   Row,
-  Col
+  Table
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 const AdvancedLabel = props => {
-  const { text } = props;
+  const { name, text } = props;
 
   return (
-    <div className="input-group">
-      <div className="input-group-prepend">
-        <div className="input-group-text" style={{ width: '290px' }}>
-          {text}
-          <FontAwesomeIcon icon={faQuestionCircle} style={{ marginLeft: 5 }} />
-        </div>
-      </div>
+    <FormGroup>
+      <Label for={name}>
+        {text}{' '}
+        <FontAwesomeIcon icon={faQuestionCircle} style={{ marginLeft: 5 }} />
+      </Label>
       {props.children}
-    </div>
+    </FormGroup>
   );
 };
 
@@ -48,54 +49,353 @@ const AdvancedSettings = props => {
         <ModalHeader toggle={toggle}>Advanced Settings</ModalHeader>
         <ModalBody>
           <Container>
-            <Col md="4">
-              <Row>
-                <Row>Reservoir Settings</Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Reservoir seepage rate (in/day)">
-                    <Field className="form-control" type="number" name="dep1" />
-                  </AdvancedLabel>
+            <Row>
+              <Col md="3">
+                <Row>
+                  <Col>
+                    <h4>
+                      <u>Reservoir Settings</u>
+                    </h4>
+                  </Col>
                 </Row>
-              </Row>
-              <Row>
-                <Row>Soil Profile Settings</Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Soil profile field capacity">
-                    <Field className="form-control" type="number" name="dep2" />
-                  </AdvancedLabel>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep1"
+                      text="Reservoir seepage rate (in/day)"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep1"
+                      />
+                    </AdvancedLabel>
+                  </Col>
                 </Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Soil profile wilting point">
-                    <Field className="form-control" type="number" name="dep3" />
-                  </AdvancedLabel>
+                <Row>
+                  <Col>
+                    <h4>
+                      <u>Soil Profile Settings</u>
+                    </h4>
+                  </Col>
                 </Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Depth of soil evaporation layer (ft)">
-                    <Field className="form-control" type="number" name="dep4" />
-                  </AdvancedLabel>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep2"
+                      text="Soil profile field capacity"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep2"
+                      />
+                    </AdvancedLabel>
+                  </Col>
                 </Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Soil surface field capacity">
-                    <Field className="form-control" type="number" name="dep5" />
-                  </AdvancedLabel>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep3"
+                      text="Soil profile wilting point"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep3"
+                      />
+                    </AdvancedLabel>
+                  </Col>
                 </Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Soil surface writing point">
-                    <Field className="form-control" type="number" name="dep6" />
-                  </AdvancedLabel>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep4"
+                      text="Depth of soil evaporation layer (ft)"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep4"
+                      />
+                    </AdvancedLabel>
+                  </Col>
                 </Row>
-                <Row className="mb-3">
-                  <AdvancedLabel text="Readily evaporable water">
-                    <Field className="form-control" type="number" name="dep7" />
-                  </AdvancedLabel>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep5"
+                      text="Soil surface field capacity"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep5"
+                      />
+                    </AdvancedLabel>
+                  </Col>
                 </Row>
-              </Row>
-            </Col>
-            <Col md="8">
-              <Row>
-                <span>Field, Crop, and Management Settings</span>
-              </Row>
-            </Col>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep6"
+                      text="Soil surface wilting point"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep6"
+                      />
+                    </AdvancedLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <AdvancedLabel name="dep7" text="Readily evaporable water">
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep7"
+                      />
+                    </AdvancedLabel>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md="9">
+                <Row>
+                  <Col>
+                    <h4>
+                      <u>Field, Crop, and Management Settings</u>
+                    </h4>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <AdvancedLabel name="dep8" text="Runoff curve number">
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep8"
+                      />
+                    </AdvancedLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <AdvancedLabel name="dep9" text="Irrigation type">
+                      <Field className="form-control" type="text" name="dep9" />
+                    </AdvancedLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <AdvancedLabel
+                      name="dep10"
+                      text="Residue cover during the non-growing season (%)"
+                    >
+                      <Field
+                        className="form-control"
+                        type="number"
+                        name="dep10"
+                      />
+                    </AdvancedLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h5 className="text-center">
+                      Growing and Non-growing Seasons
+                    </h5>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Starting Date</th>
+                          <th>Ending Date</th>
+                          <th>Crop Coefficient</th>
+                          <th>Maximum Crop Height (ft)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>Planting Date</th>
+                          <th></th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep11"
+                            />
+                          </th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <th>Initial establishment</th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep12"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep13"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="number"
+                              name="dep14"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="number"
+                              name="dep15"
+                            />
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>Development</th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep16"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep17"
+                            />
+                          </th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <th>Mid-season</th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep18"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep19"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="number"
+                              name="dep20"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="number"
+                              name="dep21"
+                            />
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>Late season</th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep22"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep23"
+                            />
+                          </th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <th>Harvest date</th>
+                          <th></th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep24"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="number"
+                              name="dep25"
+                            />
+                          </th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <th>Soil Freeze</th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep26"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="date"
+                              name="dep27"
+                            />
+                          </th>
+                          <th>
+                            <Field
+                              className="form-control"
+                              type="number"
+                              name="dep28"
+                            />
+                          </th>
+                          <th></th>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col md="4">
+                <AdvancedLabel
+                  name="dep29"
+                  text="Upload .txt file with your own custom input settings"
+                >
+                  <input className="form-control" name="dep29" type="file" />
+                </AdvancedLabel>
+                <a href="#">Download template input file</a>
+              </Col>
+            </Row>
           </Container>
         </ModalBody>
       </Modal>
