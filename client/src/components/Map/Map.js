@@ -3,7 +3,7 @@ import React from 'react';
 import { GeoJSON, Map as LeafletMap, Marker, TileLayer } from 'react-leaflet';
 import axios from 'axios';
 
-import regionalGrid from './grid.json';
+import regionalGrid from './midwest_states.json';
 
 const Map = () => {
   const origin = {
@@ -43,7 +43,7 @@ const Map = () => {
         <GeoJSON
           data={regionalGrid}
           style={() => {
-            return { color: '#007cb3', weight: 0.5, fillOpacity: 0 };
+            return { color: '#ffac3a', weight: 2, fillOpacity: 0 };
           }}
         />
         <TileLayer
