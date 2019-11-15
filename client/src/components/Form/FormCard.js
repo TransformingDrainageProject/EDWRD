@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardTitle, CardBody } from 'reactstrap';
+import { Card, CardText, CardTitle, CardBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
@@ -19,9 +19,17 @@ const FormCard = props => {
       }}
     >
       <CardTitle className="text-center">
-        {label} {!hideHelp ? <FontAwesomeIcon icon={faQuestionCircle} /> : null}
+        <h2>{label}</h2>
       </CardTitle>
-      <CardBody>{props.children}</CardBody>
+      <CardBody>
+        {props.children}
+        {!hideHelp ? (
+          <FontAwesomeIcon
+            style={{ position: 'absolute', bottom: 0, right: 0, margin: '5px' }}
+            icon={faQuestionCircle}
+          />
+        ) : null}
+      </CardBody>
     </Card>
   );
 };
