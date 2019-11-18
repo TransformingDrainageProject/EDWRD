@@ -1,19 +1,19 @@
 export const fieldUSInitialValues = {
+  darea: 160.0,
+  dareaIncSurfaceRunoff: false,
+  iarea: 160.0,
+  rarea: 6.0,
+  rdep: 10,
   soilType: '',
-  depthTile: 0,
-  fieldDrained: 0,
-  surfaceRunoff: false,
-  evaluateAcre: 0,
-  evaluateAvgDepth: 0,
-  irrigated: 0
+  zr: 3.3
 };
 
 export const fieldMetricInitialValues = {
+  darea: 65.0,
+  dareaIncSurfaceRunoff: false,
+  iarea: 65.0,
+  rarea: 2.5,
+  rdep: 3.0,
   soilType: '',
-  depthTile: 10,
-  fieldDrained: 10,
-  surfaceRunoff: false,
-  evaluateAcre: 10,
-  evaluateAvgDepth: 10,
-  irrigated: 10
+  zr: 1.0
 };

@@ -15,6 +15,7 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="What is the soil type?">
             <Field className="form-control" component="select" name="soilType">
+              <option value=""></option>
               <option value="silt">Silt loam</option>
             </Field>
           </FormCard>
@@ -22,7 +23,12 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="What is the average depth to the tile drains?">
             <UnitGroup unit="feet" unitLabel="depth" unitType={unitType}>
-              <Field className="form-control" type="number" name="depthTile" />
+              <Field
+                className="form-control"
+                type="number"
+                name="zr"
+                step="0.1"
+              />
             </UnitGroup>
           </FormCard>
         </Col>
@@ -32,12 +38,13 @@ const FieldReservoirForm = props => {
               <Field
                 className="form-control"
                 type="number"
-                name="fieldDrained"
+                name="darea"
+                step="0.1"
               />
             </UnitGroup>
             <Field
               type="checkbox"
-              name="surfaceRunoff"
+              name="dareaIncSurfaceRunoff"
               label="Include Surface Runoff"
               component={Checkbox}
             />
@@ -53,7 +60,8 @@ const FieldReservoirForm = props => {
                   <Field
                     className="form-control"
                     type="number"
-                    name="evaluateAcre"
+                    name="rarea"
+                    step="0.1"
                   />
                 </UnitGroup>
               </Col>
@@ -66,7 +74,8 @@ const FieldReservoirForm = props => {
                   <Field
                     className="form-control"
                     type="number"
-                    name="evaluateAvgDepth"
+                    name="rdep"
+                    step="0.1"
                   />
                 </UnitGroup>
               </Col>
@@ -76,7 +85,12 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="How much of the field will be irrigated?">
             <UnitGroup unit="acres" unitType={unitType}>
-              <Field className="form-control" type="number" name="irrigated" />
+              <Field
+                className="form-control"
+                type="number"
+                name="iarea"
+                step="0.1"
+              />
             </UnitGroup>
           </FormCard>
         </Col>
