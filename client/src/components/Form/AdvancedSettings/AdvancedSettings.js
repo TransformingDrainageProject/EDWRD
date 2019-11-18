@@ -24,13 +24,13 @@ const unitConversion = {
 const AdvancedLabel = props => {
   const { name, text, unit, unitType } = props;
 
-  const label = unit ? unitConversion[unit][unitType] : '';
+  const labelUnit = unit ? ` (${unitConversion[unit][unitType]})` : '';
 
   return (
     <FormGroup>
       <Label for={name}>
         {text}
-        {` ${label}`}{' '}
+        {labelUnit}{' '}
         <FontAwesomeIcon icon={faQuestionCircle} style={{ marginLeft: 5 }} />
       </Label>
       {props.children}
