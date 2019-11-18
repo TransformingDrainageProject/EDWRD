@@ -88,7 +88,11 @@ const FormContainer = props => {
             </Row>
             <Row>
               <Col>
-                <UserDataForm />
+                <UserDataForm
+                  errors={errors}
+                  touched={touched}
+                  values={values}
+                />
               </Col>
             </Row>
             <Row>
