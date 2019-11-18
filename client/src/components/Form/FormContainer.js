@@ -18,17 +18,23 @@ import {
   userMetricInitialValues,
   userUSInitialValues
 } from './UserDataForm/initialValues';
+import {
+  advUSInitialValues,
+  advMetricInitialValues
+} from './AdvancedSettings/initialValues';
 
 let metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
-  ...userMetricInitialValues
+  ...userMetricInitialValues,
+  ...advMetricInitialValues
 };
 
 let usInitialValues = {
   ...fieldUSInitialValues,
   ...cropUSInitialValues,
-  ...userUSInitialValues
+  ...userUSInitialValues,
+  ...advUSInitialValues
 };
 
 const FormContainer = props => {

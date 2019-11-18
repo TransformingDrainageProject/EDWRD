@@ -15,13 +15,22 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
+const unitConversion = {
+  inchDay: { us: 'in/day', metric: 'mm/day' },
+  inches: { us: 'in', metric: 'mm' },
+  feet: { us: 'ft', metric: 'm' }
+};
+
 const AdvancedLabel = props => {
-  const { name, text } = props;
+  const { name, text, unit, unitType } = props;
+
+  const label = unit ? unitConversion[unit][unitType] : '';
 
   return (
     <FormGroup>
       <Label for={name}>
-        {text}{' '}
+        {text}
+        {` ${label}`}{' '}
         <FontAwesomeIcon icon={faQuestionCircle} style={{ marginLeft: 5 }} />
       </Label>
       {props.children}
@@ -30,6 +39,7 @@ const AdvancedLabel = props => {
 };
 
 const AdvancedSettings = props => {
+  const { unitType } = props;
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
   const toggle = () => {
@@ -61,13 +71,16 @@ const AdvancedSettings = props => {
                 <Row>
                   <Col md="4">
                     <AdvancedLabel
-                      name="dep1"
-                      text="Reservoir seepage rate (in/day)"
+                      name="rseep"
+                      text="Reservoir seepage rate"
+                      unit="inchDay"
+                      unitType={unitType}
                     >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep1"
+                        name="rseep"
+                        step="0.01"
                       />
                     </AdvancedLabel>
                   </Col>
@@ -86,37 +99,42 @@ const AdvancedSettings = props => {
                 <Row>
                   <Col>
                     <AdvancedLabel
-                      name="dep2"
+                      name="zrfc"
                       text="Soil profile field capacity"
                     >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep2"
+                        name="zrfc"
+                        step="0.01"
                       />
                     </AdvancedLabel>
                   </Col>
                   <Col>
                     <AdvancedLabel
-                      name="dep3"
+                      name="zrwp"
                       text="Soil profile wilting point"
                     >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep3"
+                        name="zrwp"
+                        step="0.01"
                       />
                     </AdvancedLabel>
                   </Col>
                   <Col>
                     <AdvancedLabel
-                      name="dep4"
-                      text="Depth of soil evaporation layer (ft)"
+                      name="ze"
+                      text="Depth of soil evaporation layer"
+                      unit="feet"
+                      unitType={unitType}
                     >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep4"
+                        name="ze"
+                        step="0.01"
                       />
                     </AdvancedLabel>
                   </Col>
@@ -124,34 +142,42 @@ const AdvancedSettings = props => {
                 <Row>
                   <Col>
                     <AdvancedLabel
-                      name="dep5"
+                      name="zefc"
                       text="Soil surface field capacity"
                     >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep5"
+                        name="zefc"
+                        step="0.01"
                       />
                     </AdvancedLabel>
                   </Col>
                   <Col>
                     <AdvancedLabel
-                      name="dep6"
+                      name="zewp"
                       text="Soil surface wilting point"
                     >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep6"
+                        name="zewp"
+                        step="0.01"
                       />
                     </AdvancedLabel>
                   </Col>
                   <Col>
-                    <AdvancedLabel name="dep7" text="Readily evaporable water">
+                    <AdvancedLabel
+                      name="rew"
+                      text="Readily evaporable water"
+                      unit="inches"
+                      unitType={unitType}
+                    >
                       <Field
                         className="form-control"
                         type="number"
-                        name="dep7"
+                        name="rew"
+                        step="0.1"
                       />
                     </AdvancedLabel>
                   </Col>

@@ -65,7 +65,7 @@ const CropManagementForm = props => {
       <Row>
         <Col className="text-center mb-4">
           <FormCard label="Show crop growth and other advanced inputs">
-            <AdvancedSettings />
+            <AdvancedSettings unitType={unitType} />
           </FormCard>
         </Col>
       </Row>
