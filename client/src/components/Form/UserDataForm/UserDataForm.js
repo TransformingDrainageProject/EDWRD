@@ -16,7 +16,7 @@ const UserDataForm = props => {
             <Row>
               <Col md="4">
                 <RadioButtonGroup
-                  id="dataSelection"
+                  id="userData"
                   label="Select one"
                   value={values.radioGroup}
                   error={errors.radioGroup}
@@ -24,13 +24,13 @@ const UserDataForm = props => {
                 >
                   <Field
                     component={RadioButton}
-                    name="dataSelection"
+                    name="userData"
                     id="no"
                     label="No, I would like to choose example data from a different site"
                   />
                   <Field
                     component={RadioButton}
-                    name="dataSelection"
+                    name="userData"
                     id="yes"
                     label="Yes, I wil upload a file"
                   />

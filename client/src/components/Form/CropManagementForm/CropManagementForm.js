@@ -43,7 +43,8 @@ const CropManagementForm = props => {
               <Field
                 className="form-control"
                 component="select"
-                name="irrigateAmount"
+                name="irrdep"
+                step="0.1"
               >
                 <option value="1">1</option>
               </Field>
@@ -55,7 +56,8 @@ const CropManagementForm = props => {
             <Field
               className="form-control"
               type="number"
-              name="waterDepletionFactor"
+              name="pfact"
+              step="0.1"
             />
           </FormCard>
         </Col>

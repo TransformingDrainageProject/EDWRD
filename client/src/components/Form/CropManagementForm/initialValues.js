@@ -1,11 +1,11 @@
 export const cropUSInitialValues = {
   cropSelection: 'corn',
-  irrigateAmount: 1,
-  waterDepletionFactor: 0
+  irrdep: 1,
+  pfact: 0.55
 };
 
 export const cropMetricInitialValues = {
   cropSelection: 'corn',
-  irrigateAmount: 10,
-  waterDepletionFactor: 10
+  irrdep: 25.4,
+  pfact: 0.55
 };

@@ -1,9 +1,7 @@
 export const userUSInitialValues = {
-  dailyUpload: false,
-  dataSelection: 'no'
+  userData: 'no'
 };
 
 export const userMetricInitialValues = {
-  dailyUpload: false,
-  dataSelection: 'no'
+  userData: 'no'
 };
