@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 
 import Checkbox from '../../Checkbox';
@@ -9,23 +10,23 @@ const FieldReservoirForm = props => {
   const { unitType } = props;
 
   return (
-    <div className="container-fluid">
-      <div className="row mb-4">
-        <div className="col-sm-4">
+    <Container>
+      <Row>
+        <Col className="mb-4" md="4">
           <FormCard label="What is the soil type?">
             <Field className="form-control" component="select" name="soilType">
               <option value="silt">Silt loam</option>
             </Field>
           </FormCard>
-        </div>
-        <div className="col-sm-4">
+        </Col>
+        <Col className="mb-4" md="4">
           <FormCard label="What is the average depth to the tile drains?">
             <UnitGroup unit="feet" unitLabel="depth" unitType={unitType}>
               <Field className="form-control" type="number" name="depthTile" />
             </UnitGroup>
           </FormCard>
-        </div>
-        <div className="col-sm-4">
+        </Col>
+        <Col className="mb-4" md="4">
           <FormCard label="How much of the field is drained?">
             <UnitGroup unit="acres" unitType={unitType}>
               <Field
@@ -41,13 +42,13 @@ const FieldReservoirForm = props => {
               component={Checkbox}
             />
           </FormCard>
-        </div>
-      </div>
-      <div className="row mb-4">
-        <div className="col-sm-8">
+        </Col>
+      </Row>
+      <Row>
+        <Col className="mb-4" md="8">
           <FormCard label="How large of a reservoir would you like to evaluate?">
-            <div className="row">
-              <div className="col-md-6">
+            <Row>
+              <Col className="mb-4" md="6">
                 <UnitGroup unit="acres" unitType={unitType}>
                   <Field
                     className="form-control"
@@ -55,8 +56,8 @@ const FieldReservoirForm = props => {
                     name="evaluateAcre"
                   />
                 </UnitGroup>
-              </div>
-              <div className="col-md-6">
+              </Col>
+              <Col className="mb-4" md="6">
                 <UnitGroup
                   unit="feet"
                   unitLabel="avg. depth"
@@ -68,19 +69,19 @@ const FieldReservoirForm = props => {
                     name="evaluateAvgDepth"
                   />
                 </UnitGroup>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </FormCard>
-        </div>
-        <div className="col-sm-4">
+        </Col>
+        <Col className="mb-4" md="4">
           <FormCard label="How much of the field will be irrigated?">
             <UnitGroup unit="acres" unitType={unitType}>
               <Field className="form-control" type="number" name="irrigated" />
             </UnitGroup>
           </FormCard>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

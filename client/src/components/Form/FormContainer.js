@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Button, Col, Container, Row } from 'reactstrap';
 import { Formik, Form } from 'formik';
 // forms
 import FieldReservoirForm from './FieldReservoirForm';
@@ -35,7 +35,7 @@ const FormContainer = props => {
   const { unitType } = props;
 
   return (
-    <div className="container">
+    <Container>
       <Formik
         initialValues={
           unitType === 'us'
@@ -53,46 +53,60 @@ const FormContainer = props => {
       >
         {({ errors, status, isSubmitting, touched, values }) => (
           <Form>
-            <div className="row">
-              <h1>2. Describe your field and reservoir:</h1>
-            </div>
-            <div className="row">
-              <FieldReservoirForm unitType={unitType} />
-            </div>
-            <div className="row">
-              <h1>3. Describe your crop and management</h1>
-            </div>
-            <div className="row">
-              <CropManagementForm
-                errors={errors}
-                touched={touched}
-                values={values}
-                unitType={unitType}
-              />
-            </div>
-            <div className="row">
-              <h1>
-                4. Do you have your own daily weather, tile drain flow, and
-                nutrient concentration data to upload?
-              </h1>
-            </div>
-            <div className="row">
-              <UserDataForm />
-            </div>
-            <div className="row justify-content-center">
-              <Button
-                className="mb-4"
-                type="submit"
-                disabled={isSubmitting}
-                style={{ backgroundColor: '#007cb3', height: '75px' }}
-              >
-                <strong>CLICK HERE TO RUN EDWRD</strong>
-              </Button>
-            </div>
+            <Row>
+              <Col>
+                <h1>2. Describe your field and reservoir:</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FieldReservoirForm unitType={unitType} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h1>3. Describe your crop and management</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <CropManagementForm
+                  errors={errors}
+                  touched={touched}
+                  values={values}
+                  unitType={unitType}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h1>
+                  4. Do you have your own daily weather, tile drain flow, and
+                  nutrient concentration data to upload?
+                </h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <UserDataForm />
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-center">
+                <Button
+                  className="mb-4"
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={{ backgroundColor: '#007cb3', height: '75px' }}
+                >
+                  <strong>CLICK HERE TO RUN EDWRD</strong>
+                </Button>
+              </Col>
+            </Row>
           </Form>
         )}
       </Formik>
-    </div>
+    </Container>
   );
 };
 

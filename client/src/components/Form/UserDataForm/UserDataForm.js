@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 
 import Checkbox from '../../Checkbox';
@@ -6,21 +7,30 @@ import FormCard from '../FormCard';
 
 const UserDataForm = () => {
   return (
-    <div className="container-fluid">
-      <div className="row mb-4">
-        <div className="col-md-4">
-          <FormCard hideHelp={true}>
+    <Container>
+      <Row>
+        <Col className="mb-4" md="6">
+          <FormCard>
             <Field
               type="checkbox"
               name="dailyUpload"
               label="Yes, I will upload a file"
-              showHelp={true}
               component={Checkbox}
             />
           </FormCard>
-        </div>
-      </div>
-    </div>
+        </Col>
+        <Col className="mb-4" md="6">
+          <FormCard>
+            <Field
+              type="checkbox"
+              name="exampleData"
+              label="No, I would like to choose example data from a different site"
+              component={Checkbox}
+            />
+          </FormCard>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

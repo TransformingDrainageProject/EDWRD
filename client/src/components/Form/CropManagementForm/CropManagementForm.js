@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 
 import FormCard from '../FormCard';
@@ -10,9 +11,9 @@ const CropManagementForm = props => {
   const { errors, touched, values, unitType } = props;
 
   return (
-    <div className="container-fluid">
-      <div className="row mb-4">
-        <div className="col-md-4">
+    <Container>
+      <Row>
+        <Col className="mb-4" md="4">
           <FormCard label="Select a crop">
             <RadioButtonGroup
               id="cropSelection"
@@ -35,8 +36,8 @@ const CropManagementForm = props => {
               />
             </RadioButtonGroup>
           </FormCard>
-        </div>
-        <div className="col-md-4">
+        </Col>
+        <Col className="mb-4" md="4">
           <FormCard label="How much do you want to irrigate each time?">
             <UnitGroup unit="inches" unitType={unitType}>
               <Field
@@ -48,8 +49,8 @@ const CropManagementForm = props => {
               </Field>
             </UnitGroup>
           </FormCard>
-        </div>
-        <div className="col-md-4">
+        </Col>
+        <Col className="mb-4" md="4">
           <FormCard label="Water Depletion Factor">
             <Field
               className="form-control"
@@ -57,16 +58,16 @@ const CropManagementForm = props => {
               name="waterDepletionFactor"
             />
           </FormCard>
-        </div>
-      </div>
-      <div className="row mb-4">
-        <div className="col-md-4 text-center">
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-center mb-4">
           <FormCard label="Show crop growth and other advanced inputs">
             <AdvancedSettings />
           </FormCard>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

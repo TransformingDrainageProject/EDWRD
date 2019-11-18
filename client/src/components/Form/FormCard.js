@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardText, CardTitle, CardBody } from 'reactstrap';
+import { Card, CardTitle, CardBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
