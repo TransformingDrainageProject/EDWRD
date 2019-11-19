@@ -9,7 +9,7 @@ const Header = () => {
         src={edwrdLogo}
         className="mx-auto d-block"
         alt="Evaluating Drainage Water Recycling Decisions (EDWRD) Logo"
-        style={{ height: '100vh', padding: '15px', width: '100 - height:auto' }}
+        style={{ padding: '15px', width: '100vw' }}
       />
     </div>
   );
