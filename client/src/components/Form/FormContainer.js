@@ -21,7 +21,7 @@ import {
 import {
   advUSInitialValues,
   advMetricInitialValues
-} from './AdvancedSettings/initialValues';
+} from './AdvancedSettingsForm/initialValues';
 
 let metricInitialValues = {
   ...fieldMetricInitialValues,
@@ -61,7 +61,7 @@ const FormContainer = props => {
           <Form>
             <Row>
               <Col>
-                <h1>2. Describe your field and reservoir:</h1>
+                <h1>2. Describe your field and reservoir</h1>
               </Col>
             </Row>
             <Row>

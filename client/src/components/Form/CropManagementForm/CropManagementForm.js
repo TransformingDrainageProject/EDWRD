@@ -3,9 +3,9 @@ import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 
 import FormCard from '../FormCard';
-import AdvancedSettings from '../AdvancedSettings';
-import { RadioButton, RadioButtonGroup } from '../../RadioInput';
-import UnitGroup from '../../UnitGroup';
+import AdvancedSettingsForm from '../AdvancedSettingsForm';
+import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
+import UnitGroup from '../UnitGroup';
 
 const CropManagementForm = props => {
   const { errors, touched, values, unitType } = props;
@@ -65,7 +65,7 @@ const CropManagementForm = props => {
       <Row>
         <Col className="text-center mb-4">
           <FormCard label="Show crop growth and other advanced inputs">
-            <AdvancedSettings unitType={unitType} />
+            <AdvancedSettingsForm unitType={unitType} />
           </FormCard>
         </Col>
       </Row>

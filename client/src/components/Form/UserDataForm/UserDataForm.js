@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 
 import FormCard from '../FormCard';
-import { RadioButton, RadioButtonGroup } from '../../RadioInput';
+import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 
 const UserDataForm = props => {
   const { errors, touched, values } = props;

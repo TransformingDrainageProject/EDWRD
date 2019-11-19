@@ -2,9 +2,9 @@ import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 
-import Checkbox from '../../Checkbox';
+import Checkbox from '../FormikComponents/Checkbox';
 import FormCard from '../FormCard';
-import UnitGroup from '../../UnitGroup';
+import UnitGroup from '../UnitGroup';
 
 const FieldReservoirForm = props => {
   const { unitType } = props;
