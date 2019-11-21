@@ -35,7 +35,8 @@ const FormCard = props => {
 };
 
 FormCard.propTypes = {
-  label: PropTypes.string
+  label: PropTypes.string,
+  hideHelp: PropTypes.bool
 };
 
 export default FormCard;

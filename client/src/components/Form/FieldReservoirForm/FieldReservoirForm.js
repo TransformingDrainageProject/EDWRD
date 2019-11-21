@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
+import PropTypes from 'prop-types';
 
 import Checkbox from '../FormikComponents/Checkbox';
 import FormCard from '../FormCard';
@@ -97,6 +98,10 @@ const FieldReservoirForm = props => {
       </Row>
     </Container>
   );
+};
+
+FieldReservoirForm.propTypes = {
+  unitType: PropTypes.string
 };
 
 export default FieldReservoirForm;

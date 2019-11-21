@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
+import PropTypes from 'prop-types';
 
 import FormCard from '../FormCard';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
@@ -43,6 +44,12 @@ const UserDataForm = props => {
       </Row>
     </Container>
   );
+};
+
+UserDataForm.propTypes = {
+  errors: PropTypes.object,
+  touched: PropTypes.object,
+  values: PropTypes.object
 };
 
 export default UserDataForm;

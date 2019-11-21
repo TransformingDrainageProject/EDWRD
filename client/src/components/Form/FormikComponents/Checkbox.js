@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const Checkbox = ({ field, type, label, showHelp }) => (
   <div className="form-check">
@@ -18,5 +19,12 @@ const Checkbox = ({ field, type, label, showHelp }) => (
     ) : null}
   </div>
 );
+
+Checkbox.propTypes = {
+  field: PropTypes.object,
+  type: PropTypes.string,
+  label: PropTypes.string,
+  showHelp: PropTypes.bool
+};
 
 export default Checkbox;

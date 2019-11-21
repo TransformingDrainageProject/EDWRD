@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const RadioButton = ({
   field: { name, value, onChange, onBlur },
@@ -24,6 +25,13 @@ export const RadioButton = ({
     </label>
   </div>
 );
+
+RadioButton.propTypes = {
+  field: PropTypes.object,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  className: PropTypes.string
+};
 
 export const RadioButtonGroup = ({ children }) => (
   <div className="form-check">{children}</div>

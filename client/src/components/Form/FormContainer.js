@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
 // forms
 import FieldReservoirForm from './FieldReservoirForm';
 import CropManagementForm from './CropManagementForm';
@@ -118,6 +119,10 @@ const FormContainer = props => {
       </Formik>
     </Container>
   );
+};
+
+FormContainer.propTypes = {
+  unitType: PropTypes.string
 };
 
 export default FormContainer;

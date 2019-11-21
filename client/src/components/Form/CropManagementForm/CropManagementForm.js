@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
+import PropTypes from 'prop-types';
 
 import FormCard from '../FormCard';
 import AdvancedSettingsForm from '../AdvancedSettingsForm';
@@ -71,6 +72,13 @@ const CropManagementForm = props => {
       </Row>
     </Container>
   );
+};
+
+CropManagementForm.propTypes = {
+  errors: PropTypes.object,
+  touched: PropTypes.object,
+  values: PropTypes.object,
+  unitType: PropTypes.string
 };
 
 export default CropManagementForm;
