@@ -16,27 +16,38 @@ import {
   cropUSInitialValues
 } from './CropManagementForm/initialValues';
 import {
-  userMetricInitialValues,
-  userUSInitialValues
-} from './UserDataForm/initialValues';
-import {
   advUSInitialValues,
   advMetricInitialValues
 } from './AdvancedSettingsForm/initialValues';
+import {
+  userMetricInitialValues,
+  userUSInitialValues
+} from './UserDataForm/initialValues';
+// validation schemas
+import setYupLocale from './setYupLocale';
+import { fieldReservoirFormSchema } from './FieldReservoirForm/validationSchema';
+import { cropManagementFormSchema } from './CropManagementForm/validationSchema';
+import { userDataFormSchema } from './UserDataForm/validationSchema';
+import { advancedSettingsFormSchema } from './AdvancedSettingsForm/validationSchema';
 
-let metricInitialValues = {
+const metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
   ...userMetricInitialValues,
   ...advMetricInitialValues
 };
 
-let usInitialValues = {
+const usInitialValues = {
   ...fieldUSInitialValues,
   ...cropUSInitialValues,
   ...userUSInitialValues,
   ...advUSInitialValues
 };
+
+const validationSchema = fieldReservoirFormSchema
+  .concat(cropManagementFormSchema)
+  .concat(advancedSettingsFormSchema)
+  .concat(userDataFormSchema);
 
 const FormContainer = props => {
   const { unitType } = props;
@@ -50,7 +61,7 @@ const FormContainer = props => {
             : { unitType, ...metricInitialValues }
         }
         enableReinitialize={true}
-        validationSchema={{}}
+        validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));

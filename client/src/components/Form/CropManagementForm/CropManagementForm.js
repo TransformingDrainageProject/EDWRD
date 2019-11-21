@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import FormCard from '../FormCard';
 import AdvancedSettingsForm from '../AdvancedSettingsForm';
+import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 import UnitGroup from '../UnitGroup';
 
@@ -36,6 +37,7 @@ const CropManagementForm = props => {
                 label="Soybean"
               />
             </RadioButtonGroup>
+            <ErrorMessage name="cropSelection" />
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
@@ -50,6 +52,7 @@ const CropManagementForm = props => {
                 <option value="1">1</option>
               </Field>
             </UnitGroup>
+            <ErrorMessage name="irrdep" />
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
@@ -60,6 +63,7 @@ const CropManagementForm = props => {
               name="pfact"
               step="0.1"
             />
+            <ErrorMessage name="pfact" />
           </FormCard>
         </Col>
       </Row>

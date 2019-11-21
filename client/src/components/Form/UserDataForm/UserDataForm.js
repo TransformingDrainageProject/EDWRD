@@ -4,6 +4,7 @@ import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
 import FormCard from '../FormCard';
+import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 
 const UserDataForm = props => {
@@ -26,16 +27,17 @@ const UserDataForm = props => {
                   <Field
                     component={RadioButton}
                     name="userData"
-                    id="no"
+                    id="false"
                     label="No, I would like to choose example data from a different site"
                   />
                   <Field
                     component={RadioButton}
                     name="userData"
-                    id="yes"
+                    id="true"
                     label="Yes, I wil upload a file"
                   />
                 </RadioButtonGroup>
+                <ErrorMessage name="userData" />
               </Col>
               <Col md="8"></Col>
             </Row>

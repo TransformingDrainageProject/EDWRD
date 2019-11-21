@@ -4,6 +4,7 @@ import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
 import Checkbox from '../FormikComponents/Checkbox';
+import ErrorMessage from '../FormikComponents/ErrorMessage';
 import FormCard from '../FormCard';
 import UnitGroup from '../UnitGroup';
 
@@ -19,6 +20,7 @@ const FieldReservoirForm = props => {
               <option value=""></option>
               <option value="silt">Silt loam</option>
             </Field>
+            <ErrorMessage name="soilType" />
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
@@ -31,6 +33,7 @@ const FieldReservoirForm = props => {
                 step="0.1"
               />
             </UnitGroup>
+            <ErrorMessage name="zr" />
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
@@ -43,12 +46,14 @@ const FieldReservoirForm = props => {
                 step="0.1"
               />
             </UnitGroup>
+            <ErrorMessage name="darea" />
             <Field
               type="checkbox"
               name="dareaIncSurfaceRunoff"
               label="Include Surface Runoff"
               component={Checkbox}
             />
+            <ErrorMessage name="dareaIncSurfaceRunoff" />
           </FormCard>
         </Col>
       </Row>
@@ -65,6 +70,7 @@ const FieldReservoirForm = props => {
                     step="0.1"
                   />
                 </UnitGroup>
+                <ErrorMessage name="rarea" />
               </Col>
               <Col className="mb-4" md="6">
                 <UnitGroup
@@ -79,6 +85,7 @@ const FieldReservoirForm = props => {
                     step="0.1"
                   />
                 </UnitGroup>
+                <ErrorMessage name="rdep" />
               </Col>
             </Row>
           </FormCard>
@@ -93,6 +100,7 @@ const FieldReservoirForm = props => {
                 step="0.1"
               />
             </UnitGroup>
+            <ErrorMessage name="iarea" />
           </FormCard>
         </Col>
       </Row>
