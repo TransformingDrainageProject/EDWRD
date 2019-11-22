@@ -47,7 +47,8 @@ const usInitialValues = {
 const validationSchema = fieldReservoirFormSchema
   .concat(cropManagementFormSchema)
   .concat(advancedSettingsFormSchema)
-  .concat(userDataFormSchema);
+  .concat(userDataFormSchema)
+  .concat(advancedSettingsFormSchema);
 
 const FormContainer = props => {
   const { unitType } = props;

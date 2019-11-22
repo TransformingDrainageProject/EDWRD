@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 
 import AdvancedLabel from './AdvancedLabel';
 import AdvancedSeasonTable from './AdvancedSeasonTable';
+import ErrorMessage from '../FormikComponents/ErrorMessage';
 
 const AdvancedSettings = props => {
   const { unitType } = props;
@@ -59,6 +60,7 @@ const AdvancedSettings = props => {
                         step="0.01"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="rseep" />
                   </Col>
                 </Row>
               </Col>
@@ -85,6 +87,7 @@ const AdvancedSettings = props => {
                         step="0.01"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="zrfc" />
                   </Col>
                   <Col>
                     <AdvancedLabel
@@ -98,6 +101,7 @@ const AdvancedSettings = props => {
                         step="0.01"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="zrwp" />
                   </Col>
                   <Col>
                     <AdvancedLabel
@@ -113,6 +117,7 @@ const AdvancedSettings = props => {
                         step="0.01"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="ze" />
                   </Col>
                 </Row>
                 <Row>
@@ -128,6 +133,7 @@ const AdvancedSettings = props => {
                         step="0.01"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="zefc" />
                   </Col>
                   <Col>
                     <AdvancedLabel
@@ -141,6 +147,7 @@ const AdvancedSettings = props => {
                         step="0.01"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="zewp" />
                   </Col>
                   <Col>
                     <AdvancedLabel
@@ -156,6 +163,7 @@ const AdvancedSettings = props => {
                         step="0.1"
                       />
                     </AdvancedLabel>
+                    <ErrorMessage name="rew" />
                   </Col>
                 </Row>
               </Col>
