@@ -8,15 +8,34 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import FormCard from '../FormCard';
 import UnitGroup from '../UnitGroup';
 
+import { updateSoilFields } from './updateSoilFields';
+
 const FieldReservoirForm = props => {
-  const { unitType } = props;
+  const { setFieldValue, setFieldTouched, unitType } = props;
+
+  function soilTypeOnChange(e) {
+    // update soil type field
+    setFieldValue('soilType', e.target.value);
+    setFieldTouched('soilType', true);
+    // update fields dependent on soil type
+    updateSoilFields(
+      { setFieldValue, setFieldTouched },
+      e.target.value,
+      unitType
+    );
+  }
 
   return (
     <Container>
       <Row>
         <Col className="mb-4" md="4">
           <FormCard label="What is the soil type?">
-            <Field className="form-control" component="select" name="soilType">
+            <Field
+              className="form-control"
+              component="select"
+              name="soilType"
+              onChange={soilTypeOnChange}
+            >
               <option value="loam">Loam</option>
               <option value="siltLoam">Silt loam</option>
               <option value="silt">Silt</option>

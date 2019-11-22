@@ -70,7 +70,15 @@ const FormContainer = props => {
           }, 400);
         }}
       >
-        {({ errors, status, isSubmitting, touched, values }) => (
+        {({
+          errors,
+          status,
+          isSubmitting,
+          setFieldValue,
+          setFieldTouched,
+          touched,
+          values
+        }) => (
           <Form>
             <Row>
               <Col>
@@ -79,7 +87,11 @@ const FormContainer = props => {
             </Row>
             <Row>
               <Col>
-                <FieldReservoirForm unitType={unitType} />
+                <FieldReservoirForm
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
+                  unitType={unitType}
+                />
               </Col>
             </Row>
             <Row>
