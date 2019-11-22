@@ -4,7 +4,7 @@ export const fieldUSInitialValues = {
   iarea: 160.0,
   rarea: 6.0,
   rdep: 10,
-  soilType: '',
+  soilType: 'siltLoam',
   zr: 3.3
 };
 
@@ -14,6 +14,6 @@ export const fieldMetricInitialValues = {
   iarea: 65.0,
   rarea: 2.5,
   rdep: 3.0,
-  soilType: '',
+  soilType: 'siltLoam',
   zr: 1.0
 };

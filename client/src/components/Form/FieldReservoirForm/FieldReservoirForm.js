@@ -17,8 +17,12 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="What is the soil type?">
             <Field className="form-control" component="select" name="soilType">
-              <option value=""></option>
-              <option value="silt">Silt loam</option>
+              <option value="loam">Loam</option>
+              <option value="siltLoam">Silt loam</option>
+              <option value="silt">Silt</option>
+              <option value="siltClayLoam">Silt Clay Loam</option>
+              <option value="siltyClay">Silty Clay</option>
+              <option value="clay">Clay</option>
             </Field>
             <ErrorMessage name="soilType" />
           </FormCard>
