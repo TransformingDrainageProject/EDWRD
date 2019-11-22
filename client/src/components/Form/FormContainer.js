@@ -51,7 +51,7 @@ const validationSchema = fieldReservoirFormSchema
   .concat(advancedSettingsFormSchema);
 
 const FormContainer = props => {
-  const { unitType } = props;
+  const { fieldState, unitType } = props;
 
   return (
     <Container>
@@ -134,6 +134,7 @@ const FormContainer = props => {
 };
 
 FormContainer.propTypes = {
+  fieldState: PropTypes.string,
   unitType: PropTypes.string
 };
 
