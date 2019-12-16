@@ -18,9 +18,9 @@ export default setLocale({
     }
   },
   number: {
-    min: 'Must be greater than or equal to ${min}',
-    max: 'Must be less than or equal to ${max}',
-    moreThan: 'Must be more than ${more}',
+    min: ({ min }) => `Must be greater than or equal to ${min}`,
+    max: ({ max }) => `Must be less than or equal to ${max}`,
+    moreThan: ({ more }) => `Must be more than ${more}`,
     positive: 'Must be greater than zero'
   }
 });

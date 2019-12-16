@@ -2,7 +2,9 @@ import React from 'react';
 import { Field } from 'formik';
 import { Col, Row, Table } from 'reactstrap';
 
-const AdvancedSeasonTable = () => {
+const AdvancedSeasonTable = props => {
+  const { fieldState, unitType } = props;
+
   return (
     <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
       <Col>
@@ -20,17 +22,27 @@ const AdvancedSeasonTable = () => {
                   <th>Starting Date</th>
                   <th>Ending Date</th>
                   <th>Crop Coefficient</th>
-                  <th>Maximum Crop Height (ft)</th>
+                  <th>
+                    Maximum Crop Height ({unitType === 'us' ? 'ft' : 'm'})
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th>Planting Date</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep31" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="plantDateStart"
+                    />
                   </th>
                   <th>
-                    <Field className="form-control" type="date" name="dep12" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="plantDateEnd"
+                    />
                   </th>
                   <th></th>
                   <th></th>
@@ -38,33 +50,49 @@ const AdvancedSeasonTable = () => {
                 <tr>
                   <th>Initial establishment</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep12" />
-                  </th>
-                  <th>
-                    <Field className="form-control" type="date" name="dep13" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="initDateStart"
+                    />
                   </th>
                   <th>
                     <Field
                       className="form-control"
-                      type="number"
-                      name="dep14"
+                      type="date"
+                      name="initDateEnd"
                     />
                   </th>
                   <th>
                     <Field
                       className="form-control"
                       type="number"
-                      name="dep15"
+                      name="initKC"
+                    />
+                  </th>
+                  <th>
+                    <Field
+                      className="form-control"
+                      type="number"
+                      name="initCropHeight"
                     />
                   </th>
                 </tr>
                 <tr>
                   <th>Development</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep16" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="devDateStart"
+                    />
                   </th>
                   <th>
-                    <Field className="form-control" type="date" name="dep17" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="devDateEnd"
+                    />
                   </th>
                   <th></th>
                   <th></th>
@@ -72,33 +100,49 @@ const AdvancedSeasonTable = () => {
                 <tr>
                   <th>Mid-season</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep18" />
-                  </th>
-                  <th>
-                    <Field className="form-control" type="date" name="dep19" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="midDateStart"
+                    />
                   </th>
                   <th>
                     <Field
                       className="form-control"
-                      type="number"
-                      name="dep20"
+                      type="date"
+                      name="midDateEnd"
                     />
                   </th>
                   <th>
                     <Field
                       className="form-control"
                       type="number"
-                      name="dep21"
+                      name="midKC"
+                    />
+                  </th>
+                  <th>
+                    <Field
+                      className="form-control"
+                      type="number"
+                      name="midCropHeight"
                     />
                   </th>
                 </tr>
                 <tr>
                   <th>Late season</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep22" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="lateDateStart"
+                    />
                   </th>
                   <th>
-                    <Field className="form-control" type="date" name="dep23" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="lateDateEnd"
+                    />
                   </th>
                   <th></th>
                   <th></th>
@@ -106,10 +150,18 @@ const AdvancedSeasonTable = () => {
                 <tr>
                   <th>Harvest date</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep32" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="harvestDateStart"
+                    />
                   </th>
                   <th>
-                    <Field className="form-control" type="date" name="dep24" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="harvestDateEnd"
+                    />
                   </th>
                   <th></th>
                   <th></th>
@@ -118,10 +170,18 @@ const AdvancedSeasonTable = () => {
                 <tr>
                   <th>Soil Freeze</th>
                   <th>
-                    <Field className="form-control" type="date" name="dep26" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="soilDateStart"
+                    />
                   </th>
                   <th>
-                    <Field className="form-control" type="date" name="dep27" />
+                    <Field
+                      className="form-control"
+                      type="date"
+                      name="soilDateEnd"
+                    />
                   </th>
                   <th></th>
                   <th></th>

@@ -16,7 +16,7 @@ import AdvancedSeasonTable from './AdvancedSeasonTable';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 
 const AdvancedSettings = props => {
-  const { unitType } = props;
+  const { unitType, fieldState } = props;
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
   const toggle = () => {
@@ -168,7 +168,7 @@ const AdvancedSettings = props => {
                 </Row>
               </Col>
             </Row>
-            <AdvancedSeasonTable />
+            <AdvancedSeasonTable fieldState={fieldState} unitType={unitType} />
             <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
                 <AdvancedLabel
@@ -177,7 +177,13 @@ const AdvancedSettings = props => {
                 >
                   <input className="form-control" name="dep29" type="file" />
                 </AdvancedLabel>
-                <a href="#">Download template input file</a>
+                <a
+                  href="https://drainage.agriculture.purdue.edu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download template input file
+                </a>
               </Col>
             </Row>
           </Container>

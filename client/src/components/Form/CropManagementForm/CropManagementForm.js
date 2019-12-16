@@ -10,7 +10,7 @@ import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 import UnitGroup from '../UnitGroup';
 
 const CropManagementForm = props => {
-  const { errors, touched, values, unitType } = props;
+  const { errors, touched, values, unitType, fieldState } = props;
 
   return (
     <Container>
@@ -70,7 +70,7 @@ const CropManagementForm = props => {
       <Row>
         <Col className="text-center mb-4">
           <FormCard label="Show crop growth and other advanced inputs">
-            <AdvancedSettingsForm unitType={unitType} />
+            <AdvancedSettingsForm unitType={unitType} fieldState={fieldState} />
           </FormCard>
         </Col>
       </Row>

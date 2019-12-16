@@ -106,6 +106,7 @@ const FormContainer = props => {
                   touched={touched}
                   values={values}
                   unitType={unitType}
+                  fieldState={fieldState}
                 />
               </Col>
             </Row>
