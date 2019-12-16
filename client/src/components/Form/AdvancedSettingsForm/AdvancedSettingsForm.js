@@ -15,11 +15,34 @@ import AdvancedLabel from './AdvancedLabel';
 import AdvancedSeasonTable from './AdvancedSeasonTable';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 
+import { usePrevious } from '../../../custom/customHooks';
+
+import { updateCropFields } from '../CropManagementForm/updateCropFields';
+
 const AdvancedSettings = props => {
-  const { unitType, fieldState } = props;
+  const {
+    unitType,
+    fieldState,
+    values,
+    setFieldValue,
+    setFieldTouched
+  } = props;
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
+  const prevState = usePrevious(fieldState);
+
   const toggle = () => {
+    // update growing season dates if the state has changed
+    if (!modal) {
+      if (prevState && fieldState !== prevState) {
+        updateCropFields(
+          { setFieldValue, setFieldTouched },
+          values.cropSelection,
+          unitType,
+          fieldState
+        );
+      }
+    }
     toggleModal(!modal);
   };
 

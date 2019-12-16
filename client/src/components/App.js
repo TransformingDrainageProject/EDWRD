@@ -9,7 +9,7 @@ import Footer from './Footer';
 
 const App = () => {
   const [unitType, setUnitType] = useState('us');
-  const [fieldState, updateFieldState] = useState('IL');
+  const [fieldState, updateFieldState] = useState('il');
 
   return (
     <div className="container-fluid">

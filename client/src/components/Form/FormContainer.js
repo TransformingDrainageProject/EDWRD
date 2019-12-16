@@ -105,6 +105,8 @@ const FormContainer = props => {
                   errors={errors}
                   touched={touched}
                   values={values}
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                   unitType={unitType}
                   fieldState={fieldState}
                 />

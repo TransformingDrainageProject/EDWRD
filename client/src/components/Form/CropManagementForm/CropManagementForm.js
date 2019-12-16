@@ -9,8 +9,31 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 import UnitGroup from '../UnitGroup';
 
+import { updateCropFields } from './updateCropFields';
+
 const CropManagementForm = props => {
-  const { errors, touched, values, unitType, fieldState } = props;
+  const {
+    errors,
+    touched,
+    values,
+    setFieldValue,
+    setFieldTouched,
+    unitType,
+    fieldState
+  } = props;
+
+  function cropTypeOnChange(e) {
+    // update crop type field
+    setFieldValue('cropSelection', e.target.value);
+    setFieldTouched('cropSelection', true);
+    // update fields dependent on crop type in adv. settings
+    updateCropFields(
+      { setFieldValue, setFieldTouched },
+      e.target.value,
+      unitType,
+      fieldState
+    );
+  }
 
   return (
     <Container>
@@ -29,12 +52,14 @@ const CropManagementForm = props => {
                 name="cropSelection"
                 id="corn"
                 label="Corn"
+                onChange={cropTypeOnChange}
               />
               <Field
                 component={RadioButton}
                 name="cropSelection"
                 id="soybean"
                 label="Soybean"
+                onChange={cropTypeOnChange}
               />
             </RadioButtonGroup>
             <ErrorMessage name="cropSelection" />
@@ -70,7 +95,13 @@ const CropManagementForm = props => {
       <Row>
         <Col className="text-center mb-4">
           <FormCard label="Show crop growth and other advanced inputs">
-            <AdvancedSettingsForm unitType={unitType} fieldState={fieldState} />
+            <AdvancedSettingsForm
+              values={values}
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              unitType={unitType}
+              fieldState={fieldState}
+            />
           </FormCard>
         </Col>
       </Row>

@@ -20,8 +20,6 @@ const midDateEnd = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
 const lateDateStart = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
 const lateDateEnd = new Date(year, 9, 14);
 
-console.log(createDateString(plantDateStart));
-
 export const advUSInitialValues = {
   rew: 0.4,
   rseep: 0.04,

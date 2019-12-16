@@ -3,7 +3,7 @@ import { Field } from 'formik';
 import { Col, Row, Table } from 'reactstrap';
 
 const AdvancedSeasonTable = props => {
-  const { fieldState, unitType } = props;
+  const { unitType } = props;
 
   return (
     <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>

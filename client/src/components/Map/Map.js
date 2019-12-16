@@ -36,7 +36,7 @@ const Map = props => {
         }
       })
       .then(response => {
-        updateFieldState(response.data.results);
+        updateFieldState(response.data.results.trim().toLowerCase());
       })
       .catch(error => {
         console.log(error);
