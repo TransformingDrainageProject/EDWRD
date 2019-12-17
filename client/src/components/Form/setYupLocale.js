@@ -1,6 +1,12 @@
 import { setLocale } from 'yup';
 
+import { createDateString } from './utils/dateUtils';
+
 export default setLocale({
+  date: {
+    min: ({ min }) => `Must pick date on or after ${createDateString(min)}`,
+    max: ({ max }) => `Must pick date on or before ${createDateString(max)}`,
+  },
   mixed: {
     default: 'Invalid value',
     required: 'Required field',
@@ -15,12 +21,12 @@ export default setLocale({
         default:
           return 'Invalid value';
       }
-    }
+    },
   },
   number: {
     min: ({ min }) => `Must be greater than or equal to ${min}`,
     max: ({ max }) => `Must be less than or equal to ${max}`,
     moreThan: ({ more }) => `Must be more than ${more}`,
-    positive: 'Must be greater than zero'
-  }
+    positive: 'Must be greater than zero',
+  },
 });

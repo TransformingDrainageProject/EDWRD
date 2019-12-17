@@ -19,6 +19,8 @@ const midDateStart = new Date(year, 4, 7 + 30 + 40 + 50);
 const midDateEnd = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
 const lateDateStart = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
 const lateDateEnd = new Date(year, 9, 14);
+const harvestDateStart = new Date(year, 9, 14);
+const harvestDateEnd = new Date(year, 9, 14);
 
 export const advUSInitialValues = {
   rew: 0.4,
@@ -41,7 +43,9 @@ export const advUSInitialValues = {
   midKC: 1.15,
   midCropHeight: 6.6,
   lateDateStart: createDateString(lateDateStart),
-  lateDateEnd: createDateString(lateDateEnd)
+  lateDateEnd: createDateString(lateDateEnd),
+  harvestDateStart: createDateString(harvestDateStart),
+  harvestDateEnd: createDateString(harvestDateEnd),
 };
 
 export const advMetricInitialValues = {
@@ -65,5 +69,7 @@ export const advMetricInitialValues = {
   midKC: 1.15,
   midCropHeight: 2.01,
   lateDateStart: createDateString(lateDateStart),
-  lateDateEnd: createDateString(lateDateEnd)
+  lateDateEnd: createDateString(lateDateEnd),
+  harvestDateStart: createDateString(harvestDateStart),
+  harvestDateEnd: createDateString(harvestDateEnd),
 };

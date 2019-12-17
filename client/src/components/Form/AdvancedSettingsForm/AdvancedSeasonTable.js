@@ -2,6 +2,8 @@ import React from 'react';
 import { Field } from 'formik';
 import { Col, Row, Table } from 'reactstrap';
 
+import ErrorMessage from '../FormikComponents/ErrorMessage';
+
 const AdvancedSeasonTable = props => {
   const { unitType } = props;
 
@@ -36,6 +38,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="plantDateStart"
                     />
+                    <ErrorMessage name="plantDateStart" />
                   </th>
                   <th>
                     <Field
@@ -43,6 +46,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="plantDateEnd"
                     />
+                    <ErrorMessage name="plantDateEnd" />
                   </th>
                   <th></th>
                   <th></th>
@@ -55,6 +59,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="initDateStart"
                     />
+                    <ErrorMessage name="initDateStart" />
                   </th>
                   <th>
                     <Field
@@ -62,6 +67,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="initDateEnd"
                     />
+                    <ErrorMessage name="initDateEnd" />
                   </th>
                   <th>
                     <Field
@@ -69,6 +75,7 @@ const AdvancedSeasonTable = props => {
                       type="number"
                       name="initKC"
                     />
+                    <ErrorMessage name="initKC" />
                   </th>
                   <th>
                     <Field
@@ -76,6 +83,7 @@ const AdvancedSeasonTable = props => {
                       type="number"
                       name="initCropHeight"
                     />
+                    <ErrorMessage name="initCropHeight" />
                   </th>
                 </tr>
                 <tr>
@@ -86,6 +94,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="devDateStart"
                     />
+                    <ErrorMessage name="devDateStart" />
                   </th>
                   <th>
                     <Field
@@ -93,6 +102,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="devDateEnd"
                     />
+                    <ErrorMessage name="devDateEnd" />
                   </th>
                   <th></th>
                   <th></th>
@@ -105,6 +115,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="midDateStart"
                     />
+                    <ErrorMessage name="midDateStart" />
                   </th>
                   <th>
                     <Field
@@ -112,6 +123,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="midDateEnd"
                     />
+                    <ErrorMessage name="midDateEnd" />
                   </th>
                   <th>
                     <Field
@@ -119,6 +131,7 @@ const AdvancedSeasonTable = props => {
                       type="number"
                       name="midKC"
                     />
+                    <ErrorMessage name="midKC" />
                   </th>
                   <th>
                     <Field
@@ -126,6 +139,7 @@ const AdvancedSeasonTable = props => {
                       type="number"
                       name="midCropHeight"
                     />
+                    <ErrorMessage name="midCropHeight" />
                   </th>
                 </tr>
                 <tr>
@@ -136,6 +150,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="lateDateStart"
                     />
+                    <ErrorMessage name="lateDateStart" />
                   </th>
                   <th>
                     <Field
@@ -143,6 +158,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="lateDateEnd"
                     />
+                    <ErrorMessage name="lateDateEnd" />
                   </th>
                   <th></th>
                   <th></th>
@@ -155,6 +171,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="harvestDateStart"
                     />
+                    <ErrorMessage name="harvestDateStart" />
                   </th>
                   <th>
                     <Field
@@ -162,6 +179,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="harvestDateEnd"
                     />
+                    <ErrorMessage name="harvestDateEnd" />
                   </th>
                   <th></th>
                   <th></th>
@@ -175,6 +193,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="soilDateStart"
                     />
+                    <ErrorMessage name="soilDateStart" />
                   </th>
                   <th>
                     <Field
@@ -182,6 +201,7 @@ const AdvancedSeasonTable = props => {
                       type="date"
                       name="soilDateEnd"
                     />
+                    <ErrorMessage name="soilDateEnd" />
                   </th>
                   <th></th>
                   <th></th>
