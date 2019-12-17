@@ -1,37 +1,44 @@
-import React from "react";
-import { Col, Container, Row } from "reactstrap";
-import { Field } from "formik";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Col, Container, Row } from 'reactstrap';
+import { Field } from 'formik';
+import PropTypes from 'prop-types';
 
-import FormCard from "../FormCard";
-import AdvancedSettingsForm from "../AdvancedSettingsForm";
-import ErrorMessage from "../FormikComponents/ErrorMessage";
-import { RadioButton, RadioButtonGroup } from "../FormikComponents/RadioInput";
-import UnitGroup from "../UnitGroup";
+import FormCard from '../FormCard';
+import AdvancedSettingsForm from '../AdvancedSettingsForm';
+import ErrorMessage from '../FormikComponents/ErrorMessage';
+import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
+import UnitGroup from '../UnitGroup';
 
-import updateGrowingSeasonFields from "./updateGrowingSeasonFields";
+import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
+import updateKCandCropHeight from '../utils/updateKCandCropHeight';
 
 const CropManagementForm = props => {
   const {
     errors,
-    touched,
-    values,
-    setFieldValue,
+    fieldState,
     setFieldTouched,
+    setFieldValue,
+    touched,
     unitType,
-    fieldState
+    values,
   } = props;
 
   function cropTypeOnChange(e) {
     // update crop type field
-    setFieldValue("cropSelection", e.target.value);
-    setFieldTouched("cropSelection", true);
-    // update fields dependent on crop type in adv. settings
+    setFieldValue('cropSelection', e.target.value);
+    setFieldTouched('cropSelection', true);
+    // update growing seasons date fields in adv. settings
     updateGrowingSeasonFields(
       { setFieldValue, setFieldTouched },
       e.target.value,
       unitType,
       fieldState
+    );
+    // update growing seasons kc and crop height fields in adv. settings
+    updateKCandCropHeight(
+      { setFieldValue, setFieldTouched },
+      e.target.value,
+      unitType
     );
   }
 
@@ -111,9 +118,12 @@ const CropManagementForm = props => {
 
 CropManagementForm.propTypes = {
   errors: PropTypes.object,
+  fieldState: PropTypes.string,
+  setFieldTouched: PropTypes.func,
+  setFieldValue: PropTypes.func,
   touched: PropTypes.object,
+  unitType: PropTypes.string,
   values: PropTypes.object,
-  unitType: PropTypes.string
 };
 
 export default CropManagementForm;

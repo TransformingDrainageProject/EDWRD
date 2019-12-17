@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Field } from "formik";
+import React, { useState } from 'react';
+import { Field } from 'formik';
 import {
   Button,
   Col,
@@ -7,17 +7,17 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
-  Row
-} from "reactstrap";
-import PropTypes from "prop-types";
+  Row,
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
-import AdvancedLabel from "./AdvancedLabel";
-import AdvancedSeasonTable from "./AdvancedSeasonTable";
-import ErrorMessage from "../FormikComponents/ErrorMessage";
+import AdvancedLabel from './AdvancedLabel';
+import AdvancedSeasonTable from './AdvancedSeasonTable';
+import ErrorMessage from '../FormikComponents/ErrorMessage';
 
-import { usePrevious } from "../../../utils/customHooks";
+import { usePrevious } from '../../../utils/customHooks';
 
-import updateGrowingSeasonFields from "../CropManagementForm/updateGrowingSeasonFields";
+import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 
 const AdvancedSettings = props => {
   const {
@@ -25,7 +25,7 @@ const AdvancedSettings = props => {
     setFieldTouched,
     setFieldValue,
     unitType,
-    values
+    values,
   } = props;
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
@@ -49,7 +49,7 @@ const AdvancedSettings = props => {
   return (
     <div>
       <Button
-        style={{ backgroundColor: "#edb229", height: "75px" }}
+        style={{ backgroundColor: '#edb229', height: '75px' }}
         size="lg"
         onClick={toggle}
       >
@@ -59,7 +59,7 @@ const AdvancedSettings = props => {
         <ModalHeader toggle={toggle}>Advanced Settings</ModalHeader>
         <ModalBody>
           <Container>
-            <Row className="mb-3" style={{ border: "1px solid #c8ced5" }}>
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
                 <Row>
                   <Col>
@@ -88,7 +88,7 @@ const AdvancedSettings = props => {
                 </Row>
               </Col>
             </Row>
-            <Row className="mb-3" style={{ border: "1px solid #c8ced5" }}>
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
                 <Row>
                   <Col>
@@ -192,7 +192,7 @@ const AdvancedSettings = props => {
               </Col>
             </Row>
             <AdvancedSeasonTable fieldState={fieldState} unitType={unitType} />
-            <Row className="mb-3" style={{ border: "1px solid #c8ced5" }}>
+            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
                 <AdvancedLabel
                   name="dep29"
@@ -221,7 +221,7 @@ AdvancedSettings.propTypes = {
   setFieldTouched: PropTypes.func,
   setFieldValue: PropTypes.func,
   unitType: PropTypes.string,
-  values: PropTypes.object
+  values: PropTypes.object,
 };
 
 export default AdvancedSettings;

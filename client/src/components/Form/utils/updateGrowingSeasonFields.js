@@ -1,8 +1,8 @@
 import {
   GROWING_DATES,
   CORN_DATE_RANGES,
-  SOYBEAN_DATE_RANGES
-} from "./growingSeasonsConstants";
+  SOYBEAN_DATE_RANGES,
+} from './constants';
 
 /**
  * addToDate - Add n days to date.
@@ -23,11 +23,11 @@ function addToDate(date, days) {
  */
 function createDateString(date) {
   const year = date.getFullYear().toString();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date
     .getDate()
     .toString()
-    .padStart(2, "0");
+    .padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
@@ -40,24 +40,24 @@ function createDateString(date) {
  */
 function getGrowingSeasons(dateRange, days) {
   return [
-    { name: "plantDateStart", value: dateRange.start },
-    { name: "plantDateEnd", value: addToDate(dateRange.start, days.init) },
+    { name: 'plantDateStart', value: dateRange.start },
+    { name: 'plantDateEnd', value: addToDate(dateRange.start, days.init) },
     {
-      name: "initDateStart",
-      value: addToDate(dateRange.start, days.init)
+      name: 'initDateStart',
+      value: addToDate(dateRange.start, days.init),
     },
-    { name: "initDateEnd", value: addToDate(dateRange.start, days.dev) },
-    { name: "devDateStart", value: addToDate(dateRange.start, days.dev) },
-    { name: "devDateEnd", value: addToDate(dateRange.start, days.mid) },
-    { name: "midDateStart", value: addToDate(dateRange.start, days.mid) },
-    { name: "midDateEnd", value: addToDate(dateRange.start, days.late) },
+    { name: 'initDateEnd', value: addToDate(dateRange.start, days.dev) },
+    { name: 'devDateStart', value: addToDate(dateRange.start, days.dev) },
+    { name: 'devDateEnd', value: addToDate(dateRange.start, days.mid) },
+    { name: 'midDateStart', value: addToDate(dateRange.start, days.mid) },
+    { name: 'midDateEnd', value: addToDate(dateRange.start, days.late) },
     {
-      name: "lateDateStart",
-      value: addToDate(dateRange.start, days.late)
+      name: 'lateDateStart',
+      value: addToDate(dateRange.start, days.late),
     },
-    { name: "lateDateEnd", value: dateRange.end },
-    { name: "harvestDateStart", value: dateRange.end },
-    { name: "harvestDateEnd", value: dateRange.end }
+    { name: 'lateDateEnd', value: dateRange.end },
+    { name: 'harvestDateStart', value: dateRange.end },
+    { name: 'harvestDateEnd', value: dateRange.end },
   ];
 }
 
@@ -69,11 +69,11 @@ function getGrowingSeasons(dateRange, days) {
  * @param  {String} cropType   Type of crop - corn or soybean
  * @param  {String} unitType   Selected unit system - us or metric
  * @param  {String} fieldState Selected state (e.g. 'in' for Indiana)
- * @return {type}              None
+ * @return {Boolean}           Returns true if succeeds, false otherwise
  */
 function updateGrowingSeasonFields(actions, cropType, unitType, fieldState) {
   try {
-    const days = cropType === "corn" ? CORN_DATE_RANGES : SOYBEAN_DATE_RANGES;
+    const days = cropType === 'corn' ? CORN_DATE_RANGES : SOYBEAN_DATE_RANGES;
     let dateRange = GROWING_DATES[fieldState];
 
     getGrowingSeasons(dateRange, days).forEach(field => {
