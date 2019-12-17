@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Field } from 'formik';
+import React, { useState } from "react";
+import { Field } from "formik";
 import {
   Button,
   Col,
@@ -8,24 +8,24 @@ import {
   ModalBody,
   ModalHeader,
   Row
-} from 'reactstrap';
-import PropTypes from 'prop-types';
+} from "reactstrap";
+import PropTypes from "prop-types";
 
-import AdvancedLabel from './AdvancedLabel';
-import AdvancedSeasonTable from './AdvancedSeasonTable';
-import ErrorMessage from '../FormikComponents/ErrorMessage';
+import AdvancedLabel from "./AdvancedLabel";
+import AdvancedSeasonTable from "./AdvancedSeasonTable";
+import ErrorMessage from "../FormikComponents/ErrorMessage";
 
-import { usePrevious } from '../../../custom/customHooks';
+import { usePrevious } from "../../../utils/customHooks";
 
-import { updateCropFields } from '../CropManagementForm/updateCropFields';
+import updateGrowingSeasonFields from "../CropManagementForm/updateGrowingSeasonFields";
 
 const AdvancedSettings = props => {
   const {
-    unitType,
     fieldState,
-    values,
+    setFieldTouched,
     setFieldValue,
-    setFieldTouched
+    unitType,
+    values
   } = props;
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
@@ -35,7 +35,7 @@ const AdvancedSettings = props => {
     // update growing season dates if the state has changed
     if (!modal) {
       if (prevState && fieldState !== prevState) {
-        updateCropFields(
+        updateGrowingSeasonFields(
           { setFieldValue, setFieldTouched },
           values.cropSelection,
           unitType,
@@ -49,7 +49,7 @@ const AdvancedSettings = props => {
   return (
     <div>
       <Button
-        style={{ backgroundColor: '#edb229', height: '75px' }}
+        style={{ backgroundColor: "#edb229", height: "75px" }}
         size="lg"
         onClick={toggle}
       >
@@ -59,7 +59,7 @@ const AdvancedSettings = props => {
         <ModalHeader toggle={toggle}>Advanced Settings</ModalHeader>
         <ModalBody>
           <Container>
-            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+            <Row className="mb-3" style={{ border: "1px solid #c8ced5" }}>
               <Col>
                 <Row>
                   <Col>
@@ -88,7 +88,7 @@ const AdvancedSettings = props => {
                 </Row>
               </Col>
             </Row>
-            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+            <Row className="mb-3" style={{ border: "1px solid #c8ced5" }}>
               <Col>
                 <Row>
                   <Col>
@@ -192,7 +192,7 @@ const AdvancedSettings = props => {
               </Col>
             </Row>
             <AdvancedSeasonTable fieldState={fieldState} unitType={unitType} />
-            <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
+            <Row className="mb-3" style={{ border: "1px solid #c8ced5" }}>
               <Col>
                 <AdvancedLabel
                   name="dep29"
@@ -217,7 +217,11 @@ const AdvancedSettings = props => {
 };
 
 AdvancedSettings.propTypes = {
-  unitType: PropTypes.string
+  fieldState: PropTypes.string,
+  setFieldTouched: PropTypes.func,
+  setFieldValue: PropTypes.func,
+  unitType: PropTypes.string,
+  values: PropTypes.object
 };
 
 export default AdvancedSettings;

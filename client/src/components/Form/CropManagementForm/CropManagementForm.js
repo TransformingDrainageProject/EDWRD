@@ -1,15 +1,15 @@
-import React from 'react';
-import { Col, Container, Row } from 'reactstrap';
-import { Field } from 'formik';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
+import { Field } from "formik";
+import PropTypes from "prop-types";
 
-import FormCard from '../FormCard';
-import AdvancedSettingsForm from '../AdvancedSettingsForm';
-import ErrorMessage from '../FormikComponents/ErrorMessage';
-import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
-import UnitGroup from '../UnitGroup';
+import FormCard from "../FormCard";
+import AdvancedSettingsForm from "../AdvancedSettingsForm";
+import ErrorMessage from "../FormikComponents/ErrorMessage";
+import { RadioButton, RadioButtonGroup } from "../FormikComponents/RadioInput";
+import UnitGroup from "../UnitGroup";
 
-import { updateCropFields } from './updateCropFields';
+import updateGrowingSeasonFields from "./updateGrowingSeasonFields";
 
 const CropManagementForm = props => {
   const {
@@ -24,10 +24,10 @@ const CropManagementForm = props => {
 
   function cropTypeOnChange(e) {
     // update crop type field
-    setFieldValue('cropSelection', e.target.value);
-    setFieldTouched('cropSelection', true);
+    setFieldValue("cropSelection", e.target.value);
+    setFieldTouched("cropSelection", true);
     // update fields dependent on crop type in adv. settings
-    updateCropFields(
+    updateGrowingSeasonFields(
       { setFieldValue, setFieldTouched },
       e.target.value,
       unitType,
