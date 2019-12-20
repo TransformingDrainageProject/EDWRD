@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "stations_with_precompiled_data",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Latitude": 42.19672, "Longitude": -93.5975 }, "geometry": { "type": "Point", "coordinates": [ -93.5975, 42.19672 ] } },
+{ "type": "Feature", "properties": { "Latitude": 39.79139, "Longitude": -88.18556 }, "geometry": { "type": "Point", "coordinates": [ -88.18556, 39.79139 ] } },
+{ "type": "Feature", "properties": { "Latitude": 40.499336, "Longitude": -86.997403 }, "geometry": { "type": "Point", "coordinates": [ -86.997403, 40.499336 ] } },
+{ "type": "Feature", "properties": { "Latitude": 44.074114, "Longitude": -93.52249 }, "geometry": { "type": "Point", "coordinates": [ -93.52249, 44.074114 ] } },
+{ "type": "Feature", "properties": { "Latitude": 40.266111, "Longitude": -85.159936 }, "geometry": { "type": "Point", "coordinates": [ -85.159936, 40.266111 ] } },
+{ "type": "Feature", "properties": { "Latitude": 41.193683, "Longitude": -91.483293 }, "geometry": { "type": "Point", "coordinates": [ -91.483293, 41.193683 ] } }
+]
+}
