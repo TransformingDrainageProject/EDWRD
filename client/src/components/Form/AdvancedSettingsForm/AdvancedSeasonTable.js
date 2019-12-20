@@ -74,6 +74,7 @@ const AdvancedSeasonTable = props => {
                       className="form-control"
                       type="number"
                       name="initKC"
+                      step="0.05"
                     />
                     <ErrorMessage name="initKC" />
                   </th>
@@ -82,6 +83,7 @@ const AdvancedSeasonTable = props => {
                       className="form-control"
                       type="number"
                       name="initCropHeight"
+                      step="0.1"
                     />
                     <ErrorMessage name="initCropHeight" />
                   </th>
@@ -130,6 +132,7 @@ const AdvancedSeasonTable = props => {
                       className="form-control"
                       type="number"
                       name="midKC"
+                      step="0.05"
                     />
                     <ErrorMessage name="midKC" />
                   </th>
@@ -138,6 +141,7 @@ const AdvancedSeasonTable = props => {
                       className="form-control"
                       type="number"
                       name="midCropHeight"
+                      step="0.1"
                     />
                     <ErrorMessage name="midCropHeight" />
                   </th>

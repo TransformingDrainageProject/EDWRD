@@ -4,7 +4,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 const Checkbox = ({ field, type, label, showHelp }) => (
-  <div className="form-check">
+  <div className="form-check mt-2">
     <input
       className="form-check-input"
       {...field}
@@ -24,7 +24,7 @@ Checkbox.propTypes = {
   field: PropTypes.object,
   type: PropTypes.string,
   label: PropTypes.string,
-  showHelp: PropTypes.bool
+  showHelp: PropTypes.bool,
 };
 
 export default Checkbox;

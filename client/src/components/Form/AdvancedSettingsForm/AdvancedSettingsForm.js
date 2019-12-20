@@ -145,10 +145,7 @@ const AdvancedSettings = props => {
                 </Row>
                 <Row>
                   <Col>
-                    <AdvancedLabel
-                      name="zefc"
-                      text="Soil surface field capacity"
-                    >
+                    <AdvancedLabel name="zefc" text="Surface field capacity">
                       <Field
                         className="form-control"
                         type="number"
@@ -159,10 +156,7 @@ const AdvancedSettings = props => {
                     <ErrorMessage name="zefc" />
                   </Col>
                   <Col>
-                    <AdvancedLabel
-                      name="zewp"
-                      text="Soil surface wilting point"
-                    >
+                    <AdvancedLabel name="zewp" text="Surface wilting point">
                       <Field
                         className="form-control"
                         type="number"

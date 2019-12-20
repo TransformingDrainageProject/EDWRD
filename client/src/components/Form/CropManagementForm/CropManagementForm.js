@@ -93,7 +93,7 @@ const CropManagementForm = props => {
               className="form-control"
               type="number"
               name="pfact"
-              step="0.1"
+              step="0.05"
             />
             <ErrorMessage name="pfact" />
           </FormCard>

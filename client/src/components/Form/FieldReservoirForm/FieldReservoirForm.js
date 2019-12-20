@@ -132,7 +132,7 @@ const FieldReservoirForm = props => {
 };
 
 FieldReservoirForm.propTypes = {
-  unitType: PropTypes.string
+  unitType: PropTypes.string,
 };
 
 export default FieldReservoirForm;
