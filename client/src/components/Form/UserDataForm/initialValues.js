@@ -1,7 +1,7 @@
 export const userUSInitialValues = {
-  userData: 'false'
+  userData: 'true',
 };
 
 export const userMetricInitialValues = {
-  userData: 'false'
+  userData: 'true',
 };

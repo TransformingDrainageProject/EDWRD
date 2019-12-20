@@ -10,12 +10,12 @@ const Map = props => {
   const origin = {
     latitude: 41.8781,
     longitude: -87.6298,
-    zoom: 6
+    zoom: 6,
   };
-  const { updateFieldState } = props;
+  const { type, updateFieldState } = props;
   const [markerPosition, updateMarkerPosition] = useState([
     origin.latitude,
-    origin.longitude
+    origin.longitude,
   ]);
   const refMarker = useRef(<Marker />);
 
@@ -32,8 +32,8 @@ const Map = props => {
       .get('/api/geocode', {
         params: {
           lat: coords.lat,
-          lon: coords.lng
-        }
+          lon: coords.lng,
+        },
       })
       .then(response => {
         updateFieldState(response.data.results.trim().toLowerCase());
@@ -49,12 +49,14 @@ const Map = props => {
         center={[origin.latitude, origin.longitude]}
         zoom={origin.zoom}
       >
-        <Marker
-          ref={refMarker}
-          position={markerPosition}
-          draggable={true}
-          onDragend={onDragend}
-        />
+        {type === 'selectFieldLocation' ? (
+          <Marker
+            ref={refMarker}
+            position={markerPosition}
+            draggable={true}
+            onDragend={onDragend}
+          />
+        ) : null}
         <GeoJSON
           data={regionalGrid}
           style={() => {
@@ -71,7 +73,8 @@ const Map = props => {
 };
 
 Map.propTypes = {
-  updateFieldState: PropTypes.func
+  type: PropTypes.string,
+  updateFieldState: PropTypes.func,
 };
 
 export default Map;

@@ -15,7 +15,10 @@ const App = () => {
     <div className="container-fluid">
       <Header />
       <Introduction setUnitType={setUnitType} unitType={unitType} />
-      <MapContainer updateFieldState={updateFieldState} />
+      <MapContainer
+        updateFieldState={updateFieldState}
+        type="selectFieldLocation"
+      />
       <FormContainer fieldState={fieldState} unitType={unitType} />
       <Footer />
     </div>

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Col, Container, Row } from 'reactstrap';
+import { Button, Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
+import MapContainer from '../../Map/MapContainer';
+import UserDataFileUpload from './UserDataFileUpload';
 import FormCard from '../FormCard';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
@@ -39,7 +41,13 @@ const UserDataForm = props => {
                 </RadioButtonGroup>
                 <ErrorMessage name="userData" />
               </Col>
-              <Col md="8"></Col>
+              <Col md="8">
+                {values.userData === 'true' ? (
+                  <UserDataFileUpload />
+                ) : (
+                  <MapContainer type="selectStationLocation" />
+                )}
+              </Col>
             </Row>
           </FormCard>
         </Col>
@@ -51,7 +59,7 @@ const UserDataForm = props => {
 UserDataForm.propTypes = {
   errors: PropTypes.object,
   touched: PropTypes.object,
-  values: PropTypes.object
+  values: PropTypes.object,
 };
 
 export default UserDataForm;
