@@ -86,8 +86,8 @@ export const advancedSettingsFormSchema = yup.object().shape({
     .required(),
   harvestDateStart: yup
     .date()
-    .min(yup.ref('lateDateEnd'))
-    .max(yup.ref('harvestDateEnd'))
+    .min(yup.ref('lateDateEnd'), 'Must match late season end date')
+    .max(yup.ref('lateDateEnd'), 'Must match late season end date')
     .required(),
   harvestDateEnd: yup
     .date()
