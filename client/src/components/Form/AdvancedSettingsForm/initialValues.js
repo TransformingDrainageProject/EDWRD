@@ -8,6 +8,7 @@ function createDateString(date) {
   return `${year}-${month}-${day}`;
 }
 
+// Default dates for Illinois (default map marker location)
 const year = new Date().getFullYear();
 const plantDateStart = new Date(year, 4, 7);
 const plantDateEnd = new Date(year, 4, 7 + 30);
@@ -20,7 +21,8 @@ const midDateEnd = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
 const lateDateStart = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
 const lateDateEnd = new Date(year, 9, 14);
 const harvestDateStart = new Date(year, 9, 14);
-const harvestDateEnd = new Date(year, 9, 14);
+const soilDateStart = new Date(year, 0, 1 + 86.998985);
+const soilDateEnd = new Date(year, 0, 1 + 311.46277);
 
 export const advUSInitialValues = {
   rew: 0.4,
@@ -45,7 +47,8 @@ export const advUSInitialValues = {
   lateDateStart: createDateString(lateDateStart),
   lateDateEnd: createDateString(lateDateEnd),
   harvestDateStart: createDateString(harvestDateStart),
-  harvestDateEnd: createDateString(harvestDateEnd),
+  soilDateStart: createDateString(soilDateStart),
+  soilDateEnd: createDateString(soilDateEnd),
 };
 
 export const advMetricInitialValues = {
@@ -71,5 +74,6 @@ export const advMetricInitialValues = {
   lateDateStart: createDateString(lateDateStart),
   lateDateEnd: createDateString(lateDateEnd),
   harvestDateStart: createDateString(harvestDateStart),
-  harvestDateEnd: createDateString(harvestDateEnd),
+  soilDateStart: createDateString(soilDateStart),
+  soilDateEnd: createDateString(soilDateEnd),
 };

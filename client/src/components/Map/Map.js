@@ -26,15 +26,17 @@ const customMarkerIconSelected = divIcon({
 });
 
 const Map = props => {
-  const origin = {
-    latitude: 41.8781,
-    longitude: -87.6298,
-    zoom: 6,
-  };
-  const { type, updateFieldState, selectedSite, setSelectedSite } = props;
+  const {
+    origin,
+    type,
+    updateFieldState,
+    updateFrzThwDates,
+    selectedSite,
+    setSelectedSite,
+  } = props;
   const [markerPosition, updateMarkerPosition] = useState([
-    origin.latitude,
-    origin.longitude,
+    origin.lat,
+    origin.lon,
   ]);
   const refMarker = useRef(<Marker />);
 
@@ -60,6 +62,24 @@ const Map = props => {
       .catch(error => {
         console.log(error);
       });
+    // use marker coordinates to find freeze and thaw dates
+    axios
+      .get('/api/get_freeze_and_thaw', {
+        params: {
+          lat: coords.lat,
+          lon: coords.lng,
+        },
+      })
+      .then(response => {
+        let results = response.data.results;
+        updateFrzThwDates({
+          freeze: parseFloat(results.freeze),
+          thaw: parseFloat(results.thaw),
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   function onPrecompiledStationClick(e) {
@@ -78,10 +98,7 @@ const Map = props => {
 
   return (
     <div className="container">
-      <LeafletMap
-        center={[origin.latitude, origin.longitude]}
-        zoom={origin.zoom}
-      >
+      <LeafletMap center={[origin.lat, origin.lon]} zoom={origin.zoom}>
         {type === 'selectFieldLocation' ? (
           <Marker
             ref={refMarker}

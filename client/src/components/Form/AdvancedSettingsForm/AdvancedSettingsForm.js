@@ -22,6 +22,7 @@ import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 const AdvancedSettings = props => {
   const {
     fieldState,
+    frzThwDates,
     setFieldTouched,
     setFieldValue,
     unitType,
@@ -30,16 +31,22 @@ const AdvancedSettings = props => {
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
   const prevState = usePrevious(fieldState);
+  const prevFrzThwDates = usePrevious(frzThwDates);
 
   const toggle = () => {
     // update growing season dates if the state has changed
     if (!modal) {
-      if (prevState && fieldState !== prevState) {
+      if (
+        (prevState && fieldState !== prevState) ||
+        ((prevFrzThwDates && frzThwDates.freeze !== prevFrzThwDates.freeze) ||
+          frzThwDates.thaw !== prevFrzThwDates.thaw)
+      ) {
         updateGrowingSeasonFields(
           { setFieldValue, setFieldTouched },
           values.cropSelection,
           unitType,
-          fieldState
+          fieldState,
+          frzThwDates
         );
       }
     }
@@ -212,6 +219,10 @@ const AdvancedSettings = props => {
 
 AdvancedSettings.propTypes = {
   fieldState: PropTypes.string,
+  frzThwDates: PropTypes.shape({
+    freeze: PropTypes.number,
+    thaw: PropTypes.number,
+  }),
   setFieldTouched: PropTypes.func,
   setFieldValue: PropTypes.func,
   unitType: PropTypes.string,

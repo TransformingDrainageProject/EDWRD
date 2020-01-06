@@ -177,14 +177,7 @@ const AdvancedSeasonTable = props => {
                     />
                     <ErrorMessage name="harvestDateStart" />
                   </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="harvestDateEnd"
-                    />
-                    <ErrorMessage name="harvestDateEnd" />
-                  </th>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>

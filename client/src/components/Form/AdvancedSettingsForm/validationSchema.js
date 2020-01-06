@@ -89,10 +89,6 @@ export const advancedSettingsFormSchema = yup.object().shape({
     .min(yup.ref('lateDateEnd'), 'Must match late season end date')
     .max(yup.ref('lateDateEnd'), 'Must match late season end date')
     .required(),
-  harvestDateEnd: yup
-    .date()
-    .min(yup.ref('harvestDateEnd'))
-    .required(),
   initKC: yup
     .number()
     .positive()

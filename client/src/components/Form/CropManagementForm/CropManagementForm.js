@@ -16,6 +16,7 @@ const CropManagementForm = props => {
   const {
     errors,
     fieldState,
+    frzThwDates,
     setFieldTouched,
     setFieldValue,
     touched,
@@ -32,7 +33,8 @@ const CropManagementForm = props => {
       { setFieldValue, setFieldTouched },
       e.target.value,
       unitType,
-      fieldState
+      fieldState,
+      frzThwDates
     );
     // update growing seasons kc and crop height fields in adv. settings
     updateKCandCropHeight(
@@ -108,6 +110,7 @@ const CropManagementForm = props => {
               setFieldTouched={setFieldTouched}
               unitType={unitType}
               fieldState={fieldState}
+              frzThwDates={frzThwDates}
             />
           </FormCard>
         </Col>
@@ -119,6 +122,10 @@ const CropManagementForm = props => {
 CropManagementForm.propTypes = {
   errors: PropTypes.object,
   fieldState: PropTypes.string,
+  frzThwDates: PropTypes.shape({
+    freeze: PropTypes.number,
+    thaw: PropTypes.number,
+  }),
   setFieldTouched: PropTypes.func,
   setFieldValue: PropTypes.func,
   touched: PropTypes.object,

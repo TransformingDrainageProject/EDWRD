@@ -9,19 +9,19 @@ import UserDataForm from './UserDataForm';
 // initial values
 import {
   fieldMetricInitialValues,
-  fieldUSInitialValues
+  fieldUSInitialValues,
 } from './FieldReservoirForm/initialValues';
 import {
   cropMetricInitialValues,
-  cropUSInitialValues
+  cropUSInitialValues,
 } from './CropManagementForm/initialValues';
 import {
   advUSInitialValues,
-  advMetricInitialValues
+  advMetricInitialValues,
 } from './AdvancedSettingsForm/initialValues';
 import {
   userMetricInitialValues,
-  userUSInitialValues
+  userUSInitialValues,
 } from './UserDataForm/initialValues';
 // validation schemas
 import setYupLocale from './setYupLocale';
@@ -34,14 +34,14 @@ const metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
   ...userMetricInitialValues,
-  ...advMetricInitialValues
+  ...advMetricInitialValues,
 };
 
 const usInitialValues = {
   ...fieldUSInitialValues,
   ...cropUSInitialValues,
   ...userUSInitialValues,
-  ...advUSInitialValues
+  ...advUSInitialValues,
 };
 
 const validationSchema = fieldReservoirFormSchema
@@ -51,7 +51,7 @@ const validationSchema = fieldReservoirFormSchema
   .concat(advancedSettingsFormSchema);
 
 const FormContainer = props => {
-  const { fieldState, unitType } = props;
+  const { fieldState, frzThwDates, unitType } = props;
 
   return (
     <Container>
@@ -77,7 +77,7 @@ const FormContainer = props => {
           setFieldValue,
           setFieldTouched,
           touched,
-          values
+          values,
         }) => (
           <Form>
             <Row>
@@ -109,6 +109,7 @@ const FormContainer = props => {
                   setFieldTouched={setFieldTouched}
                   unitType={unitType}
                   fieldState={fieldState}
+                  frzThwDates={frzThwDates}
                 />
               </Col>
             </Row>
@@ -150,7 +151,11 @@ const FormContainer = props => {
 
 FormContainer.propTypes = {
   fieldState: PropTypes.string,
-  unitType: PropTypes.string
+  frzThwDates: PropTypes.shape({
+    freeze: PropTypes.number,
+    thaw: PropTypes.number,
+  }),
+  unitType: PropTypes.string,
 };
 
 export default FormContainer;
