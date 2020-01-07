@@ -15,7 +15,6 @@
     "concurrently": "^4.1.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-validator": "^6.2.0",
-    "react-dates": "^21.5.1"
+    "express-validator": "^6.2.0"
   }
 }
