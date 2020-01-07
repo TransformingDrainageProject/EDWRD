@@ -1,18 +1,31 @@
 import React from 'react';
 import { Field } from 'formik';
 import { Col, Row, Table } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+import DateRangePicker, { Arrow } from '../FormikComponents/DateRangePicker';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 
+import { STATES } from '../utils/constants';
+
 const AdvancedSeasonTable = props => {
-  const { unitType } = props;
+  const { fieldState, unitType } = props;
+
+  const startEndDateHeaderStyle = {
+    display: 'inline-block',
+    padding: '0 11px 0',
+    width: '130px',
+  };
 
   return (
     <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
       <Col>
         <Row>
           <Col>
-            <h4 className="text-center">Growing and Non-growing Seasons</h4>
+            <h4 className="text-center">
+              Growing and Non-growing Seasons - {STATES[fieldState]}
+            </h4>
           </Col>
         </Row>
         <Row>
@@ -21,8 +34,11 @@ const AdvancedSeasonTable = props => {
               <thead>
                 <tr>
                   <th></th>
-                  <th>Starting Date</th>
-                  <th>Ending Date</th>
+                  <th>
+                    <span style={startEndDateHeaderStyle}>Start Date</span>
+                    <Arrow />
+                    <span style={startEndDateHeaderStyle}>End Date</span>
+                  </th>
                   <th>Crop Coefficient</th>
                   <th>
                     Maximum Crop Height ({unitType === 'us' ? 'ft' : 'm'})
@@ -35,17 +51,10 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="plantDateStart"
+                      component={DateRangePicker}
+                      name="plantDate"
                     />
                     <ErrorMessage name="plantDateStart" />
-                  </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="plantDateEnd"
-                    />
                     <ErrorMessage name="plantDateEnd" />
                   </th>
                   <th></th>
@@ -56,17 +65,10 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="initDateStart"
+                      component={DateRangePicker}
+                      name="initDate"
                     />
                     <ErrorMessage name="initDateStart" />
-                  </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="initDateEnd"
-                    />
                     <ErrorMessage name="initDateEnd" />
                   </th>
                   <th>
@@ -93,17 +95,10 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="devDateStart"
+                      component={DateRangePicker}
+                      name="devDate"
                     />
                     <ErrorMessage name="devDateStart" />
-                  </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="devDateEnd"
-                    />
                     <ErrorMessage name="devDateEnd" />
                   </th>
                   <th></th>
@@ -114,17 +109,10 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="midDateStart"
+                      component={DateRangePicker}
+                      name="midDate"
                     />
                     <ErrorMessage name="midDateStart" />
-                  </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="midDateEnd"
-                    />
                     <ErrorMessage name="midDateEnd" />
                   </th>
                   <th>
@@ -151,17 +139,10 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="lateDateStart"
+                      component={DateRangePicker}
+                      name="lateDate"
                     />
                     <ErrorMessage name="lateDateStart" />
-                  </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="lateDateEnd"
-                    />
                     <ErrorMessage name="lateDateEnd" />
                   </th>
                   <th></th>
@@ -172,13 +153,12 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="harvestDateStart"
+                      component={DateRangePicker}
+                      name="harvestDate"
+                      disabled="endDate"
                     />
                     <ErrorMessage name="harvestDateStart" />
                   </th>
-                  <th></th>
-                  <th></th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -187,17 +167,10 @@ const AdvancedSeasonTable = props => {
                   <th>
                     <Field
                       className="form-control"
-                      type="date"
-                      name="soilDateStart"
+                      component={DateRangePicker}
+                      name="soilDate"
                     />
                     <ErrorMessage name="soilDateStart" />
-                  </th>
-                  <th>
-                    <Field
-                      className="form-control"
-                      type="date"
-                      name="soilDateEnd"
-                    />
                     <ErrorMessage name="soilDateEnd" />
                   </th>
                   <th></th>

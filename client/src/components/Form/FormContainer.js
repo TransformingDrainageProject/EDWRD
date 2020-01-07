@@ -30,6 +30,8 @@ import { cropManagementFormSchema } from './CropManagementForm/validationSchema'
 import { userDataFormSchema } from './UserDataForm/validationSchema';
 import { advancedSettingsFormSchema } from './AdvancedSettingsForm/validationSchema';
 
+import { Debug } from './utils/debug';
+
 const metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
@@ -142,6 +144,7 @@ const FormContainer = props => {
                 </Button>
               </Col>
             </Row>
+            <Debug />
           </Form>
         )}
       </Formik>

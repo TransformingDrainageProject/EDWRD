@@ -1,5 +1,6 @@
-import { addToDate, createDateString } from './dateUtils';
+import moment from 'moment';
 
+import { addToDate } from './dateUtils';
 import {
   GROWING_DATES,
   CORN_DATE_RANGES,
@@ -45,12 +46,13 @@ function getGrowingSeasons(dateRange, days) {
 function updateSoilFreezeAndThawDates(actions, frzThwDates) {
   try {
     const FIRST_OF_YEAR = new Date(new Date().getFullYear(), 0, 1);
-    const thawDate = addToDate(FIRST_OF_YEAR, frzThwDates.thaw);
+    const FIRST_OF_NEXT_YEAR = new Date(new Date().getFullYear() + 1, 0, 1);
+    const thawDate = addToDate(FIRST_OF_NEXT_YEAR, frzThwDates.thaw);
     const freezeDate = addToDate(FIRST_OF_YEAR, frzThwDates.freeze);
 
-    actions.setFieldValue('soilDateStart', createDateString(thawDate));
+    actions.setFieldValue('soilDateStart', moment(freezeDate));
     actions.setFieldTouched('soilDateStart');
-    actions.setFieldValue('soilDateEnd', createDateString(freezeDate));
+    actions.setFieldValue('soilDateEnd', moment(thawDate));
     actions.setFieldTouched('soilDateEnd');
   } catch (err) {
     console.log(err);
@@ -78,21 +80,24 @@ function updateGrowingSeasonFields(
   fieldState,
   frzThwDates
 ) {
-  try {
-    const days = cropType === 'corn' ? CORN_DATE_RANGES : SOYBEAN_DATE_RANGES;
-    let dateRange = GROWING_DATES[fieldState];
+  if (fieldState) {
+    try {
+      const days = cropType === 'corn' ? CORN_DATE_RANGES : SOYBEAN_DATE_RANGES;
+      let dateRange = GROWING_DATES[fieldState];
 
-    getGrowingSeasons(dateRange, days).forEach(field => {
-      actions.setFieldValue(field.name, createDateString(field.value));
-      actions.setFieldTouched(field.name, true);
-    });
+      getGrowingSeasons(dateRange, days).forEach(field => {
+        actions.setFieldValue(field.name, moment(field.value));
+        actions.setFieldTouched(field.name, true);
+      });
 
-    updateSoilFreezeAndThawDates(actions, frzThwDates);
-  } catch (err) {
-    console.log(err);
-    return false;
+      updateSoilFreezeAndThawDates(actions, frzThwDates);
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+    return true;
   }
-  return true;
+  return false;
 }
 
 export default updateGrowingSeasonFields;

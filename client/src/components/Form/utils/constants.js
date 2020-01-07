@@ -90,3 +90,19 @@ export const CROP_HEIGHT_FIELDS = [
     soybean: { us: 3.3, metric: 1.01 },
   },
 ];
+
+export const STATES = {
+  il: 'Illinois',
+  in: 'Indiana',
+  ia: 'Iowa',
+  ks: 'Kansas',
+  ky: 'Kentucky',
+  mi: 'Michigan',
+  mn: 'Minnesota',
+  mo: 'Missouri',
+  nb: 'Nebraska',
+  nd: 'North Dakota',
+  oh: 'Ohio',
+  sd: 'South Dakota',
+  wi: 'Wisconsin',
+};
