@@ -53,7 +53,7 @@ const validationSchema = fieldReservoirFormSchema
   .concat(advancedSettingsFormSchema);
 
 const FormContainer = props => {
-  const { fieldState, frzThwDates, unitType } = props;
+  const { origin, fieldState, frzThwDates, unitType } = props;
 
   return (
     <Container>
@@ -127,6 +127,7 @@ const FormContainer = props => {
               <Col>
                 <UserDataForm
                   errors={errors}
+                  origin={origin}
                   touched={touched}
                   values={values}
                 />
@@ -153,6 +154,11 @@ const FormContainer = props => {
 };
 
 FormContainer.propTypes = {
+  origin: PropTypes.shape({
+    lat: PropTypes.number,
+    lon: PropTypes.number,
+    zoom: PropTypes.number,
+  }),
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,

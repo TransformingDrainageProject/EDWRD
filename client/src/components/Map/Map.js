@@ -90,12 +90,6 @@ const Map = props => {
     setSelectedSite({ id: station.id, name: station.site_id });
   }
 
-  function onEachFeature(feature, layer) {}
-
-  function pointToLayer(feature, latlng) {
-    return customMarkerIcon;
-  }
-
   return (
     <div className="container">
       <LeafletMap center={[origin.lat, origin.lon]} zoom={origin.zoom}>
@@ -137,6 +131,11 @@ const Map = props => {
 };
 
 Map.propTypes = {
+  origin: PropTypes.shape({
+    lat: PropTypes.number,
+    lon: PropTypes.number,
+    zoom: PropTypes.number,
+  }),
   selectedSite: PropTypes.object,
   setSelectedSite: PropTypes.func,
   type: PropTypes.string,

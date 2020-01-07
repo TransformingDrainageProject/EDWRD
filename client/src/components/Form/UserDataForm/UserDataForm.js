@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container, Row } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 
 const UserDataForm = props => {
-  const { errors, touched, values } = props;
+  const { errors, origin, touched, values } = props;
 
   return (
     <Container>
@@ -45,7 +45,7 @@ const UserDataForm = props => {
                 {values.userData === 'true' ? (
                   <UserDataFileUpload />
                 ) : (
-                  <MapContainer type="selectStationLocation" />
+                  <MapContainer origin={origin} type="selectStationLocation" />
                 )}
               </Col>
             </Row>
@@ -58,6 +58,11 @@ const UserDataForm = props => {
 
 UserDataForm.propTypes = {
   errors: PropTypes.object,
+  origin: PropTypes.shape({
+    lat: PropTypes.number,
+    lon: PropTypes.number,
+    zoom: PropTypes.number,
+  }),
   touched: PropTypes.object,
   values: PropTypes.object,
 };

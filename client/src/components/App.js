@@ -72,6 +72,7 @@ const App = () => {
         type="selectFieldLocation"
       />
       <FormContainer
+        origin={ORIGIN}
         fieldState={fieldState}
         frzThwDates={frzThwDates}
         unitType={unitType}

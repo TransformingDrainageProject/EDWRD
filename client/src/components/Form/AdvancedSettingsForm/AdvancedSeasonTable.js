@@ -1,8 +1,6 @@
 import React from 'react';
 import { Field } from 'formik';
 import { Col, Row, Table } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import DateRangePicker, { Arrow } from '../FormikComponents/DateRangePicker';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
