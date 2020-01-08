@@ -34,12 +34,13 @@ const AdvancedSettings = props => {
   const prevFrzThwDates = usePrevious(frzThwDates);
 
   const toggle = () => {
-    // update growing season dates if the state has changed
-    if (!modal) {
+    // update growing season dates if the state or
+    // freeze and/or thaw dates have changed
+    if (!modal && prevState && prevFrzThwDates) {
       if (
-        (prevState && fieldState !== prevState) ||
-        ((prevFrzThwDates && frzThwDates.freeze !== prevFrzThwDates.freeze) ||
-          frzThwDates.thaw !== prevFrzThwDates.thaw)
+        fieldState !== prevState ||
+        frzThwDates.freeze !== prevFrzThwDates.freeze ||
+        frzThwDates.thaw !== prevFrzThwDates.thaw
       ) {
         updateGrowingSeasonFields(
           { setFieldValue, setFieldTouched },
