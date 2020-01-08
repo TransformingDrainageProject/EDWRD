@@ -1,9 +1,8 @@
 import React from 'react';
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Container, Label, Row } from 'reactstrap';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
-import Checkbox from '../FormikComponents/Checkbox';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 import FormCard from '../FormCard';
 import UnitGroup from '../UnitGroup';
@@ -70,12 +69,14 @@ const FieldReservoirForm = props => {
               />
             </UnitGroup>
             <ErrorMessage name="darea" />
-            <Field
-              type="checkbox"
-              name="dareaIncSurfaceRunoff"
-              label="Include Surface Runoff"
-              component={Checkbox}
-            />
+            <Label check className="mt-2" for="dareaIncSurfaceRunoff">
+              <Field
+                className="mr-1"
+                type="checkbox"
+                name="dareaIncSurfaceRunoff"
+              />
+              Include Surface Runoff
+            </Label>
             <ErrorMessage name="dareaIncSurfaceRunoff" />
           </FormCard>
         </Col>
