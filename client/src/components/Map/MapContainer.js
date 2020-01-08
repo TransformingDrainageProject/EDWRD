@@ -57,7 +57,6 @@ function SelectFieldLocationMap(props) {
 }
 
 const MapContainer = props => {
-  console.log(props);
   return props.type === 'selectFieldLocation' ? (
     <SelectFieldLocationMap {...props} />
   ) : (
