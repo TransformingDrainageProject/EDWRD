@@ -1,12 +1,13 @@
 import React from 'react';
 import { Col, Container, Label, Row } from 'reactstrap';
-import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 import FormCard from '../FormCard';
+import { MyInputField, MySelectField } from '../FormikComponents/MyFields';
 import UnitGroup from '../UnitGroup';
 
+import { soilTypeOptions } from './constants';
 import { updateSoilFields } from './updateSoilFields';
 
 const FieldReservoirForm = props => {
@@ -29,31 +30,19 @@ const FieldReservoirForm = props => {
       <Row>
         <Col className="mb-4" md="4">
           <FormCard label="What is the soil type?">
-            <Field
-              className="form-control"
-              component="select"
+            <MySelectField
+              type="select"
               name="soilType"
               onChange={soilTypeOnChange}
-            >
-              <option value="loam">Loam</option>
-              <option value="siltLoam">Silt loam</option>
-              <option value="silt">Silt</option>
-              <option value="siltClayLoam">Silt Clay Loam</option>
-              <option value="siltyClay">Silty Clay</option>
-              <option value="clay">Clay</option>
-            </Field>
+              options={soilTypeOptions}
+            />
             <ErrorMessage name="soilType" />
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
           <FormCard label="What is the average depth to the tile drains?">
             <UnitGroup unit="feet" unitLabel="depth" unitType={unitType}>
-              <Field
-                className="form-control"
-                type="number"
-                name="zr"
-                step="0.1"
-              />
+              <MyInputField type="number" name="zr" step="0.1" />
             </UnitGroup>
             <ErrorMessage name="zr" />
           </FormCard>
@@ -61,20 +50,11 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="How much of the field is drained?">
             <UnitGroup unit="acres" unitType={unitType}>
-              <Field
-                className="form-control"
-                type="number"
-                name="darea"
-                step="0.1"
-              />
+              <MyInputField type="number" name="darea" step="0.1" />
             </UnitGroup>
             <ErrorMessage name="darea" />
             <Label check className="mt-2" for="dareaIncSurfaceRunoff">
-              <Field
-                className="mr-1"
-                type="checkbox"
-                name="dareaIncSurfaceRunoff"
-              />
+              <MyInputField type="checkbox" name="dareaIncSurfaceRunoff" />
               Include Surface Runoff
             </Label>
             <ErrorMessage name="dareaIncSurfaceRunoff" />
@@ -87,12 +67,7 @@ const FieldReservoirForm = props => {
             <Row>
               <Col className="mb-4" md="6">
                 <UnitGroup unit="acres" unitType={unitType}>
-                  <Field
-                    className="form-control"
-                    type="number"
-                    name="rarea"
-                    step="0.1"
-                  />
+                  <MyInputField type="number" name="rarea" step="0.1" />
                 </UnitGroup>
                 <ErrorMessage name="rarea" />
               </Col>
@@ -102,12 +77,7 @@ const FieldReservoirForm = props => {
                   unitLabel="avg. depth"
                   unitType={unitType}
                 >
-                  <Field
-                    className="form-control"
-                    type="number"
-                    name="rdep"
-                    step="0.1"
-                  />
+                  <MyInputField type="number" name="rdep" step="0.1" />
                 </UnitGroup>
                 <ErrorMessage name="rdep" />
               </Col>
@@ -117,12 +87,7 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="How much of the field will be irrigated?">
             <UnitGroup unit="acres" unitType={unitType}>
-              <Field
-                className="form-control"
-                type="number"
-                name="iarea"
-                step="0.1"
-              />
+              <MyInputField type="number" name="iarea" step="0.1" />
             </UnitGroup>
             <ErrorMessage name="iarea" />
           </FormCard>
