@@ -21,9 +21,7 @@ import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 
 const AdvancedSettings = props => {
   const { fieldState, frzThwDates, unitType } = props;
-
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
-
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
   const prevState = usePrevious(fieldState);

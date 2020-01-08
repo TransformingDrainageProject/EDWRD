@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 import FormCard from '../FormCard';
 import { MyInputField, MySelectField } from '../FormikComponents/MyFields';
-import UnitGroup from '../UnitGroup';
+import UnitGroup from '../FormikComponents/UnitGroup';
 
 import { soilTypeOptions } from './constants';
 import { updateSoilFields } from './updateSoilFields';
@@ -14,6 +14,7 @@ import { updateSoilFields } from './updateSoilFields';
 const FieldReservoirForm = props => {
   const { unitType } = props;
   const { setFieldValue, setFieldTouched } = useFormikContext();
+
   function soilTypeOnChange(e) {
     // update soil type field
     setFieldValue('soilType', e.target.value);
