@@ -1,6 +1,7 @@
 import React from 'react';
+import { Field, useFormikContext } from 'formik';
 import { Col, Container, Row } from 'reactstrap';
-import { Field } from 'formik';
+import Select from 'react-select';
 import PropTypes from 'prop-types';
 
 import FormCard from '../FormCard';
@@ -13,16 +14,15 @@ import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 import updateKCandCropHeight from '../utils/updateKCandCropHeight';
 
 const CropManagementForm = props => {
+  const { fieldState, frzThwDates, unitType } = props;
+
   const {
     errors,
-    fieldState,
-    frzThwDates,
-    setFieldTouched,
-    setFieldValue,
-    touched,
-    unitType,
     values,
-  } = props;
+    touched,
+    setFieldValue,
+    setFieldTouched,
+  } = useFormikContext();
 
   function cropTypeOnChange(e) {
     // update crop type field
@@ -120,17 +120,12 @@ const CropManagementForm = props => {
 };
 
 CropManagementForm.propTypes = {
-  errors: PropTypes.object,
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
     thaw: PropTypes.number,
   }),
-  setFieldTouched: PropTypes.func,
-  setFieldValue: PropTypes.func,
-  touched: PropTypes.object,
   unitType: PropTypes.string,
-  values: PropTypes.object,
 };
 
 export default CropManagementForm;

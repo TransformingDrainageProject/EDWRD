@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import {
   Button,
   Col,
@@ -20,14 +20,10 @@ import { usePrevious } from '../../../utils/customHooks';
 import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 
 const AdvancedSettings = props => {
-  const {
-    fieldState,
-    frzThwDates,
-    setFieldTouched,
-    setFieldValue,
-    unitType,
-    values,
-  } = props;
+  const { fieldState, frzThwDates, unitType } = props;
+
+  const { values, setFieldValue, setFieldTouched } = useFormikContext();
+
   const [modal, toggleModal] = useState(props.open ? props.open : false);
 
   const prevState = usePrevious(fieldState);
@@ -224,10 +220,7 @@ AdvancedSettings.propTypes = {
     freeze: PropTypes.number,
     thaw: PropTypes.number,
   }),
-  setFieldTouched: PropTypes.func,
-  setFieldValue: PropTypes.func,
   unitType: PropTypes.string,
-  values: PropTypes.object,
 };
 
 export default AdvancedSettings;

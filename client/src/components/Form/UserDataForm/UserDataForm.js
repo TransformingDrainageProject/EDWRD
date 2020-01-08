@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import PropTypes from 'prop-types';
 
 import MapContainer from '../../Map/MapContainer';
@@ -10,8 +10,8 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
 
 const UserDataForm = props => {
-  const { errors, origin, touched, values } = props;
-
+  const { origin } = props;
+  const { values, touched, errors } = useFormikContext();
   return (
     <Container>
       <Row>
@@ -57,14 +57,11 @@ const UserDataForm = props => {
 };
 
 UserDataForm.propTypes = {
-  errors: PropTypes.object,
   origin: PropTypes.shape({
     lat: PropTypes.number,
     lon: PropTypes.number,
     zoom: PropTypes.number,
   }),
-  touched: PropTypes.object,
-  values: PropTypes.object,
 };
 
 export default UserDataForm;

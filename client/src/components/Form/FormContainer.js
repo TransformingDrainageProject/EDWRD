@@ -89,11 +89,7 @@ const FormContainer = props => {
             </Row>
             <Row>
               <Col>
-                <FieldReservoirForm
-                  setFieldValue={setFieldValue}
-                  setFieldTouched={setFieldTouched}
-                  unitType={unitType}
-                />
+                <FieldReservoirForm unitType={unitType} />
               </Col>
             </Row>
             <Row>
@@ -104,11 +100,6 @@ const FormContainer = props => {
             <Row>
               <Col>
                 <CropManagementForm
-                  errors={errors}
-                  touched={touched}
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  setFieldTouched={setFieldTouched}
                   unitType={unitType}
                   fieldState={fieldState}
                   frzThwDates={frzThwDates}
@@ -125,12 +116,7 @@ const FormContainer = props => {
             </Row>
             <Row>
               <Col>
-                <UserDataForm
-                  errors={errors}
-                  origin={origin}
-                  touched={touched}
-                  values={values}
-                />
+                <UserDataForm origin={origin} />
               </Col>
             </Row>
             <Row>

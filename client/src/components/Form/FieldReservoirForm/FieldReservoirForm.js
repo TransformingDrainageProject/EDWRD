@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFormikContext } from 'formik';
 import { Col, Container, Label, Row } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -11,8 +12,8 @@ import { soilTypeOptions } from './constants';
 import { updateSoilFields } from './updateSoilFields';
 
 const FieldReservoirForm = props => {
-  const { setFieldValue, setFieldTouched, unitType } = props;
-
+  const { unitType } = props;
+  const { setFieldValue, setFieldTouched } = useFormikContext();
   function soilTypeOnChange(e) {
     // update soil type field
     setFieldValue('soilType', e.target.value);
