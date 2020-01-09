@@ -1,17 +1,25 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
-import { Field, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import PropTypes from 'prop-types';
 
 import MapContainer from '../../Map/MapContainer';
 import UserDataFileUpload from './UserDataFileUpload';
 import FormCard from '../FormCard';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
-import { RadioButton, RadioButtonGroup } from '../FormikComponents/RadioInput';
+import { MyRadioField } from '../FormikComponents/MyFields';
 
 const UserDataForm = props => {
   const { origin } = props;
-  const { values, touched, errors } = useFormikContext();
+  const { values } = useFormikContext();
+
+  const userDataSelectionOptions = [
+    {
+      label: 'No, I would like to choose example data from a different site',
+      value: 'false',
+    },
+    { label: 'Yes, I will upload a file', value: 'true' },
+  ];
 
   return (
     <Container>
@@ -20,26 +28,10 @@ const UserDataForm = props => {
           <FormCard label="Select one" hideHelp={true}>
             <Row>
               <Col md="4">
-                <RadioButtonGroup
-                  id="userData"
-                  label="Select one"
-                  value={values.radioGroup}
-                  error={errors.radioGroup}
-                  touched={touched.radioGroup}
-                >
-                  <Field
-                    component={RadioButton}
-                    name="userData"
-                    id="false"
-                    label="No, I would like to choose example data from a different site"
-                  />
-                  <Field
-                    component={RadioButton}
-                    name="userData"
-                    id="true"
-                    label="Yes, I wil upload a file"
-                  />
-                </RadioButtonGroup>
+                <MyRadioField
+                  name="userData"
+                  options={userDataSelectionOptions}
+                />
                 <ErrorMessage name="userData" />
               </Col>
               <Col md="8">
