@@ -33,7 +33,6 @@ const FieldReservoirForm = props => {
         <Col className="mb-4" md="4">
           <FormCard label="What is the soil type?">
             <MySelectField
-              type="select"
               name="soilType"
               onChange={soilTypeOnChange}
               options={soilTypeOptions}

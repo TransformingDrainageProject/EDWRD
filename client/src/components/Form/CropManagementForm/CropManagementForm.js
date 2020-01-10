@@ -1,19 +1,25 @@
-import React from 'react';
-import { Field, useFormikContext } from 'formik';
-import { Col, Container, Row } from 'reactstrap';
+import React, { useState } from 'react';
+import { useFormikContext } from 'formik';
+import { Col, Container, Input, Row } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import FormCard from '../FormCard';
 import AdvancedSettingsForm from '../AdvancedSettingsForm';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
-import { MyInputField, MyRadioField } from '../FormikComponents/MyFields';
+import {
+  MyInputField,
+  MyRadioField,
+  MySelectField,
+} from '../FormikComponents/MyFields';
 import UnitGroup from '../FormikComponents/UnitGroup';
 
+import { irrDepUSOptions, irrDepMetricOptions } from './constants';
 import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 import updateKCandCropHeight from '../utils/updateKCandCropHeight';
 
 const CropManagementForm = props => {
   const { fieldState, frzThwDates, unitType } = props;
+  const [irrdepRadioSelection, setIrrDepRadioSelection] = useState('select');
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
   function cropTypeOnChange(e) {
@@ -53,16 +59,49 @@ const CropManagementForm = props => {
         </Col>
         <Col className="mb-4" md="4">
           <FormCard label="How much do you want to irrigate each time?">
-            <UnitGroup unit="inches" unitType={unitType}>
-              <Field
-                className="form-control"
-                component="select"
+            <div>
+              <Input
+                type="radio"
+                name="irrdepRadio"
+                value="select"
+                checked={irrdepRadioSelection === 'select'}
+                onChange={e => {
+                  setIrrDepRadioSelection(e.target.value);
+                  setFieldValue(
+                    'irrdep',
+                    unitType === 'us'
+                      ? irrDepUSOptions[0].value
+                      : irrDepMetricOptions[0].value
+                  );
+                }}
+              />
+              <span style={{ display: 'inline-block' }}>Predefined</span>
+              <MySelectField
                 name="irrdep"
-                step="0.1"
-              >
-                <option value="1">1</option>
-              </Field>
-            </UnitGroup>
+                options={
+                  unitType === 'us' ? irrDepUSOptions : irrDepMetricOptions
+                }
+                disabled={irrdepRadioSelection === 'manual' ? true : false}
+              />
+            </div>
+            <div className="mt-2">
+              <Input
+                type="radio"
+                name="irrdepRadio"
+                value="manual"
+                checked={irrdepRadioSelection === 'manual'}
+                onChange={e => setIrrDepRadioSelection(e.target.value)}
+              />
+              <span style={{ display: 'inline-block' }}>Manual</span>
+              <UnitGroup unit="inches" unitType={unitType}>
+                <MyInputField
+                  type="number"
+                  name="irrdep"
+                  step="0.1"
+                  disabled={irrdepRadioSelection === 'select' ? true : false}
+                />
+              </UnitGroup>
+            </div>
             <ErrorMessage name="irrdep" />
           </FormCard>
         </Col>
