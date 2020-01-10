@@ -40,13 +40,12 @@ export const MyRadioField = ({ ...props }) => {
               {...field}
               type="radio"
               id={option.value}
-              name={props.name}
               checked={value === option.value}
               onChange={e => {
-                setValue(option.value);
                 if (props.onChange) {
-                  props.onChange(e);
+                  props.onChange(option.value);
                 }
+                setValue(option.value);
               }}
             />
             {option.label}

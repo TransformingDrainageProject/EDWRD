@@ -22,21 +22,17 @@ const CropManagementForm = props => {
   const [irrdepRadioSelection, setIrrDepRadioSelection] = useState('select');
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
-  function cropTypeOnChange(e) {
+  function cropTypeOnChange(value) {
     // update growing seasons date fields in adv. settings
     updateGrowingSeasonFields(
       { setFieldValue, setFieldTouched },
-      e.target.value,
+      value,
       unitType,
       fieldState,
       frzThwDates
     );
     // update growing seasons kc and crop height fields in adv. settings
-    updateKCandCropHeight(
-      { setFieldValue, setFieldTouched },
-      e.target.value,
-      unitType
-    );
+    updateKCandCropHeight({ setFieldValue, setFieldTouched }, value, unitType);
   }
 
   const cropSelectionOptions = [
