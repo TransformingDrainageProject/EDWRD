@@ -49,7 +49,7 @@ function SelectStationLocationMap(props) {
 function SelectFieldLocationMap(props) {
   return (
     <Container>
-      <h1>1. Click a location to drop a pin at your field</h1>
+      <h1>1. Click and drag the pin to your field's location</h1>
       <Map {...props} />
       <hr />
     </Container>
