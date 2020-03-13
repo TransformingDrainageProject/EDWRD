@@ -1,19 +1,11 @@
 import React from 'react';
 import { Card, CardTitle, CardBody } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
+import HelpPopover from './HelpPopover';
+
 const FormCard = props => {
-  const { label, hideHelp } = props;
-
-  function onMouseEnter(e) {
-    console.log('show help text');
-  }
-
-  function onMouseLeave(e) {
-    console.log('hide help text');
-  }
+  const { label, helpText, hideHelp, name } = props;
 
   return (
     <Card
@@ -23,7 +15,7 @@ const FormCard = props => {
         backgroundColor: '#007cb3',
         borderColor: '#007cb3',
         height: '100%',
-        padding: '.5rem .25rem',
+        padding: '.5rem .25rem'
       }}
     >
       <CardTitle className="text-center">
@@ -31,12 +23,12 @@ const FormCard = props => {
       </CardTitle>
       <CardBody style={{ padding: '1.25rem' }}>
         {props.children}
-        {!hideHelp ? (
-          <FontAwesomeIcon
-            style={{ position: 'absolute', bottom: 0, right: 0, margin: '5px' }}
-            icon={faQuestionCircle}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
+        {!hideHelp && helpText && label && name ? (
+          <HelpPopover
+            key={name}
+            helpText={helpText}
+            label={label}
+            name={name}
           />
         ) : null}
       </CardBody>
@@ -46,7 +38,7 @@ const FormCard = props => {
 
 FormCard.propTypes = {
   label: PropTypes.string,
-  hideHelp: PropTypes.bool,
+  hideHelp: PropTypes.bool
 };
 
 export default FormCard;

@@ -22,10 +22,10 @@ const Introduction = props => {
         potential benefits at a particular site or who have their own data, you
         may edit the defaults provided below. You may find out more about
         specific inputs by hovering over the ? and we've identified important
-        inputs ( | ) which are influential in impacting results. These
-        influential inputs should match your specific field conditions as
-        closely as possible in order to get good estimates of the potential
-        benefits from DWR for your site.
+        inputs ! which are influential in impacting results. These influential
+        inputs should match your specific field conditions as closely as
+        possible in order to get good estimates of the potential benefits from
+        DWR for your site.
       </div>
       <div className="row mb-3">
         <span className="mr-3">Select units:</span>

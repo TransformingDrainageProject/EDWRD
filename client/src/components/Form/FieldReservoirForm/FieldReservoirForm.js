@@ -31,7 +31,20 @@ const FieldReservoirForm = props => {
     <Container>
       <Row>
         <Col className="mb-4" md="4">
-          <FormCard label="What is the soil type?">
+          <FormCard
+            label="What is the soil type?"
+            helpText={
+              <span>
+                Select the most representative soil type in your field. EDWRD
+                uses this soil type to estimate the water holding capacity of
+                the soil to support crops. You may customize this by going to “
+                <strong>Advanced Settings</strong>” below and adjusting values
+                for “Soil profile field capacity” and “Soil profile wilting
+                point”.
+              </span>
+            }
+            name="soilType"
+          >
             <MySelectField
               name="soilType"
               onChange={soilTypeOnChange}
@@ -41,7 +54,19 @@ const FieldReservoirForm = props => {
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
-          <FormCard label="What is the average depth to the tile drains?">
+          <FormCard
+            label="What is the average depth to the tile drains?"
+            helpText={
+              <span>
+                Enter a value that represents that average depth to tile drains
+                in your field. EDWRD uses this value to define the soil profile
+                depth used in estimating the total available water for growing
+                crops. The deeper the tile drain depth then more water that can
+                be held by the soil between the surface and tile drain.
+              </span>
+            }
+            name="zr"
+          >
             <UnitGroup unit="feet" unitLabel="depth" unitType={unitType}>
               <MyInputField type="number" name="zr" step="0.1" />
             </UnitGroup>
@@ -99,7 +124,7 @@ const FieldReservoirForm = props => {
 };
 
 FieldReservoirForm.propTypes = {
-  unitType: PropTypes.string,
+  unitType: PropTypes.string
 };
 
 export default FieldReservoirForm;
