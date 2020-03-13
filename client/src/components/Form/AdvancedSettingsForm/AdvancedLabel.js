@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormGroup, Label } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
+
+import HelpPopover from '../HelpPopover';
 
 const unitConversion = {
   inchDay: { us: 'in/day', metric: 'mm/day' },
@@ -11,16 +11,23 @@ const unitConversion = {
 };
 
 const AdvancedLabel = props => {
-  const { name, text, unit, unitType } = props;
+  const { helpText, hideHelp, name, text, unit, unitType } = props;
 
   const labelUnit = unit ? ` (${unitConversion[unit][unitType]})` : '';
 
   return (
-    <FormGroup>
+    <FormGroup style={{ marginBottom: '2rem' }}>
       <Label for={name}>
         {text}
         {labelUnit}{' '}
-        <FontAwesomeIcon icon={faQuestionCircle} style={{ marginLeft: 5 }} />
+        {!hideHelp && helpText && name ? (
+          <HelpPopover
+            key={name}
+            helpText={helpText}
+            label={text}
+            name={name}
+          />
+        ) : null}
       </Label>
       {props.children}
     </FormGroup>

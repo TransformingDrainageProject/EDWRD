@@ -7,16 +7,18 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
-  Row,
+  Row
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import AdvancedLabel from './AdvancedLabel';
 import AdvancedSeasonTable from './AdvancedSeasonTable';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
+import HelpPopover from '../HelpPopover';
 
 import { usePrevious } from '../../../utils/customHooks';
 
+import { advancedSettingsHelp } from './advancedSettingsHelp';
 import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 
 const AdvancedSettings = props => {
@@ -51,7 +53,7 @@ const AdvancedSettings = props => {
   return (
     <div>
       <Button
-        style={{ backgroundColor: '#edb229', height: '75px' }}
+        style={{ backgroundColor: '#edb229', height: '75px', width: '100%' }}
         size="lg"
         onClick={toggle}
       >
@@ -78,6 +80,13 @@ const AdvancedSettings = props => {
                           name="zrfc"
                           text="Soil profile field capacity"
                         >
+                          <HelpPopover
+                            key="zrfc"
+                            helpText={advancedSettingsHelp.zrfc}
+                            label="Soil profile field capacity"
+                            name="zrfc"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -179,6 +188,7 @@ const AdvancedSettings = props => {
                     <Row>
                       <Col>
                         <AdvancedLabel
+                          helpText={advancedSettingsHelp.rseep}
                           name="rseep"
                           text="Reservoir seepage rate"
                           unit="inchDay"
@@ -227,9 +237,9 @@ AdvancedSettings.propTypes = {
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
-    thaw: PropTypes.number,
+    thaw: PropTypes.number
   }),
-  unitType: PropTypes.string,
+  unitType: PropTypes.string
 };
 
 export default AdvancedSettings;

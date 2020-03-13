@@ -9,11 +9,12 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import {
   MyInputField,
   MyRadioField,
-  MySelectField,
+  MySelectField
 } from '../FormikComponents/MyFields';
 import UnitGroup from '../FormikComponents/UnitGroup';
 
-import { irrDepUSOptions, irrDepMetricOptions } from './constants';
+import { cropManagementHelp } from './cropManagementHelp';
+import { irrdepOptions } from './constants';
 import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 import updateKCandCropHeight from '../utils/updateKCandCropHeight';
 
@@ -37,14 +38,17 @@ const CropManagementForm = props => {
 
   const cropSelectionOptions = [
     { label: 'Corn', value: 'corn' },
-    { label: 'Soybean', value: 'soybean' },
+    { label: 'Soybean', value: 'soybean' }
   ];
 
   return (
     <Container>
       <Row>
         <Col className="mb-4" md="4">
-          <FormCard label="Select a crop">
+          <FormCard
+            helpText={cropManagementHelp.cropSelection}
+            name="cropSelection"
+          >
             <MyRadioField
               name="cropSelection"
               options={cropSelectionOptions}
@@ -60,24 +64,18 @@ const CropManagementForm = props => {
                 type="radio"
                 name="irrdepRadio"
                 value="select"
-                checked={irrdepRadioSelection === 'select'}
+                checked={values.irrdepType === 'select'}
+                onBlur={() => setFieldTouched('irrdepType', true)}
                 onChange={e => {
-                  setIrrDepRadioSelection(e.target.value);
-                  setFieldValue(
-                    'irrdep',
-                    unitType === 'us'
-                      ? irrDepUSOptions[0].value
-                      : irrDepMetricOptions[0].value
-                  );
+                  // setIrrDepRadioSelection(e.target.value);
+                  setFieldValue('irrdepType', 'select');
                 }}
               />
               <span style={{ display: 'inline-block' }}>Predefined</span>
               <MySelectField
                 name="irrdep"
-                options={
-                  unitType === 'us' ? irrDepUSOptions : irrDepMetricOptions
-                }
-                disabled={irrdepRadioSelection === 'manual' ? true : false}
+                options={irrdepOptions}
+                disabled={values.irrdepType === 'manual' ? true : false}
               />
             </div>
             <div className="mt-2">
@@ -85,8 +83,12 @@ const CropManagementForm = props => {
                 type="radio"
                 name="irrdepRadio"
                 value="manual"
-                checked={irrdepRadioSelection === 'manual'}
-                onChange={e => setIrrDepRadioSelection(e.target.value)}
+                checked={values.irrdepType === 'manual'}
+                onBlur={() => setFieldTouched('irrdepType', true)}
+                onChange={e => {
+                  // setIrrDepRadioSelection(e.target.value);
+                  setFieldValue('irrdepType', 'manual');
+                }}
               />
               <span style={{ display: 'inline-block' }}>Manual</span>
               <UnitGroup unit="inches" unitType={unitType}>
@@ -94,7 +96,7 @@ const CropManagementForm = props => {
                   type="number"
                   name="irrdep"
                   step="0.1"
-                  disabled={irrdepRadioSelection === 'select' ? true : false}
+                  disabled={values.irrdepType === 'select' ? true : false}
                 />
               </UnitGroup>
             </div>
@@ -102,13 +104,28 @@ const CropManagementForm = props => {
           </FormCard>
         </Col>
         <Col className="mb-4" md="4">
-          <FormCard label="Water Depletion Factor">
+          <FormCard
+            label="Show crop growth and other advanced inputs"
+            position="bottom"
+            helpText={cropManagementHelp.advSettings}
+            name="advSettings"
+          >
+            <AdvancedSettingsForm
+              values={values}
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              unitType={unitType}
+              fieldState={fieldState}
+              frzThwDates={frzThwDates}
+            />
+          </FormCard>
+          {/* <FormCard label="Water Depletion Factor">
             <MyInputField type="number" name="pfact" step="0.05" />
             <ErrorMessage name="pfact" />
-          </FormCard>
+          </FormCard> */}
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col className="text-center mb-4">
           <FormCard label="Show crop growth and other advanced inputs">
             <AdvancedSettingsForm
@@ -121,7 +138,7 @@ const CropManagementForm = props => {
             />
           </FormCard>
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 };
@@ -130,9 +147,9 @@ CropManagementForm.propTypes = {
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
-    thaw: PropTypes.number,
+    thaw: PropTypes.number
   }),
-  unitType: PropTypes.string,
+  unitType: PropTypes.string
 };
 
 export default CropManagementForm;

@@ -28,22 +28,29 @@ export const MyCustomField = ({ ...props }) => {
 export const MyRadioField = ({ ...props }) => {
   const [field, meta, helpers] = useField(props.name);
   const { value } = meta;
-  const { setValue } = helpers;
+  const { setValue, setTouched } = helpers;
+
+  const { label, name, onChange, options, required } = props;
+
+  const isRequired = required === undefined || required ? 'required' : null;
 
   return (
     <FormGroup>
-      <Label for={props.name}>Crop Selection</Label>
+      <Label className={isRequired} for={name}>
+        {label}
+      </Label>
       <div>
-        {props.options.map(option => (
+        {options.map(option => (
           <div key={option.value}>
             <Input
               {...field}
               type="radio"
               id={option.value}
               checked={value === option.value}
+              onBlur={() => setTouched(true)}
               onChange={e => {
-                if (props.onChange) {
-                  props.onChange(option.value);
+                if (onChange) {
+                  onChange(option.value);
                 }
                 setValue(option.value);
               }}

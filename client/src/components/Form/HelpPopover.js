@@ -5,7 +5,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 const HelpPopover = props => {
-  const { helpText, label, name } = props;
+  const { helpText, label, name, position } = props;
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const toggle = () => setPopoverOpen(!popoverOpen);
@@ -13,7 +13,11 @@ const HelpPopover = props => {
   return (
     <div>
       <FontAwesomeIcon
-        style={{ position: 'absolute', bottom: 0, right: 0, margin: '5px' }}
+        style={
+          position === 'top'
+            ? { position: 'absolute', top: 0, right: '15px' }
+            : { position: 'absolute', bottom: 0, right: 0, margin: '5px' }
+        }
         icon={faQuestionCircle}
         id={name}
       />
