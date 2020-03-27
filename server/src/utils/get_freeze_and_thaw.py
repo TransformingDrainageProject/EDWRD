@@ -54,8 +54,8 @@ def main(longitude: float, latitude: float) -> None:
     """
     point = (longitude, latitude)
 
-    freeze = extract_value("./utils/frz_date_krig.tif", point)
-    thaw = extract_value("./utils/thw_date_krig.tif", point)
+    freeze = extract_value("./src/utils/frz_date_krig.tif", point)
+    thaw = extract_value("./src/utils/thw_date_krig.tif", point)
 
     results = {
         "freeze": str(freeze),

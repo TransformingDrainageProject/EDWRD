@@ -16,7 +16,7 @@ def main(longitude: float, latitude: float) -> None:
     Returns:
     None.
     """
-    states = gpd.read_file("./utils/midwest_states.geojson")
+    states = gpd.read_file("./src/utils/midwest_states.geojson")
     field = Point(longitude, latitude)
 
     state = states.loc[states["geometry"].contains(field), "STUSPS"]

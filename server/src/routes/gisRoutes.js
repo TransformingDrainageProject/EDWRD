@@ -1,5 +1,6 @@
 const { spawn } = require('child_process');
 const { checkSchema, validationResult } = require('express-validator');
+const createError = require('http-errors');
 
 const { pythonPath } = require('../config');
 
@@ -19,10 +20,14 @@ const geocodeSchema = {
 };
 
 module.exports = app => {
-  app.get('/api/geocode', checkSchema(geocodeSchema), (req, res) => {
+  app.get('/api/geocode', checkSchema(geocodeSchema), (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      next(
+        createError(400, 'Invalid parameters', {
+          errors: errors.array()
+        })
+      );
     }
 
     const lon = req.query.lon;
@@ -45,14 +50,18 @@ module.exports = app => {
     (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        next(
+          createError(400, 'Invalid parameters', {
+            errors: errors.array()
+          })
+        );
       }
 
       const lon = req.query.lon;
       const lat = req.query.lat;
 
       const pythonExtract = spawn(pythonPath, [
-        './utils/get_freeze_and_thaw.py',
+        './src/utils/get_freeze_and_thaw.py',
         lon,
         lat
       ]);
