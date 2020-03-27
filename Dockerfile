@@ -21,8 +21,8 @@ WORKDIR /app/
 COPY --from=client /app/client/build/ ./client/build/
 
 # install dependencies
-RUN apk add gcc g++ python3 python3-dev gdal gdal-dev
-RUN pip3 install pyproj rasterio shapely geopandas
+RUN apt-get update && apt-get install -y gcc g++ python3 python3-dev gdal-bin gdal-data libgdal-dev libgeos-3.7.1 libgeos-dev proj-bin proj-data libproj-dev
+RUN apt-get install -y python3-gdal python3-pyproj python3-rasterio python3-shapely python3-geopandas
 
 # working directory
 WORKDIR /app/server
