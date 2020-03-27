@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormikContext } from 'formik';
 import { Col, Container, Input, Row } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -20,7 +20,6 @@ import updateKCandCropHeight from '../utils/updateKCandCropHeight';
 
 const CropManagementForm = props => {
   const { fieldState, frzThwDates, unitType } = props;
-  const [irrdepRadioSelection, setIrrDepRadioSelection] = useState('select');
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
   function cropTypeOnChange(value) {

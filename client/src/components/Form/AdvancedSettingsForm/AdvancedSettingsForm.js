@@ -101,6 +101,13 @@ const AdvancedSettings = props => {
                           name="zrwp"
                           text="Soil profile wilting point"
                         >
+                          <HelpPopover
+                            key="zrwp"
+                            helpText={advancedSettingsHelp.zrwp}
+                            label="Soil profile wilting point"
+                            name="zrwp"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -119,6 +126,13 @@ const AdvancedSettings = props => {
                           unit="feet"
                           unitType={unitType}
                         >
+                          <HelpPopover
+                            key="ze"
+                            helpText={advancedSettingsHelp.ze}
+                            label="Depth of soil evaporation layer"
+                            name="ze"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -135,6 +149,13 @@ const AdvancedSettings = props => {
                           unit="inches"
                           unitType={unitType}
                         >
+                          <HelpPopover
+                            key="rew"
+                            helpText={advancedSettingsHelp.rew}
+                            label="Readily evaporable water"
+                            name="rew"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -149,8 +170,15 @@ const AdvancedSettings = props => {
                       <Col md={6}>
                         <AdvancedLabel
                           name="zefc"
-                          text="Surface field capacity"
+                          text="Evaporation layer field capacity"
                         >
+                          <HelpPopover
+                            key="zefc"
+                            helpText={advancedSettingsHelp.zefc}
+                            label="Evaporation layer field capacity"
+                            name="zefc"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -161,7 +189,17 @@ const AdvancedSettings = props => {
                         <ErrorMessage name="zefc" />
                       </Col>
                       <Col md={6}>
-                        <AdvancedLabel name="zewp" text="Surface wilting point">
+                        <AdvancedLabel
+                          name="zewp"
+                          text="Evaporation layer wilting point"
+                        >
+                          <HelpPopover
+                            key="zewp"
+                            helpText={advancedSettingsHelp.zewp}
+                            label="Evaporation layer wilting point"
+                            name="zewp"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -188,12 +226,18 @@ const AdvancedSettings = props => {
                     <Row>
                       <Col>
                         <AdvancedLabel
-                          helpText={advancedSettingsHelp.rseep}
                           name="rseep"
                           text="Reservoir seepage rate"
                           unit="inchDay"
                           unitType={unitType}
                         >
+                          <HelpPopover
+                            key="rseep"
+                            helpText={advancedSettingsHelp.rseep}
+                            label="Reservoir seepage rate"
+                            name="rseep"
+                            position="top"
+                          />
                           <Field
                             className="form-control"
                             type="number"
@@ -212,18 +256,23 @@ const AdvancedSettings = props => {
             <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
                 <AdvancedLabel
-                  name="dep29"
-                  text="Upload .txt file with your own custom input settings"
+                  name="advCustomInput"
+                  text="Upload custom input file"
                 >
-                  <input className="form-control" name="dep29" type="file" />
+                  <input
+                    className="form-control"
+                    name="advCustomInput"
+                    type="file"
+                  />
                 </AdvancedLabel>
-                <a
-                  href="https://drainage.agriculture.purdue.edu/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download template input file
-                </a>
+                <HelpPopover
+                  key="advCustomInput"
+                  helpText={advancedSettingsHelp.advCustomInput}
+                  label="Upload custom input file"
+                  name="advCustomInput"
+                  position="top"
+                  top="5px"
+                />
               </Col>
             </Row>
           </Container>

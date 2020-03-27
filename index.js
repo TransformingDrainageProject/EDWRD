@@ -5,6 +5,7 @@ const app = express();
 
 app.use(express.static(path.resolve(__dirname, './client/build')));
 
+require('./routes/downloadRoutes')(app);
 require('./routes/gisRoutes')(app);
 
 app.get('*', (req, res) => {

@@ -15,17 +15,30 @@ const UserDataForm = props => {
 
   const userDataSelectionOptions = [
     {
-      label: 'No, I would like to choose example data from a different site',
-      value: 'false',
+      label: 'Choose existing data from a research site',
+      value: 'false'
     },
-    { label: 'Yes, I will upload a file', value: 'true' },
+    { label: 'Upload my own data file', value: 'true' }
   ];
 
   return (
     <Container>
       <Row>
         <Col className="mb-4">
-          <FormCard label="Select one" hideHelp={true}>
+          <FormCard hideHelp={true}>
+            <Row>
+              <Col md="12">
+                <h2>Instructions</h2>
+                <p>
+                  Daily measurements for weather, drain flow, and nutrient
+                  concentrations are required. You may upload your own data as a
+                  .txt file and formatted following this example data file (link
+                  to example data file), or you may choose existing data from
+                  one of our research sites across the region.
+                </p>
+              </Col>
+            </Row>
+            <hr />
             <Row>
               <Col md="4">
                 <MyRadioField
@@ -53,8 +66,8 @@ UserDataForm.propTypes = {
   origin: PropTypes.shape({
     lat: PropTypes.number,
     lon: PropTypes.number,
-    zoom: PropTypes.number,
-  }),
+    zoom: PropTypes.number
+  })
 };
 
 export default UserDataForm;

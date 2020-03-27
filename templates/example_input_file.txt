@@ -1,0 +1,13 @@
+darea	iarea	rarea	rdep	rseep	zr	zrfc	zrwp	ze	zefc	zewp	rew	cn	wind	rhmin	cstart	cstage	ngrw_stage	cht	kc	frz_kc	fw	pfact	irr	residue
+32.375	32.375	19425	3.048	0.9	1	0.363	0.222	0.1	0.347	0.196	11	65	3.1	70	121	30	280	0.1	0.15	0.44	1	0.55	25.4	0.3
+													3.1	66		40	327	2	1.15					
+													3.2	59		50	69	0.01	0.15					
+													3.2	55		30								
+													2.7	56										
+													2.4	56										
+													2.2	58										
+													2.1	58										
+													2.2	55										
+													2.6	55										
+													2.9	63										
+													2.9	71										

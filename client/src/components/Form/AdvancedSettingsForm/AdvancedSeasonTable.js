@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 
 import AdvancedSeasonTableHeader from './AdvancedSeasonTableHeader';
 import AdvancedSeasonTableBody from './AdvancedSeasonTableBody';
+import HelpPopover from '../HelpPopover';
 
+import { advancedSettingsHelp } from './advancedSettingsHelp';
 import { STATES } from '../utils/constants';
 
 const AdvancedSeasonTable = props => {
@@ -16,9 +18,16 @@ const AdvancedSeasonTable = props => {
       <Col>
         <Row>
           <Col>
-            <h4 className="text-center">
-              Growing and Non-growing Seasons - {STATES[fieldState]}
-            </h4>
+            <h4 className="text-center">Growing and Non-growing Seasons </h4>
+            <HelpPopover
+              key="growNonGrowSeasons"
+              helpText={advancedSettingsHelp.growNonGrowSeasons}
+              label="Growing and Non-growing Seasons"
+              name="growNonGrowSeasons"
+              position="top"
+              top="5px"
+            />
+            <h5 className="text-center">Location in {STATES[fieldState]}</h5>
           </Col>
         </Row>
         <Row>
@@ -36,7 +45,7 @@ const AdvancedSeasonTable = props => {
 
 AdvancedSeasonTable.propTypes = {
   fieldState: PropTypes.string,
-  unitType: PropTypes.string,
+  unitType: PropTypes.string
 };
 
 export default AdvancedSeasonTable;

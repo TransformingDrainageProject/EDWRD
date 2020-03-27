@@ -9,19 +9,19 @@ import UserDataForm from './UserDataForm';
 // initial values
 import {
   fieldMetricInitialValues,
-  fieldUSInitialValues,
+  fieldUSInitialValues
 } from './FieldReservoirForm/initialValues';
 import {
   cropMetricInitialValues,
-  cropUSInitialValues,
+  cropUSInitialValues
 } from './CropManagementForm/initialValues';
 import {
   advUSInitialValues,
-  advMetricInitialValues,
+  advMetricInitialValues
 } from './AdvancedSettingsForm/initialValues';
 import {
   userMetricInitialValues,
-  userUSInitialValues,
+  userUSInitialValues
 } from './UserDataForm/initialValues';
 // validation schemas
 import setYupLocale from './setYupLocale';
@@ -36,14 +36,14 @@ const metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
   ...userMetricInitialValues,
-  ...advMetricInitialValues,
+  ...advMetricInitialValues
 };
 
 const usInitialValues = {
   ...fieldUSInitialValues,
   ...cropUSInitialValues,
   ...userUSInitialValues,
-  ...advUSInitialValues,
+  ...advUSInitialValues
 };
 
 const validationSchema = fieldReservoirFormSchema
@@ -79,7 +79,7 @@ const FormContainer = props => {
           setFieldValue,
           setFieldTouched,
           touched,
-          values,
+          values
         }) => (
           <Form>
             <Row>
@@ -109,8 +109,8 @@ const FormContainer = props => {
             <Row>
               <Col>
                 <h1>
-                  4. Do you have your own daily weather, tile drain flow, and
-                  nutrient concentration data to upload?
+                  4. Select your data source for daily weather, drain flow, and
+                  nutrient concentrations.
                 </h1>
               </Col>
             </Row>
@@ -143,14 +143,14 @@ FormContainer.propTypes = {
   origin: PropTypes.shape({
     lat: PropTypes.number,
     lon: PropTypes.number,
-    zoom: PropTypes.number,
+    zoom: PropTypes.number
   }),
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
-    thaw: PropTypes.number,
+    thaw: PropTypes.number
   }),
-  unitType: PropTypes.string,
+  unitType: PropTypes.string
 };
 
 export default FormContainer;
