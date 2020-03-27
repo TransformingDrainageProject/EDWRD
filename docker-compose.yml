@@ -1,9 +1,27 @@
-version: "3.3"
+version: '3.7'
 services:
-  web:
-    container_name: edwrd
-    build: .
+  server:
+    container_name: edwrd-server-dev
+    build:
+      context: ./server
+    command: /app/node_modules/.bin/nodemon src/index.js
+    volumes:
+      - ./server:/app
+      - /app/node_modules
     ports:
-      - "5002:5000"
+      - 5000:5000
     restart: always
-    env_file: ./.env
+    env_file: .env
+  client:
+    container_name: edwrd-client-dev
+    build:
+      context: ./client
+    command: yarn start
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    restart: always
+    ports:
+      - 3000:3000

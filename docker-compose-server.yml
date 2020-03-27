@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  web:
+    container_name: edwrd-web-dev
+    build: .
+    volumes:
+      - ${EDWRD_LOGS_DIR}:/app/server/src/logs
+    ports:
+      - 5002:5000
+    restart: always
+    env_file: ./.env
