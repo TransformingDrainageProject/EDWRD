@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
-    "client": "cd client && yarn run start",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+    "start": "nodemon src/index.js"
   },
   "repository": "git@github.com:hancocb/edwrd.git",
   "author": "Ben Hancock <hancocb@purdue.edu>",
