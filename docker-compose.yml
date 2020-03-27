@@ -4,6 +4,6 @@ services:
     container_name: edwrd
     build: .
     ports:
-      - "5000:5000"
+      - "5002:5000"
     restart: always
     env_file: ./.env

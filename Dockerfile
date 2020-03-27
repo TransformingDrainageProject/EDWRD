@@ -16,6 +16,8 @@ RUN yarn run build
 # base image
 FROM node:10.18.0-buster-slim
 
+RUN apt-get update && apt-get install -y curl
+
 # set working directory
 WORKDIR /app/
 COPY --from=client /app/client/build/ ./client/build/
