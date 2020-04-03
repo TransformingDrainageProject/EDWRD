@@ -17,7 +17,7 @@ const AdvancedLabel = props => {
 
   return (
     <FormGroup style={{ marginBottom: '2rem' }}>
-      <Label for={name}>
+      <Label for={name} style={{ width: '90%' }}>
         {text}
         {labelUnit}{' '}
         {!hideHelp && helpText && name ? (

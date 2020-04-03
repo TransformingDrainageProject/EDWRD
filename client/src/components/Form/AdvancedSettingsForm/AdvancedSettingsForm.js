@@ -64,8 +64,11 @@ const AdvancedSettings = props => {
         <ModalBody>
           <Container>
             <Row className="mb-3">
-              <Col md={8}>
-                <Row className="mr-1" style={{ border: '1px solid #c8ced5' }}>
+              <Col md={12} lg={8}>
+                <Row
+                  className="mr-lg-3 mb-md-3"
+                  style={{ border: '1px solid #c8ced5' }}
+                >
                   <Col>
                     <Row>
                       <Col>
@@ -213,7 +216,7 @@ const AdvancedSettings = props => {
                   </Col>
                 </Row>
               </Col>
-              <Col md={4}>
+              <Col md={12} lg={4}>
                 <Row style={{ border: '1px solid #c8ced5' }}>
                   <Col>
                     <Row>
@@ -260,7 +263,8 @@ const AdvancedSettings = props => {
                   text="Upload custom input file"
                 >
                   <input
-                    className="form-control"
+                    className="form-control mt-3"
+                    style={{ border: 'none', padding: '0' }}
                     name="advCustomInput"
                     type="file"
                   />

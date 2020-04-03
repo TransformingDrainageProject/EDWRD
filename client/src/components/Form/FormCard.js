@@ -15,7 +15,7 @@ const FormCard = props => {
         backgroundColor: '#007cb3',
         borderColor: '#007cb3',
         height: '100%',
-        padding: '.5rem .25rem'
+        padding: '1rem'
       }}
     >
       {position !== 'bottom' ? (

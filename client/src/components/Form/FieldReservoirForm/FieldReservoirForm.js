@@ -31,7 +31,7 @@ const FieldReservoirForm = props => {
   return (
     <Container>
       <Row>
-        <Col className="mb-4" md="4">
+        <Col className="mb-4" md={6} lg={4}>
           <FormCard
             label="What is the soil type?"
             helpText={fieldReservoirHelp.soilType}
@@ -45,7 +45,7 @@ const FieldReservoirForm = props => {
             <ErrorMessage name="soilType" />
           </FormCard>
         </Col>
-        <Col className="mb-4" md="4">
+        <Col className="mb-4" md={6} lg={4}>
           <FormCard
             label="What is the average depth to the tile drains?"
             helpText={fieldReservoirHelp.zr}
@@ -57,7 +57,7 @@ const FieldReservoirForm = props => {
             <ErrorMessage name="zr" />
           </FormCard>
         </Col>
-        <Col className="mb-4" md="4">
+        <Col className="mb-4" md={12} lg={4}>
           <FormCard
             label="How much of the field is drained?"
             helpText={fieldReservoirHelp.darea}
@@ -76,7 +76,7 @@ const FieldReservoirForm = props => {
         </Col>
       </Row>
       <Row>
-        <Col className="mb-4" md="8">
+        <Col className="mb-4" md={12} lg={8}>
           <FormCard
             label="How large of a reservoir would you like to evaluate?"
             helpText={fieldReservoirHelp.rarea}
@@ -102,7 +102,7 @@ const FieldReservoirForm = props => {
             </Row>
           </FormCard>
         </Col>
-        <Col className="mb-4" md="4">
+        <Col className="mb-4" md={12} lg={4}>
           <FormCard
             label="How much of the field will be irrigated?"
             helpText={fieldReservoirHelp.iarea}

@@ -32,7 +32,7 @@ const AdvancedSeasonTable = props => {
         </Row>
         <Row>
           <Col>
-            <Table>
+            <Table responsive>
               <AdvancedSeasonTableHeader unitType={unitType} />
               <AdvancedSeasonTableBody />
             </Table>
