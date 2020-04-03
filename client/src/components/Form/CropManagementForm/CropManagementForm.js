@@ -43,7 +43,7 @@ const CropManagementForm = props => {
   return (
     <Container>
       <Row>
-        <Col className="mb-4" md={6} lg={4}>
+        <Col className="mb-4" md={4} lg={2}>
           <FormCard
             helpText={cropManagementHelp.cropSelection}
             name="cropSelection"
@@ -56,7 +56,7 @@ const CropManagementForm = props => {
             <ErrorMessage name="cropSelection" />
           </FormCard>
         </Col>
-        <Col className="mb-4" md={6} lg={4}>
+        <Col className="mb-4" md={8} lg={5}>
           <FormCard
             label="How much do you want to irrigate each time?"
             helpText={cropManagementHelp.irrdep}
@@ -106,7 +106,7 @@ const CropManagementForm = props => {
             <ErrorMessage name="irrdep" />
           </FormCard>
         </Col>
-        <Col className="mb-4" md={12} lg={4}>
+        <Col className="mb-4" md={12} lg={5}>
           <FormCard
             label="Show crop growth and other advanced inputs"
             position="bottom"

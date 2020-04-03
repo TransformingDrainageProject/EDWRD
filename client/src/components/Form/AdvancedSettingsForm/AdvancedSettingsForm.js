@@ -66,7 +66,7 @@ const AdvancedSettings = props => {
             <Row className="mb-3">
               <Col md={12} lg={8}>
                 <Row
-                  className="mr-xl-3 mr-lg-3 mb-md-3 mb-sm-3 mb-xs-3"
+                  className="mr-xl-3 mr-lg-3 mb-lg-0 mb-sm-3 mb-3"
                   style={{ border: '1px solid #c8ced5' }}
                 >
                   <Col>
