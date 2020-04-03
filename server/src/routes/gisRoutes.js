@@ -34,7 +34,7 @@ module.exports = app => {
     const lat = req.query.lat;
 
     const pythonGeocoder = spawn(pythonPath, [
-      './utils/reverse_geocode.py',
+      './src/utils/reverse_geocode.py',
       lon,
       lat
     ]);
