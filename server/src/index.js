@@ -17,6 +17,16 @@ app.use(express.static(path.resolve(__dirname, '../../client/build')));
 require('./routes/downloadRoutes')(app);
 require('./routes/gisRoutes')(app);
 
+// send requests not caught by a route to react client
+app.get('*', (req, res, next) => {
+  const reactPath = path.resolve(__dirname, '../../client/build', 'index.html');
+  if (fs.existsSync(reactPath)) {
+    res.sendFile(reactPath);
+  } else {
+    next(createError(404, 'Unable to find requested page'));
+  }
+});
+
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
@@ -35,16 +45,6 @@ app.use((err, req, res, next) => {
     res.send({ errors: err.errors });
   } else {
     res.send(err.message);
-  }
-});
-
-// send requests not caught by a route to react client
-app.get('*', (req, res, next) => {
-  const reactPath = path.resolve(__dirname, '../../client/build', 'index.html');
-  if (fs.existsSync(reactPath)) {
-    res.sendFile(reactPath);
-  } else {
-    next(createError(404, 'Unable to find requested page'));
   }
 });
 
