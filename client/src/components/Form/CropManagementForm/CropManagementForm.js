@@ -9,7 +9,7 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import {
   MyInputField,
   MyRadioField,
-  MySelectField
+  MySelectField,
 } from '../FormikComponents/MyFields';
 import UnitGroup from '../FormikComponents/UnitGroup';
 
@@ -18,7 +18,7 @@ import { irrdepOptions } from './constants';
 import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 import updateKCandCropHeight from '../utils/updateKCandCropHeight';
 
-const CropManagementForm = props => {
+const CropManagementForm = (props) => {
   const { fieldState, frzThwDates, unitType } = props;
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
@@ -37,7 +37,7 @@ const CropManagementForm = props => {
 
   const cropSelectionOptions = [
     { label: 'Corn', value: 'corn' },
-    { label: 'Soybean', value: 'soybean' }
+    { label: 'Soybean', value: 'soybean' },
   ];
 
   return (
@@ -66,12 +66,13 @@ const CropManagementForm = props => {
               <Input
                 type="radio"
                 name="irrdepRadio"
-                value="select"
-                checked={values.irrdepType === 'select'}
+                value="predefined"
+                checked={values.irrdepType === 'predefined'}
                 onBlur={() => setFieldTouched('irrdepType', true)}
-                onChange={e => {
-                  // setIrrDepRadioSelection(e.target.value);
-                  setFieldValue('irrdepType', 'select');
+                onChange={(e) => {
+                  setFieldValue('irrdepType', 'predefined');
+                  setFieldTouched('irrdep', false);
+                  setFieldValue('irrdep', 'capacity90');
                 }}
               />
               <span style={{ display: 'inline-block' }}>Predefined</span>
@@ -88,9 +89,14 @@ const CropManagementForm = props => {
                 value="manual"
                 checked={values.irrdepType === 'manual'}
                 onBlur={() => setFieldTouched('irrdepType', true)}
-                onChange={e => {
-                  // setIrrDepRadioSelection(e.target.value);
+                onChange={(e) => {
                   setFieldValue('irrdepType', 'manual');
+                  setFieldTouched('irrdep', false);
+                  if (values.unitType === 'us') {
+                    setFieldValue('irrdep', 1);
+                  } else {
+                    setFieldValue('irrdep', 25.4);
+                  }
                 }}
               />
               <span style={{ display: 'inline-block' }}>Manual</span>
@@ -99,7 +105,7 @@ const CropManagementForm = props => {
                   type="number"
                   name="irrdep"
                   step="0.1"
-                  disabled={values.irrdepType === 'select' ? true : false}
+                  disabled={values.irrdepType === 'predefined' ? true : false}
                 />
               </UnitGroup>
             </div>
@@ -150,9 +156,9 @@ CropManagementForm.propTypes = {
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
-    thaw: PropTypes.number
+    thaw: PropTypes.number,
   }),
-  unitType: PropTypes.string
+  unitType: PropTypes.string,
 };
 
 export default CropManagementForm;
