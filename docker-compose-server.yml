@@ -9,3 +9,10 @@ services:
       - 5002:5000
     restart: always
     env_file: ./.env
+  mongo:
+    container_name: edwrd-db
+    image: mongo
+    volumes:
+      - ${EDWRD_DB_DATA}:/data/db
+    ports:
+      - 27017:27017

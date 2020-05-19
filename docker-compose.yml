@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   server:
-    container_name: edwrd-server-dev
+    container_name: edwrd-server
     build:
       context: ./server
     command: /app/node_modules/.bin/nodemon src/index.js
@@ -13,7 +13,7 @@ services:
     restart: always
     env_file: .env
   client:
-    container_name: edwrd-client-dev
+    container_name: edwrd-client
     build:
       context: ./client
     command: yarn start
@@ -25,3 +25,10 @@ services:
     restart: always
     ports:
       - 3000:3000
+  mongo:
+    container_name: edwrd-db
+    image: mongo
+    volumes:
+      - ${EDWRD_DB_DATA}:/data/db
+    ports:
+      - 27017:27017

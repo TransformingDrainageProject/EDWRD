@@ -1,19 +1,27 @@
 const express = require('express');
 const createError = require('http-errors');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 
 const winston = require('./config/winston');
+
+// register model schemas
+require('./models/Task');
 
 const app = express();
 
 // log using morgan and winston
 app.use(morgan('combined', { stream: winston.stream }));
 
+// connect to database
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+
 // priority to serve any static files
 app.use(express.static(path.resolve(__dirname, '../../client/build')));
 
+// routes
 require('./routes/downloadRoutes')(app);
 require('./routes/gisRoutes')(app);
 

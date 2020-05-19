@@ -66,31 +66,31 @@ const CropManagementForm = (props) => {
               <Input
                 type="radio"
                 name="irrdepRadio"
-                value="predefined"
-                checked={values.irrdepType === 'predefined'}
+                value="variable"
+                checked={values.irrdepType === 'variable'}
                 onBlur={() => setFieldTouched('irrdepType', true)}
                 onChange={(e) => {
-                  setFieldValue('irrdepType', 'predefined');
+                  setFieldValue('irrdepType', 'variable');
                   setFieldTouched('irrdep', false);
                   setFieldValue('irrdep', 'capacity90');
                 }}
               />
-              <span style={{ display: 'inline-block' }}>Predefined</span>
+              <span style={{ display: 'inline-block' }}>Variable amount</span>
               <MySelectField
                 name="irrdep"
                 options={irrdepOptions}
-                disabled={values.irrdepType === 'manual' ? true : false}
+                disabled={values.irrdepType === 'fixed' ? true : false}
               />
             </div>
             <div className="mt-2">
               <Input
                 type="radio"
                 name="irrdepRadio"
-                value="manual"
-                checked={values.irrdepType === 'manual'}
+                value="fixed"
+                checked={values.irrdepType === 'fixed'}
                 onBlur={() => setFieldTouched('irrdepType', true)}
                 onChange={(e) => {
-                  setFieldValue('irrdepType', 'manual');
+                  setFieldValue('irrdepType', 'fixed');
                   setFieldTouched('irrdep', false);
                   if (values.unitType === 'us') {
                     setFieldValue('irrdep', 1);
@@ -99,13 +99,13 @@ const CropManagementForm = (props) => {
                   }
                 }}
               />
-              <span style={{ display: 'inline-block' }}>Manual</span>
+              <span style={{ display: 'inline-block' }}>Fixed amount</span>
               <UnitGroup unit="inches" unitType={unitType}>
                 <MyInputField
                   type="number"
                   name="irrdep"
                   step="0.1"
-                  disabled={values.irrdepType === 'predefined' ? true : false}
+                  disabled={values.irrdepType === 'variable' ? true : false}
                 />
               </UnitGroup>
             </div>

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 export const cropManagementFormSchema = yup.object({
   cropSelection: yup.string().required(),
   irrdep: yup.mixed().when('irrdepType', {
-    is: 'predefined',
+    is: 'variable',
     then: yup.string().required(),
     otherwise: yup.number().min(0).required(),
   }),
