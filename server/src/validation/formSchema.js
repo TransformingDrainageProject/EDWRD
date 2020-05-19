@@ -16,6 +16,8 @@ const formSchema = {
   irrdepType: rules.string,
   lateDateEnd: rules.string,
   lateDateStart: rules.string,
+  'location.latitude': rules.number,
+  'location.longitude': rules.number,
   midCropHeight: rules.number,
   midDateEnd: rules.string,
   midDateStart: rules.string,

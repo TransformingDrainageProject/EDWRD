@@ -1,5 +1,6 @@
 const { checkSchema, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
+const { spawn } = require('child_process');
 
 const { getFormSchema } = require('../validation/schema');
 
@@ -17,6 +18,8 @@ module.exports = (app) => {
       const form = new Form(req.body);
       form.save((err) => {
         if (err) return next(err);
+        // find wind and rhmin
+
         return res.sendStatus(200);
       });
     }

@@ -24,6 +24,7 @@ import {
   userMetricInitialValues,
   userUSInitialValues,
 } from './UserDataForm/initialValues';
+
 // validation schemas
 import setYupLocale from './setYupLocale';
 import { fieldReservoirFormSchema } from './FieldReservoirForm/validationSchema';
@@ -54,7 +55,7 @@ const validationSchema = fieldReservoirFormSchema
   .concat(advancedSettingsFormSchema);
 
 const FormContainer = (props) => {
-  const { origin, fieldState, frzThwDates, unitType } = props;
+  const { origin, fieldState, frzThwDates, markerCoords, unitType } = props;
 
   return (
     <Container>
@@ -68,9 +69,8 @@ const FormContainer = (props) => {
         validationSchema={validationSchema}
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
           setTimeout(() => {
-            console.log(values);
             axios
-              .post('/api/form', values)
+              .post('/api/form', { ...markerCoords, ...values })
               .then((response) => {
                 console.log(response);
                 // success

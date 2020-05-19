@@ -18,6 +18,10 @@ const formSchema = new Schema({
   irrdepType: String,
   lateDateEnd: Date,
   lateDateStart: Date,
+  location: {
+    latitude: Number,
+    longitude: Number,
+  },
   midCropHeight: Number,
   midDateEnd: Date,
   midDateStart: Date,

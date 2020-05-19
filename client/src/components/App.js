@@ -22,6 +22,9 @@ const App = () => {
     freeze: 311.46277,
     thaw: 86.998985,
   });
+  const [markerCoords, updateMarkerCoords] = useState({
+    location: { latitude: ORIGIN.lat, longitude: ORIGIN.lon },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,12 +72,14 @@ const App = () => {
         origin={ORIGIN}
         updateFieldState={updateFieldState}
         updateFrzThwDates={updateFrzThwDates}
+        updateMarkerCoords={updateMarkerCoords}
         type="selectFieldLocation"
       />
       <FormContainer
         origin={ORIGIN}
         fieldState={fieldState}
         frzThwDates={frzThwDates}
+        markerCoords={markerCoords}
         unitType={unitType}
       />
       <Footer />

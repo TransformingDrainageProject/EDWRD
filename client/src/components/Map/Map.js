@@ -1,14 +1,12 @@
 import './Map.css';
 import React, { useRef, useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { divIcon } from 'leaflet';
-import { GeoJSON, Map as LeafletMap, Marker, TileLayer } from 'react-leaflet';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-
 import axios from 'axios';
+import { divIcon } from 'leaflet';
 import PropTypes from 'prop-types';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { GeoJSON, Map as LeafletMap, Marker, TileLayer } from 'react-leaflet';
 
 import precompiledDataStations from './stations_with_precompiled_data.js';
 import regionalGrid from './midwest_states.json';
@@ -25,12 +23,13 @@ const customMarkerIconSelected = divIcon({
   ),
 });
 
-const Map = props => {
+const Map = (props) => {
   const {
     origin,
     type,
     updateFieldState,
     updateFrzThwDates,
+    updateMarkerCoords,
     selectedSite,
     setSelectedSite,
   } = props;
@@ -56,10 +55,10 @@ const Map = props => {
           lon: coords.lng,
         },
       })
-      .then(response => {
+      .then((response) => {
         updateFieldState(response.data.results.trim().toLowerCase());
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
     // use marker coordinates to find freeze and thaw dates
@@ -70,21 +69,24 @@ const Map = props => {
           lon: coords.lng,
         },
       })
-      .then(response => {
+      .then((response) => {
         let results = response.data.results;
         updateFrzThwDates({
           freeze: parseFloat(results.freeze),
           thaw: parseFloat(results.thaw),
         });
+        updateMarkerCoords({
+          location: { latitude: coords.lat, longitude: coords.lng },
+        });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
 
   function onPrecompiledStationClick(e) {
     const position = e.target.options.position;
-    const station = precompiledDataStations.filter(chain => {
+    const station = precompiledDataStations.filter((chain) => {
       return chain.lat === position[0] && chain.lon === position[1];
     })[0];
     setSelectedSite({ id: station.id, name: station.site_id });
@@ -102,7 +104,7 @@ const Map = props => {
             icon={customMarkerIcon}
           />
         ) : (
-          precompiledDataStations.map(station => (
+          precompiledDataStations.map((station) => (
             <Marker
               key={station.id}
               position={[station.lat, station.lon]}
