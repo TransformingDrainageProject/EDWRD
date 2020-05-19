@@ -8,9 +8,11 @@ const path = require('path');
 const winston = require('./config/winston');
 
 // register model schemas
+require('./models/Form');
 require('./models/Task');
 
 const app = express();
+app.use(express.json());
 
 // log using morgan and winston
 app.use(morgan('combined', { stream: winston.stream }));
@@ -23,6 +25,7 @@ app.use(express.static(path.resolve(__dirname, '../../client/build')));
 
 // routes
 require('./routes/downloadRoutes')(app);
+require('./routes/formRoutes')(app);
 require('./routes/gisRoutes')(app);
 
 // send requests not caught by a route to react client

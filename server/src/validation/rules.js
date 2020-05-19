@@ -4,13 +4,8 @@ module.exports = {
     escape: true,
     toBoolean: true,
   },
-  int: {
-    isInt: true,
-    trim: true,
-    escape: true,
-  },
-  float: {
-    isFloat: true,
+  number: {
+    isNumeric: true,
     trim: true,
     escape: true,
   },

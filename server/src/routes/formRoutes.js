@@ -1,4 +1,3 @@
-const to = require('await-to-js').default;
 const { checkSchema, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
@@ -15,15 +14,11 @@ module.exports = (app) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) return res.status(422).json(errors);
 
-      let err, form;
-      [err, form] = await to(new Form(req.body).save());
-      if (err) return next(err);
-
-      if (form) {
+      const form = new Form(req.body);
+      form.save((err) => {
+        if (err) return next(err);
         return res.sendStatus(200);
-      } else {
-        return res.sendStatus(500);
-      }
+      });
     }
   );
 };

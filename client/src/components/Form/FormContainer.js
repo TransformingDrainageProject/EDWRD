@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
@@ -9,19 +10,19 @@ import UserDataForm from './UserDataForm';
 // initial values
 import {
   fieldMetricInitialValues,
-  fieldUSInitialValues
+  fieldUSInitialValues,
 } from './FieldReservoirForm/initialValues';
 import {
   cropMetricInitialValues,
-  cropUSInitialValues
+  cropUSInitialValues,
 } from './CropManagementForm/initialValues';
 import {
   advUSInitialValues,
-  advMetricInitialValues
+  advMetricInitialValues,
 } from './AdvancedSettingsForm/initialValues';
 import {
   userMetricInitialValues,
-  userUSInitialValues
+  userUSInitialValues,
 } from './UserDataForm/initialValues';
 // validation schemas
 import setYupLocale from './setYupLocale';
@@ -36,14 +37,14 @@ const metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
   ...userMetricInitialValues,
-  ...advMetricInitialValues
+  ...advMetricInitialValues,
 };
 
 const usInitialValues = {
   ...fieldUSInitialValues,
   ...cropUSInitialValues,
   ...userUSInitialValues,
-  ...advUSInitialValues
+  ...advUSInitialValues,
 };
 
 const validationSchema = fieldReservoirFormSchema
@@ -52,7 +53,7 @@ const validationSchema = fieldReservoirFormSchema
   .concat(userDataFormSchema)
   .concat(advancedSettingsFormSchema);
 
-const FormContainer = props => {
+const FormContainer = (props) => {
   const { origin, fieldState, frzThwDates, unitType } = props;
 
   return (
@@ -65,8 +66,24 @@ const FormContainer = props => {
         }
         enableReinitialize={true}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
           setTimeout(() => {
+            console.log(values);
+            axios
+              .post('/api/form', values)
+              .then((response) => {
+                console.log(response);
+                // success
+              })
+              .catch((err) => {
+                if (err.response && err.response.status === 422) {
+                  err.response.data.errors.forEach((fieldError) =>
+                    setFieldError(fieldError.param, fieldError.msg)
+                  );
+                } else {
+                  setStatus('Unable to process form submission at this time.');
+                }
+              });
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 400);
@@ -79,7 +96,7 @@ const FormContainer = props => {
           setFieldValue,
           setFieldTouched,
           touched,
-          values
+          values,
         }) => (
           <Form>
             <Row>
@@ -131,6 +148,13 @@ const FormContainer = props => {
                 </Button>
               </Col>
             </Row>
+            {status ? (
+              <Row>
+                <Col className="text-center">
+                  <span style={{ color: 'red' }}>{status}</span>
+                </Col>
+              </Row>
+            ) : null}
             <Debug />
           </Form>
         )}
@@ -143,14 +167,14 @@ FormContainer.propTypes = {
   origin: PropTypes.shape({
     lat: PropTypes.number,
     lon: PropTypes.number,
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
   }),
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
-    thaw: PropTypes.number
+    thaw: PropTypes.number,
   }),
-  unitType: PropTypes.string
+  unitType: PropTypes.string,
 };
 
 export default FormContainer;

@@ -9,7 +9,6 @@
   "author": "Ben Hancock <hancocb@purdue.edu>",
   "license": "MIT",
   "dependencies": {
-    "await-to-js": "^2.1.1",
     "concurrently": "^4.1.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
