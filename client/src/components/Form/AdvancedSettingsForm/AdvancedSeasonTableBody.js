@@ -10,9 +10,12 @@ const AdvancedSeasonTableBody = () => {
       <tr>
         <th>Planting Date</th>
         <th>
-          <MyCustomField name="plantDate" component={DateRangePicker} />
+          <MyCustomField
+            name="plantDate"
+            component={DateRangePicker}
+            disabled="endDate"
+          />
           <ErrorMessage name="plantDateStart" />
-          <ErrorMessage name="plantDateEnd" />
         </th>
         <th></th>
         <th></th>

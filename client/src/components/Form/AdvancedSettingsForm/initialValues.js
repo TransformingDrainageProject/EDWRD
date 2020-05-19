@@ -2,23 +2,31 @@ import moment from 'moment';
 
 // Default dates for Illinois (default map marker location)
 const year = new Date().getFullYear();
-const plantDateStart = new Date(year, 4, 7);
-const plantDateEnd = new Date(year, 4, 7 + 30);
-const initDateStart = new Date(year, 4, 7 + 30);
-const initDateEnd = new Date(year, 4, 7 + 30 + 40);
-const devDateStart = new Date(year, 4, 7 + 30 + 40);
-const devDateEnd = new Date(year, 4, 7 + 30 + 40 + 50);
-const midDateStart = new Date(year, 4, 7 + 30 + 40 + 50);
-const midDateEnd = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
-const lateDateStart = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
-const lateDateEnd = new Date(year, 9, 14);
+// const plantDateStart = new Date(year, 4, 7);
+// const initDateStart = new Date(year, 4, 7 + 30);
+// const initDateEnd = new Date(year, 4, 7 + 30 + 40);
+// const devDateStart = new Date(year, 4, 7 + 30 + 40);
+// const devDateEnd = new Date(year, 4, 7 + 30 + 40 + 50);
+// const midDateStart = new Date(year, 4, 7 + 30 + 40 + 50);
+// const midDateEnd = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
+// const lateDateStart = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
+// const lateDateEnd = new Date(year, 9, 14);
 const harvestDateStart = new Date(year, 9, 14);
 const soilDateStart = new Date(year, 0, 1 + 311.46277);
 const soilDateEnd = new Date(year + 1, 0, 1 + 86.998985);
 
+const plantDateStart = new Date(year, 4, 7);
+const initDateStart = new Date(year, 4, 7 + 1);
+const initDateEnd = new Date(year, 4, 7 + 30);
+const devDateStart = new Date(year, 4, 7 + 30 + 1);
+const devDateEnd = new Date(year, 4, 7 + 30 + 40);
+const midDateStart = new Date(year, 4, 7 + 30 + 40 + 1);
+const midDateEnd = new Date(year, 4, 7 + 30 + 40 + 50);
+const lateDateStart = new Date(year, 4, 7 + 30 + 40 + 50 + 1);
+const lateDateEnd = new Date(year, 4, 7 + 30 + 40 + 50 + 30);
+
 const unitlessInitialValues = {
   plantDateStart: moment(plantDateStart),
-  plantDateEnd: moment(plantDateEnd),
   initDateStart: moment(initDateStart),
   initDateEnd: moment(initDateEnd),
   devDateStart: moment(devDateStart),

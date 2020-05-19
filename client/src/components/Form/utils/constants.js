@@ -64,6 +64,7 @@ export const CORN_DATE_RANGES = {
   late: 30 + 40 + 50 + 30,
   harvest: 0,
 };
+
 export const SOYBEAN_DATE_RANGES = {
   plant: 0,
   init: 20,

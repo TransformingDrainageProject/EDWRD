@@ -17,21 +17,29 @@ import {
 function getGrowingSeasons(dateRange, days) {
   return [
     { name: 'plantDateStart', value: dateRange.planting },
-    { name: 'plantDateEnd', value: addToDate(dateRange.planting, days.init) },
     {
       name: 'initDateStart',
-      value: addToDate(dateRange.planting, days.init),
+      value: addToDate(dateRange.planting, 1),
     },
-    { name: 'initDateEnd', value: addToDate(dateRange.planting, days.dev) },
-    { name: 'devDateStart', value: addToDate(dateRange.planting, days.dev) },
-    { name: 'devDateEnd', value: addToDate(dateRange.planting, days.mid) },
-    { name: 'midDateStart', value: addToDate(dateRange.planting, days.mid) },
-    { name: 'midDateEnd', value: addToDate(dateRange.planting, days.late) },
+    { name: 'initDateEnd', value: addToDate(dateRange.planting, days.init) },
+    {
+      name: 'devDateStart',
+      value: addToDate(dateRange.planting, days.init + 1),
+    },
+    { name: 'devDateEnd', value: addToDate(dateRange.planting, days.dev) },
+    {
+      name: 'midDateStart',
+      value: addToDate(dateRange.planting, days.dev + 1),
+    },
+    { name: 'midDateEnd', value: addToDate(dateRange.planting, days.mid) },
     {
       name: 'lateDateStart',
+      value: addToDate(dateRange.planting, days.mid + 1),
+    },
+    {
+      name: 'lateDateEnd',
       value: addToDate(dateRange.planting, days.late),
     },
-    { name: 'lateDateEnd', value: dateRange.harvest },
     { name: 'harvestDateStart', value: dateRange.harvest },
   ];
 }
@@ -85,7 +93,7 @@ function updateGrowingSeasonFields(
       const days = cropType === 'corn' ? CORN_DATE_RANGES : SOYBEAN_DATE_RANGES;
       let dateRange = GROWING_DATES[fieldState];
 
-      getGrowingSeasons(dateRange, days).forEach(field => {
+      getGrowingSeasons(dateRange, days).forEach((field) => {
         actions.setFieldValue(field.name, moment(field.value));
         actions.setFieldTouched(field.name, true);
       });

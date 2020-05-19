@@ -1,52 +1,17 @@
 import * as yup from 'yup';
 
 export const advancedSettingsFormSchema = yup.object().shape({
-  rew: yup
-    .number()
-    .positive()
-    .required(),
-  rseep: yup
-    .number()
-    .min(0)
-    .required(),
-  ze: yup
-    .number()
-    .min(0)
-    .required(),
-  zefc: yup
-    .number()
-    .positive()
-    .max(1)
-    .moreThan(yup.ref('zewp'))
-    .required(),
-  zewp: yup
-    .number()
-    .positive()
-    .max(1)
-    .required(),
-  zrfc: yup
-    .number()
-    .positive()
-    .max(1)
-    .moreThan(yup.ref('zrwp'))
-    .required(),
-  zrwp: yup
-    .number()
-    .positive()
-    .max(1)
-    .required(),
-  plantDateStart: yup
-    .date()
-    .max(yup.ref('plantDateEnd'))
-    .required(),
-  plantDateEnd: yup
-    .date()
-    .min(yup.ref('plantDateStart'))
-    .max(yup.ref('initDateStart'))
-    .required(),
+  rew: yup.number().positive().required(),
+  rseep: yup.number().min(0).required(),
+  ze: yup.number().min(0).required(),
+  zefc: yup.number().positive().max(1).moreThan(yup.ref('zewp')).required(),
+  zewp: yup.number().positive().max(1).required(),
+  zrfc: yup.number().positive().max(1).moreThan(yup.ref('zrwp')).required(),
+  zrwp: yup.number().positive().max(1).required(),
+  plantDateStart: yup.date().max(yup.ref('initDateStart')).required(),
   initDateStart: yup
     .date()
-    .min(yup.ref('plantDateEnd'))
+    .min(yup.ref('plantDateStart'))
     .max(yup.ref('initDateEnd'))
     .required(),
   initDateEnd: yup
@@ -86,23 +51,13 @@ export const advancedSettingsFormSchema = yup.object().shape({
     .required(),
   harvestDateStart: yup
     .date()
-    .min(yup.ref('lateDateEnd'), 'Must match late season end date')
-    .max(yup.ref('lateDateEnd'), 'Must match late season end date')
+    .min(yup.ref('lateDateEnd'))
+    .max(yup.ref('soilDateStart'))
     .required(),
-  initKC: yup
-    .number()
-    .positive()
-    .required(),
-  midKC: yup
-    .number()
-    .positive()
-    .required(),
-  initCropHeight: yup
-    .number()
-    .positive()
-    .required(),
-  midCropHeight: yup
-    .number()
-    .positive()
-    .required(),
+  soilDateStart: yup.date().min(yup.ref('harvestDateStart')).required(),
+  soilDateEnd: yup.date().required(),
+  initKC: yup.number().positive().required(),
+  midKC: yup.number().positive().required(),
+  initCropHeight: yup.number().positive().required(),
+  midCropHeight: yup.number().positive().required(),
 });
