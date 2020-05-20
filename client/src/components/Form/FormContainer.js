@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Col, Container, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 // forms
@@ -57,8 +57,10 @@ const validationSchema = fieldReservoirFormSchema
 const FormContainer = (props) => {
   const { origin, fieldState, frzThwDates, markerCoords, unitType } = props;
 
+  const [showModifyInputs, toggleShowModifyInputs] = useState(false);
+
   return (
-    <Container>
+    <>
       <Formik
         initialValues={
           unitType === 'us'
@@ -89,53 +91,49 @@ const FormContainer = (props) => {
           }, 400);
         }}
       >
-        {({
-          errors,
-          status,
-          isSubmitting,
-          setFieldValue,
-          setFieldTouched,
-          touched,
-          values,
-        }) => (
+        {({ status, isSubmitting }) => (
           <Form>
-            <Row>
-              <Col>
-                <h1>2. Describe your field and reservoir</h1>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <FieldReservoirForm unitType={unitType} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h1>3. Describe your crop and management</h1>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <CropManagementForm
-                  unitType={unitType}
-                  fieldState={fieldState}
-                  frzThwDates={frzThwDates}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h1>
-                  4. Select your data source for daily weather, drain flow, and
-                  nutrient concentrations.
-                </h1>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <UserDataForm origin={origin} />
-              </Col>
-            </Row>
+            {showModifyInputs ? (
+              <>
+                <Row>
+                  <Col>
+                    <h1>2. Describe your field and reservoir</h1>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FieldReservoirForm unitType={unitType} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h1>3. Describe your crop and management</h1>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <CropManagementForm
+                      unitType={unitType}
+                      fieldState={fieldState}
+                      frzThwDates={frzThwDates}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h1>
+                      4. Select your data source for daily weather, drain flow,
+                      and nutrient concentrations.
+                    </h1>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <UserDataForm origin={origin} />
+                  </Col>
+                </Row>
+              </>
+            ) : null}
             <Row>
               <Col className="text-center">
                 <Button
@@ -144,9 +142,22 @@ const FormContainer = (props) => {
                   disabled={isSubmitting}
                   style={{ backgroundColor: '#007cb3', height: '75px' }}
                 >
-                  <strong>CLICK HERE TO RUN EDWRD</strong>
+                  <strong>Run EDWRD</strong>
                 </Button>
               </Col>
+              {!showModifyInputs ? (
+                <Col className="text-center">
+                  <Button
+                    className="mb-4"
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => toggleShowModifyInputs(true)}
+                    style={{ backgroundColor: '#007cb3', height: '75px' }}
+                  >
+                    <strong>Modify Inputs</strong>
+                  </Button>
+                </Col>
+              ) : null}
             </Row>
             {status ? (
               <Row>
@@ -159,7 +170,7 @@ const FormContainer = (props) => {
           </Form>
         )}
       </Formik>
-    </Container>
+    </>
   );
 };
 

@@ -1,8 +1,10 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'reactstrap';
 
 import Header from './Header';
+import Instructions from './Instructions';
 import Introduction from './Introduction';
 import MapContainer from './Map/MapContainer';
 import FormContainer from './Form/FormContainer';
@@ -65,16 +67,24 @@ const App = () => {
   }, []);
 
   return (
-    <div className="container-fluid">
+    <Container>
       <Header />
       <Introduction setUnitType={setUnitType} unitType={unitType} />
-      <MapContainer
-        origin={ORIGIN}
-        updateFieldState={updateFieldState}
-        updateFrzThwDates={updateFrzThwDates}
-        updateMarkerCoords={updateMarkerCoords}
-        type="selectFieldLocation"
-      />
+      <hr />
+      <Row>
+        <Col md={4}>
+          <Instructions />
+        </Col>
+        <Col md={8}>
+          <MapContainer
+            origin={ORIGIN}
+            updateFieldState={updateFieldState}
+            updateFrzThwDates={updateFrzThwDates}
+            updateMarkerCoords={updateMarkerCoords}
+            type="selectFieldLocation"
+          />
+        </Col>
+      </Row>
       <FormContainer
         origin={ORIGIN}
         fieldState={fieldState}
@@ -83,7 +93,7 @@ const App = () => {
         unitType={unitType}
       />
       <Footer />
-    </div>
+    </Container>
   );
 };
 

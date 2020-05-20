@@ -12,7 +12,7 @@ import { fieldReservoirHelp } from './fieldReservoirHelp';
 import { soilTypeOptions } from './constants';
 import { updateSoilFields } from './updateSoilFields';
 
-const FieldReservoirForm = props => {
+const FieldReservoirForm = (props) => {
   const { unitType } = props;
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
@@ -29,7 +29,7 @@ const FieldReservoirForm = props => {
   }
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col className="mb-4" md={6} lg={4}>
           <FormCard
@@ -120,7 +120,7 @@ const FieldReservoirForm = props => {
 };
 
 FieldReservoirForm.propTypes = {
-  unitType: PropTypes.string
+  unitType: PropTypes.string,
 };
 
 export default FieldReservoirForm;

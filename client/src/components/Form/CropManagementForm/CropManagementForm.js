@@ -41,7 +41,7 @@ const CropManagementForm = (props) => {
   ];
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col className="mb-4" md={4} lg={2}>
           <FormCard

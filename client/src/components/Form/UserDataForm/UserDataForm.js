@@ -9,20 +9,20 @@ import FormCard from '../FormCard';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { MyRadioField } from '../FormikComponents/MyFields';
 
-const UserDataForm = props => {
+const UserDataForm = (props) => {
   const { origin } = props;
   const { values } = useFormikContext();
 
   const userDataSelectionOptions = [
     {
       label: 'Choose existing data from a research site',
-      value: 'false'
+      value: 'false',
     },
-    { label: 'Upload my own data file', value: 'true' }
+    { label: 'Upload my own data file', value: 'true' },
   ];
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col className="mb-4">
           <FormCard hideHelp={true}>
@@ -66,8 +66,8 @@ UserDataForm.propTypes = {
   origin: PropTypes.shape({
     lat: PropTypes.number,
     lon: PropTypes.number,
-    zoom: PropTypes.number
-  })
+    zoom: PropTypes.number,
+  }),
 };
 
 export default UserDataForm;
