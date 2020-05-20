@@ -8,6 +8,7 @@ const taskSchema = new Schema({
   error: String,
   params: {
     darea: Number,
+    dareaIncSurfaceRunoff: Boolean,
     iarea: Number,
     rarea: Number,
     rdep: Number,
@@ -19,7 +20,7 @@ const taskSchema = new Schema({
     zefc: Number,
     zewp: Number,
     rew: Number,
-    cn: Number,
+    cn: { type: Number, default: 65 },
     wind: [Number],
     rhmin: [Number],
     cstart: Number,
@@ -27,11 +28,10 @@ const taskSchema = new Schema({
     ngrw_stage: [Number],
     cht: [Number],
     kc: [Number],
-    frz_kc: Number,
-    fw: Number,
-    pfact: Number,
-    irr: Number,
-    residue: Number,
+    fw: { type: Number, default: 1 },
+    pfact: { type: Number, default: 0.55 },
+    irrdep: String,
+    resd: { type: Number, default: 0.3 },
   },
 });
 

@@ -70,10 +70,11 @@ const FormContainer = (props) => {
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
           setTimeout(() => {
             axios
-              .post('/api/form', { ...markerCoords, ...values })
+              .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
               .then((response) => {
-                console.log(response);
-                // success
+                if (response && response.data) {
+                  alert(JSON.stringify(response.data, null, 2));
+                }
               })
               .catch((err) => {
                 if (err.response && err.response.status === 422) {
@@ -84,7 +85,6 @@ const FormContainer = (props) => {
                   setStatus('Unable to process form submission at this time.');
                 }
               });
-            alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 400);
         }}
