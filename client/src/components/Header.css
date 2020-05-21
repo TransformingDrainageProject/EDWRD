@@ -1,0 +1,22 @@
+#edwrd-title {
+  color: #2d79b6;
+  font-size: 1.8rem;
+  font-weight: bolder;
+}
+
+#tdp-logo {
+  max-height: 75px;
+}
+
+@media only screen and (device-width: 768px),
+  only screen and (max-width: 768px) {
+  #edwrd-title {
+    text-align: center;
+  }
+
+  #tdp-logo {
+    max-height: 75px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

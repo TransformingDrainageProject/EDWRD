@@ -1,24 +1,34 @@
+import './Header.css';
 import React from 'react';
 import { Col, Row } from 'reactstrap';
 
-import edwrdLogo from '../assets/images/tdp_header.png';
+import tdpLogo from '../assets/images/Transforming_Drainage_672_288.png';
+import pondImg from '../assets/images/pond1.jpg';
 
 const Header = () => {
   return (
-    <Row>
-      <Col md={6}>
-        <img
-          src={edwrdLogo}
-          className="mx-auto d-block"
-          alt="Evaluating Drainage Water Recycling Decisions (EDWRD) Logo"
-          style={{ padding: '15px', width: '100%' }}
-        />
+    <Row style={{ padding: '15px' }}>
+      <Col md={3}>
+        <Row>
+          <a
+            href="https://transformingdrainage.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img id="tdp-logo" src={tdpLogo} alt="Transforming Drainage Logo" />
+          </a>
+        </Row>
+        <Row>
+          <span id="edwrd-title">
+            Evaluating Drainage Water Recycling Decisions (EDWRD)
+          </span>
+        </Row>
       </Col>
-      <Col md={6}>
+      <Col md={9}>
         <img
-          src={edwrdLogo}
+          src={pondImg}
           className="mx-auto d-block"
-          alt="Evaluating Drainage Water Recycling Decisions (EDWRD) Logo"
+          alt="Water storage reservoir"
           style={{ padding: '15px', width: '100%' }}
         />
       </Col>

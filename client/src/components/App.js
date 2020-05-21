@@ -67,33 +67,35 @@ const App = () => {
   }, []);
 
   return (
-    <Container>
-      <Header />
-      <Introduction setUnitType={setUnitType} unitType={unitType} />
-      <hr />
-      <Row>
-        <Col md={4}>
-          <Instructions />
-        </Col>
-        <Col md={8}>
-          <MapContainer
-            origin={ORIGIN}
-            updateFieldState={updateFieldState}
-            updateFrzThwDates={updateFrzThwDates}
-            updateMarkerCoords={updateMarkerCoords}
-            type="selectFieldLocation"
-          />
-        </Col>
-      </Row>
-      <FormContainer
-        origin={ORIGIN}
-        fieldState={fieldState}
-        frzThwDates={frzThwDates}
-        markerCoords={markerCoords}
-        unitType={unitType}
-      />
+    <div>
+      <Container>
+        <Header />
+        <Introduction setUnitType={setUnitType} unitType={unitType} />
+        <hr />
+        <Row>
+          <Col md={4}>
+            <Instructions />
+          </Col>
+          <Col md={8}>
+            <MapContainer
+              origin={ORIGIN}
+              updateFieldState={updateFieldState}
+              updateFrzThwDates={updateFrzThwDates}
+              updateMarkerCoords={updateMarkerCoords}
+              type="selectFieldLocation"
+            />
+          </Col>
+        </Row>
+        <FormContainer
+          origin={ORIGIN}
+          fieldState={fieldState}
+          frzThwDates={frzThwDates}
+          markerCoords={markerCoords}
+          unitType={unitType}
+        />
+      </Container>
       <Footer />
-    </Container>
+    </div>
   );
 };
 
