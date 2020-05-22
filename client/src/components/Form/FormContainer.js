@@ -57,6 +57,7 @@ const validationSchema = fieldReservoirFormSchema
 const FormContainer = (props) => {
   const { origin, fieldState, frzThwDates, markerCoords, unitType } = props;
 
+  const [results, setResults] = useState(null);
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
 
   return (
@@ -75,7 +76,7 @@ const FormContainer = (props) => {
               .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
               .then((response) => {
                 if (response && response.data) {
-                  alert(JSON.stringify(response.data, null, 2));
+                  setResults(response.data);
                 }
               })
               .catch((err) => {
@@ -165,6 +166,34 @@ const FormContainer = (props) => {
                   <span style={{ color: 'red' }}>{status}</span>
                 </Col>
               </Row>
+            ) : null}
+            {results ? (
+              <div className="mb-3">
+                <div
+                  style={{
+                    textTransform: 'uppercase',
+                    fontSize: 11,
+                    borderTopLeftRadius: 4,
+                    borderTopRightRadius: 4,
+                    fontWeight: 500,
+                    padding: '.5rem',
+                    background: '#555',
+                    color: '#fff',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  Results
+                </div>
+                <pre
+                  style={{
+                    fontSize: '.65rem',
+                    padding: '.25rem .5rem',
+                    overflowX: 'scroll',
+                  }}
+                >
+                  {JSON.stringify(results, null, 2)}
+                </pre>
+              </div>
             ) : null}
             <Debug />
           </Form>
