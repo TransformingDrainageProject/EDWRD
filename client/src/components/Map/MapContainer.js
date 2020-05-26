@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Row } from 'reactstrap';
+import { Button, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,7 +12,7 @@ function SelectStationLocationMap(props) {
     name: 'Purdue Water Quality Field Station',
   });
   return (
-    <Container>
+    <div>
       <Row>
         <span className="mr-2">Select station on the map</span>
         <FontAwesomeIcon icon={faMapMarkerAlt} size="1x" color="#edb229" />
@@ -42,21 +42,21 @@ function SelectStationLocationMap(props) {
           {displayMap ? 'Hide map' : 'Show map'}
         </Button>
       </Row>
-    </Container>
+    </div>
   );
 }
 
 function SelectFieldLocationMap(props) {
   return (
-    <Container>
+    <div>
       <h1>1. Click and drag the pin to your field's location</h1>
       <Map {...props} />
       <hr />
-    </Container>
+    </div>
   );
 }
 
-const MapContainer = props => {
+const MapContainer = (props) => {
   return props.type === 'selectFieldLocation' ? (
     <SelectFieldLocationMap {...props} />
   ) : (

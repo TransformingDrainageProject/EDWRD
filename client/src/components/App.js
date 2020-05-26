@@ -1,7 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 import Header from './Header';
 import Instructions from './Instructions';
@@ -72,20 +72,14 @@ const App = () => {
         <Header />
         <Introduction setUnitType={setUnitType} unitType={unitType} />
         <hr />
-        <Row>
-          <Col md={4}>
-            <Instructions />
-          </Col>
-          <Col md={8}>
-            <MapContainer
-              origin={ORIGIN}
-              updateFieldState={updateFieldState}
-              updateFrzThwDates={updateFrzThwDates}
-              updateMarkerCoords={updateMarkerCoords}
-              type="selectFieldLocation"
-            />
-          </Col>
-        </Row>
+        <Instructions />
+        <MapContainer
+          origin={ORIGIN}
+          updateFieldState={updateFieldState}
+          updateFrzThwDates={updateFrzThwDates}
+          updateMarkerCoords={updateMarkerCoords}
+          type="selectFieldLocation"
+        />
         <FormContainer
           origin={ORIGIN}
           fieldState={fieldState}

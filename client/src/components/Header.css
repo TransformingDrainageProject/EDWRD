@@ -5,7 +5,9 @@
 }
 
 #tdp-logo {
-  max-height: 75px;
+  height: 50vh;
+  max-height: 400px;
+  max-width: 100%;
 }
 
 @media only screen and (device-width: 768px),
