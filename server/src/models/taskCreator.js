@@ -11,6 +11,7 @@ module.exports = {
         iarea: formValues.iarea,
         rarea: formValues.rarea,
         rdep: formValues.rdep,
+        rdep_min: formValues.rdepMin,
         rseep: formValues.rseep,
         zr: formValues.zr,
         zrfc: formValues.zrfc,
@@ -40,6 +41,7 @@ module.exports = {
         ],
         kc: [formValues.initKC, formValues.midKC, 0.15, 0.44],
         irrdep: formValues.irrdep,
+        irrdep_min: formValues.irrdepMin
       },
     });
   },
