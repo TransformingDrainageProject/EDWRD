@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 
 export const advancedSettingsFormSchema = yup.object().shape({
+  rdepMin: yup.number().positive().required(),
   rew: yup.number().positive().required(),
   rseep: yup.number().min(0).required(),
   ze: yup.number().min(0).required(),

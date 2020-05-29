@@ -47,6 +47,7 @@ const unitlessInitialValues = {
 };
 
 export const advUSInitialValues = {
+  rdepMin: 1,
   rew: 0.4,
   rseep: 0.04,
   ze: 0.33,
@@ -56,6 +57,7 @@ export const advUSInitialValues = {
 };
 
 export const advMetricInitialValues = {
+  rdepMin: 0.3,
   rew: 10.0,
   rseep: 0.9,
   ze: 0.1,

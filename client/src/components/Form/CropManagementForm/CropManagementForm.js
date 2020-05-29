@@ -110,6 +110,25 @@ const CropManagementForm = (props) => {
               </UnitGroup>
             </div>
             <ErrorMessage name="irrdep" />
+            {values.irrdepType === 'variable' &&
+            values.irrdep === 'deficitOnly' ? (
+              <div>
+                <hr />
+                <div className="mt-3">
+                  <span style={{ display: 'inline-block' }}>
+                    Mimimum irrigation application depth
+                  </span>
+                  <UnitGroup
+                    unit="inches"
+                    unitLabel="depth"
+                    unitType={unitType}
+                  >
+                    <MyInputField type="number" name="irrdepMin" step="0.1" />
+                  </UnitGroup>
+                  <ErrorMessage name="irrdepMin" />
+                </div>
+              </div>
+            ) : null}
           </FormCard>
         </Col>
         <Col className="mb-4" md={12} lg={5}>
@@ -128,26 +147,8 @@ const CropManagementForm = (props) => {
               frzThwDates={frzThwDates}
             />
           </FormCard>
-          {/* <FormCard label="Water Depletion Factor">
-            <MyInputField type="number" name="pfact" step="0.05" />
-            <ErrorMessage name="pfact" />
-          </FormCard> */}
         </Col>
       </Row>
-      {/* <Row>
-        <Col className="text-center mb-4">
-          <FormCard label="Show crop growth and other advanced inputs">
-            <AdvancedSettingsForm
-              values={values}
-              setFieldValue={setFieldValue}
-              setFieldTouched={setFieldTouched}
-              unitType={unitType}
-              fieldState={fieldState}
-              frzThwDates={frzThwDates}
-            />
-          </FormCard>
-        </Col>
-      </Row> */}
     </Container>
   );
 };

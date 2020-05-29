@@ -1,6 +1,13 @@
 import React from 'react';
 
 export const advancedSettingsHelp = {
+  rdepMin: (
+    <div>
+      The minimum reservoir depth for irrigation sets the minimum threshold
+      depth for when water may be withdrawn from the reservoir for irrigation.
+      If water levels are below this depth, irrigation will not be applied.
+    </div>
+  ),
   rseep: (
     <div>
       Enter a value that represents an estimated average daily seepage rate from
@@ -186,5 +193,5 @@ export const advancedSettingsHelp = {
       </a>
       .
     </div>
-  )
+  ),
 };

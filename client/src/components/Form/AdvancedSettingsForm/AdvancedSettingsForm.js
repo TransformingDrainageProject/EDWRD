@@ -251,6 +251,29 @@ const AdvancedSettings = props => {
                         <ErrorMessage name="rseep" />
                       </Col>
                     </Row>
+                    <Row>
+                      <Col>
+                        <AdvancedLabel
+                          name="rdepMin"
+                          text="Minimum reservoir depth for irrigation"
+                        >
+                          <HelpPopover
+                            key="rdepMin"
+                            helpText={advancedSettingsHelp.rdepMin}
+                            label="Minimum reservoir depth for irrigation"
+                            name="rdepMin"
+                            position="top"
+                          />
+                          <Field
+                            className="form-control"
+                            type="number"
+                            name="rdepMin"
+                            step="0.1"
+                          />
+                        </AdvancedLabel>
+                        <ErrorMessage name="rdepMin" />
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </Col>

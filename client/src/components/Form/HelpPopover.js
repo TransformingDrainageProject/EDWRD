@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
-const HelpPopover = props => {
+const HelpPopover = (props) => {
   const { helpText, label, name, position, top } = props;
   const [popoverOpen, setPopoverOpen] = useState(false);
   const toggle = () => setPopoverOpen(!popoverOpen);
@@ -27,7 +27,9 @@ const HelpPopover = props => {
         toggle={toggle}
       >
         <PopoverHeader>Help: {label}</PopoverHeader>
-        <PopoverBody>{helpText}</PopoverBody>
+        <PopoverBody style={{ maxHeight: '350px', overflowY: 'scroll' }}>
+          {helpText}
+        </PopoverBody>
       </Popover>
     </div>
   );
@@ -36,7 +38,7 @@ const HelpPopover = props => {
 HelpPopover.propTypes = {
   helpText: PropTypes.object,
   label: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
 };
 
 export default HelpPopover;
