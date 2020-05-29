@@ -12,6 +12,7 @@ const taskSchema = new Schema({
     iarea: Number,
     rarea: Number,
     rdep: Number,
+    rdep_min: Number,
     rseep: Number,
     zr: Number,
     zrfc: Number,
@@ -31,6 +32,7 @@ const taskSchema = new Schema({
     fw: { type: Number, default: 1 },
     pfact: { type: Number, default: 0.55 },
     irrdep: String,
+    irrdep_min: Number,
     resd: { type: Number, default: 0.3 },
   },
 });
