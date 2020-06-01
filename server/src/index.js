@@ -4,7 +4,10 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
+const { mongoURI, sessionSecret } = require('./config');
 const winston = require('./config/winston');
 
 // register model schemas
@@ -18,7 +21,17 @@ app.use(express.json());
 app.use(morgan('combined', { stream: winston.stream }));
 
 // connect to database
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+mongoose.connect(mongoURI, { useNewUrlParser: true });
+
+// set up session using existing mongoose connection
+app.use(
+  session({
+    cookie: { secure: process.env.NODE_ENV === 'production' ? true : false },
+    resave: false,
+    secret: sessionSecret,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+);
 
 // priority to serve any static files
 app.use(express.static(path.resolve(__dirname, '../../client/build')));
