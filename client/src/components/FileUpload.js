@@ -32,11 +32,7 @@ const FileUpload = ({ label, type }) => {
         setError(undefined);
       },
       (err) => {
-        if (err.response.data.msg) {
-          setError(err.response.data.msg);
-        } else {
-          setError('Unable to upload file');
-        }
+        setError(err.response.data);
       }
     );
   };
@@ -59,7 +55,7 @@ const FileUpload = ({ label, type }) => {
           color="success"
           value={progress}
         >
-          {progress}%
+          {progress === 100 ? 'Completed' : `${progress}%`}
         </Progress>
       ) : null}
       {error ? (

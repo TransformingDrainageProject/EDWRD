@@ -1,23 +1,11 @@
 const csv = require('csvtojson');
+const createError = require('http-errors');
+const fs = require('fs');
 const multer = require('multer');
+const path = require('path');
 const tmp = require('tmp');
 
-// file upload storage options
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      tmp.dir(function _tempDirCreated(err, path, cleanupCallback) {
-        if (err) throw err;
-        cb(null, path);
-      });
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    },
-  }),
-});
-
-const inputHeaders = [
+const INPUT_HEADERS = [
   'year',
   'month',
   'day',
@@ -30,7 +18,7 @@ const inputHeaders = [
   'srpc',
 ];
 
-const paramHeaders = [
+const PARAM_HEADERS = [
   'darea',
   'iarea',
   'rarea',
@@ -60,9 +48,24 @@ const paramHeaders = [
   'dareaIncSurfaceRunoff',
 ];
 
+// file upload storage options
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      tmp.dir(function _tempDirCreated(err, path, cleanupCallback) {
+        if (err) throw err;
+        cb(null, path);
+      });
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+});
+
 const checkForMissingHeaders = (fileHeaders, type) => {
   // check if all column headers are present
-  const requiredHeaders = type === 'input' ? inputHeaders : paramHeaders;
+  const requiredHeaders = type === 'input' ? INPUT_HEADERS : PARAM_HEADERS;
   let missingHeaders = '';
   requiredHeaders.forEach((header) => {
     if (fileHeaders.indexOf(header) < 0) {
@@ -71,6 +74,23 @@ const checkForMissingHeaders = (fileHeaders, type) => {
   });
 
   return missingHeaders;
+};
+
+const cleanupTempWorkspace = async (tempFile) => {
+  // remove uploaded file
+  fs.unlink(tempFile, (err) => {
+    if (err) {
+      winston.error(`Unable to remove uploaded file - ${tempFile}`);
+    }
+    // remove temporary directory
+    fs.rmdir(path.dirname(tempFile), (err) => {
+      if (err) {
+        winston.error(
+          `Unable to remove temporary workspace - ${path.dirname(tempFile)}`
+        );
+      }
+    });
+  });
 };
 
 module.exports = (app) => {
@@ -83,9 +103,8 @@ module.exports = (app) => {
       if (data) {
         if (data.length < 1) {
           // no file content detected
-          return res.status(400).send({
-            msg: 'Uploaded file is empty',
-          });
+          cleanupTempWorkspace(req.files[0].path);
+          return next(createError(400, 'Uploaded file is empty'));
         }
 
         const missingHeaders = checkForMissingHeaders(
@@ -93,9 +112,13 @@ module.exports = (app) => {
           req.body.type
         );
         if (missingHeaders.length > 0) {
-          return res.status(400).send({
-            msg: `Uploaded file is missing the following data columns: ${missingHeaders}`,
-          });
+          cleanupTempWorkspace(req.files[0].path);
+          return next(
+            createError(
+              400,
+              `Uploaded file is missing the following data columns: ${missingHeaders}`
+            )
+          );
         }
 
         // create session variable for uploaded file contents
@@ -104,17 +127,21 @@ module.exports = (app) => {
         } else if (req.body.type === 'param') {
           req.session.paramFile = data;
         } else {
-          return res
-            .status(400)
-            .send({ msg: "Uploaded file's type cannot be determined" });
+          cleanupTempWorkspace(req.files[0].path);
+          return next(
+            createError(400, "Uploaded file's type cannot be determined")
+          );
         }
 
+        cleanupTempWorkspace(req.files[0].path);
         return res.sendStatus(200);
       } else {
-        return res.sendStatus(200);
+        cleanupTempWorkspace(req.files[0].path);
+        return next(createError(500, 'Uploaded file cannot be read'));
       }
     } catch (err) {
-      return res.status(500).send({ msg: 'Uploaded file cannot be read' });
+      cleanupTempWorkspace(req.files[0].path);
+      return next(createError(500, 'Uploaded file cannot be read'));
     }
   });
 };
