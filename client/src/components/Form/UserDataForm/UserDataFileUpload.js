@@ -34,7 +34,11 @@ function UserDataFileUpload() {
         setError(undefined);
       },
       (err) => {
-        setError('Unable to upload file');
+        if (err.response.data.msg) {
+          setError(err.response.data.msg);
+        } else {
+          setError('Unable to upload file');
+        }
       }
     );
   };
