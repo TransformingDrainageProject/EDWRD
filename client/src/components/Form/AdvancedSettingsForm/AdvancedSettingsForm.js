@@ -7,13 +7,14 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
-  Row
+  Row,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import AdvancedLabel from './AdvancedLabel';
 import AdvancedSeasonTable from './AdvancedSeasonTable';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
+import FileUpload from '../../FileUpload';
 import HelpPopover from '../HelpPopover';
 
 import { usePrevious } from '../../../utils/customHooks';
@@ -21,7 +22,7 @@ import { usePrevious } from '../../../utils/customHooks';
 import { advancedSettingsHelp } from './advancedSettingsHelp';
 import updateGrowingSeasonFields from '../utils/updateGrowingSeasonFields';
 
-const AdvancedSettings = props => {
+const AdvancedSettings = (props) => {
   const { fieldState, frzThwDates, unitType } = props;
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const [modal, toggleModal] = useState(props.open ? props.open : false);
@@ -281,17 +282,7 @@ const AdvancedSettings = props => {
             <AdvancedSeasonTable fieldState={fieldState} unitType={unitType} />
             <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
-                <AdvancedLabel
-                  name="advCustomInput"
-                  text="Upload custom input file"
-                >
-                  <input
-                    className="form-control mt-3"
-                    style={{ border: 'none', padding: '0' }}
-                    name="advCustomInput"
-                    type="file"
-                  />
-                </AdvancedLabel>
+                <FileUpload label="Upload custom input file" type="param" />
                 <HelpPopover
                   key="advCustomInput"
                   helpText={advancedSettingsHelp.advCustomInput}
@@ -313,9 +304,9 @@ AdvancedSettings.propTypes = {
   fieldState: PropTypes.string,
   frzThwDates: PropTypes.shape({
     freeze: PropTypes.number,
-    thaw: PropTypes.number
+    thaw: PropTypes.number,
   }),
-  unitType: PropTypes.string
+  unitType: PropTypes.string,
 };
 
 export default AdvancedSettings;

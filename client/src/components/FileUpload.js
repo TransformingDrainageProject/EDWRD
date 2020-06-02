@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormGroup, Input, Label, Progress } from 'reactstrap';
 
-function UserDataFileUpload() {
-  const [inputFile, setInputFile] = useState(null);
+const FileUpload = ({ label, type }) => {
   const [progress, updateProgress] = useState(-1);
   const [error, setError] = useState(undefined);
 
@@ -15,11 +14,10 @@ function UserDataFileUpload() {
     }
 
     let file = e.target.files[0];
-    setInputFile(file);
 
     let data = new FormData();
     data.append('file', file);
-    data.append('type', 'input');
+    data.append('type', type);
 
     let config = {
       onUploadProgress: (p) => {
@@ -45,10 +43,10 @@ function UserDataFileUpload() {
 
   return (
     <FormGroup>
-      <Label for="inputFile">Upload your data</Label>
+      <Label for="file">{label}</Label>
       <Input
         type="file"
-        name="inputFile"
+        name="file"
         accept="text/csv, text/plain"
         onChange={handleOnChange}
       />
@@ -71,6 +69,6 @@ function UserDataFileUpload() {
       ) : null}
     </FormGroup>
   );
-}
+};
 
-export default UserDataFileUpload;
+export default FileUpload;

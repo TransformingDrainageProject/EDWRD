@@ -3,8 +3,8 @@ import { Col, Container, Row } from 'reactstrap';
 import { useFormikContext } from 'formik';
 import PropTypes from 'prop-types';
 
+import FileUpload from '../../FileUpload';
 import MapContainer from '../../Map/MapContainer';
-import UserDataFileUpload from './UserDataFileUpload';
 import FormCard from '../FormCard';
 import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { MyRadioField } from '../FormikComponents/MyFields';
@@ -49,7 +49,7 @@ const UserDataForm = (props) => {
               </Col>
               <Col md="8">
                 {values.userData === 'true' ? (
-                  <UserDataFileUpload />
+                  <FileUpload label="Upload your data" type="input" />
                 ) : (
                   <MapContainer origin={origin} type="selectStationLocation" />
                 )}

@@ -17,22 +17,54 @@ const upload = multer({
   }),
 });
 
-const checkForMissingHeaders = (fileHeaders) => {
+const inputHeaders = [
+  'year',
+  'month',
+  'day',
+  'prcp',
+  'dflw',
+  'max_upflx',
+  'water_evap',
+  'eto',
+  'no3c',
+  'srpc',
+];
+
+const paramHeaders = [
+  'darea',
+  'iarea',
+  'rarea',
+  'rdep',
+  'rdep_min',
+  'rseep',
+  'zr',
+  'zrfc',
+  'zrwp',
+  'ze',
+  'zefc',
+  'zewp',
+  'rew',
+  'cn',
+  'wind',
+  'rhmin',
+  'cstart',
+  'cstage',
+  'ngrw_stage',
+  'cht',
+  'kc',
+  'fw',
+  'pfact',
+  'irrdep',
+  'irrdep_min',
+  'resd',
+  'dareaIncSurfaceRunoff',
+];
+
+const checkForMissingHeaders = (fileHeaders, type) => {
   // check if all column headers are present
-  const requiredHeaders = [
-    'year',
-    'month',
-    'day',
-    'prcp',
-    'dflw',
-    'max_upflx',
-    'water_evap',
-    'eto',
-    'no3c',
-    'srpc',
-  ];
+  const requiredHeaders = type === 'input' ? inputHeaders : paramHeaders;
   let missingHeaders = '';
-  requiredHeaders.forEach((header, index) => {
+  requiredHeaders.forEach((header) => {
     if (fileHeaders.indexOf(header) < 0) {
       missingHeaders += missingHeaders ? `, ${header}` : header;
     }
@@ -56,7 +88,10 @@ module.exports = (app) => {
           });
         }
 
-        const missingHeaders = checkForMissingHeaders(Object.keys(data[0]));
+        const missingHeaders = checkForMissingHeaders(
+          Object.keys(data[0]),
+          req.body.type
+        );
         if (missingHeaders.length > 0) {
           return res.status(400).send({
             msg: `Uploaded file is missing the following data columns: ${missingHeaders}`,
@@ -64,7 +99,16 @@ module.exports = (app) => {
         }
 
         // create session variable for uploaded file contents
-        req.session.inputFile = data;
+        if (req.body.type === 'input') {
+          req.session.inputFile = data;
+        } else if (req.body.type === 'param') {
+          req.session.paramFile = data;
+        } else {
+          return res
+            .status(400)
+            .send({ msg: "Uploaded file's type cannot be determined" });
+        }
+
         return res.sendStatus(200);
       } else {
         return res.sendStatus(200);
