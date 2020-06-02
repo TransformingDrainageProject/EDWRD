@@ -40,6 +40,7 @@ app.use(express.static(path.resolve(__dirname, '../../client/build')));
 require('./routes/downloadRoutes')(app);
 require('./routes/formRoutes')(app);
 require('./routes/gisRoutes')(app);
+require('./routes/uploadRoutes')(app);
 
 // send requests not caught by a route to react client
 app.get('*', (req, res, next) => {

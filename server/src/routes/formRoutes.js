@@ -37,6 +37,7 @@ module.exports = (app) => {
         });
 
         pythonStationFinder.on('close', (code) => {
+          console.log(req.session.inputFile);
           const task = createTaskObject(req.body, rhminWnd);
           task.save((err) => {
             if (err) return next(err);

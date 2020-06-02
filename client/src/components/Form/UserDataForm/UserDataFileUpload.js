@@ -18,7 +18,8 @@ function UserDataFileUpload() {
     setInputFile(file);
 
     let data = new FormData();
-    data.append('inputFile', file);
+    data.append('file', file);
+    data.append('type', 'input');
 
     let config = {
       onUploadProgress: (p) => {
@@ -28,11 +29,9 @@ function UserDataFileUpload() {
 
     updateProgress(0);
 
-    axios.post('/api/upload?type=input', data, config).then(
+    axios.post('/api/upload', data, config).then(
       (res) => {
         setError(undefined);
-        updateProgress(-1);
-        console.log(res.data.path);
       },
       (err) => {
         setError('Unable to upload file');
@@ -43,7 +42,12 @@ function UserDataFileUpload() {
   return (
     <FormGroup>
       <Label for="inputFile">Upload your data</Label>
-      <Input type="file" name="inputFile" onChange={handleOnChange} />
+      <Input
+        type="file"
+        name="inputFile"
+        accept="text/csv, text/plain"
+        onChange={handleOnChange}
+      />
       {progress > -1 && !error ? (
         <Progress
           animated
