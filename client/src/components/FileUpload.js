@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useFormikContext } from 'formik';
 import { FormGroup, Input, Label, Progress } from 'reactstrap';
 
 const FileUpload = ({ label, type }) => {
   const [progress, updateProgress] = useState(-1);
   const [error, setError] = useState(undefined);
 
+  const { setFieldValue } = useFormikContext();
+
   const handleOnChange = (e) => {
     setError(undefined);
 
     if (!e.target.files) {
       return;
+    }
+
+    if (type === 'param') {
+      setFieldValue('userParam', true);
     }
 
     let file = e.target.files[0];

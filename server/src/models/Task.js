@@ -6,6 +6,18 @@ const taskSchema = new Schema({
   lastUpdatedAt: { type: Date, default: new Date().toUTCString() },
   statusCode: { type: Number, default: 1 }, // 0 - Error, 1 - Ongoing,  2 - Completed
   error: String,
+  inputs: {
+    year: [Number],
+    month: [Number],
+    day: [Number],
+    prcp: [Number],
+    dflw: [Number],
+    max_upflx: [Number],
+    water_evap: [Number],
+    eto: [Number],
+    no3c: [Number],
+    srpc: [Number],
+  },
   params: {
     darea: Number,
     dareaIncSurfaceRunoff: Boolean,

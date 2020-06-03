@@ -61,4 +61,5 @@ export const advancedSettingsFormSchema = yup.object().shape({
   midKC: yup.number().positive().required(),
   initCropHeight: yup.number().positive().required(),
   midCropHeight: yup.number().positive().required(),
+  userParam: yup.boolean().required(),
 });

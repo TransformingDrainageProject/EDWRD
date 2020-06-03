@@ -44,6 +44,7 @@ const unitlessInitialValues = {
   zrwp: 0.15,
   initKC: 0.15,
   midKC: 1.15,
+  userParam: false,
 };
 
 export const advUSInitialValues = {

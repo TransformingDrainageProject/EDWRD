@@ -40,7 +40,7 @@ const formSchema = new Schema({
   soilType: String,
   thaw: Number,
   unitType: String,
-  userData: Boolean,
+  userInput: Boolean,
   ze: Number,
   zefc: Number,
   zewp: Number,

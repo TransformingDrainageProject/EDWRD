@@ -42,13 +42,13 @@ const UserDataForm = (props) => {
             <Row>
               <Col md="4">
                 <MyRadioField
-                  name="userData"
+                  name="userInput"
                   options={userDataSelectionOptions}
                 />
-                <ErrorMessage name="userData" />
+                <ErrorMessage name="userInput" />
               </Col>
               <Col md="8">
-                {values.userData === 'true' ? (
+                {values.userInput === 'true' ? (
                   <FileUpload label="Upload your data" type="input" />
                 ) : (
                   <MapContainer origin={origin} type="selectStationLocation" />

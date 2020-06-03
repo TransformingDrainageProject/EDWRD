@@ -37,8 +37,18 @@ module.exports = (app) => {
         });
 
         pythonStationFinder.on('close', (code) => {
-          console.log(req.session.inputFile);
-          const task = createTaskObject(req.body, rhminWnd);
+          let inputs, params;
+
+          if (req.session.inputFile && req.body.userInput) {
+            inputs = req.session.inputFile;
+          }
+          if (req.session.paramFile && req.body.userParam) {
+            params = req.session.paramFile;
+          } else {
+            params = req.body;
+          }
+
+          const task = createTaskObject(inputs, params, rhminWnd);
           task.save((err) => {
             if (err) return next(err);
             return res.send(task);
