@@ -82,7 +82,19 @@ const CropManagementForm = (props) => {
                 disabled={values.irrdepType === 'fixed' ? true : false}
               />
             </div>
-            <div className="mt-2">
+            {values.irrdepType === 'variable' &&
+            values.irrdep === 'deficitOnly' ? (
+              <div className="mt-3">
+                <span style={{ display: 'inline-block' }}>
+                  Minimum irrigation application depth
+                </span>
+                <UnitGroup unit="inches" unitLabel="depth" unitType={unitType}>
+                  <MyInputField type="number" name="irrdepMin" step="0.1" />
+                </UnitGroup>
+                <ErrorMessage name="irrdepMin" />
+              </div>
+            ) : null}
+            <div className="mt-3">
               <Input
                 type="radio"
                 name="irrdepRadio"
@@ -110,25 +122,6 @@ const CropManagementForm = (props) => {
               </UnitGroup>
             </div>
             <ErrorMessage name="irrdep" />
-            {values.irrdepType === 'variable' &&
-            values.irrdep === 'deficitOnly' ? (
-              <div>
-                <hr />
-                <div className="mt-3">
-                  <span style={{ display: 'inline-block' }}>
-                    Mimimum irrigation application depth
-                  </span>
-                  <UnitGroup
-                    unit="inches"
-                    unitLabel="depth"
-                    unitType={unitType}
-                  >
-                    <MyInputField type="number" name="irrdepMin" step="0.1" />
-                  </UnitGroup>
-                  <ErrorMessage name="irrdepMin" />
-                </div>
-              </div>
-            ) : null}
           </FormCard>
         </Col>
         <Col className="mb-4" md={12} lg={5}>
