@@ -257,6 +257,8 @@ const AdvancedSettings = (props) => {
                         <AdvancedLabel
                           name="rdepMin"
                           text="Minimum reservoir depth for irrigation"
+                          unit="feet"
+                          unitType={unitType}
                         >
                           <HelpPopover
                             key="rdepMin"
