@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Col, Row } from 'reactstrap';
+import FileDownload from 'js-file-download';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 // forms
@@ -73,13 +74,14 @@ const FormContainer = (props) => {
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
           setTimeout(() => {
             axios
-              .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
+              .post('/api/form', { ...markerCoords, ...frzThwDates, ...values }, {responseType: 'blob'})
               .then((response) => {
                 if (response && response.data) {
-                  setResults(response.data);
+                  FileDownload(response.data, 'data.xlsx');
                 }
               })
               .catch((err) => {
+                console.log(err);
                 if (err.response && err.response.status === 422) {
                   err.response.data.errors.forEach((fieldError) =>
                     setFieldError(fieldError.param, fieldError.msg)

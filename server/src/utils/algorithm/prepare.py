@@ -72,19 +72,26 @@ def edwrd_input(infile,pfile):
 
     #CREATE DICTIONARY OF INPUT PARAMETERS
     param = {
-            'darea':0,'iarea':1,
-            'rarea':2,'rdep':3,'rdep_min':4,'rseep':5,
-            'zr':6,'zrfc':7,'zrwp':8,
-            'ze':9,'zefc':10,'zewp':11,'rew':12,'cn':13,
-            'wind':14,'rhmin':15,
-            'cstart':16,'cstage':17,'ngrw_stage':18,
-            'cht':19,'kc':20,
-            'fw':21,'pfact':22,'irrdep':23,'irrdep_min':24,'resd':25,
-            'dareaIncSurfaceRunoff':26
-            }
+        'darea':0,'iarea':1,
+        'rarea':2,'rdep':3,'rdep_min':4,'rseep':5,
+        'zr':6,'zrfc':7,'zrwp':8,
+        'ze':9,'zefc':10,'zewp':11,'rew':12,'cn':13,
+        'wind':14,'rhmin':15,
+        'cstart':16,'cstage':17,'ngrw_stage':18,
+        'cht':19,'kc':20,
+        'fw':21,'pfact':22,'irrdep':23,'irrdep_min':24,'resd':25,
+        'dareaIncSurfaceRunoff':26
+    }
+
+    # Attempt to detect which delimiter was used (default to tab)
+    sep = '\t'
+    with open(pfile) as f:
+        header_row = f.readline()
+        if len(header_row.split(',')) == len(param.keys()):
+            sep = r'\,'
 
     for i in param:
-        param[i] = pd.read_csv(pfile,sep = '\t',header = 0,usecols = [param[i]]).dropna()
+        param[i] = pd.read_csv(pfile, sep=sep, header=0, usecols=[param[i]], engine='python').dropna()
 
     #CONVERT FIELD AND RESERVOIR AREAS TO SQUARE METERS
     param['darea'] = param['darea'] * 10000
@@ -92,31 +99,31 @@ def edwrd_input(infile,pfile):
     param['rarea'] = param['rarea'] * 10000
 
     #ADD SECONDARY PARAMETERS TO THE DICTIONARY WHICH ARE CALCULATED FROM INITIAL PARAMETERS
-        #Reservoir volume
+    #Reservoir volume
     param['rvol'] = pd.DataFrame(param['rarea'] * param['rdep'].at[0,'rdep'])
     param['rvol'].columns = ['rvol']
 
-        #Add an extremely large reservoir volume (10,000,000 m3, ~8,100 ac-ft) to the end in order to estimate the irrigation that would be applied when water is not limited (used for calculating ARIS)
-        #Add a matching reservoir area.
+    #Add an extremely large reservoir volume (10,000,000 m3, ~8,100 ac-ft) to the end in order to estimate the irrigation that would be applied when water is not limited (used for calculating ARIS)
+    #Add a matching reservoir area.
     param['rvol'].at[len(param['rvol']),'rvol'] = 10000000
     param['rarea'].at[len(param['rarea']),'rarea'] = param['rarea'].at[len(param['rarea'])-1,'rarea']
 
-        #Total evaporable water in the evaporation layer, limited during the non-growing season when surface residue is present
+    #Total evaporable water in the evaporation layer, limited during the non-growing season when surface residue is present
     param['tew'] = pd.DataFrame([1000 * (param['zefc'].at[0,'zefc'] - (0.5 * param['zewp'].at[0,'zewp'])) * param['ze'].at[0,'ze']],columns = ['tew'])
     param['nongr_tew'] = pd.DataFrame([np.maximum(param['tew'].at[0,'tew'] - (param['tew'].at[0,'tew'] * (param['resd'].at[0,'resd'] / 0.1 * 0.05)),param['rew'].at[0,'rew'])],columns = ['nongr_tew'])
 
-        #Total available water in the soil profile
+    #Total available water in the soil profile
     param['taw'] = pd.DataFrame([1000 * (param['zrfc'].at[0,'zrfc'] - param['zrwp'].at[0,'zrwp']) * param['zr'].at[0,'zr']],columns = ['taw'])
 
-        #Evaporation layer depletion thresholds which determine which curve number to use
+    #Evaporation layer depletion thresholds which determine which curve number to use
     param['zedep3'] = pd.DataFrame([0.5 * param['rew'].at[0,'rew']],columns = ['zedep3'])
     param['zedep1'] = pd.DataFrame([(0.7 * param['rew'].at[0,'rew']) + (0.3 * param['tew'].at[0,'tew'])],columns = ['zedep1'])
 
-        #Curve numbers which are adjusted based on depletion in the evaporation
+    #Curve numbers which are adjusted based on depletion in the evaporation
     param['cn1'] = pd.DataFrame([param['cn'].at[0,'cn'] / (2.281 - 0.01281 * param['cn'].at[0,'cn'])],columns = ['cn1'])
     param['cn3'] = pd.DataFrame([param['cn'].at[0,'cn'] / (0.427 + 0.00573 * param['cn'].at[0,'cn'])],columns = ['cn3'])
 
-        #Basal crop coefficient adjusted for local weather conditions based on July weather conditions and mid-season crop height
+    #Basal crop coefficient adjusted for local weather conditions based on July weather conditions and mid-season crop height
     param['kcb'] = pd.DataFrame([param['kc'].at[1,'kc'] + (0.04 * (param['wind'].at[6,'wind'] - 2) - 0.004 * (param['rhmin'].at[6,'rhmin'] - 45)) * (param['cht'].at[1,'cht'] / 3) ** 0.3],columns = ['kcb'])
 
     #--ERROR CHECK--#

@@ -52,10 +52,15 @@ const PARAM_HEADERS = [
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      tmp.dir(function _tempDirCreated(err, path, cleanupCallback) {
-        if (err) throw err;
-        cb(null, path);
-      });
+      if (!req.session.workspace || !fs.existsSync(req.session.workspace)) {
+        tmp.dir(function _tempDirCreated(err, path, cleanupCallback) {
+          if (err) throw err;
+          req.session.workspace = path;
+          cb(null, path);
+        });
+      } else {
+        cb(null, req.session.workspace);
+      }
     },
     filename: (req, file, cb) => {
       cb(null, file.originalname);
@@ -166,9 +171,9 @@ module.exports = (app) => {
 
         // create session variable for uploaded file contents
         if (req.body.type === 'input') {
-          req.session.inputFile = formatInputData(data);
+          req.session.inputFile = req.files[0].filename;
         } else if (req.body.type === 'param') {
-          req.session.paramFile = formatParamData(data);
+          req.session.paramFile = req.files[0].filename;
         } else {
           cleanupTempWorkspace(req.files[0].path);
           return next(
@@ -176,7 +181,6 @@ module.exports = (app) => {
           );
         }
 
-        cleanupTempWorkspace(req.files[0].path);
         return res.sendStatus(200);
       } else {
         cleanupTempWorkspace(req.files[0].path);
