@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Col, Row } from 'reactstrap';
+import { Button, Col, Row, Spinner } from 'reactstrap';
 import FileDownload from 'js-file-download';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
@@ -72,26 +72,29 @@ const FormContainer = (props) => {
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
-          setTimeout(() => {
-            axios
-              .post('/api/form', { ...markerCoords, ...frzThwDates, ...values }, {responseType: 'blob'})
-              .then((response) => {
-                if (response && response.data) {
-                  FileDownload(response.data, 'data.xlsx');
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-                if (err.response && err.response.status === 422) {
-                  err.response.data.errors.forEach((fieldError) =>
-                    setFieldError(fieldError.param, fieldError.msg)
-                  );
-                } else {
-                  setStatus('Unable to process form submission at this time.');
-                }
-              });
-            setSubmitting(false);
-          }, 400);
+          axios
+            .post(
+              '/api/form',
+              { ...markerCoords, ...frzThwDates, ...values },
+              { responseType: 'blob' }
+            )
+            .then((response) => {
+              if (response && response.data) {
+                FileDownload(response.data, 'data.xlsx');
+                setSubmitting(false);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              if (err.response && err.response.status === 422) {
+                err.response.data.errors.forEach((fieldError) =>
+                  setFieldError(fieldError.param, fieldError.msg)
+                );
+              } else {
+                setStatus('Unable to process form submission at this time.');
+              }
+              setSubmitting(false);
+            });
         }}
       >
         {({ status, isSubmitting }) => (
@@ -143,9 +146,22 @@ const FormContainer = (props) => {
                   className="mb-4"
                   type="submit"
                   disabled={isSubmitting}
-                  style={{ backgroundColor: '#007cb3', height: '75px' }}
+                  style={{
+                    backgroundColor: '#007cb3',
+                    height: '75px',
+                    width: '150px',
+                  }}
                 >
-                  <strong>Run EDWRD</strong>
+                  {isSubmitting ? (
+                    <Spinner
+                      style={{
+                        width: '3rem',
+                        height: '3rem',
+                      }}
+                    />
+                  ) : (
+                    <strong>Run EDWRD</strong>
+                  )}
                 </Button>
               </Col>
               {!showModifyInputs ? (
@@ -155,7 +171,11 @@ const FormContainer = (props) => {
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => toggleShowModifyInputs(true)}
-                    style={{ backgroundColor: '#007cb3', height: '75px' }}
+                    style={{
+                      backgroundColor: '#007cb3',
+                      height: '75px',
+                      width: '150px',
+                    }}
                   >
                     <strong>Modify Inputs</strong>
                   </Button>
