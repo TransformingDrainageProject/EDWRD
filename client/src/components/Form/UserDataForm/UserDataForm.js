@@ -49,7 +49,11 @@ const UserDataForm = (props) => {
               </Col>
               <Col md="8">
                 {values.userInput === 'true' ? (
-                  <FileUpload label="Upload your data" type="input" />
+                  <FileUpload
+                    name="input-upload"
+                    label="Upload your data"
+                    type="input"
+                  />
                 ) : (
                   <MapContainer origin={origin} type="selectStationLocation" />
                 )}

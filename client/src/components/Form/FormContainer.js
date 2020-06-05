@@ -60,6 +60,7 @@ const FormContainer = (props) => {
 
   const [results, setResults] = useState(null);
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
+  const [showReset, toggleShowReset] = useState(false);
 
   return (
     <>
@@ -82,6 +83,7 @@ const FormContainer = (props) => {
               if (response && response.data) {
                 FileDownload(response.data, 'data.xlsx');
                 setSubmitting(false);
+                toggleShowReset(true);
               }
             })
             .catch((err) => {
@@ -94,10 +96,11 @@ const FormContainer = (props) => {
                 setStatus('Unable to process form submission at this time.');
               }
               setSubmitting(false);
+              toggleShowReset(true);
             });
         }}
       >
-        {({ status, isSubmitting }) => (
+        {({ dirty, handleReset, isSubmitting, status }) => (
           <Form>
             {showModifyInputs ? (
               <>
@@ -164,6 +167,39 @@ const FormContainer = (props) => {
                   )}
                 </Button>
               </Col>
+              {showReset ? (
+                <Col className="text-center">
+                  <Button
+                    className="mb-4"
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      const inputUpload = document.getElementsByName(
+                        'input-upload'
+                      );
+                      const paramUpload = document.getElementsByName(
+                        'param-upload'
+                      );
+
+                      if (inputUpload && inputUpload.length > 0) {
+                        inputUpload[0].value = '';
+                      }
+                      if (paramUpload && paramUpload.length > 0) {
+                        paramUpload[0].value = '';
+                      }
+
+                      handleReset();
+                    }}
+                    style={{
+                      backgroundColor: '#edb229',
+                      height: '75px',
+                      width: '150px',
+                    }}
+                  >
+                    <strong>Reset</strong>
+                  </Button>
+                </Col>
+              ) : null}
               {!showModifyInputs ? (
                 <Col className="text-center">
                   <Button

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useFormikContext } from 'formik';
 import { FormGroup, Input, Label, Progress } from 'reactstrap';
 
-const FileUpload = ({ label, type }) => {
+const FileUpload = ({ label, name, type }) => {
   const [progress, updateProgress] = useState(-1);
   const [error, setError] = useState(undefined);
 
@@ -46,14 +46,14 @@ const FileUpload = ({ label, type }) => {
 
   return (
     <FormGroup>
-      <Label for="file">{label}</Label>
+      <Label for={name}>{label}</Label>
       <Input
         type="file"
-        name="file"
+        name={name}
         accept="text/csv, text/plain"
         onChange={handleOnChange}
       />
-      {progress > -1 && !error ? (
+      {progress > -1 && !error && document.getElementsByName(name)[0].value ? (
         <Progress
           animated
           striped
