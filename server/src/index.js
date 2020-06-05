@@ -21,7 +21,21 @@ app.use(express.json());
 app.use(morgan('combined', { stream: winston.stream }));
 
 // connect to database
-mongoose.connect(mongoURI, { useNewUrlParser: true });
+const connectToDatabase = async () => {
+  try {
+    await mongoose.connect(mongoURI, {
+      autoReconnect: true,
+      useNewUrlParser: true,
+    });
+  } catch (err) {
+    winston.error(err);
+    setTimeout(() => {
+      connectToDatabase();
+    }, 2000);
+  }
+};
+
+connectToDatabase();
 
 // set up session using existing mongoose connection
 app.use(
