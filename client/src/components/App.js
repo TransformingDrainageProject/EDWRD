@@ -31,31 +31,18 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get('/api/geocode', {
+        const result = await axios.get('/api/site_info', {
           params: { ...ORIGIN },
         });
-        updateFieldState(result.data.results.trim().toLowerCase());
+        updateFieldState(result.data.results.state.trim().toLowerCase());
+        updateFrzThwDates({
+          freeze: parseFloat(result.data.results.soil.freeze),
+          thaw: parseFloat(result.data.results.soil.thaw),
+        });
+        console.log(frzThwDates);
       } catch (err) {
         console.log(err);
         updateFieldState('il');
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get('/api/get_freeze_and_thaw', {
-          params: { ...ORIGIN },
-        });
-        updateFrzThwDates({
-          freeze: parseFloat(result.data.results.freeze),
-          thaw: parseFloat(result.data.results.thaw),
-        });
-      } catch (err) {
-        console.log(err);
         updateFrzThwDates({
           freeze: 311.46277,
           thaw: 86.998985,

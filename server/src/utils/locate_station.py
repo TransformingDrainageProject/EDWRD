@@ -64,9 +64,7 @@ def format_for_edwrd(station):
     return data
 
 
-def main(args):
-    latitude = args.latitude
-    longitude = args.longitude
+def main(longitude: float, latitude: float) -> None:
     point = Point(latitude, longitude)
 
     df = pd.read_csv("./src/utils/edwrd_wnd_rhmin.txt", sep="\t")
@@ -86,5 +84,7 @@ if __name__ == "__main__":
     parser.add_argument("longitude", type=float, help="Longitude")
 
     args = parser.parse_args()
+    latitude = args.latitude
+    longitude = args.longitude
 
-    main(args)
+    main(longitude, latitude)

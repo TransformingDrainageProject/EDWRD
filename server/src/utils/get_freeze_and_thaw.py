@@ -1,6 +1,4 @@
 import argparse
-import json
-import sys
 from typing import Tuple
 
 import pyproj
@@ -41,7 +39,7 @@ def extract_value(raster_path: str, point: Tuple) -> float:
         return value
 
 
-def main(longitude: float, latitude: float) -> None:
+def main(longitude: float, latitude: float) -> dict:
     """Fetches the freeze and thaw raster values at a
     specified point and prints the results as a JSON string.
 
@@ -62,9 +60,7 @@ def main(longitude: float, latitude: float) -> None:
         "thaw": str(thaw)
     }
 
-    print(json.dumps(results))
-
-    sys.stdout.flush()
+    return results
 
 
 if __name__ == "__main__":

@@ -33,6 +33,8 @@ const AdvancedSettings = (props) => {
   const toggle = () => {
     // update growing season dates if the state or
     // freeze and/or thaw dates have changed
+    console.log('prevFrzThwDates', prevFrzThwDates);
+    console.log('frzThwDates', frzThwDates);
     if (!modal && prevState && prevFrzThwDates) {
       if (
         fieldState !== prevState ||
