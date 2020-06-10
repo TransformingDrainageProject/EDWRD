@@ -21,10 +21,7 @@ import {
   advUSInitialValues,
   advMetricInitialValues,
 } from './AdvancedSettingsForm/initialValues';
-import {
-  userMetricInitialValues,
-  userUSInitialValues,
-} from './UserDataForm/initialValues';
+import { userInitialValues } from './UserDataForm/initialValues';
 
 // validation schemas
 import setYupLocale from './setYupLocale';
@@ -38,14 +35,14 @@ import { Debug } from './utils/debug';
 const metricInitialValues = {
   ...fieldMetricInitialValues,
   ...cropMetricInitialValues,
-  ...userMetricInitialValues,
+  ...userInitialValues,
   ...advMetricInitialValues,
 };
 
 const usInitialValues = {
   ...fieldUSInitialValues,
   ...cropUSInitialValues,
-  ...userUSInitialValues,
+  ...userInitialValues,
   ...advUSInitialValues,
 };
 
@@ -100,7 +97,14 @@ const FormContainer = (props) => {
             });
         }}
       >
-        {({ dirty, handleReset, isSubmitting, status }) => (
+        {({
+          dirty,
+          handleReset,
+          isSubmitting,
+          setFieldTouched,
+          setFieldValue,
+          status,
+        }) => (
           <Form>
             {showModifyInputs ? (
               <>
@@ -206,7 +210,11 @@ const FormContainer = (props) => {
                     className="mb-4"
                     type="button"
                     disabled={isSubmitting}
-                    onClick={() => toggleShowModifyInputs(true)}
+                    onClick={() => {
+                      setFieldValue('userInput', 'true');
+                      setFieldTouched('userInput', true);
+                      toggleShowModifyInputs(true);
+                    }}
                     style={{
                       backgroundColor: '#007cb3',
                       height: '75px',

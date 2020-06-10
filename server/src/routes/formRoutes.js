@@ -1,4 +1,5 @@
 const { checkSchema, validationResult } = require('express-validator');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
 const { spawn } = require('child_process');
@@ -29,14 +30,15 @@ module.exports = (app) => {
         if (err) return next(err);
         // find wind and rhmin
         const pythonStationFinder = spawn(pythonPath, [
-          './src/utils/locate_weather_station.py',
-          req.body.location.latitude,
-          req.body.location.longitude,
+          './src/utils/locate_nearest_station_data.py',
+          form.location.latitude,
+          form.location.longitude,
+          form.userInput ? 1 : 0,
         ]);
 
-        let rhminWnd;
+        let stationData;
         pythonStationFinder.stdout.on('data', (data) => {
-          rhminWnd = JSON.parse(data.toString());
+          stationData = JSON.parse(data.toString().trim());
         });
 
         pythonStationFinder.on('error', (err) => {
@@ -46,11 +48,17 @@ module.exports = (app) => {
         pythonStationFinder.on('close', async (code) => {
           let inputFile, paramFile;
 
-          if (req.session.inputFile && req.body.userInput) {
+          if (req.session.inputFile && form.userInput) {
             inputFile = path.resolve(
               req.session.workspace,
               req.session.inputFile
             );
+          } else {
+            fs.copyFileSync(
+              path.resolve('src', 'utils', 'daily_stations', stationData.input),
+              path.resolve(req.session.workspace, stationData.input)
+            );
+            inputFile = path.resolve(req.session.workspace, stationData.input);
           }
           if (req.session.paramFile && req.body.userParam) {
             paramFile = path.resolve(
@@ -63,7 +71,7 @@ module.exports = (app) => {
               paramFile = await createTaskObject(
                 req.session.workspace,
                 req.body,
-                rhminWnd
+                stationData.param
               );
             } catch (err) {
               return next(err);

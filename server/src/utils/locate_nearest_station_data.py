@@ -11,8 +11,8 @@ from shapely.geometry import Point
 from shapely.ops import nearest_points
 
 
-logging.basicConfig(filename='/tmp/location_station.log',
-                    filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename="/tmp/location_nearest_weather_station.log",
+                    filemode="w", level=logging.DEBUG)
 
 
 def convert_to_geopandas_dataframe(df, lat_colname, lon_colname):
@@ -64,27 +64,49 @@ def format_for_edwrd(station):
     return data
 
 
-def main(longitude: float, latitude: float) -> None:
+def main(longitude: float, latitude: float, user_data_flag: int) -> None:
     point = Point(latitude, longitude)
 
-    df = pd.read_csv("./src/utils/edwrd_wnd_rhmin.txt", sep="\t")
-    gdf = convert_to_geopandas_dataframe(df, "Latitude", "Longitude")
+    # find nearest weather station
+    weather_df = pd.read_csv("./src/utils/edwrd_wnd_rhmin.txt", sep="\t")
+    weather_gdf = convert_to_geopandas_dataframe(
+        weather_df, "Latitude", "Longitude")
 
-    nearest_station = find_nearest_station(point, gdf)
-    station_records = format_for_edwrd(nearest_station)
+    nearest_weather_station = find_nearest_station(point, weather_gdf)
+    weather_station_data = format_for_edwrd(nearest_weather_station)
 
-    print(json.dumps(station_records))
+    data = {
+        "param": weather_station_data
+    }
+
+    # find nearest daily input station
+    if user_data_flag == 0:
+        daily_df = pd.read_csv("./src/utils/edwrd_daily_stations.txt")
+        daily_gdf = convert_to_geopandas_dataframe(
+            daily_df, "LATITUDE", "LONGITUDE")
+
+        nearest_daily_station = find_nearest_station(point, daily_gdf)
+        daily_station = nearest_daily_station["FILE"].values[0]
+
+        data["input"] = daily_station
+
+    print(json.dumps(data))
     sys.stdout.flush()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Find nearest weather station to a provided point.")
-    parser.add_argument("latitude", type=float, help="Latitude")
-    parser.add_argument("longitude", type=float, help="Longitude")
+    parser.add_argument("latitude", type=float,
+                        help="Latitude of the map marker")
+    parser.add_argument("longitude", type=float,
+                        help="Longitude of the map marker")
+    parser.add_argument("user_data_flag", type=int,
+                        help="Boolean flag indicating if the user provided their own daily data")
 
     args = parser.parse_args()
     latitude = args.latitude
     longitude = args.longitude
+    user_data_flag = args.user_data_flag
 
-    main(longitude, latitude)
+    main(longitude, latitude, user_data_flag)

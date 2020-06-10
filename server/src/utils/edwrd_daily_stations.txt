@@ -1,0 +1,7 @@
+ID,NAME,FILE,LATITUDE,LONGITUDE
+0,Minnesota Southern Research and Outreach Center,0_minnesota.txt,42.19672,-93.5975
+1,Story City Research Site,1_story_city.txt,39.79139,-88.18556
+2,Purdue Water Quality Field Station,2_purdue_water.txt,40.499336,-86.997403
+3,Camargo Research Site,camargo.txt,44.074114,-93.52249
+4,Davis Purdue Agricultural Center,4_davis_purdue.txt,40.266111,-85.159936
+5,Iowa State Southeast Research Farm,5_iowa.txt,41.193683,-91.483293
