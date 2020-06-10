@@ -29,7 +29,7 @@ module.exports = (app) => {
         if (err) return next(err);
         // find wind and rhmin
         const pythonStationFinder = spawn(pythonPath, [
-          './src/utils/locate_station.py',
+          './src/utils/locate_weather_station.py',
           req.body.location.latitude,
           req.body.location.longitude,
         ]);
