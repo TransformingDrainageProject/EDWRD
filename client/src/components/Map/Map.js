@@ -49,31 +49,17 @@ const Map = (props) => {
     }
     // use marker coordinates to find state
     axios
-      .get('/api/geocode', {
+      .get('/api/site_info', {
         params: {
           lat: coords.lat,
           lon: coords.lng,
         },
       })
       .then((response) => {
-        updateFieldState(response.data.results.trim().toLowerCase());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // use marker coordinates to find freeze and thaw dates
-    axios
-      .get('/api/get_freeze_and_thaw', {
-        params: {
-          lat: coords.lat,
-          lon: coords.lng,
-        },
-      })
-      .then((response) => {
-        let results = response.data.results;
+        updateFieldState(response.data.results.state.trim().toLowerCase());
         updateFrzThwDates({
-          freeze: parseFloat(results.freeze),
-          thaw: parseFloat(results.thaw),
+          freeze: parseFloat(response.data.results.soil.freeze),
+          thaw: parseFloat(response.data.results.soil.thaw),
         });
         updateMarkerCoords({
           location: { latitude: coords.lat, longitude: coords.lng },

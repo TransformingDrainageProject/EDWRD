@@ -57,7 +57,6 @@ function updateSoilFreezeAndThawDates(actions, frzThwDates) {
     const FIRST_OF_NEXT_YEAR = new Date(new Date().getFullYear() + 1, 0, 1);
     const thawDate = addToDate(FIRST_OF_NEXT_YEAR, frzThwDates.thaw);
     const freezeDate = addToDate(FIRST_OF_YEAR, frzThwDates.freeze);
-
     actions.setFieldValue('soilDateStart', moment(freezeDate));
     actions.setFieldTouched('soilDateStart');
     actions.setFieldValue('soilDateEnd', moment(thawDate));

@@ -9,23 +9,23 @@ const geocodeSchema = {
     isFloat: true,
     isEmpty: false,
     trim: true,
-    escape: true
+    escape: true,
   },
   lon: {
     isFloat: true,
     isEmpty: false,
     trim: true,
-    escape: true
-  }
+    escape: true,
+  },
 };
 
-module.exports = app => {
-  app.get('/api/geocode', checkSchema(geocodeSchema), (req, res, next) => {
+module.exports = (app) => {
+  app.get('/api/site_info', checkSchema(geocodeSchema), (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       next(
         createError(400, 'Invalid parameters', {
-          errors: errors.array()
+          errors: errors.array(),
         })
       );
     }
@@ -34,41 +34,14 @@ module.exports = app => {
     const lat = req.query.lat;
 
     const pythonGeocoder = spawn(pythonPath, [
-      './src/utils/reverse_geocode.py',
+      './src/utils/find_site_info.py',
       lon,
-      lat
+      lat,
     ]);
 
-    pythonGeocoder.stdout.on('data', data => {
-      res.send({ results: data.toString() });
+    pythonGeocoder.stdout.on('data', (data) => {
+      // returns state abbreviation, freeze and thaw dates
+      res.send({ results: JSON.parse(data.toString()) });
     });
   });
-
-  app.get(
-    '/api/get_freeze_and_thaw',
-    checkSchema(geocodeSchema),
-    (req, res) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        next(
-          createError(400, 'Invalid parameters', {
-            errors: errors.array()
-          })
-        );
-      }
-
-      const lon = req.query.lon;
-      const lat = req.query.lat;
-
-      const pythonExtract = spawn(pythonPath, [
-        './src/utils/get_freeze_and_thaw.py',
-        lon,
-        lat
-      ]);
-
-      pythonExtract.stdout.on('data', data => {
-        res.send({ results: JSON.parse(data.toString()) });
-      });
-    }
-  );
 };

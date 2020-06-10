@@ -1,11 +1,14 @@
 import argparse
+import json
+import sys
 
-import geopandas as gpd
-from shapely.geometry import Point
+from get_freeze_and_thaw import main as get_freeze_and_thaw
+from reverse_geocode import main as get_state_abbreviation
 
 
-def main(longitude: float, latitude: float) -> str:
-    """Fetches the state name associated with a specified
+def main(longitude: float, latitude: float) -> None:
+    """ 
+    Fetches the state name associated with a specified
     point and prints the state's postal abbreviation.
 
     Parameters:
@@ -15,16 +18,13 @@ def main(longitude: float, latitude: float) -> str:
     Returns:
     None.
     """
-    states = gpd.read_file("./src/utils/midwest_states.geojson")
-    field = Point(longitude, latitude)
+    site_info = {
+        "state": get_state_abbreviation(longitude, latitude),
+        "soil": get_freeze_and_thaw(longitude, latitude),
+    }
 
-    state = states.loc[states["geometry"].contains(field), "STUSPS"]
-
-    abbr = ""
-    if state.values.size > 0:
-        abbr = state.values[0]
-
-    return abbr
+    print(json.dumps(site_info))
+    sys.stdout.flush()
 
 
 if __name__ == "__main__":
