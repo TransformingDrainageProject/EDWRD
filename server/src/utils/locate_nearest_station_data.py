@@ -81,12 +81,13 @@ def main(longitude: float, latitude: float, user_data_flag: int) -> None:
 
     # find nearest daily input station
     if user_data_flag == 0:
-        daily_df = pd.read_csv("./src/utils/edwrd_daily_stations.txt")
+        daily_json = json.load(open("./src/utils/daily_stations.json"))
+        daily_df = pd.DataFrame(daily_json["stations"])
         daily_gdf = convert_to_geopandas_dataframe(
-            daily_df, "LATITUDE", "LONGITUDE")
+            daily_df, "lat", "lon")
 
         nearest_daily_station = find_nearest_station(point, daily_gdf)
-        daily_station = nearest_daily_station["FILE"].values[0]
+        daily_station = nearest_daily_station["file"].values[0]
 
         data["input"] = daily_station
 

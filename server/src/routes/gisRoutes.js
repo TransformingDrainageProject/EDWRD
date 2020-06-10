@@ -3,6 +3,7 @@ const { checkSchema, validationResult } = require('express-validator');
 const createError = require('http-errors');
 
 const { pythonPath } = require('../config');
+const dailyStations = require('../utils/daily_stations.json');
 
 const geocodeSchema = {
   lat: {
@@ -43,5 +44,9 @@ module.exports = (app) => {
       // returns state abbreviation, freeze and thaw dates
       res.send({ results: JSON.parse(data.toString()) });
     });
+  });
+
+  app.get('/api/daily_stations', (req, res, next) => {
+    return res.send(dailyStations);
   });
 };

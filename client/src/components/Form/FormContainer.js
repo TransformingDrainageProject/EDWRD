@@ -213,6 +213,8 @@ const FormContainer = (props) => {
                     onClick={() => {
                       setFieldValue('userInput', 'true');
                       setFieldTouched('userInput', true);
+                      setFieldValue('userSelectedStation', 2);
+                      setFieldTouched('userSelectedStation', true);
                       toggleShowModifyInputs(true);
                     }}
                     style={{

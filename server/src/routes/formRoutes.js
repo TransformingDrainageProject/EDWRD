@@ -8,6 +8,7 @@ const tmp = require('tmp');
 const { createTaskObject } = require('../models/taskCreator');
 const { pythonPath } = require('../config');
 const { getFormSchema } = require('../validation/schema');
+const dailyStations = require('../utils/daily_stations.json');
 
 const Form = mongoose.model('forms');
 
@@ -53,12 +54,20 @@ module.exports = (app) => {
               req.session.workspace,
               req.session.inputFile
             );
+          } else if (!form.userInput && form.userSelectedStation > -1) {
+            const stationFile =
+              dailyStations.stations[form.userSelectedStation].file;
+            inputFile = path.resolve(req.session.workspace, stationFile);
+            fs.copyFileSync(
+              path.resolve('src', 'utils', 'daily_stations', stationFile),
+              inputFile
+            );
           } else {
+            inputFile = path.resolve(req.session.workspace, stationData.input);
             fs.copyFileSync(
               path.resolve('src', 'utils', 'daily_stations', stationData.input),
-              path.resolve(req.session.workspace, stationData.input)
+              inputFile
             );
-            inputFile = path.resolve(req.session.workspace, stationData.input);
           }
           if (req.session.paramFile && req.body.userParam) {
             paramFile = path.resolve(

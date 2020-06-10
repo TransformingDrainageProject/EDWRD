@@ -1,5 +1,5 @@
 import './Map.css';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { GeoJSON, Map as LeafletMap, Marker, TileLayer } from 'react-leaflet';
 
-import precompiledDataStations from './stations_with_precompiled_data.js';
 import regionalGrid from './midwest_states.json';
 
 const customMarkerIcon = divIcon({
@@ -32,12 +31,30 @@ const Map = (props) => {
     updateMarkerCoords,
     selectedSite,
     setSelectedSite,
+    updateSelectedSite,
   } = props;
   const [markerPosition, updateMarkerPosition] = useState([
     origin.lat,
     origin.lon,
   ]);
+  const [precompiledDataStations, setPrecompiledDataStations] = useState(
+    undefined
+  );
   const refMarker = useRef(<Marker />);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get('/api/daily_stations');
+        setPrecompiledDataStations(result.data.stations);
+      } catch (err) {
+        console.log(err);
+        setPrecompiledDataStations(undefined);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   function onDragend(e) {
     // update the marker position
@@ -75,7 +92,8 @@ const Map = (props) => {
     const station = precompiledDataStations.filter((chain) => {
       return chain.lat === position[0] && chain.lon === position[1];
     })[0];
-    setSelectedSite({ id: station.id, name: station.site_id });
+    setSelectedSite({ id: station.id, name: station.name });
+    updateSelectedSite(station.id);
   }
 
   return (
@@ -89,7 +107,7 @@ const Map = (props) => {
             onDragend={onDragend}
             icon={customMarkerIcon}
           />
-        ) : (
+        ) : precompiledDataStations ? (
           precompiledDataStations.map((station) => (
             <Marker
               key={station.id}
@@ -102,7 +120,7 @@ const Map = (props) => {
               onClick={onPrecompiledStationClick}
             />
           ))
-        )}
+        ) : null}
         <GeoJSON
           data={regionalGrid}
           style={() => {

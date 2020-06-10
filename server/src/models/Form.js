@@ -41,6 +41,7 @@ const formSchema = new Schema({
   thaw: Number,
   unitType: String,
   userInput: Boolean,
+  userSelectedStation: Number,
   ze: Number,
   zefc: Number,
   zewp: Number,

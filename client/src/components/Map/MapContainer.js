@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Row } from 'reactstrap';
+import { useFormikContext } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,6 +12,13 @@ function SelectStationLocationMap(props) {
     id: 2,
     name: 'Purdue Water Quality Field Station',
   });
+  const { setFieldValue, setFieldTouched } = useFormikContext();
+
+  function updateSelectedSite(site) {
+    setFieldValue('userSelectedStation', site);
+    setFieldTouched('userSelectedStation', true);
+  }
+
   return (
     <div>
       <Row>
@@ -29,6 +37,7 @@ function SelectStationLocationMap(props) {
             {...props}
             selectedSite={selectedSite}
             setSelectedSite={setSelectedSite}
+            updateSelectedSite={updateSelectedSite}
           />
         ) : null}
       </Row>
