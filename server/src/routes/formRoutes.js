@@ -22,7 +22,7 @@ module.exports = (app) => {
       if (!errors.isEmpty()) return res.status(422).json(errors);
 
       // create workspace if one does not exist for this session
-      if (!req.session.workspace) {
+      if (!req.session.workspace || !fs.existsSync(req.session.workspace)) {
         req.session.workspace = tmp.dirSync().name;
       }
 
