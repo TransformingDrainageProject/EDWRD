@@ -50,7 +50,7 @@ const UserDataForm = (props) => {
               <Col md="8">
                 {values.userInput === 'true' ? (
                   <FileUpload
-                    name="input-upload"
+                    name="userInputFile"
                     label="Upload your data"
                     type="input"
                   />

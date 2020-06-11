@@ -3,11 +3,13 @@ import axios from 'axios';
 import { useFormikContext } from 'formik';
 import { FormGroup, Input, Label, Progress } from 'reactstrap';
 
+import ErrorMessage from './Form/FormikComponents/ErrorMessage';
+
 const FileUpload = ({ label, name, type }) => {
   const [progress, updateProgress] = useState(-1);
   const [error, setError] = useState(undefined);
 
-  const { setFieldValue } = useFormikContext();
+  const { errors, setFieldValue, setFieldTouched } = useFormikContext();
 
   const handleOnChange = (e) => {
     setError(undefined);
@@ -21,6 +23,7 @@ const FileUpload = ({ label, name, type }) => {
     }
 
     let file = e.target.files[0];
+    setFieldValue(name, file.name);
 
     let data = new FormData();
     data.append('file', file);
@@ -53,6 +56,7 @@ const FileUpload = ({ label, name, type }) => {
         accept="text/csv, text/plain"
         onChange={handleOnChange}
       />
+      {errors[name] ? <ErrorMessage name={name} msg={errors[name]} /> : null}
       {progress > -1 && !error && document.getElementsByName(name)[0].value ? (
         <Progress
           animated

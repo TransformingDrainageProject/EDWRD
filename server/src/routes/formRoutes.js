@@ -1,4 +1,5 @@
 const { checkSchema, validationResult } = require('express-validator');
+const createError = require('http-errors');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -24,6 +25,11 @@ module.exports = (app) => {
       // create workspace if one does not exist for this session
       if (!req.session.workspace || !fs.existsSync(req.session.workspace)) {
         req.session.workspace = tmp.dirSync().name;
+      }
+
+      // check for file uploads
+      if (req.body.userInput === 'true' && !req.session.inputFile) {
+        return next(createError(400, 'Must upload file with daily values'));
       }
 
       const form = new Form(req.body);

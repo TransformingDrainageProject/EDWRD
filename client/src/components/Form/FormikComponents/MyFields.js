@@ -12,7 +12,7 @@ export const MySelectField = ({ ...props }) => {
   const { options, ...updatedProps } = { ...props };
   return (
     <Input type="select" {...field} {...updatedProps}>
-      {options.map(option => (
+      {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.name}
         </option>
@@ -40,7 +40,7 @@ export const MyRadioField = ({ ...props }) => {
         {label}
       </Label>
       <div>
-        {options.map(option => (
+        {options.map((option) => (
           <div key={option.value}>
             <Input
               {...field}
@@ -48,7 +48,7 @@ export const MyRadioField = ({ ...props }) => {
               id={option.value}
               checked={value === option.value}
               onBlur={() => setTouched(true)}
-              onChange={e => {
+              onChange={(e) => {
                 if (onChange) {
                   onChange(option.value);
                 }

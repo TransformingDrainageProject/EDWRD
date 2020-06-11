@@ -277,7 +277,7 @@ const AdvancedSettings = (props) => {
             <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
                 <FileUpload
-                  name="param-upload"
+                  name="userParamFile"
                   label="Upload custom input file"
                   type="param"
                 />
