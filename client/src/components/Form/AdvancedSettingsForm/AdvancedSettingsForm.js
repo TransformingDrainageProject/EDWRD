@@ -276,11 +276,14 @@ const AdvancedSettings = (props) => {
             <AdvancedSeasonTable fieldState={fieldState} unitType={unitType} />
             <Row className="mb-3" style={{ border: '1px solid #c8ced5' }}>
               <Col>
-                <FileUpload
-                  name="userParamFile"
-                  label="Upload custom input file"
-                  type="param"
-                />
+                <Row>
+                  <Col>
+                    <h4>
+                      <u>Upload Custom Input File</u>
+                    </h4>
+                  </Col>
+                </Row>
+                <FileUpload name="userParamFile" type="param" />
                 <HelpPopover
                   key="advCustomInput"
                   helpText={advancedSettingsHelp.advCustomInput}
