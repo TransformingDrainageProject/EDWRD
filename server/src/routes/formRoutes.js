@@ -3,21 +3,24 @@ const createError = require('http-errors');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
+const { PythonShell } = require('python-shell');
 const { spawn } = require('child_process');
 const tmp = require('tmp');
 
 const { createTaskObject } = require('../models/taskCreator');
-const { pythonPath } = require('../config');
-const { getFormSchema } = require('../validation/schema');
 const dailyStations = require('../utils/daily_stations.json');
+const { getFormSchema } = require('../validation/schema');
+const { pythonPath } = require('../config');
+const winston = require('../config/winston');
 
 const Form = mongoose.model('forms');
 
-module.exports = (app) => {
+module.exports = (app, io) => {
   app.post(
     '/api/form',
     checkSchema(getFormSchema()),
     async (req, res, next) => {
+      io.emit('test', { msg: '/api/form' });
       // validate and sanitize form values and return any errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) return res.status(422).json(errors);
@@ -94,22 +97,39 @@ module.exports = (app) => {
           }
 
           if (inputFile && paramFile) {
-            const pythonEDWRD = spawn(pythonPath, [
-              './src/utils/algorithm/run.py',
-              inputFile,
-              paramFile,
-            ]);
+            const startTime = process.hrtime();
+
+            const options = {
+              mode: 'json',
+              pythonPath: pythonPath,
+              pythonOptions: ['-u'],
+              scriptPath: './src/utils/algorithm',
+              args: [inputFile, paramFile],
+            };
+
+            const pyshell = new PythonShell('run.py', options);
 
             let dataSpreadsheet = '';
-            pythonEDWRD.stdout.on('data', (data) => {
-              dataSpreadsheet = data.toString().trim();
+            pyshell.on('message', (message) => {
+              if ('msg' in message) {
+                io.emit('processing', message);
+              }
+              if ('file' in message) {
+                dataSpreadsheet = message.file;
+              }
             });
 
-            pythonEDWRD.on('error', (err) => {
-              return next(err);
-            });
-
-            pythonEDWRD.on('close', (code) => {
+            pyshell.end((err, code, signal) => {
+              const runtime = process.hrtime(startTime)[0];
+              if (err) {
+                return next(err);
+              }
+              winston.info('The exit code was: ' + code);
+              winston.info('The exit signal was: ' + signal);
+              winston.info(`edwrd took ${runtime} seconds`);
+              io.emit('processing', {
+                msg: `Task completed in ${runtime} seconds.`,
+              });
               return res.download(dataSpreadsheet);
             });
           } else {

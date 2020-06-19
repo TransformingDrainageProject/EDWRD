@@ -53,7 +53,7 @@ const FileUpload = ({ label, name, type }) => {
       <Input
         type="file"
         name={name}
-        accept="text/csv, text/plain"
+        accept=".csv, text/plain"
         onChange={handleOnChange}
       />
       {errors[name] ? <ErrorMessage name={name} msg={errors[name]} /> : null}

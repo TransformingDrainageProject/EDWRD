@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Col, Row, Spinner } from 'reactstrap';
+import { Alert, Button, Col, Row, Spinner } from 'reactstrap';
 import FileDownload from 'js-file-download';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
+
 // forms
 import FieldReservoirForm from './FieldReservoirForm';
 import CropManagementForm from './CropManagementForm';
 import UserDataForm from './UserDataForm';
+
 // initial values
 import {
   fieldMetricInitialValues,
@@ -55,9 +58,17 @@ const validationSchema = fieldReservoirFormSchema
 const FormContainer = (props) => {
   const { origin, fieldState, frzThwDates, markerCoords, unitType } = props;
 
+  const [processingStatus, updateProcessingStatus] = useState('');
   const [results, setResults] = useState(null);
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
   const [showReset, toggleShowReset] = useState(false);
+
+  useEffect(() => {
+    const socket = io('http://localhost:3000');
+    socket.on('processing', (data) => {
+      updateProcessingStatus(data.msg);
+    });
+  }, []);
 
   return (
     <>
@@ -77,6 +88,7 @@ const FormContainer = (props) => {
               { responseType: 'blob' }
             )
             .then((response) => {
+              console.log(response);
               if (response && response.data) {
                 FileDownload(response.data, 'data.xlsx');
                 setSubmitting(false);
@@ -147,7 +159,7 @@ const FormContainer = (props) => {
                 </Row>
               </>
             ) : null}
-            <Row>
+            <Row style={{ padding: '0 15px 0 15px' }}>
               <Col className="text-center">
                 <Button
                   className="mb-4"
@@ -157,6 +169,7 @@ const FormContainer = (props) => {
                     backgroundColor: '#007cb3',
                     height: '75px',
                     width: '150px',
+                    marginLeft: '150px',
                   }}
                 >
                   {isSubmitting ? (
@@ -170,9 +183,42 @@ const FormContainer = (props) => {
                     <strong>Run EDWRD</strong>
                   )}
                 </Button>
-              </Col>
-              {showReset ? (
-                <Col className="text-center">
+                {!showReset ? (
+                  <Button
+                    className="mb-4"
+                    type="button"
+                    disabled={isSubmitting}
+                    outline
+                    color="secondary"
+                    onClick={() => {
+                      if (!showModifyInputs) {
+                        setFieldValue('userInput', 'true');
+                        setFieldTouched('userInput', true);
+                        setFieldValue('userSelectedStation', 2);
+                        setFieldTouched('userSelectedStation', true);
+                      } else {
+                        setFieldValue('userInput', 'false');
+                        setFieldTouched('userInput', true);
+                        setFieldValue('userSelectedStation', -1);
+                        setFieldTouched('userSelectedStation', true);
+                      }
+
+                      toggleShowModifyInputs(!showModifyInputs);
+                    }}
+                    style={{
+                      height: '75px',
+                      width: '150px',
+                      float: 'right',
+                    }}
+                  >
+                    {!showModifyInputs ? (
+                      <strong>Modify Inputs</strong>
+                    ) : (
+                      <strong>Return to Quick Analysis</strong>
+                    )}
+                  </Button>
+                ) : null}
+                {showReset ? (
                   <Button
                     className="mb-4"
                     type="button"
@@ -192,46 +238,33 @@ const FormContainer = (props) => {
                         paramUpload[0].value = '';
                       }
 
+                      updateProcessingStatus('');
                       handleReset();
+                      toggleShowReset(false);
                     }}
                     style={{
                       backgroundColor: '#edb229',
                       height: '75px',
                       width: '150px',
+                      float: 'right',
                     }}
                   >
                     <strong>Reset</strong>
                   </Button>
-                </Col>
-              ) : null}
-              {!showModifyInputs ? (
-                <Col className="text-center">
-                  <Button
-                    className="mb-4"
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      setFieldValue('userInput', 'true');
-                      setFieldTouched('userInput', true);
-                      setFieldValue('userSelectedStation', 2);
-                      setFieldTouched('userSelectedStation', true);
-                      toggleShowModifyInputs(true);
-                    }}
-                    style={{
-                      backgroundColor: '#007cb3',
-                      height: '75px',
-                      width: '150px',
-                    }}
-                  >
-                    <strong>Modify Inputs</strong>
-                  </Button>
-                </Col>
-              ) : null}
+                ) : null}
+              </Col>
             </Row>
             {status ? (
               <Row>
                 <Col className="text-center">
                   <span style={{ color: 'red' }}>{status}</span>
+                </Col>
+              </Row>
+            ) : null}
+            {processingStatus ? (
+              <Row>
+                <Col className="text-center">
+                  <Alert color="light">{processingStatus}</Alert>
                 </Col>
               </Row>
             ) : null}

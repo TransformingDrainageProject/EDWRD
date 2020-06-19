@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import sys
 
@@ -11,7 +12,8 @@ def main(input_file, param_file):
 
     data.to_excel(os.path.join(os.path.dirname(input_file), "data.xlsx"))
 
-    print(os.path.join(os.path.dirname(input_file), "data.xlsx"))
+    print(json.dumps({'file': os.path.join(
+        os.path.dirname(input_file), "data.xlsx")}))
     sys.stdout.flush()
 
 

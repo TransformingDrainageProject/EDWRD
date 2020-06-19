@@ -7,6 +7,11 @@ const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+const app = express();
+const server = require('http').Server(app);
+
+const io = require('socket.io')(server);
+
 const { mongoURI, sessionSecret } = require('./config');
 const winston = require('./config/winston');
 
@@ -14,8 +19,15 @@ const winston = require('./config/winston');
 require('./models/Form');
 require('./models/Task');
 
-const app = express();
 app.use(express.json());
+
+// listen for connections
+io.on('connection', (socket) => {
+  winston.info('a client connected');
+  socket.on('disconnect', () => {
+    winston.info('a client disconnected');
+  });
+});
 
 // log using morgan and winston
 app.use(morgan('combined', { stream: winston.stream }));
@@ -52,7 +64,7 @@ app.use(express.static(path.resolve(__dirname, '../../client/build')));
 
 // routes
 require('./routes/downloadRoutes')(app);
-require('./routes/formRoutes')(app);
+require('./routes/formRoutes')(app, io);
 require('./routes/gisRoutes')(app);
 require('./routes/uploadRoutes')(app);
 
@@ -88,4 +100,4 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+server.listen(PORT);
