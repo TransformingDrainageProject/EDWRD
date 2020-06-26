@@ -15,21 +15,26 @@ logging.basicConfig(filename="/tmp/location_nearest_weather_station.log",
                     filemode="w", level=logging.DEBUG)
 
 
-def convert_to_geopandas_dataframe(df, lat_colname, lon_colname):
+def convert_to_geopandas_dataframe(df: pd.DataFrame, lat_colname: str, lon_colname: str) -> gpd.GeoDataFrame:
     df["geometry"] = df["geometry"] = df.apply(
         lambda z: Point(z[lat_colname], z[lon_colname]),
         axis=1)
     return gpd.GeoDataFrame(df)
 
 
-def find_nearest_station(point, stations):
+def find_nearest_station(point: Point, stations: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     station_points = stations.geometry.unary_union
     nearest_station = stations.geometry == nearest_points(point, station_points)[
         1]
     return stations[nearest_station]
 
 
-def format_for_edwrd(station):
+def format_for_edwrd(station: pd.DataFrame, unit_type: str) -> None:
+    conversion_factor = 1
+
+    if unit_type == "metric":
+        conversion_factor = 0.44704
+
     data = {
         "rhmin": [
             station["Jan_rhmin"].values[0].item(),
@@ -46,25 +51,25 @@ def format_for_edwrd(station):
             station["Dec_rhmin"].values[0].item(),
         ],
         "wnd": [
-            station["Jan_wnd"].values[0].item(),
-            station["Feb_wnd"].values[0].item(),
-            station["Mar_wnd"].values[0].item(),
-            station["Apr_wnd"].values[0].item(),
-            station["May_wnd"].values[0].item(),
-            station["Jun_wnd"].values[0].item(),
-            station["Jul_wnd"].values[0].item(),
-            station["Aug_wnd"].values[0].item(),
-            station["Sep_wnd"].values[0].item(),
-            station["Oct_wnd"].values[0].item(),
-            station["Nov_wnd"].values[0].item(),
-            station["Dec_wnd"].values[0].item(),
+            station["Jan_wnd"].values[0].item() * conversion_factor,
+            station["Feb_wnd"].values[0].item() * conversion_factor,
+            station["Mar_wnd"].values[0].item() * conversion_factor,
+            station["Apr_wnd"].values[0].item() * conversion_factor,
+            station["May_wnd"].values[0].item() * conversion_factor,
+            station["Jun_wnd"].values[0].item() * conversion_factor,
+            station["Jul_wnd"].values[0].item() * conversion_factor,
+            station["Aug_wnd"].values[0].item() * conversion_factor,
+            station["Sep_wnd"].values[0].item() * conversion_factor,
+            station["Oct_wnd"].values[0].item() * conversion_factor,
+            station["Nov_wnd"].values[0].item() * conversion_factor,
+            station["Dec_wnd"].values[0].item() * conversion_factor,
         ]
     }
 
     return data
 
 
-def main(longitude: float, latitude: float, user_data_flag: int) -> None:
+def main(longitude: float, latitude: float, user_data_flag: int, unit_type: str) -> None:
     point = Point(latitude, longitude)
 
     # find nearest weather station
@@ -73,7 +78,7 @@ def main(longitude: float, latitude: float, user_data_flag: int) -> None:
         weather_df, "Latitude", "Longitude")
 
     nearest_weather_station = find_nearest_station(point, weather_gdf)
-    weather_station_data = format_for_edwrd(nearest_weather_station)
+    weather_station_data = format_for_edwrd(nearest_weather_station, unit_type)
 
     data = {
         "param": weather_station_data
@@ -104,10 +109,13 @@ if __name__ == "__main__":
                         help="Longitude of the map marker")
     parser.add_argument("user_data_flag", type=int,
                         help="Boolean flag indicating if the user provided their own daily data")
+    parser.add_argument("unit_type", type=str,
+                        help="Unit type (us or metric)")
 
     args = parser.parse_args()
     latitude = args.latitude
     longitude = args.longitude
     user_data_flag = args.user_data_flag
+    unit_type = args.unit_type
 
-    main(longitude, latitude, user_data_flag)
+    main(longitude, latitude, user_data_flag, unit_type)

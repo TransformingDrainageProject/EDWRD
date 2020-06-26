@@ -44,6 +44,7 @@ module.exports = (app, io) => {
           form.location.latitude,
           form.location.longitude,
           form.userInput ? 1 : 0,
+          req.body.unitType,
         ]);
 
         let stationData;
