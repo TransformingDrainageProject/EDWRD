@@ -3,6 +3,8 @@ import json
 import os
 import sys
 
+import pandas as pd
+
 from main import edwrd
 
 
@@ -10,7 +12,9 @@ def main(input_file, param_file):
 
     param, data, daily_data, annual_output = edwrd(input_file, param_file)
 
-    data.to_excel(os.path.join(os.path.dirname(input_file), "data.xlsx"))
+    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "data.xlsx")) as writer:
+        for key in daily_data:
+            daily_data[key].to_excel(writer, sheet_name=f"Vol {key}")
 
     print(json.dumps({'file': os.path.join(
         os.path.dirname(input_file), "data.xlsx")}))
