@@ -249,7 +249,7 @@ const FormContainer = (props) => {
                       float: 'right',
                     }}
                   >
-                    <strong>Reset</strong>
+                    <strong>Restore Default Values</strong>
                   </Button>
                 ) : null}
               </Col>

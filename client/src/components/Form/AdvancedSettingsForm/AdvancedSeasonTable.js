@@ -10,7 +10,7 @@ import HelpPopover from '../HelpPopover';
 import { advancedSettingsHelp } from './advancedSettingsHelp';
 import { STATES } from '../utils/constants';
 
-const AdvancedSeasonTable = props => {
+const AdvancedSeasonTable = (props) => {
   const { fieldState, unitType } = props;
 
   return (
@@ -18,7 +18,9 @@ const AdvancedSeasonTable = props => {
       <Col>
         <Row>
           <Col>
-            <h4 className="text-center">Growing and Non-growing Seasons </h4>
+            <h4>
+              <u>Growing and Non-growing Seasons ({STATES[fieldState]})</u>
+            </h4>
             <HelpPopover
               key="growNonGrowSeasons"
               helpText={advancedSettingsHelp.growNonGrowSeasons}
@@ -27,7 +29,6 @@ const AdvancedSeasonTable = props => {
               position="top"
               top="5px"
             />
-            <h5 className="text-center">Location in {STATES[fieldState]}</h5>
           </Col>
         </Row>
         <Row>
@@ -45,7 +46,7 @@ const AdvancedSeasonTable = props => {
 
 AdvancedSeasonTable.propTypes = {
   fieldState: PropTypes.string,
-  unitType: PropTypes.string
+  unitType: PropTypes.string,
 };
 
 export default AdvancedSeasonTable;
