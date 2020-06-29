@@ -64,7 +64,7 @@ const FormContainer = (props) => {
   const [showReset, toggleShowReset] = useState(false);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io('https://drainage.agriculture.purdue.edu:8888');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
     });
