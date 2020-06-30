@@ -10,7 +10,8 @@ from main import edwrd
 
 def main(input_file, param_file):
 
-    param, data, daily_data, annual_output = edwrd(input_file, param_file)
+    param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
+        input_file, param_file)
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "data.xlsx")) as writer:
         for key in daily_data:

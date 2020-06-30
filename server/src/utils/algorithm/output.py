@@ -9,129 +9,214 @@ import pandas as pd
 import numpy as np
 
 
-def output_calc(param,data,vol,dic):
-    """Aggregates and summarizes output for each variable from a range of reservoir volumes (vol). Writes this output to an Excel file."""
+def annual_output_calc(param,data,vol,dic):
+    """Aggregates and summarizes output on an annual basis for each variable from a range of reservoir volumes (vol). Writes this output to an Excel file."""
     #CREATE AN EMPTY DATAFRAME FOR THE OUTPUT
     output=pd.DataFrame()
     
     #ANNUAL PRECIP
-    output['prcp']=data[vol]['prcp'].groupby(data[vol].index.year).sum()
-    
-    #ANNUAL EVAPORATION FROM THE RESERVOIR SURFACE
-    output['water_evap']=data[vol]['water_evap'].groupby(data[vol].index.year).sum()
-    
-    #ANNUAL DRAIN FLOW
-    output['dflw']=data[vol]['dflw'].groupby(data[vol].index.year).sum()
-    
-    #ANNUAL RUNOFF
-    output['ro']=data[vol]['ro'].groupby(data[vol].index.year).sum()
-    
-    #GROWING SEASON PRECIPITATION
-    grw_prcp=data[vol]['prcp'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_prcp']=grw_prcp.groupby(grw_prcp.index.year).sum()
-    
-    #GROWING SEASON RUNOFF
-    grw_ro=data[vol]['ro'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_ro']=grw_ro.groupby(grw_ro.index.year).sum()
-    
-    #GROWING SEASON DRAIN FLOW
-    grw_dflw=data[vol]['dflw'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_dflw']=grw_dflw.groupby(grw_dflw.index.year).sum()
-    
-    #GROWING SEASON ADJUSTED CROP ET
-    grw_etc_a=data[vol]['etc_a'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_etc_a']=grw_etc_a.groupby(grw_etc_a.index.year).sum()
-    
-    #GROWING SEASON UPWARD FLUX
-    grw_upflx=data[vol]['upflx'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_upflx']=grw_upflx.groupby(grw_upflx.index.year).sum()
-    
-    #GROWING SEASON POTENTIAL (NOT WATER-LIMITED) CROP ET
-    grw_etc=data[vol]['etc'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_etc']=grw_etc.groupby(grw_etc.index.year).sum()
-    
-    #ANNUAL APPLIED IRRIGATION
-    output['irr']=data[vol]['irr'].groupby(data[vol].index.year).sum()
-    
-    #ANNUAL IRRIGATION REQUIREMENT BASED ON THE IRRIGATION PROVIDED WHEN WATER IS NOT LIMITED
-    irr_req=data[len(param['rvol'])-1]['irr'].loc[np.logical_and(data[len(param['rvol'])-1].index.dayofyear>=param['cstart'].values[0][0],data[len(param['rvol'])-1].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['irr_req']=irr_req.groupby(irr_req.index.year).sum()
-    
-    #ANNUAL RELATIVE IRRIGATION SUFFICIENCY
-    output['aris']=output['irr']/output['irr_req']
-    
-    #ANNUAL POTENTIAL (NOT WATER-LIMITED) TRANSPIRATION
-    trans_p = data[vol]['trans'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    trans_p = trans_p.groupby(trans_p.index.year).sum()
-    
-    #ANNUAL ACTUAL TRANSPIRATION
-    trans_a = data[vol]['trans_a'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    trans_a = trans_a.groupby(trans_a.index.year).sum()
-    
-    # #ANNUAL RELATIVE YIELD
-    # output['ryld'] = 1 - (param['ky'].values[0][0] * (1 - trans_a / trans_p))
+    output['Precipitation']=data[vol]['Precipitation'].groupby(data[vol].index.year).sum()
 
+    #ANNUAL APPLIED IRRIGATION
+    output['Applied Irrigation Depth']=data[vol]['Applied Irrigation Depth'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL UPWARD FLUX
+    output['Actual Upward Flux']=data[vol]['Actual Upward Flux'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL RUNOFF
+    output['Runoff']=data[vol]['Runoff'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL SOIL EVAPORATION
+    output['Soil Evaporation']=data[vol]['Soil Evaporation'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL POTENTIAL (NOT WATER-LIMITED) TRANSPIRATION
+    output['Potential Transpiration']=data[vol]['Potential Transpiration'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL ACTUAL TRANSPIRATION
+    output['Actual Transpiration']=data[vol]['Actual Transpiration'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL SEASON POTENTIAL (NOT WATER-LIMITED) ET
+    output['Potential Crop ET']=data[vol]['Potential Crop ET'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL SEASON ADJUSTED ET
+    output['Actual Crop ET']=data[vol]['Actual Crop ET'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL DRAIN FLOW
+    output['Tile Drain Flow']=data[vol]['Tile Drain Flow'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL PRECIPATION INTO THE RESERVOIR
+    output['Precipitation to Reservoir']=data[vol]['Precipitation to Reservoir'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL DRAIN FLOW INTO THE RESERVOIR
+    output['Tile Drain Flow to Reservoir']=data[vol]['Tile Drain Flow to Reservoir'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL RUNOFF INTO THE RESERVOIR
+    output['Runoff to Reservoir']=data[vol]['Runoff to Reservoir'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL IRRIGATION WITHDRAWAL FROM THE RESERVOIR
+    output['Irrigation Withdrawal']=data[vol]['Irrigation Withdrawal'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL SEEPAGE LOSSES FROM THE RESERVOIR
+    output['Reservoir Seepage']=data[vol]['Reservoir Seepage'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL EVAPORATION FROM THE RESERVOIR SURFACE
+    output['Reservoir Evaporation']=data[vol]['Reservoir Evaporation'].groupby(data[vol].index.year).sum()
+    
     #ANNUAL OVERFLOW FROM THE RESERVOIR
-    rovr=data[vol]['rovr'] / param['darea'].values[0][0] * 1000
-    output['rovr']=rovr.groupby(rovr.index.year).sum()
-    
-    #GROWING SEASON OVERFLOW FROM THE RESERVOIR
-    grw_rovr=data[vol]['rovr'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])] / param['darea'].values[0][0] * 1000
-    output['grw_rovr']=grw_rovr.groupby(grw_rovr.index.year).sum()
-    
+    rovr=data[vol]['Reservoir Overflow'] / param['darea'].values[0][0] * 1000
+    output['Reservoir Overflow']=rovr.groupby(rovr.index.year).sum()
+
     #ANNUAL CAPTURED DRAIN FLOW BY THE RESERVOIR
-    rcap=data[vol]['rcap'] / param['darea'].values[0][0] * 1000
-    output['rcap']=rcap.groupby(rcap.index.year).sum()
-    
-    #GROWING SEASON CAPTURED DRAIN FLOW BY THE RESERVOIR
-    grw_rcap=data[vol]['rcap'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])] / param['darea'].values[0][0] * 1000
-    output['grw_rcap']=grw_rcap.groupby(grw_rcap.index.year).sum()
-    
-    #NUMBER OF DAYS OF DEFICIT WATER STRESS FOR THE CROP
-    grw_ks_day=data[vol]['ks'].loc[np.logical_and(data[vol]['ks'] < 1,np.logical_and(data[vol].index.month>5,data[vol].index.month<9))]
-    output['grw_ks_day']=grw_ks_day.groupby(grw_ks_day.index.year).count()
-    
+    rcap=data[vol]['Captured Tile Drain Flow'] / param['darea'].values[0][0] * 1000
+    output['Captured Tile Drain Flow']=rcap.groupby(rcap.index.year).sum()
+
+    #ANNUAL PERCENT CAPTURED TILE DRAIN FLOW
+    output['Percent Captured Tile Drain Flow'] = output['Captured Tile Drain Flow'] / output['Tile Drain Flow'] * 100
+
     #ANNUAL NITRATE LOAD
-    output['no3l']=data[vol]['no3l'].groupby(data[vol].index.year).sum()
-    
+    output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby(data[vol].index.year).sum()
+
     #ANNUAL NITRATE LOAD THAT OVERFLOWED THE RESERVOIR
-    output['no3l_ovr']=data[vol]['no3l_ovr'].groupby(data[vol].index.year).sum()
+    output['Overflow Nitrate Load (Tile)']=data[vol]['Overflow Nitrate Load (Tile)'].groupby(data[vol].index.year).sum()
     
     #ANNUAL NITRATE LOAD CAPTURED BY THE RESERVOIR
-    output['no3l_cap']=data[vol]['no3l_cap'].groupby(data[vol].index.year).sum()
-    
-    #GROWING SEASON NITRATE LOAD
-    grw_no3l=data[vol]['no3l'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_no3l']=grw_no3l.groupby(grw_no3l.index.year).sum()
-    
-    #GROWING SEASON NITRATE LOAD THAT OVERFLOWED THE RESERVOIR
-    grw_no3l_ovr=data[vol]['no3l_ovr'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_no3l_ovr']=grw_no3l_ovr.groupby(grw_no3l_ovr.index.year).sum()
-    
-    #GROWING SEASON NITRATE LOAD CAPTURED BY THE RESERVOIR
-    grw_no3l_cap=data[vol]['no3l_cap'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_no3l_cap']=grw_no3l_cap.groupby(grw_no3l_cap.index.year).sum()
-    
+    output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL PERCENT NITRATE LOAD REDUCTION
+    output['Nitrate Load Reduction (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Drain Nitrate Load'] * 100
+
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD
-    output['srpl']=data[vol]['srpl'].groupby(data[vol].index.year).sum()
-    
+    output['Tile Drain SRP Load']=data[vol]['Tile Drain SRP Load'].groupby(data[vol].index.year).sum()
+
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD THAT OVERFLOWED THE RESERVOIR
-    output['srpl_ovr']=data[vol]['srpl_ovr'].groupby(data[vol].index.year).sum()
+    output['Overflow SRP Load (Tile)']=data[vol]['Overflow SRP Load (Tile)'].groupby(data[vol].index.year).sum()
     
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD CAPTURED BY THE RESERVOIR
-    output['srpl_cap']=data[vol]['srpl_cap'].groupby(data[vol].index.year).sum()
+    output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby(data[vol].index.year).sum()
+
+    #ANNUAL PERCENT SOLUBLE REACTIVE PHOSPHORUS LOAD REDUCTION
+    output['SRP Load Reduction (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile Drain SRP Load'] * 100
+
+    #ANNUAL IRRIGATION REQUIREMENT BASED ON THE IRRIGATION PROVIDED WHEN WATER IS NOT LIMITED
+    output['Irrigation Demand']=data[len(param['rvol'])-1]['Applied Irrigation Depth'].groupby(data[len(param['rvol'])-1].index.year).sum()
     
-    #GROWING SEASON SOLUBLE REACTIVE PHOSPHORUS LOAD
-    grw_srpl=data[vol]['srpl'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_srpl']=grw_srpl.groupby(grw_srpl.index.year).sum()
+    #ANNUAL RELATIVE IRRIGATION SUFFICIENCY
+    output['Relative Irrigation Supply']=output['Applied Irrigation Depth']/output['Irrigation Demand']
+
+    #Annual NUMBER OF DAYS OF DEFICIT WATER STRESS FOR THE CROP
+    output['Days of Deficit Water Stress']=data[vol]['Water Stress Coefficient'].where(data[vol]['Water Stress Coefficient'] < 1.0).groupby(data[vol].index.year).count()
+
+    #COPY ALL OUTPUT FROM A PARTICULAR RESERVOIR VOLUME TO A DICTIONARY AND WRITE TO AN EXCEL SHEET
+    dic[vol]=output.copy()
+
+def monthly_output_calc(param,data,vol,dic):
+    """Aggregates and summarizes output on an annual basis for each variable from a range of reservoir volumes (vol). Writes this output to an Excel file."""
+    #CREATE AN EMPTY DATAFRAME FOR THE OUTPUT
+    output=pd.DataFrame()
     
-    #GROWING SEASON SOLUBLE REACTIVE PHOSPHORUS LOAD THAT OVERFLOWED THE RESERVOIR
-    grw_srpl_ovr=data[vol]['srpl_ovr'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_srpl_ovr']=grw_srpl_ovr.groupby(grw_srpl_ovr.index.year).sum()
+    #MONTHLY PRECIP
+    output['Precipitation']=data[vol]['Precipitation'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY APPLIED IRRIGATION
+    output['Applied Irrigation Depth']=data[vol]['Applied Irrigation Depth'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY UPWARD FLUX
+    output['Actual Upward Flux']=data[vol]['Actual Upward Flux'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY RUNOFF
+    output['Runoff']=data[vol]['Runoff'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY SOIL EVAPORATION
+    output['Soil Evaporation']=data[vol]['Soil Evaporation'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY POTENTIAL (NOT WATER-LIMITED) TRANSPIRATION
+    output['Potential Transpiration']=data[vol]['Potential Transpiration'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY ACTUAL TRANSPIRATION
+    output['Actual Transpiration']=data[vol]['Actual Transpiration'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY SEASON POTENTIAL (NOT WATER-LIMITED) ET
+    output['Potential Crop ET']=data[vol]['Potential Crop ET'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY SEASON ADJUSTED ET
+    output['Actual Crop ET']=data[vol]['Actual Crop ET'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY DRAIN FLOW
+    output['Tile Drain Flow']=data[vol]['Tile Drain Flow'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY AVERAGE SOIL MOISTURE
+    output['Root Zone Soil Moisture'] = data[vol]['Root Zone Soil Moisture'].groupby([(data[vol].index.year), (data[vol].index.month)]).mean()
+
+    #MONTHLY AVERAGE READILY AVAILABLE WATER
+    output['Readily Available Water'] = data[vol]['Readily Available Water'].groupby([(data[vol].index.year), (data[vol].index.month)]).mean()
+
+    #MONTHLY PRECIPATION INTO THE RESERVOIR
+    output['Precipitation to Reservoir']=data[vol]['Precipitation to Reservoir'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY DRAIN FLOW INTO THE RESERVOIR
+    output['Tile Drain Flow to Reservoir']=data[vol]['Tile Drain Flow to Reservoir'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY RUNOFF INTO THE RESERVOIR
+    output['Runoff to Reservoir']=data[vol]['Runoff to Reservoir'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY IRRIGATION WITHDRAWAL FROM THE RESERVOIR
+    output['Irrigation Withdrawal']=data[vol]['Irrigation Withdrawal'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY SEEPAGE LOSSES FROM THE RESERVOIR
+    output['Reservoir Seepage']=data[vol]['Reservoir Seepage'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY EVAPORATION FROM THE RESERVOIR SURFACE
+    output['Reservoir Evaporation']=data[vol]['Reservoir Evaporation'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY AVERAGE RESERVOIR VOLUME
+    output['Reservoir Water Volume'] = data[vol]['Reservoir Water Volume'].groupby([(data[vol].index.year), (data[vol].index.month)]).mean()
+
+    #MONTHLY AVERAGE RESERVOIR DEPTH
+    output['Reservoir Water Depth'] = data[vol]['Reservoir Water Depth'].groupby([(data[vol].index.year), (data[vol].index.month)]).mean()
     
-    #GROWING SEASON SOLUBLE REACTIVE PHOSPHORUS LOAD CAPTURED BY THE RESERVOIR
-    grw_srpl_cap=data[vol]['srpl_cap'].loc[np.logical_and(data[vol].index.dayofyear>=param['cstart'].values[0][0],data[vol].index.dayofyear<=param['cstage_doy'].values[3][0])]
-    output['grw_srpl_cap']=grw_srpl_cap.groupby(grw_srpl_cap.index.year).sum()
+    #MONTHLY OVERFLOW FROM THE RESERVOIR
+    rovr=data[vol]['Reservoir Overflow'] / param['darea'].values[0][0] * 1000
+    output['Reservoir Overflow']=rovr.groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY CAPTURED DRAIN FLOW BY THE RESERVOIR
+    rcap=data[vol]['Captured Tile Drain Flow'] / param['darea'].values[0][0] * 1000
+    output['Captured Tile Drain Flow']=rcap.groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY PERCENT CAPTURED TILE DRAIN FLOW
+    output['Percent Captured Tile Drain Flow'] = output['Captured Tile Drain Flow'] / output['Tile Drain Flow'] * 100
+
+    #MONTHLY NITRATE LOAD
+    output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY NITRATE LOAD THAT OVERFLOWED THE RESERVOIR
+    output['Overflow Nitrate Load (Tile)']=data[vol]['Overflow Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
     
+    #MONTHLY NITRATE LOAD CAPTURED BY THE RESERVOIR
+    output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY PERCENT NITRATE LOAD REDUCTION
+    output['Nitrate Load Reduction (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Drain Nitrate Load'] * 100
+
+    #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD
+    output['Tile Drain SRP Load']=data[vol]['Tile Drain SRP Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD THAT OVERFLOWED THE RESERVOIR
+    output['Overflow SRP Load (Tile)']=data[vol]['Overflow SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    
+    #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD CAPTURED BY THE RESERVOIR
+    output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+
+    #MONTHLY PERCENT SOLUBLE REACTIVE PHOSPHORUS LOAD REDUCTION
+    output['SRP Load Reduction (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile Drain SRP Load'] * 100
+
+    #MONTHLY IRRIGATION REQUIREMENT BASED ON THE IRRIGATION PROVIDED WHEN WATER IS NOT LIMITED
+    output['Irrigation Demand']=data[len(param['rvol'])-1]['Applied Irrigation Depth'].groupby([(data[len(param['rvol'])-1].index.year), (data[len(param['rvol'])-1].index.month)]).sum()
+    
+    #MONTHLY RELATIVE IRRIGATION SUFFICIENCY
+    output['Relative Irrigation Supply']=output['Applied Irrigation Depth']/output['Irrigation Demand']
+
+    #MONTHLY NUMBER OF DAYS OF DEFICIT WATER STRESS FOR THE CROP
+    output['Days of Deficit Water Stress']=data[vol]['Water Stress Coefficient'].where(data[vol]['Water Stress Coefficient'] < 1.0).groupby([(data[vol]['Water Stress Coefficient'].index.year), (data[vol]['Water Stress Coefficient'].index.month)]).count()
+
     #COPY ALL OUTPUT FROM A PARTICULAR RESERVOIR VOLUME TO A DICTIONARY AND WRITE TO AN EXCEL SHEET
     dic[vol]=output.copy()

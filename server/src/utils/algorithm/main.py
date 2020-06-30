@@ -14,7 +14,7 @@ from runoff import runoff_calc
 from reservoir import reservoir_calc, wq_calc
 from evaporation import evap_calc
 from field import soilwater_calc
-from output import output_calc
+from output import annual_output_calc, monthly_output_calc
 
 
 def edwrd(infile, pfile):
@@ -24,7 +24,9 @@ def edwrd(infile, pfile):
 
     # CREATE EMPTY DICTIONARIES TO STORE THE DAILY DATA AND OUTPUT FROM VARIOUS RESERVOIR VOLUMES
     daily_data = {}
+    daily_data_user = {}
     annual_output = {}
+    monthly_output = {}
 
     # LOOP THROUGH EACH VOLUME PROVIDED IN THE PARAMETER FILE TO CALCULATE THE DAILY VALUES
     for vol in range(len(param['rvol'])):
@@ -87,12 +89,8 @@ def edwrd(infile, pfile):
                 p > raw > zrperc > zrdepl > zrsm > irr_req > irr > upflx > ks > kc_a > trans_a> etc_a
         """
         # Iterate over dataframe rows as named tuples
-        year = -1
         for row in data.itertuples():
-            if row[0].year != year:
-                year = row[0].year
-                print(json.dumps(
-                    {"msg": f"Calculating {str(year)} daily values for volume {vol + 1}"}))
+
             # Calculate runoff (cn > ro)
             runoff_calc(row, param, data, zedepl_init)
 
@@ -119,14 +117,24 @@ def edwrd(infile, pfile):
             irr_init = data.at[row.Index, 'irr']
             fw_init = data.at[row.Index, 'fw']
 
-        # COPY ALL DAILY DATA AND OUTPUT FOR A GIVEN RESERVOIR VOLUME TO THE DICTIONARY AND WRITE IT TO AN EXCEL WORKSHEET
-        daily_data[vol] = data.copy()
+        # CREATE CONDENSED OUTPUT FILE FOR USER
+        var_drop = ['max_upflx', 'water_evap', 'eto', 'no3c', 'srpc', 'wind', 'rhmin', 'cht', 'kcb', 'kcb_max', 'fc', 'few', 'zedepl',
+                    'zeperc', 'cn', 'kr', 'ke', 'p', 'zrdepl', 'zrperc', 'kc', 'kc_a', 'fw']
+        data_user = data.drop(columns=var_drop)
 
-    # LOOP THROUGH THE DAILY DATA FOR EACH VOLUME TO CALCULATE THE OUTPUT
-    # This second loop is needed here in order to calculate the ARIS values...need to know how much irrigation would be applied given an unlimited supply of water
+        # RENAME COLUMNS TO MORE DESCRIPTIVE TITLE
+        data_user = data_user.rename(columns=data_dic)
+
+        # COPY ALL DAILY DATA AND OUTPUT FOR A GIVEN RESERVOIR VOLUME TO THE DICTIONARY AND WRITE IT TO AN EXCEL WORKSHEET
+        daily_data[vol] = data.copy()  # Comprehensive copy, all data
+        daily_data_user[vol] = data_user.copy()  # User copy, condensed dataset
+
+    # #LOOP THROUGH THE DAILY DATA FOR EACH VOLUME TO CALCULATE THE OUTPUT
+    # #This second loop is needed here in order to calculate the ARIS values...need to know how much irrigation would be applied given an unlimited supply of water
     for vol in range(len(param['rvol'])):
         print(json.dumps(
             {'msg': f'Calculating output values for volume {vol + 1} of {len(param["rvol"])}...'}))
-        output_calc(param, daily_data, vol, annual_output)
+        annual_output_calc(param, daily_data_user, vol, annual_output)
+        monthly_output_calc(param, daily_data_user, vol, monthly_output)
 
-    return param, data, daily_data, annual_output
+    return param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output
