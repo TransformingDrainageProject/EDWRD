@@ -40,7 +40,7 @@ def edwrd_input(infile, pfile):
 
     # PARSE DATES, AND SET DATES AS INDEX
     data = pd.read_csv(infile, sep=sep, header=0, parse_dates={
-        'date': [0, 1, 2]}, index_col=0, engine='python')
+                       'date': [0, 1, 2]}, index_col=0)
 
     # REINDEX PANDAS DATAFRAME TO INCLUDE ALL VARIABLES TO BE CALCULATED
     data = data.reindex(columns=data.columns.tolist() + [
@@ -60,15 +60,15 @@ def edwrd_input(infile, pfile):
                 'cht': 'Crop Height', 'kcb': 'Basal Crop Coefficient', 'kcb_max': 'Maximum Potential Crop Coefficient',
                 'fc': 'Fraction of Vegetative Cover', 'few': 'Exposed, Wetted Soil Surface Fraction', 'zedepl': 'Evaporation Layer Depletion',
                 'zeperc': 'Evaporation Layer Excess Drainage', 'cn': 'Curve Number', 'ro': 'Runoff',
-                'kr': 'Evaporation Reduction Coefficient', 'ke': 'Evaporation Coefficient', 'evap': 'Evaporation',
+                'kr': 'Evaporation Reduction Coefficient', 'ke': 'Evaporation Coefficient', 'evap': 'Soil Evaporation',
                 'etc': 'Potential Crop ET', 'p': 'Soil Water Depletion Factor', 'raw': 'Readily Available Water',
                 'zrdepl': 'Root Zone Depletion', 'zrperc': 'Root Zone Excess Drainage', 'ks': 'Water Stress Coefficient',
                 'etc_a': 'Actual Crop ET', 'upflx': 'Actual Upward Flux', 'rdep': 'Reservoir Water Depth',
-                'rvol': 'Reservoir Water Volume', 'rprcp': 'Precipitation Contribution to Reservoir',
-                'rdflw': 'Tile Drain Flow Contribution to Reservoir', 'zrsm': 'Root Zone Soil Moisture', 'rirr': 'Applied Irrigation Volume',
+                'rvol': 'Reservoir Water Volume', 'rprcp': 'Precipitation to Reservoir',
+                'rdflw': 'Tile Drain Flow to Reservoir', 'zrsm': 'Root Zone Soil Moisture', 'rirr': 'Irrigation Withdrawal',
                 'rro': 'Runoff to Reservoir', 'rovr': 'Reservoir Overflow', 'rcap': 'Captured Tile Drain Flow', 'no3l': 'Tile Drain Nitrate Load',
-                'srpl': 'Tile Drain SRP Load', 'no3l_ovr': 'Overflow Nitrate Load', 'no3l_cap': 'Captured Nitrate Load',
-                'srpl_ovr': 'Overflow SRP Load', 'srpl_cap': 'Captured SRP Load', 'irr': 'Applied Irrigation Depth',
+                'srpl': 'Tile Drain SRP Load', 'no3l_ovr': 'Overflow Nitrate Load (Tile)', 'no3l_cap': 'Captured Nitrate Load (Tile)',
+                'srpl_ovr': 'Overflow SRP Load (Tile)', 'srpl_cap': 'Captured SRP Load (Tile)', 'irr': 'Applied Irrigation Depth',
                 'kc': 'Potential Crop Coefficient', 'kc_a': 'Actual Crop Coefficient', 'trans': 'Potential Transpiration',
                 'trans_a': 'Actual Transpiration', 'fw': 'Wetted Soil Surface Fraction', 'rseep': 'Reservoir Seepage',
                 'revap': 'Reservoir Evaporation'}
@@ -80,8 +80,8 @@ def edwrd_input(infile, pfile):
                              ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
     #--END OF ERROR CHECK--#
 
-    # CREATE DICTIONARY OF INPUT PARAMETERS
     print(json.dumps({'msg': 'Preparing parameters...'}))
+    # CREATE DICTIONARY OF INPUT PARAMETERS
     param = {
         'darea': 0, 'iarea': 1,
         'rarea': 2, 'rdep': 3, 'rdep_min': 4, 'rseep': 5,
@@ -98,28 +98,42 @@ def edwrd_input(infile, pfile):
     sep = '\t'
     with open(pfile) as f:
         header_row = f.readline()
-        if len(header_row.split(',')) == len(param.keys()):
+        if (len(header_row.split(',')) == len(param.keys())):
             sep = r'\,'
 
     for i in param:
-        param[i] = pd.read_csv(pfile, sep=sep, header=0, usecols=[
-                               param[i]], engine='python').dropna()
+        param[i] = pd.read_csv(pfile, sep=sep, header=0,
+                               usecols=[param[i]], engine='python').dropna()
 
     # CONVERT FIELD AND RESERVOIR AREAS TO SQUARE METERS
     param['darea'] = param['darea'] * 10000
     param['iarea'] = param['iarea'] * 10000
     param['rarea'] = param['rarea'] * 10000
 
+    # CHECK IF IRRDEP_MIN IS EMPTY, IF SO THEN SET TO ZERO
+    if param['irrdep_min'].empty:
+        param['irrdep_min'] = pd.DataFrame(
+            np.array([0]), columns=param['irrdep_min'].columns)
+
     # ADD SECONDARY PARAMETERS TO THE DICTIONARY WHICH ARE CALCULATED FROM INITIAL PARAMETERS
-    # Reservoir volume
+        # Reservoir volume
     param['rvol'] = pd.DataFrame(param['rarea'] * param['rdep'].at[0, 'rdep'])
     param['rvol'].columns = ['rvol']
 
-    # Add an extremely large reservoir volume (10,000,000 m3, ~8,100 ac-ft) to the end in order to estimate the irrigation that would be applied when water is not limited (used for calculating ARIS)
-    # Add a matching reservoir area.
+    # Add smaller and larger reservoirs to compare against user specific reservoir size
+    r_vols = [(param['rvol'].at[0, 'rvol']*1.5), (param['rvol'].at[0, 'rvol']*3.0),
+              (param['rvol'].at[0, 'rvol']*0.5), (param['rvol'].at[0, 'rvol']*0.1)]
+
+    for i in r_vols:
+        param['rvol'] = param['rvol'].append({'rvol': i}, ignore_index=True)
+    param['rarea'] = param['rvol'] / param['rdep'].at[0, 'rdep']
+    param['rarea'] = param['rarea'].rename(columns={'rvol': 'rarea'})
+
+    #     #Add an extremely large reservoir volume (10,000,000 m3, ~8,100 ac-ft) to the end in order to estimate the irrigation that would be applied when water is not limited (used for calculating ARIS)
+    #     #Add a matching reservoir area.
     param['rvol'].at[len(param['rvol']), 'rvol'] = 10000000
-    param['rarea'].at[len(param['rarea']), 'rarea'] = param['rarea'].at[len(
-        param['rarea'])-1, 'rarea']
+    param['rarea'].at[len(param['rarea']),
+                      'rarea'] = param['rarea'].at[0, 'rarea']
 
     # Total evaporable water in the evaporation layer, limited during the non-growing season when surface residue is present
     param['tew'] = pd.DataFrame([1000 * (param['zefc'].at[0, 'zefc'] - (
