@@ -81,6 +81,7 @@ const FormContainer = (props) => {
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
+          setStatus('');
           axios
             .post(
               '/api/form',
@@ -88,19 +89,20 @@ const FormContainer = (props) => {
               { responseType: 'blob' }
             )
             .then((response) => {
-              console.log(response);
               if (response && response.data) {
                 FileDownload(response.data, 'data.xlsx');
                 setSubmitting(false);
                 toggleShowReset(true);
               }
             })
-            .catch((err) => {
-              console.log(err);
+            .catch(async (err) => {
+              updateProcessingStatus('');
               if (err.response && err.response.status === 422) {
                 err.response.data.errors.forEach((fieldError) =>
                   setFieldError(fieldError.param, fieldError.msg)
                 );
+              } else if (err.response.data) {
+                setStatus(await err.response.data.text());
               } else {
                 setStatus('Unable to process form submission at this time.');
               }

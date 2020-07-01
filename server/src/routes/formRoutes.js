@@ -12,6 +12,7 @@ const dailyStations = require('../utils/daily_stations.json');
 const { getFormSchema } = require('../validation/schema');
 const { pythonPath } = require('../config');
 const winston = require('../config/winston');
+const { create } = require('../models/Task');
 
 const Form = mongoose.model('forms');
 
@@ -100,12 +101,16 @@ module.exports = (app, io) => {
           if (inputFile && paramFile) {
             const startTime = process.hrtime();
 
+            // while in json mode, python-shell library will throw an internal
+            // error when the python script has an exception. work around is to
+            // convert the stderr message to valid json (last line in options).
             const options = {
               mode: 'json',
               pythonPath: pythonPath,
               pythonOptions: ['-u'],
               scriptPath: './src/utils/algorithm',
               args: [inputFile, paramFile],
+              stderrParser: (line) => JSON.stringify(line),
             };
 
             const pyshell = new PythonShell('run.py', options);
@@ -120,18 +125,33 @@ module.exports = (app, io) => {
               }
             });
 
+            pyshell.on('error', (err) => {
+              winston.error(err.stack);
+            });
+
             pyshell.end((err, code, signal) => {
               const runtime = process.hrtime(startTime)[0];
-              if (err) {
-                return next(err);
+
+              if (err || code !== 0) {
+                if (err) {
+                  return next(
+                    createError(
+                      500,
+                      err.stack.split('\n')[0].split(':')[2].trim()
+                    )
+                  );
+                } else {
+                  return next(
+                    createError(500, 'Unexpected error has occurred')
+                  );
+                }
+              } else {
+                winston.info(`edwrd took ${runtime} seconds`);
+                io.emit('processing', {
+                  msg: `Task completed in ${runtime} seconds.`,
+                });
+                return res.download(dataSpreadsheet);
               }
-              winston.info('The exit code was: ' + code);
-              winston.info('The exit signal was: ' + signal);
-              winston.info(`edwrd took ${runtime} seconds`);
-              io.emit('processing', {
-                msg: `Task completed in ${runtime} seconds.`,
-              });
-              return res.download(dataSpreadsheet);
             });
           } else {
             return res.sendStatus(500);
