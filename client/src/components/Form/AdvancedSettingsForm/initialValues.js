@@ -53,7 +53,7 @@ export const advUSInitialValues = {
   rew: 0.4,
   rseep: 0.04,
   ze: 0.33,
-  initCropHeight: 0.67,
+  initCropHeight: 0.7,
   midCropHeight: 6.6,
   ...unitlessInitialValues,
 };
@@ -64,6 +64,6 @@ export const advMetricInitialValues = {
   rseep: 0.9,
   ze: 0.1,
   initCropHeight: 0.2,
-  midCropHeight: 2.01,
+  midCropHeight: 2.0,
   ...unitlessInitialValues,
 };
