@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import 'react-dates/initialize';
 import { DateRangePicker as ReactDateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -34,11 +35,17 @@ const DateRangePicker = ({
     setFieldTouched(endDateFieldName, true);
   };
 
+  const currentYear = new Date().getFullYear();
+  const falseFunc = () => false;
+
   return (
     <ReactDateRangePicker
       disabled={props.disabled ? props.disabled : null}
       displayFormat="MMM DD"
       monthFormat="MMM DD"
+      enableOutsideDays={true}
+      isOutsideRange={falseFunc}
+      minDate={moment(new Date(currentYear, 0, 1))}
       startDate={values[startDateFieldName]}
       startDateId={'id-' + field.name}
       endDate={values[endDateFieldName]}
