@@ -3,6 +3,7 @@ import {
   VictoryAxis,
   VictoryChart,
   VictoryArea,
+  VictoryLabel,
   VictoryLine,
   VictoryGroup,
   VictoryScatter,
@@ -27,42 +28,42 @@ const lineData = [
   { x: '6', y: 136.44 },
 ];
 const outlierData = [
-  { x: '1', y: 96.86, label: '1990' },
-  { x: '1', y: 97.8, label: '2006' },
-  { x: '1', y: 104.48, label: '2008' },
-  { x: '1', y: 160.43, label: '1993' },
-  { x: '1', y: 147.062, label: '1995' },
-  { x: '1', y: 147.94, label: '1996' },
-  { x: '2', y: 94.2, label: '1990' },
-  { x: '2', y: 102.4, label: '2006' },
-  { x: '2', y: 102.33, label: '2008' },
-  { x: '2', y: 156.44, label: '1993' },
-  { x: '2', y: 141.8, label: '1995' },
-  { x: '2', y: 141.91, label: '1996' },
-  { x: '3', y: 98.8, label: '2002' },
-  { x: '3', y: 105.71, label: '2006' },
-  { x: '3', y: 112.613, label: '2007' },
-  { x: '3', y: 166.77, label: '1987' },
-  { x: '3', y: 172.8, label: '2010' },
-  { x: '3', y: 172.96, label: '2011' },
-  { x: '4', y: 97.13, label: '1990' },
-  { x: '4', y: 98.16, label: '2006' },
-  { x: '4', y: 104.81, label: '2008' },
-  { x: '4', y: 159.42, label: '1993' },
-  { x: '4', y: 145.18, label: '1995' },
-  { x: '4', y: 148.51, label: '1996' },
-  { x: '5', y: 97.13, label: '1990' },
-  { x: '5', y: 98.16, label: '2006' },
-  { x: '5', y: 104.81, label: '2008' },
-  { x: '5', y: 159.42, label: '1993' },
-  { x: '5', y: 145.18, label: '1995' },
-  { x: '5', y: 148.51, label: '1996' },
-  { x: '6', y: 112.61, label: '2002' },
-  { x: '6', y: 98.8, label: '2006' },
-  { x: '6', y: 105.71, label: '2007' },
-  { x: '6', y: 172.95, label: '1987' },
-  { x: '6', y: 166.77, label: '2010' },
-  { x: '6', y: 172.8, label: '2011' },
+  { x: '1', y: 96.86, year: '1990' },
+  { x: '1', y: 97.8, year: '2006' },
+  { x: '1', y: 104.48, year: '2008' },
+  { x: '1', y: 160.43, year: '1993' },
+  { x: '1', y: 147.062, year: '1995' },
+  { x: '1', y: 147.94, year: '1996' },
+  { x: '2', y: 94.2, year: '1990' },
+  { x: '2', y: 102.4, year: '2006' },
+  { x: '2', y: 102.33, year: '2008' },
+  { x: '2', y: 156.44, year: '1993' },
+  { x: '2', y: 141.8, year: '1995' },
+  { x: '2', y: 141.91, year: '1996' },
+  { x: '3', y: 98.8, year: '2002' },
+  { x: '3', y: 105.71, year: '2006' },
+  { x: '3', y: 112.613, year: '2007' },
+  { x: '3', y: 166.77, year: '1987' },
+  { x: '3', y: 172.8, year: '2010' },
+  { x: '3', y: 172.96, year: '2011' },
+  { x: '4', y: 97.13, year: '1990' },
+  { x: '4', y: 98.16, year: '2006' },
+  { x: '4', y: 104.81, year: '2008' },
+  { x: '4', y: 159.42, year: '1993' },
+  { x: '4', y: 145.18, year: '1995' },
+  { x: '4', y: 148.51, year: '1996' },
+  { x: '5', y: 97.13, year: '1990' },
+  { x: '5', y: 98.16, year: '2006' },
+  { x: '5', y: 104.81, year: '2008' },
+  { x: '5', y: 159.42, year: '1993' },
+  { x: '5', y: 145.18, year: '1995' },
+  { x: '5', y: 148.51, year: '1996' },
+  { x: '6', y: 112.61, year: '2002' },
+  { x: '6', y: 98.8, year: '2006' },
+  { x: '6', y: 105.71, year: '2007' },
+  { x: '6', y: 172.95, year: '1987' },
+  { x: '6', y: 166.77, year: '2010' },
+  { x: '6', y: 172.8, year: '2011' },
 ];
 
 const ExampleChart = () => {
@@ -91,6 +92,15 @@ const ExampleChart = () => {
         }}
         data={lineData}
       />
+      <VictoryLabel
+        style={{ fill: '#006d2c', fontSize: 8, fontWeight: 'bold' }}
+        text={[
+          'Values outside the shaded area',
+          'have a 1 in 10 chance of occurring',
+        ]}
+        datum={{ x: '3.5', y: 182 }}
+        textAnchor="middle"
+      />
       <VictoryGroup>
         <VictoryScatter
           style={{ data: { fill: '#006d2c' } }}
@@ -104,9 +114,12 @@ const ExampleChart = () => {
         <VictoryScatter
           style={{ data: { fill: '#bdbdbd' } }}
           data={outlierData}
-          labels={({ datum }) => datum.y}
+          labels={({ datum }) => `Year: ${datum.year}\nValue: ${datum.y}`}
           labelComponent={
-            <VictoryTooltip flyoutStyle={{ stroke: '#bdbdbd' }} />
+            <VictoryTooltip
+              flyoutPadding={{ left: 10, right: 10, top: 5, bottom: 5 }}
+              flyoutStyle={{ stroke: '#bdbdbd' }}
+            />
           }
           size={3}
         />
