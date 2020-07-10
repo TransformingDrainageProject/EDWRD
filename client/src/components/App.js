@@ -75,11 +75,12 @@ const App = () => {
           unitType={unitType}
         />
         <Row className="mb-3">
-          <Col md={3}></Col>
           <Col md={6}>
             <ExampleChart />
           </Col>
-          <Col md={3}></Col>
+          <Col md={6}>
+            <ExampleChart />
+          </Col>
         </Row>
       </Container>
       <Footer />
