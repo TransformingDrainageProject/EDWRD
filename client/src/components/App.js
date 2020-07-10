@@ -74,9 +74,11 @@ const App = () => {
           markerCoords={markerCoords}
           unitType={unitType}
         />
-        <Row>
+        <Row className="mb-3">
           <Col md={3}></Col>
-          <Col md={6}><ExampleChart /></Col>
+          <Col md={6}>
+            <ExampleChart />
+          </Col>
           <Col md={3}></Col>
         </Row>
       </Container>
