@@ -16,6 +16,10 @@ def main(input_file, param_file):
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "data.xlsx")) as writer:
         for key in daily_data:
             daily_data[key].to_excel(writer, sheet_name=f"Vol {key}")
+    
+    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "annual_output.xlsx")) as writer:
+        for key in annual_output:
+            annual_output[key].to_excel(writer, sheet_name=f"Vol {key}")
 
     print(json.dumps({'file': os.path.join(
         os.path.dirname(input_file), "data.xlsx")}))

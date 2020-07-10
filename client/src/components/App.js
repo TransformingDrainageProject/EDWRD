@@ -1,8 +1,9 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Container } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 
+import ExampleChart from './Charts/ExampleChart';
 import Header from './Header';
 import Instructions from './Instructions';
 import Introduction from './Introduction';
@@ -73,6 +74,11 @@ const App = () => {
           markerCoords={markerCoords}
           unitType={unitType}
         />
+        <Row>
+          <Col md={3}></Col>
+          <Col md={6}><ExampleChart /></Col>
+          <Col md={3}></Col>
+        </Row>
       </Container>
       <Footer />
     </div>
