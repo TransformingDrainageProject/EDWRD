@@ -9,6 +9,7 @@ import {
   VictoryScatter,
   VictoryTheme,
   VictoryTooltip,
+  VictoryVoronoiContainer,
 } from 'victory';
 
 const areaData = [
@@ -70,19 +71,26 @@ const ExampleChart = () => {
   return (
     <VictoryChart
       theme={VictoryTheme.material}
+      containerComponent={<VictoryVoronoiContainer />}
       domainPadding={15}
       height={300}
       style={{ parent: { border: '1px solid #ccc' } }}
     >
       <VictoryGroup>
-        <VictoryArea style={{ data: { fill: '#74c476' } }} data={areaData} />
+        <VictoryArea
+          style={{ data: { fill: '#74c476' } }}
+          data={areaData}
+          interpolation="natural"
+        />
         <VictoryLine
           style={{ data: { stroke: '#006d2c', strokeWidth: 2 } }}
           data={areaData.map((data) => ({ x: data.x, y: data.y0 }))}
+          interpolation="natural"
         />
         <VictoryLine
           style={{ data: { stroke: '#006d2c', strokeWidth: 2 } }}
           data={areaData.map((data) => ({ x: data.x, y: data.y }))}
+          interpolation="natural"
         />
       </VictoryGroup>
       <VictoryLine
@@ -112,7 +120,14 @@ const ExampleChart = () => {
           size={5}
         />
         <VictoryScatter
-          style={{ data: { fill: '#bdbdbd' } }}
+          style={{
+            data: {
+              fill: '#bdbdbd',
+              fillOpacity: 0.7,
+              stroke: '#343434',
+              strokeWidth: 0.5,
+            },
+          }}
           data={outlierData}
           labels={({ datum }) => `Year: ${datum.year}\nValue: ${datum.y}`}
           labelComponent={
@@ -121,7 +136,7 @@ const ExampleChart = () => {
               flyoutStyle={{ stroke: '#bdbdbd' }}
             />
           }
-          size={3}
+          size={2}
         />
       </VictoryGroup>
       <VictoryAxis dependentAxis theme={VictoryTheme.material} />
