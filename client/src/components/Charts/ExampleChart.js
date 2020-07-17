@@ -139,7 +139,11 @@ const ExampleChart = () => {
           size={2}
         />
       </VictoryGroup>
-      <VictoryAxis dependentAxis theme={VictoryTheme.material} />
+      <VictoryAxis
+        dependentAxis
+        theme={VictoryTheme.material}
+        style={{ axisLabel: { padding: 36 } }}
+      />
       <VictoryAxis
         style={{ axisLabel: { padding: 30 } }}
         label="Reservoir Area (Depth = 10 ft)"

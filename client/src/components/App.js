@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 
+import ExampleCard from './Charts/ExampleCard';
 import ExampleChart from './Charts/ExampleChart';
 import Header from './Header';
 import Instructions from './Instructions';
@@ -76,10 +77,22 @@ const App = () => {
         />
         <Row className="mb-3">
           <Col md={6}>
-            <ExampleChart />
+            <div>
+              <ExampleCard
+                title="Annual Applied Irrigation"
+                text="This graph shows the annual amount of irrigation applied from a given reservoir size across all years at this location. Click on the question mark to learn more about how this is estimated."
+              />
+              <ExampleChart />
+            </div>
           </Col>
           <Col md={6}>
-            <ExampleChart />
+            <div>
+              <ExampleCard
+                title="Annual Relative Irrigation Supply"
+                text="This graph shows how much of the total irrigation requirement is met by the amount of irrigation applied from a given reservoir size, called the Annual Relative Irrigation Supply. Click on the question mark to learn more about how this is estimated."
+              />
+              <ExampleChart />
+            </div>
           </Col>
         </Row>
       </Container>
