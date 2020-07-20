@@ -8,6 +8,21 @@ import pandas as pd
 from main import edwrd
 
 
+def convert_dataframe_to_json(data, column_name):
+    chart_data = []
+    # loop through first five volumes
+    for vol in range(0, 5):
+        temp = json.loads(data[vol].to_json())[column_name]
+        for key in temp.keys():
+            chart_data.append({
+                "x": str(vol),
+                "y": temp[key],
+                "year": key
+            })
+
+    return chart_data
+
+
 def main(input_file, param_file):
 
     param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
@@ -21,8 +36,15 @@ def main(input_file, param_file):
         for key in annual_output:
             annual_output[key].to_excel(writer, sheet_name=f"Vol {key}")
 
-    print(json.dumps({'file': os.path.join(
-        os.path.dirname(input_file), "data.xlsx")}))
+    json_output = {
+        "data": {
+            "annual": {
+                "appliedIrrigation": convert_dataframe_to_json(annual_output, "Applied Irrigation Depth"),
+                "irrigationSupply": convert_dataframe_to_json(annual_output, "Relative Irrigation Supply")
+            }
+        }
+    }
+    print(json.dumps(json_output))
     sys.stdout.flush()
 
 

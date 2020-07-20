@@ -83,14 +83,10 @@ const FormContainer = (props) => {
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
           setStatus('');
           axios
-            .post(
-              '/api/form',
-              { ...markerCoords, ...frzThwDates, ...values },
-              { responseType: 'blob' }
-            )
+            .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
             .then((response) => {
               if (response && response.data) {
-                FileDownload(response.data, 'data.xlsx');
+                setResults(response.data);
                 setSubmitting(false);
                 toggleShowReset(true);
               }
