@@ -134,25 +134,26 @@ module.exports = (app, io) => {
 
               if (err || code !== 0) {
                 if (err) {
-                  return next(
-                    createError(
-                      500,
-                      err.stack.split('\n')[0].split(':')[2].trim()
-                    )
-                  );
+                  winston.error(err);
+                  io.emit('error', {
+                    msg: err.stack.split('\n')[0].split(':')[2].trim(),
+                  });
                 } else {
-                  return next(
-                    createError(500, 'Unexpected error has occurred')
-                  );
+                  winston.error('Unexpected error has occurred');
+                  io.emit('error', { msg: 'Unexpected error has occurred' });
                 }
               } else {
                 winston.info(`edwrd took ${runtime} seconds`);
                 io.emit('processing', {
                   msg: `Task completed in ${runtime} seconds.`,
                 });
-                return res.send(results);
+                io.emit('chartDataReady', results);
               }
             });
+
+            return res.send(
+              'Please do not close this tab. Your request is currently processing.'
+            );
           } else {
             return res.sendStatus(500);
           }

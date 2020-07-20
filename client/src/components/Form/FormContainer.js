@@ -56,8 +56,16 @@ const validationSchema = fieldReservoirFormSchema
   .concat(advancedSettingsFormSchema);
 
 const FormContainer = (props) => {
-  const { origin, fieldState, frzThwDates, markerCoords, unitType } = props;
+  const {
+    origin,
+    fieldState,
+    frzThwDates,
+    markerCoords,
+    setChartData,
+    unitType,
+  } = props;
 
+  const [errorMsg, setErrorMsg] = useState('');
   const [processingStatus, updateProcessingStatus] = useState('');
   const [results, setResults] = useState(null);
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
@@ -67,6 +75,13 @@ const FormContainer = (props) => {
     const socket = io('http://localhost:3000');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
+    });
+    socket.on('error', (err) => {
+      setErrorMsg(err);
+    });
+    socket.on('chartDataReady', (chartData) => {
+      console.log(chartData);
+      setChartData(chartData);
     });
   }, []);
 
@@ -86,7 +101,8 @@ const FormContainer = (props) => {
             .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
             .then((response) => {
               if (response && response.data) {
-                setResults(response.data);
+                console.log(response.data);
+                setStatus(response.data.msg);
                 setSubmitting(false);
                 toggleShowReset(true);
               }
@@ -97,9 +113,11 @@ const FormContainer = (props) => {
                 err.response.data.errors.forEach((fieldError) =>
                   setFieldError(fieldError.param, fieldError.msg)
                 );
-              } else if (err.response.data) {
+              } else if (err.response && err.response.data) {
+                console.log(err.response.data);
                 setStatus(await err.response.data.text());
               } else {
+                console.log(err);
                 setStatus('Unable to process form submission at this time.');
               }
               setSubmitting(false);
@@ -256,6 +274,13 @@ const FormContainer = (props) => {
               <Row>
                 <Col className="text-center">
                   <span style={{ color: 'red' }}>{status}</span>
+                </Col>
+              </Row>
+            ) : null}
+            {errorMsg ? (
+              <Row>
+                <Col className="text-center">
+                  <span style={{ color: 'red' }}>{errorMsg}</span>
                 </Col>
               </Row>
             ) : null}

@@ -1,87 +1,100 @@
 import React from 'react';
 import {
+  VictoryAxis,
   VictoryChart,
   VictoryArea,
+  VictoryLabel,
   VictoryLine,
+  VictoryGroup,
   VictoryScatter,
   VictoryTheme,
+  VictoryTooltip,
+  VictoryVoronoiContainer,
 } from 'victory';
 
-const areaData = [
-  { x: 1, y: 105.39, y0: 141.66 },
-  { x: 2, y: 103.4, y0: 139.08 },
-  { x: 3, y: 116.64, y0: 163.28 },
-  { x: 4, y: 104.95, y0: 140.39 },
-  { x: 5, y: 104.95, y0: 140.39 },
-  { x: 6, y: 116.64, y0: 163.28 },
-];
-const lineData = [
-  { x: 1, y: 124.47 },
-  { x: 2, y: 122.46 },
-  { x: 3, y: 136.44 },
-  { x: 4, y: 124.38 },
-  { x: 5, y: 124.38 },
-  { x: 6, y: 136.44 },
-];
-const outlierData = [
-  { x: 1, y: 96.86 },
-  { x: 1, y: 97.8 },
-  { x: 1, y: 104.48 },
-  { x: 1, y: 160.43 },
-  { x: 1, y: 147.062 },
-  { x: 1, y: 147.94 },
-  { x: 2, y: 94.2 },
-  { x: 2, y: 102.4 },
-  { x: 2, y: 102.33 },
-  { x: 2, y: 156.44 },
-  { x: 2, y: 141.8 },
-  { x: 2, y: 141.91 },
-  { x: 3, y: 98.8 },
-  { x: 3, y: 105.71 },
-  { x: 3, y: 112.613 },
-  { x: 3, y: 166.77 },
-  { x: 3, y: 172.8 },
-  { x: 3, y: 172.96 },
-  { x: 4, y: 97.13 },
-  { x: 4, y: 98.16 },
-  { x: 4, y: 104.81 },
-  { x: 4, y: 159.42 },
-  { x: 4, y: 145.18 },
-  { x: 4, y: 148.51 },
-  { x: 5, y: 97.13 },
-  { x: 5, y: 98.16 },
-  { x: 5, y: 104.81 },
-  { x: 5, y: 159.42 },
-  { x: 5, y: 145.18 },
-  { x: 5, y: 148.51 },
-  { x: 6, y: 112.61 },
-  { x: 6, y: 98.8 },
-  { x: 6, y: 105.71 },
-  { x: 6, y: 172.95 },
-  { x: 6, y: 166.77 },
-  { x: 6, y: 172.8 },
-];
-
-const ExampleChart = () => {
+const ExampleChart = ({ chartData }) => {
+  console.log('ExampleChart');
+  console.log(chartData);
   return (
-    <VictoryChart theme={VictoryTheme.material} domainPadding={30}>
-      <VictoryArea style={{ data: { fill: '#99d8c9' } }} data={areaData} />
+    <VictoryChart
+      theme={VictoryTheme.material}
+      containerComponent={<VictoryVoronoiContainer />}
+      domainPadding={15}
+      height={300}
+      style={{ parent: { border: '1px solid #ccc' } }}
+    >
+      <VictoryGroup>
+        <VictoryArea
+          style={{ data: { fill: '#74c476' } }}
+          data={chartData.area}
+          interpolation="natural"
+        />
+        <VictoryLine
+          style={{ data: { stroke: '#006d2c', strokeWidth: 2 } }}
+          data={chartData.area.map((data) => ({ x: data.x, y: data.y0 }))}
+          interpolation="natural"
+        />
+        <VictoryLine
+          style={{ data: { stroke: '#006d2c', strokeWidth: 2 } }}
+          data={chartData.area.map((data) => ({ x: data.x, y: data.y }))}
+          interpolation="natural"
+        />
+      </VictoryGroup>
       <VictoryLine
         style={{
-          data: { stroke: '#2ca25f' },
+          data: { stroke: '#006d2c' },
           parent: { border: '1px solid #ccc' },
         }}
-        data={lineData}
+        data={chartData.average}
+        interpolation="natural"
       />
-      <VictoryScatter
-        data={lineData}
-        size={5}
-        style={{ data: { fill: '#2ca25f' } }}
+      {/* <VictoryLabel
+        style={{ fill: '#006d2c', fontSize: 8, fontWeight: 'bold' }}
+        text={[
+          'Values outside the shaded area',
+          'have a 1 in 10 chance of occurring',
+        ]}
+        datum={{ x: '3.5', y: 182 }}
+        textAnchor="middle"
+      /> */}
+      <VictoryGroup>
+        <VictoryScatter
+          style={{ data: { fill: '#006d2c' } }}
+          data={chartData.average}
+          labels={({ datum }) => datum.y}
+          labelComponent={
+            <VictoryTooltip flyoutStyle={{ stroke: '#006d2c' }} />
+          }
+          size={5}
+        />
+        <VictoryScatter
+          style={{
+            data: {
+              fill: '#bdbdbd',
+              fillOpacity: 0.7,
+              stroke: '#343434',
+              strokeWidth: 0.5,
+            },
+          }}
+          data={chartData.outlier}
+          labels={({ datum }) => `Year: ${datum.year}\nValue: ${datum.y}`}
+          labelComponent={
+            <VictoryTooltip
+              flyoutPadding={{ left: 10, right: 10, top: 5, bottom: 5 }}
+              flyoutStyle={{ stroke: '#bdbdbd' }}
+            />
+          }
+          size={2}
+        />
+      </VictoryGroup>
+      <VictoryAxis
+        dependentAxis
+        theme={VictoryTheme.material}
+        style={{ axisLabel: { padding: 36 } }}
       />
-      <VictoryScatter
-        data={outlierData}
-        size={3}
-        style={{ data: { fill: '#2ca25f' } }}
+      <VictoryAxis
+        style={{ axisLabel: { padding: 30 } }}
+        label="Reservoir Area (Depth = 10 ft)"
       />
     </VictoryChart>
   );

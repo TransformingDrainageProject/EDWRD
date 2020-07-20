@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 
+import ChartsContainer from './Charts/ChartsContainer';
+import ExampleCard from './Charts/ExampleCard';
 import ExampleChart from './Charts/ExampleChart';
 import Header from './Header';
 import Instructions from './Instructions';
@@ -19,6 +21,7 @@ const ORIGIN = {
 };
 
 const App = () => {
+  const [chartData, setChartData] = useState(null);
   const [unitType, setUnitType] = useState('us');
   const [fieldState, updateFieldState] = useState('il');
   const [frzThwDates, updateFrzThwDates] = useState({
@@ -72,13 +75,10 @@ const App = () => {
           fieldState={fieldState}
           frzThwDates={frzThwDates}
           markerCoords={markerCoords}
+          setChartData={setChartData}
           unitType={unitType}
         />
-        <Row>
-          <Col md={3}></Col>
-          <Col md={6}><ExampleChart /></Col>
-          <Col md={3}></Col>
-        </Row>
+        {chartData ? <ChartsContainer chartData={chartData} /> : null}
       </Container>
       <Footer />
     </div>
