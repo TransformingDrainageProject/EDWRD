@@ -115,13 +115,13 @@ module.exports = (app, io) => {
 
             const pyshell = new PythonShell('run.py', options);
 
-            let dataSpreadsheet = '';
+            let results = undefined;
             pyshell.on('message', (message) => {
               if ('msg' in message) {
                 io.emit('processing', message);
               }
-              if ('file' in message) {
-                dataSpreadsheet = message.file;
+              if ('data' in message) {
+                results = message.data;
               }
             });
 
@@ -150,7 +150,7 @@ module.exports = (app, io) => {
                 io.emit('processing', {
                   msg: `Task completed in ${runtime} seconds.`,
                 });
-                return res.download(dataSpreadsheet);
+                return res.send(results);
               }
             });
           } else {
