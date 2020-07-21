@@ -78,7 +78,12 @@ const App = () => {
           setChartData={setChartData}
           unitType={unitType}
         />
-        {chartData ? <ChartsContainer chartData={chartData} /> : null}
+        {chartData ? (
+          <>
+            <hr />
+            <ChartsContainer chartData={chartData} />
+          </>
+        ) : null}
       </Container>
       <Footer />
     </div>

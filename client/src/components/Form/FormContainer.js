@@ -291,7 +291,7 @@ const FormContainer = (props) => {
                 </Col>
               </Row>
             ) : null}
-            {results ? (
+            {/* {results ? (
               <div className="mb-3">
                 <div
                   style={{
@@ -318,8 +318,8 @@ const FormContainer = (props) => {
                   {JSON.stringify(results, null, 2)}
                 </pre>
               </div>
-            ) : null}
-            <Debug />
+            ) : null} */}
+            {/* <Debug /> */}
           </Form>
         )}
       </Formik>
