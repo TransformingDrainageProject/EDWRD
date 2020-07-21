@@ -72,12 +72,13 @@ const FormContainer = (props) => {
   const [showReset, toggleShowReset] = useState(false);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io('https://drainage.agriculture.purdue.edu:8888');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
     });
     socket.on('error', (err) => {
-      setErrorMsg(err);
+      console.log(err);
+      // setErrorMsg(err);
     });
     socket.on('chartDataReady', (chartData) => {
       console.log(chartData);

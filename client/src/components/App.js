@@ -1,11 +1,9 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 import ChartsContainer from './Charts/ChartsContainer';
-import ExampleCard from './Charts/ExampleCard';
-import ExampleChart from './Charts/ExampleChart';
 import Header from './Header';
 import Instructions from './Instructions';
 import Introduction from './Introduction';
