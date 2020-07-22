@@ -35,7 +35,7 @@ def convert_dataframe_to_json(data, column_name):
 
         # calculate outliers < 10th percentile > 90th percentile
         for key in temp.keys():
-            if temp[key] < perc10 or temp[key] > perc90:
+            if round(temp[key], 2) < round(perc10, 2) or round(temp[key], 2) > round(perc90, 2):
                 chart_data["outlier"].append({
                     "x": str(vol),
                     "y": round(temp[key], 2),

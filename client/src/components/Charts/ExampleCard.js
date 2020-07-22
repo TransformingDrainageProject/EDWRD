@@ -1,7 +1,9 @@
 import React from 'react';
 import { Card, CardText, CardTitle } from 'reactstrap';
 
-const ExampleCard = ({ text, title }) => (
+import HelpPopover from '../Form/HelpPopover';
+
+const ExampleCard = ({ name, text, title }) => (
   <Card
     className="mb-3"
     body
@@ -10,6 +12,12 @@ const ExampleCard = ({ text, title }) => (
     <CardTitle>
       <h1>{title}</h1>
     </CardTitle>
+    <HelpPopover
+      key={name}
+      helpText={<span>help text</span>}
+      label={title}
+      name={name}
+    />
     <CardText>{text}</CardText>
   </Card>
 );
