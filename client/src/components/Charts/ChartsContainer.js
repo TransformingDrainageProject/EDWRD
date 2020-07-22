@@ -10,6 +10,7 @@ const ChartsContainer = ({ chartData }) => (
       <Col md={6}>
         <div>
           <ExampleCard
+            name="annualAppliedIrrigation"
             title="Annual Applied Irrigation"
             text="This graph shows the annual amount of irrigation applied from a given reservoir size across all years at this location. Click on the question mark to learn more about how this is estimated."
           />
@@ -22,13 +23,11 @@ const ChartsContainer = ({ chartData }) => (
       <Col md={6}>
         <div>
           <ExampleCard
+            name="annualRelativeIrrigationSupply"
             title="Annual Relative Irrigation Supply"
             text="This graph shows how much of the total irrigation requirement is met by the amount of irrigation applied from a given reservoir size, called the Annual Relative Irrigation Supply. Click on the question mark to learn more about how this is estimated."
           />
-          <ExampleChart
-            chartData={chartData['annual']['irrigationSupply']}
-            unitLabel="Acre-Feet"
-          />
+          <ExampleChart chartData={chartData['annual']['irrigationSupply']} />
         </div>
       </Col>
     </Row>

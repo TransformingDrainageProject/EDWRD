@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Alert, Button, Col, Row, Spinner } from 'reactstrap';
-import FileDownload from 'js-file-download';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
@@ -32,8 +31,6 @@ import { fieldReservoirFormSchema } from './FieldReservoirForm/validationSchema'
 import { cropManagementFormSchema } from './CropManagementForm/validationSchema';
 import { userDataFormSchema } from './UserDataForm/validationSchema';
 import { advancedSettingsFormSchema } from './AdvancedSettingsForm/validationSchema';
-
-import { Debug } from './utils/debug';
 
 const metricInitialValues = {
   ...fieldMetricInitialValues,
@@ -67,24 +64,25 @@ const FormContainer = (props) => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [processingStatus, updateProcessingStatus] = useState('');
-  const [results, setResults] = useState(null);
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
   const [showReset, toggleShowReset] = useState(false);
 
-  useEffect(() => {
+  function makeSocketConnection(setSubmitting) {
     const socket = io('https://drainage.agriculture.purdue.edu:8888');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
     });
     socket.on('error', (err) => {
-      console.log(err);
-      // setErrorMsg(err);
+      setErrorMsg('Unable to connect to server');
+      setSubmitting(false);
+      toggleShowReset(true);
     });
     socket.on('chartDataReady', (chartData) => {
-      console.log(chartData);
       setChartData(chartData);
+      setSubmitting(false);
+      toggleShowReset(true);
     });
-  }, []);
+  }
 
   return (
     <>
@@ -98,14 +96,16 @@ const FormContainer = (props) => {
         validationSchema={validationSchema}
         onSubmit={(values, { setFieldError, setSubmitting, setStatus }) => {
           setStatus('');
+          setErrorMsg('');
+          setChartData(null);
+          updateProcessingStatus('');
           axios
             .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
             .then((response) => {
               if (response && response.data) {
                 console.log(response.data);
-                setStatus(response.data.msg);
-                setSubmitting(false);
-                toggleShowReset(true);
+                setStatus(response.data);
+                makeSocketConnection(setSubmitting);
               }
             })
             .catch(async (err) => {
@@ -116,10 +116,10 @@ const FormContainer = (props) => {
                 );
               } else if (err.response && err.response.data) {
                 console.log(err.response.data);
-                setStatus(await err.response.data.text());
+                setErrorMsg(await err.response.data.text());
               } else {
                 console.log(err);
-                setStatus('Unable to process form submission at this time.');
+                setErrorMsg('Unable to process form submission at this time.');
               }
               setSubmitting(false);
               toggleShowReset(true);
@@ -274,7 +274,7 @@ const FormContainer = (props) => {
             {status ? (
               <Row>
                 <Col className="text-center">
-                  <span style={{ color: 'red' }}>{status}</span>
+                  <span style={{ color: '#007cb3' }}>{status}</span>
                 </Col>
               </Row>
             ) : null}
@@ -292,35 +292,6 @@ const FormContainer = (props) => {
                 </Col>
               </Row>
             ) : null}
-            {/* {results ? (
-              <div className="mb-3">
-                <div
-                  style={{
-                    textTransform: 'uppercase',
-                    fontSize: 11,
-                    borderTopLeftRadius: 4,
-                    borderTopRightRadius: 4,
-                    fontWeight: 500,
-                    padding: '.5rem',
-                    background: '#555',
-                    color: '#fff',
-                    letterSpacing: '1px',
-                  }}
-                >
-                  Results
-                </div>
-                <pre
-                  style={{
-                    fontSize: '.65rem',
-                    padding: '.25rem .5rem',
-                    overflowX: 'scroll',
-                  }}
-                >
-                  {JSON.stringify(results, null, 2)}
-                </pre>
-              </div>
-            ) : null} */}
-            {/* <Debug /> */}
           </Form>
         )}
       </Formik>

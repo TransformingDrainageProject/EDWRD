@@ -9,7 +9,7 @@ const FileUpload = ({ label, name, type }) => {
   const [progress, updateProgress] = useState(-1);
   const [error, setError] = useState(undefined);
 
-  const { errors, setFieldValue, setFieldTouched } = useFormikContext();
+  const { errors, setFieldValue } = useFormikContext();
 
   const handleOnChange = (e) => {
     setError(undefined);
