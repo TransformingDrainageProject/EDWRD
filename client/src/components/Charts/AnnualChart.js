@@ -11,7 +11,22 @@ import {
   VictoryVoronoiContainer,
 } from 'victory';
 
-const ExampleChart = ({ chartData, unitLabel }) => (
+const colorSchemes = {
+  blue: {
+    areaFill: '#acc1d7',
+    lineStroke: '#5983b0',
+  },
+  green: {
+    areaFill: '#9fd7a2',
+    lineStroke: '#3faf46',
+  },
+  yellow: {
+    areaFill: '#ffe993',
+    lineStroke: '#ffd428',
+  },
+};
+
+const AnnualChart = ({ chartData, color, unitLabel }) => (
   <VictoryChart
     theme={VictoryTheme.material}
     containerComponent={<VictoryVoronoiContainer />}
@@ -22,24 +37,28 @@ const ExampleChart = ({ chartData, unitLabel }) => (
   >
     <VictoryGroup>
       <VictoryArea
-        style={{ data: { fill: '#74c476' } }}
+        style={{ data: { fill: colorSchemes[color].areaFill } }}
         data={chartData.area}
         interpolation="natural"
       />
       <VictoryLine
-        style={{ data: { stroke: '#006d2c', strokeWidth: 2 } }}
+        style={{
+          data: { stroke: colorSchemes[color].lineStroke, strokeWidth: 2 },
+        }}
         data={chartData.area.map((data) => ({ x: data.x, y: data.y0 }))}
         interpolation="natural"
       />
       <VictoryLine
-        style={{ data: { stroke: '#006d2c', strokeWidth: 2 } }}
+        style={{
+          data: { stroke: colorSchemes[color].lineStroke, strokeWidth: 2 },
+        }}
         data={chartData.area.map((data) => ({ x: data.x, y: data.y }))}
         interpolation="natural"
       />
     </VictoryGroup>
     <VictoryLine
       style={{
-        data: { stroke: '#006d2c' },
+        data: { stroke: colorSchemes[color].lineStroke },
         parent: { border: '1px solid #ccc' },
       }}
       data={chartData.average}
@@ -47,10 +66,14 @@ const ExampleChart = ({ chartData, unitLabel }) => (
     />
     <VictoryGroup>
       <VictoryScatter
-        style={{ data: { fill: '#006d2c' } }}
+        style={{ data: { fill: colorSchemes[color].lineStroke } }}
         data={chartData.average}
         labels={({ datum }) => datum.y}
-        labelComponent={<VictoryTooltip flyoutStyle={{ stroke: '#006d2c' }} />}
+        labelComponent={
+          <VictoryTooltip
+            flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
+          />
+        }
         size={5}
       />
       <VictoryScatter
@@ -85,4 +108,4 @@ const ExampleChart = ({ chartData, unitLabel }) => (
   </VictoryChart>
 );
 
-export default ExampleChart;
+export default AnnualChart;
