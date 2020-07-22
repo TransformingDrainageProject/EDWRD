@@ -3,7 +3,6 @@ import {
   VictoryAxis,
   VictoryChart,
   VictoryArea,
-  VictoryLabel,
   VictoryLine,
   VictoryGroup,
   VictoryScatter,
@@ -46,15 +45,6 @@ const ExampleChart = ({ chartData, unitLabel }) => (
       data={chartData.average}
       interpolation="natural"
     />
-    {/* <VictoryLabel
-        style={{ fill: '#006d2c', fontSize: 8, fontWeight: 'bold' }}
-        text={[
-          'Values outside the shaded area',
-          'have a 1 in 10 chance of occurring',
-        ]}
-        datum={{ x: '3.5', y: 182 }}
-        textAnchor="middle"
-      /> */}
     <VictoryGroup>
       <VictoryScatter
         style={{ data: { fill: '#006d2c' } }}
