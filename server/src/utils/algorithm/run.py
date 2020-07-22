@@ -62,7 +62,9 @@ def main(input_file, param_file):
         "data": {
             "annual": {
                 "appliedIrrigation": convert_dataframe_to_json(annual_output, "Applied Irrigation Depth"),
-                "irrigationSupply": convert_dataframe_to_json(annual_output, "Relative Irrigation Supply")
+                "irrigationSupply": convert_dataframe_to_json(annual_output, "Relative Irrigation Supply"),
+                "nitrateLoadReduction": convert_dataframe_to_json(annual_output, "Nitrate Load Reduction (%)"),
+                "capturedTileDrainFlow": convert_dataframe_to_json(annual_output, "Percent Captured Tile Drain Flow")
             }
         }
     }
