@@ -14,6 +14,13 @@ const ChartsContainer = ({ chartData }) => {
         <Col className="ml-4">
           <Row>
             <Col>
+              <h4>
+                <u>Chart Settings</u>
+              </h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               <Label check for="togglePercentiles">
                 <Input
                   type="checkbox"
