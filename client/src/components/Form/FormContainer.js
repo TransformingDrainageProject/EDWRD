@@ -78,6 +78,7 @@ const FormContainer = (props) => {
       toggleShowReset(true);
     });
     socket.on('chartDataReady', (chartData) => {
+      console.log(chartData);
       setChartData(chartData);
       setSubmitting(false);
       toggleShowReset(true);

@@ -3,12 +3,49 @@ import json
 import os
 import sys
 
+import numpy as np
 import pandas as pd
 
 from main import edwrd
 
 
-def convert_dataframe_to_json(data, column_name):
+def convert_dataframe_to_monthly_json(data, column_name):
+    chart_data = {
+        0: {},
+        1: {},
+        2: {},
+        3: {},
+        4: {}
+    }
+
+    # loop through first five volumes
+    for vol in range(0, 5):
+        grouped_by_month = data[vol][column_name].groupby(level=1)
+        perc10 = grouped_by_month.quantile(0.1)
+        perc90 = grouped_by_month.quantile(0.9)
+
+        monthly_means = grouped_by_month.aggregate(np.mean).values
+
+        chart_data[vol]["average"] = []
+        chart_data[vol]["area"] = []
+        chart_data[vol]["outliers"] = []
+
+        for month in range(0, len(monthly_means)):
+            chart_data[vol]["average"].append({
+                "x": str(month + 1),
+                "y": monthly_means[month]
+            })
+
+            chart_data[vol]["area"].append({
+                "x": str(month + 1),
+                "y": perc10.values[month],
+                "y0": perc90.values[month]
+            })
+
+    return chart_data
+
+
+def convert_dataframe_to_annual_json(data, column_name):
     chart_data = {
         "area": [],
         "average": [],
@@ -61,10 +98,16 @@ def main(input_file, param_file):
     json_output = {
         "data": {
             "annual": {
-                "appliedIrrigation": convert_dataframe_to_json(annual_output, "Applied Irrigation Depth"),
-                "irrigationSupply": convert_dataframe_to_json(annual_output, "Relative Irrigation Supply"),
-                "nitrateLoadReduction": convert_dataframe_to_json(annual_output, "Nitrate Load Reduction (%)"),
-                "capturedTileDrainFlow": convert_dataframe_to_json(annual_output, "Percent Captured Tile Drain Flow")
+                "appliedIrrigation": convert_dataframe_to_annual_json(annual_output, "Applied Irrigation Depth"),
+                "irrigationSupply": convert_dataframe_to_annual_json(annual_output, "Relative Irrigation Supply"),
+                "nitrateLoadReduction": convert_dataframe_to_annual_json(annual_output, "Nitrate Load Reduction (%)"),
+                "capturedTileDrainFlow": convert_dataframe_to_annual_json(annual_output, "Percent Captured Tile Drain Flow")
+            },
+            "monthly": {
+                "appliedIrrigation": convert_dataframe_to_monthly_json(monthly_output, "Applied Irrigation Depth"),
+                # "irrigationSupply": convert_dataframe_to_monthly_json(monthly_output, "Relative Irrigation Supply"),
+                # "nitrateLoadReduction": convert_dataframe_to_monthly_json(monthly_output, "Nitrate Load Reduction (%)"),
+                # "capturedTileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, "Percent Captured Tile Drain Flow")
             }
         }
     }
