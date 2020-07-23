@@ -28,7 +28,7 @@ const ChartsContainer = ({ chartData }) => {
                   checked={showPercentiles}
                   onChange={() => toggleShowPercentiles(!showPercentiles)}
                 />
-                Display percentile range
+                Display percentile range (10% - 90%)
               </Label>
             </Col>
           </Row>
@@ -41,7 +41,7 @@ const ChartsContainer = ({ chartData }) => {
                   checked={showOutliers}
                   onChange={() => toggleShowOutliers(!showOutliers)}
                 />
-                Display outliers
+                Display outliers (outside 10% - 90% range)
               </Label>
             </Col>
           </Row>
