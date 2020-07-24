@@ -67,7 +67,7 @@ const FormContainer = (props) => {
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
   const [showReset, toggleShowReset] = useState(false);
 
-  function makeSocketConnection(setSubmitting) {
+  function makeSocketConnection(setSubmitting, setStatus) {
     const socket = io('https://drainage.agriculture.purdue.edu:8888');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
