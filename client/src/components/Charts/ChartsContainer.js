@@ -1,9 +1,42 @@
+import './ChartsContainer.css';
 import React, { useState } from 'react';
-import { Col, Container, Input, Label, Row } from 'reactstrap';
+import {
+  Col,
+  Container,
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
+  Input,
+  Label,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+} from 'reactstrap';
 
 import AnnualChart from './AnnualChart';
 import ChartDescription from './ChartDescription';
 
+const ChartTabs = () => (
+  <Nav tabs>
+    <NavItem>
+      <NavLink active>Annual Performance</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink>Field Water Balance</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink>Reservoir Water Balance</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink>Nutrient Capture and Overflow</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink>Download Results</NavLink>
+    </NavItem>
+  </Nav>
+);
 const ChartsContainer = ({ chartData }) => {
   const [showPercentiles, toggleShowPercentiles] = useState(true);
   const [showOutliers, toggleShowOutliers] = useState(true);
@@ -47,6 +80,7 @@ const ChartsContainer = ({ chartData }) => {
           </Row>
         </Col>
       </Row>
+      <ChartTabs />
       <Row className="mb-3">
         <Col md={6}>
           <div>
