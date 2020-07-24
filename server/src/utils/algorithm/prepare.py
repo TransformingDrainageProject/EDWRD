@@ -121,7 +121,7 @@ def edwrd_input(infile, pfile):
     param['rvol'].columns = ['rvol']
 
     # Add smaller and larger reservoirs to compare against user specific reservoir size
-    r_vols = [(param['rvol'].at[0, 'rvol']*1.5), (param['rvol'].at[0, 'rvol']*3.0),
+    r_vols = [(param['rvol'].at[0, 'rvol']*1.5), (param['rvol'].at[0, 'rvol']*2.0),
               (param['rvol'].at[0, 'rvol']*0.5), (param['rvol'].at[0, 'rvol']*0.1)]
 
     for i in r_vols:
