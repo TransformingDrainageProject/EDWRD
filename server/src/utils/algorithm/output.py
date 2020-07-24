@@ -101,7 +101,11 @@ def annual_output_calc(param,data,vol,dic):
     output['Irrigation Demand']=data[len(param['rvol'])-1]['Applied Irrigation Depth'].groupby(data[len(param['rvol'])-1].index.year).sum()
     
     #ANNUAL RELATIVE IRRIGATION SUFFICIENCY
-    output['Relative Irrigation Supply']=output['Applied Irrigation Depth']/output['Irrigation Demand']
+    for i in list(output['Irrigation Demand'].index.get_level_values(0)):
+        if output.loc[i, 'Irrigation Demand'] == 0.0:
+            output.loc[i, 'Relative Irrigation Supply'] = 1.0
+        else:
+            output.loc[i, 'Relative Irrigation Supply'] = output.loc[i, 'Applied Irrigation Depth'] / output.loc[i, 'Irrigation Demand']
 
     #Annual NUMBER OF DAYS OF DEFICIT WATER STRESS FOR THE CROP
     output['Days of Deficit Water Stress']=data[vol]['Water Stress Coefficient'].where(data[vol]['Water Stress Coefficient'] < 1.0).groupby(data[vol].index.year).count()
@@ -213,7 +217,12 @@ def monthly_output_calc(param,data,vol,dic):
     output['Irrigation Demand']=data[len(param['rvol'])-1]['Applied Irrigation Depth'].groupby([(data[len(param['rvol'])-1].index.year), (data[len(param['rvol'])-1].index.month)]).sum()
     
     #MONTHLY RELATIVE IRRIGATION SUFFICIENCY
-    output['Relative Irrigation Supply']=output['Applied Irrigation Depth']/output['Irrigation Demand']
+    for y in list(output['Irrigation Demand'].index.get_level_values(0).unique()):
+        for m in list(output['Irrigation Demand'].index.get_level_values(1).unique()):
+            if output.loc[(y,m),'Irrigation Demand'] == 0.0:
+                output.loc[(y,m),'Relative Irrigation Supply'] = 1.0
+            else:
+                output.loc[(y,m),'Relative Irrigation Supply'] = output.loc[(y,m),'Applied Irrigation Depth'] /output.loc[(y,m),'Irrigation Demand']
 
     #MONTHLY NUMBER OF DAYS OF DEFICIT WATER STRESS FOR THE CROP
     output['Days of Deficit Water Stress']=data[vol]['Water Stress Coefficient'].where(data[vol]['Water Stress Coefficient'] < 1.0).groupby([(data[vol]['Water Stress Coefficient'].index.year), (data[vol]['Water Stress Coefficient'].index.month)]).count()
