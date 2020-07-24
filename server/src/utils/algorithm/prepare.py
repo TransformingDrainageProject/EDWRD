@@ -126,6 +126,12 @@ def edwrd_input(infile, pfile):
 
     for i in r_vols:
         param['rvol'] = param['rvol'].append({'rvol': i}, ignore_index=True)
+
+    # sort all reservoir volumes in ascending order
+    param['rvol'].sort_values(by=['rvol'], inplace=True)
+    param['rvol'] = param['rvol'].reset_index(drop=True)  # reset index
+
+    # recalculate reservoir areas, including for smaller and larger reservoir volumes
     param['rarea'] = param['rvol'] / param['rdep'].at[0, 'rdep']
     param['rarea'] = param['rarea'].rename(columns={'rvol': 'rarea'})
 
