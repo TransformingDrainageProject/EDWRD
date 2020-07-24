@@ -67,13 +67,17 @@ const FormContainer = (props) => {
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
   const [showReset, toggleShowReset] = useState(false);
 
-  function makeSocketConnection(setSubmitting) {
+  function makeSocketConnection(setSubmitting, setStatus) {
     const socket = io('http://localhost:3000');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
     });
     socket.on('error', (err) => {
-      setErrorMsg('Unable to connect to server');
+      setStatus('');
+      updateProcessingStatus('');
+      setErrorMsg(
+        'An unexpected error has occurred. Please contact support if this issue persists.'
+      );
       setSubmitting(false);
       toggleShowReset(true);
     });
@@ -104,9 +108,8 @@ const FormContainer = (props) => {
             .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
             .then((response) => {
               if (response && response.data) {
-                console.log(response.data);
                 setStatus(response.data);
-                makeSocketConnection(setSubmitting);
+                makeSocketConnection(setSubmitting, setStatus);
               }
             })
             .catch(async (err) => {
@@ -116,7 +119,6 @@ const FormContainer = (props) => {
                   setFieldError(fieldError.param, fieldError.msg)
                 );
               } else if (err.response && err.response.data) {
-                console.log(err.response.data);
                 setErrorMsg(await err.response.data.text());
               } else {
                 console.log(err);
