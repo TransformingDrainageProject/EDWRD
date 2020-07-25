@@ -47,35 +47,22 @@ def convert_dataframe_to_monthly_json(data, column_name):
 
 def convert_dataframe_to_annual_json(data, column_name):
     chart_data = {
-        "area": [],
+        "annual": [],
         "average": [],
-        "outlier": [],
     }
     # loop through first five volumes
     for vol in range(0, 5):
         temp = json.loads(data[vol].to_json())[column_name]
-        perc10 = data[vol][column_name].quantile(0.1)
-        perc90 = data[vol][column_name].quantile(0.9)
+
         # calculate annual average
         chart_data["average"].append({
             "x": str(vol),
             "y": round(data[vol][column_name].mean(), 2)
         })
-        # calculate area range 10th - 90th percentile
-        chart_data["area"].append({
-            "x": str(vol),
-            "y": perc10,
-            "y0": perc90
-        })
-        # calculate outliers < 10th percentile > 90th percentile
-        for key in temp.keys():
-            if temp[key] and perc10 and perc90:
-                if round(temp[key], 2) < round(perc10, 2) or round(temp[key], 2) > round(perc90, 2):
-                    chart_data["outlier"].append({
-                        "x": str(vol),
-                        "y": round(temp[key], 2),
-                        "year": key
-                    })
+
+        # annual records
+        chart_data["annual"] += [
+            {"x": str(vol), "y": record} for record in data[vol][column_name].values]
 
     return chart_data
 
