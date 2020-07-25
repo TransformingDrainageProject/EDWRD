@@ -2,13 +2,11 @@ import React from 'react';
 import {
   VictoryAxis,
   VictoryChart,
-  VictoryArea,
   VictoryLine,
   VictoryGroup,
   VictoryScatter,
   VictoryTheme,
   VictoryTooltip,
-  VictoryVoronoiContainer,
 } from 'victory';
 
 const colorSchemes = {
@@ -26,44 +24,14 @@ const colorSchemes = {
   },
 };
 
-const AnnualChart = ({
-  chartData,
-  color,
-  showOutliers,
-  showPercentiles,
-  unitLabel,
-}) => (
+const AnnualChart = ({ chartData, color, unitLabel }) => (
   <VictoryChart
     theme={VictoryTheme.material}
-    containerComponent={<VictoryVoronoiContainer />}
     domainPadding={15}
     height={300}
     padding={{ left: 66, bottom: 50, right: 15, top: 15 }}
     style={{ parent: { border: '1px solid #ccc' } }}
   >
-    {showPercentiles ? (
-      <VictoryGroup>
-        <VictoryArea
-          style={{ data: { fill: colorSchemes[color].areaFill } }}
-          data={chartData.area}
-          interpolation="natural"
-        />
-        <VictoryLine
-          style={{
-            data: { stroke: colorSchemes[color].lineStroke, strokeWidth: 2 },
-          }}
-          data={chartData.area.map((data) => ({ x: data.x, y: data.y0 }))}
-          interpolation="natural"
-        />
-        <VictoryLine
-          style={{
-            data: { stroke: colorSchemes[color].lineStroke, strokeWidth: 2 },
-          }}
-          data={chartData.area.map((data) => ({ x: data.x, y: data.y }))}
-          interpolation="natural"
-        />
-      </VictoryGroup>
-    ) : null}
     <VictoryLine
       style={{
         data: { stroke: colorSchemes[color].lineStroke },
@@ -82,29 +50,19 @@ const AnnualChart = ({
             flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
           />
         }
-        size={5}
+        size={4}
       />
-      {showOutliers ? (
-        <VictoryScatter
-          style={{
-            data: {
-              fill: '#bdbdbd',
-              fillOpacity: 0.7,
-              stroke: '#343434',
-              strokeWidth: 0.5,
-            },
-          }}
-          data={chartData.outlier}
-          labels={({ datum }) => `Year: ${datum.year}\nValue: ${datum.y}`}
-          labelComponent={
-            <VictoryTooltip
-              flyoutPadding={{ left: 10, right: 10, top: 5, bottom: 5 }}
-              flyoutStyle={{ stroke: '#bdbdbd' }}
-            />
-          }
-          size={2}
-        />
-      ) : null}
+      <VictoryScatter
+        style={{
+          data: {
+            fill: '#bdbdbd',
+            fillOpacity: 0.7,
+          },
+        }}
+        symbol={'minus'}
+        data={chartData.annual}
+        size={2}
+      />
     </VictoryGroup>
     <VictoryAxis
       dependentAxis
