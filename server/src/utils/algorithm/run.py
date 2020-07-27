@@ -62,7 +62,7 @@ def convert_dataframe_to_annual_json(data, column_name):
 
         # annual records
         chart_data["annual"] += [
-            {"x": str(vol), "y": record} for record in data[vol][column_name].values]
+            {"x": str(vol), "y": record, "year": int(data[vol][column_name].index[index])} for index, record in enumerate(data[vol][column_name].values)]
 
     return chart_data
 
@@ -85,11 +85,13 @@ def main(input_file, param_file):
             "annual": {
                 "appliedIrrigation": convert_dataframe_to_annual_json(annual_output, "Applied Irrigation Depth"),
                 "irrigationSupply": convert_dataframe_to_annual_json(annual_output, "Relative Irrigation Supply"),
-                "nitrateLoadReduction": convert_dataframe_to_annual_json(annual_output, "Nitrate Load Reduction (%)"),
-                "capturedTileDrainFlow": convert_dataframe_to_annual_json(annual_output, "Percent Captured Tile Drain Flow")
+                "nitrateLoadReduction": convert_dataframe_to_annual_json(annual_output, "Captured Nitrate Load (Tile)"),
+                "nitrateLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, "Nitrate Load Reduction (%)"),
+                "srpLoadReduction": convert_dataframe_to_annual_json(annual_output, "Captured SRP Load (Tile)"),
+                "srpLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, "SRP Load Reduction (%)")
             },
             "monthly": {
-                "appliedIrrigation": convert_dataframe_to_monthly_json(monthly_output, "Applied Irrigation Depth"),
+                # "appliedIrrigation": convert_dataframe_to_monthly_json(monthly_output, "Applied Irrigation Depth"),
                 # "irrigationSupply": convert_dataframe_to_monthly_json(monthly_output, "Relative Irrigation Supply"),
                 # "nitrateLoadReduction": convert_dataframe_to_monthly_json(monthly_output, "Nitrate Load Reduction (%)"),
                 # "capturedTileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, "Percent Captured Tile Drain Flow")

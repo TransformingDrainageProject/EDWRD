@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   VictoryAxis,
+  VictoryBar,
   VictoryChart,
   VictoryLine,
   VictoryGroup,
@@ -24,56 +25,75 @@ const colorSchemes = {
   },
 };
 
-const AnnualChart = ({ chartData, color, unitLabel }) => (
-  <VictoryChart
-    theme={VictoryTheme.material}
-    domainPadding={15}
-    height={300}
-    padding={{ left: 66, bottom: 50, right: 15, top: 15 }}
-    style={{ parent: { border: '1px solid #ccc' } }}
-  >
-    <VictoryLine
-      style={{
-        data: { stroke: colorSchemes[color].lineStroke },
-        parent: { border: '1px solid #ccc' },
-      }}
-      data={chartData.average}
-      interpolation="natural"
-    />
-    <VictoryGroup>
-      <VictoryScatter
-        style={{ data: { fill: colorSchemes[color].lineStroke } }}
-        data={chartData.average}
-        labels={({ datum }) => datum.y}
-        labelComponent={
-          <VictoryTooltip
-            flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
+const AnnualChart = ({ avgLineOnly, chartData, color, filter, unitLabel }) => {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.material}
+      domainPadding={15}
+      height={300}
+      padding={{ left: 66, bottom: 50, right: 15, top: 15 }}
+      style={{ parent: { border: '1px solid #ccc' } }}
+    >
+      {filter === 'all' ? (
+        <VictoryGroup>
+          <VictoryLine
+            style={{
+              data: { stroke: colorSchemes[color].lineStroke },
+              parent: { border: '1px solid #ccc' },
+            }}
+            data={chartData.average}
+            interpolation="natural"
           />
-        }
-        size={4}
+          {/* <VictoryGroup> */}
+          <VictoryScatter
+            style={{ data: { fill: colorSchemes[color].lineStroke } }}
+            data={chartData.average}
+            labels={({ datum }) => datum.y}
+            labelComponent={
+              <VictoryTooltip
+                flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
+              />
+            }
+            size={3}
+          />
+          {!avgLineOnly ? (
+            <VictoryScatter
+              style={{
+                data: {
+                  fill: '#636363',
+                  fillOpacity: 0.7,
+                },
+              }}
+              symbol={'minus'}
+              data={chartData.annual}
+              size={2}
+            />
+          ) : null}
+          {/* </VictoryGroup> */}
+        </VictoryGroup>
+      ) : (
+        <VictoryBar
+          style={{ data: { fill: colorSchemes[color].areaFill } }}
+          data={chartData.annual.filter(
+            (data) => data.year === parseInt(filter)
+          )}
+          labelComponent={
+            <VictoryTooltip
+              flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
+            />
+          }
+        />
+      )}
+      <VictoryAxis
+        dependentAxis
+        style={{ axisLabel: { padding: 46 } }}
+        label={unitLabel}
       />
-      <VictoryScatter
-        style={{
-          data: {
-            fill: '#bdbdbd',
-            fillOpacity: 0.7,
-          },
-        }}
-        symbol={'minus'}
-        data={chartData.annual}
-        size={2}
+      <VictoryAxis
+        style={{ axisLabel: { padding: 30 } }}
+        label="Reservoir Area (Depth = 10 ft)"
       />
-    </VictoryGroup>
-    <VictoryAxis
-      dependentAxis
-      style={{ axisLabel: { padding: 46 } }}
-      label={unitLabel}
-    />
-    <VictoryAxis
-      style={{ axisLabel: { padding: 30 } }}
-      label="Reservoir Area (Depth = 10 ft)"
-    />
-  </VictoryChart>
-);
-
+    </VictoryChart>
+  );
+};
 export default AnnualChart;
