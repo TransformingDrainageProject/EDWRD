@@ -3,3 +3,7 @@
   background-color: #007cb3;
   font-weight: bold;
 }
+
+.btn-secondary:not(:disabled):not(.disabled).active {
+  background-color: #007cb3;
+}
