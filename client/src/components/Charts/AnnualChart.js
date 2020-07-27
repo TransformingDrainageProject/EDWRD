@@ -25,7 +25,13 @@ const colorSchemes = {
   },
 };
 
-const AnnualChart = ({ avgLineOnly, chartData, color, filter, unitLabel }) => {
+const AnnualChart = ({
+  avgLineOnly,
+  chartData,
+  color,
+  annualFilter,
+  unitLabel,
+}) => {
   return (
     <VictoryChart
       theme={VictoryTheme.material}
@@ -34,7 +40,7 @@ const AnnualChart = ({ avgLineOnly, chartData, color, filter, unitLabel }) => {
       padding={{ left: 66, bottom: 50, right: 15, top: 15 }}
       style={{ parent: { border: '1px solid #ccc' } }}
     >
-      {filter === 'all' ? (
+      {annualFilter === 'all' ? (
         <VictoryGroup>
           <VictoryLine
             style={{
@@ -75,8 +81,9 @@ const AnnualChart = ({ avgLineOnly, chartData, color, filter, unitLabel }) => {
         <VictoryBar
           style={{ data: { fill: colorSchemes[color].areaFill } }}
           data={chartData.annual.filter(
-            (data) => data.year === parseInt(filter)
+            (data) => data.year === parseInt(annualFilter)
           )}
+          labels={({ datum }) => datum.y.toFixed(2)}
           labelComponent={
             <VictoryTooltip
               flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
