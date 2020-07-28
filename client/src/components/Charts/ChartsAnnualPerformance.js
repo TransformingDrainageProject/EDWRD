@@ -50,6 +50,18 @@ const chartCategories = [
 
 const NavButtons = ({ active, setActive }) => (
   <>
+    <Row>
+      <Col>
+        <p>
+          Click on the buttons below to see results for each annual performance
+          metric across multiple reservoir sizes.
+          <span style={{ color: 'red' }}>
+            &nbsp;(Each of the boxes has a question icon providing a definition
+            of the variable)
+          </span>
+        </p>
+      </Col>
+    </Row>
     <Row className="mb-1 text-center">
       <Col>
         <Button
