@@ -109,7 +109,7 @@ module.exports = (app, io) => {
               pythonPath: pythonPath,
               pythonOptions: ['-u'],
               scriptPath: './src/utils/algorithm',
-              args: [inputFile, paramFile],
+              args: [inputFile, paramFile, req.body.unitType],
               stderrParser: (line) => JSON.stringify(line),
             };
 

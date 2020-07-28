@@ -30,6 +30,8 @@ def edwrd(infile, pfile):
 
     # LOOP THROUGH EACH VOLUME PROVIDED IN THE PARAMETER FILE TO CALCULATE THE DAILY VALUES
     for vol in range(len(param['rvol'])):
+        print(json.dumps({'msg': 'Calculating daily values for volume ' +
+                          str(vol + 1) + ' of ' + str(len(param['rvol'])) + '...'}))
         rmax = param['rvol'].at[vol, 'rvol']
         rarea = param['rarea'].at[vol, 'rarea']
 

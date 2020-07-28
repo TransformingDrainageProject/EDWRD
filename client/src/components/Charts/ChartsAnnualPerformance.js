@@ -119,6 +119,15 @@ const ChartsAnnualPerformance = ({ chartData }) => {
   const selectedChartData =
     chartData['annual'][chartCategories[activeChart].key];
 
+  const uniqueYears = [
+    ...new Set(selectedChartData.annual.map((record) => record.year)),
+  ];
+
+  const yearRange =
+    uniqueYears.length > 1
+      ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
+      : ` (${uniqueYears[0]})`;
+
   function yearOnChange(event) {
     const year = event.target.value;
     setAnnualFilter(year);
@@ -131,7 +140,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
         <Col>
           <h1>
             {chartCategories[activeChart].title}
-            {annualFilter !== 'all' ? ` (${annualFilter})` : null}
+            {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
           </h1>
         </Col>
       </Row>
@@ -143,6 +152,8 @@ const ChartsAnnualPerformance = ({ chartData }) => {
             avgLineOnly={avgLineOnly}
             unitLabel={chartCategories[activeChart].unit}
             annualFilter={annualFilter}
+            rdep={chartData.rdep}
+            unit_type={chartData.unit_type}
           />
         </Col>
         <Col md={3}>
@@ -167,11 +178,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
                 onChange={yearOnChange}
               >
                 <option value="all">View all years</option>
-                {[
-                  ...new Set(
-                    selectedChartData.annual.map((record) => record.year)
-                  ),
-                ].map((year) => (
+                {uniqueYears.map((year) => (
                   <option key={year} value={year}>
                     {year}
                   </option>
