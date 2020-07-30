@@ -16,78 +16,66 @@ const chartCategories = [
   [
     {
       index: 0,
-      key: 'precipitation',
-      title: 'Precipitation',
+      key: 'reservoirPrecipitation',
+      title: 'Reservoir Precipitation',
       unit: 'inches',
     },
     {
       index: 1,
-      key: 'cropTranspiration',
-      title: 'Crop Transpiration',
+      key: 'reservoirDrainFlow',
+      title: 'Reservoir Drain Flow',
       unit: 'inches',
     },
     {
       index: 2,
-      key: 'evapotranspiration',
-      title: 'Evapotranspiration',
+      key: 'reservoirRunoff',
+      title: 'Reservoir Runfoff',
       unit: 'kilograms',
     },
     {
       index: 3,
-      key: 'soilEvaporation',
-      title: 'Soil Evaporation',
+      key: 'irrigationWithdrawl',
+      title: 'Irrigation Withdrawl',
       unit: 'acre-feet',
     },
   ],
   [
     {
       index: 4,
-      key: 'upwardFlux',
-      title: 'Upward Flux',
+      key: 'seepage',
+      title: 'Seepage',
       unit: '%',
     },
     {
       index: 5,
-      key: 'runoff',
-      title: 'Runoff',
+      key: 'reservoirEvaporation',
+      title: 'Reservoir Evaporation',
       unit: '%',
     },
     {
       index: 6,
-      key: 'potentialCropTranspiration',
-      title: 'Potential Crop Transpiration',
+      key: 'overflow',
+      title: 'Overflow',
       unit: '%',
     },
     {
       index: 7,
-      key: 'potentialEvapotranspiration',
-      title: 'Potential Evapotranspiration',
+      key: 'capture',
+      title: 'Capture',
       unit: '%',
     },
   ],
   [
     {
       index: 8,
-      key: 'readilyAvailableWater',
-      title: 'Readily Available Water',
+      key: 'reservoirStoredVolume',
+      title: 'Reservoir Stored Volume',
       unit: '%',
     },
     {
       index: 9,
-      key: 'irrigation',
-      title: 'Irrigation',
-      unit: '%',
-    },
-    {
-      index: 10,
-      key: 'tileDrainFlow',
-      title: 'Tile Drain Flow',
-      unit: '%',
-    },
-    {
-      index: 11,
-      key: 'soilMoisture',
-      title: 'Soil Moisture',
+      key: 'reservoirWaterDepth',
+      title: 'Reservoir Water Depth',
       unit: '%',
     },
   ],
@@ -123,8 +111,8 @@ const NavButtons = ({ active, updateActive }) => (
     <Row>
       <Col>
         <p>
-          Click on the buttons below to see results for each annual performance
-          metric across multiple reservoir sizes.
+          Click on the buttons below to see results for reservoir water balance
+          components for a specific reservoir size on a monthly or annual basis.
         </p>
       </Col>
     </Row>
@@ -132,7 +120,7 @@ const NavButtons = ({ active, updateActive }) => (
   </>
 );
 
-const ChartsFieldWaterBalance = ({ chartData }) => {
+const ChartsReservoirWaterBalance = ({ chartData }) => {
   const [active, setActive] = useState([]);
   const [annualFilter, setAnnualFilter] = useState('all');
   const [selectedChartData, updateSelectedChartData] = useState(null);
@@ -300,8 +288,8 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
       <Row>
         <Col>
           <ChartDescription
-            name="fieldWaterBalance"
-            title="Field Water Balance"
+            name="reservoirWaterBalance"
+            title="Reservoir Water Balance"
             text="This graph shows the average monthly amount of water for each component of the field water balance for a particular reservoir size across all years. Click on the button at the top right of the graph to view a specific year. Click on the question mark to learn more about how this is estimated."
           />
         </Col>
@@ -310,4 +298,4 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
   );
 };
 
-export default ChartsFieldWaterBalance;
+export default ChartsReservoirWaterBalance;
