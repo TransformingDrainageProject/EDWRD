@@ -7,7 +7,9 @@ const ChartDescription = ({ name, text, title }) => (
   <Card
     className="mb-3"
     body
-    style={{ backgroundColor: '#e2e3e5', minHeight: 200 }}
+    style={{
+      border: '2px solid #edb229',
+    }}
   >
     <CardTitle>
       <h1>{title}</h1>

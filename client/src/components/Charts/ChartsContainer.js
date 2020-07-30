@@ -4,13 +4,17 @@ import { Container } from 'reactstrap';
 
 import ChartNavTabs from './ChartNavTabs';
 import ChartsAnnualPerformance from './ChartsAnnualPerformance';
+import ChartsFieldWaterBalance from './ChartsFieldWaterBalance';
 
 function showChart(tabIndex, chartData) {
+  console.log('tabIndex', tabIndex);
   switch (tabIndex) {
-    case tabIndex === 0:
+    case 0:
       return <ChartsAnnualPerformance chartData={chartData} />;
+    case 1:
+      return <ChartsFieldWaterBalance chartData={chartData} />;
     default:
-      return <ChartsAnnualPerformance chartData={chartData} />;
+      return <span>Please select a chart tab.</span>;
   }
 }
 

@@ -7,3 +7,7 @@
 .btn-secondary:not(:disabled):not(.disabled).active {
   background-color: #007cb3;
 }
+
+.btn-secondary:not(:disabled):not(.disabled).active.output {
+  background-color: #3faf46;
+}

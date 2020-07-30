@@ -50,6 +50,18 @@ const chartCategories = [
 
 const NavButtons = ({ active, setActive }) => (
   <>
+    <Row>
+      <Col>
+        <p>
+          Click on the buttons below to see results for each annual performance
+          metric across multiple reservoir sizes.
+          <span style={{ color: 'red' }}>
+            &nbsp;(Each of the boxes has a question icon providing a definition
+            of the variable)
+          </span>
+        </p>
+      </Col>
+    </Row>
     <Row className="mb-1 text-center">
       <Col>
         <Button
@@ -119,6 +131,15 @@ const ChartsAnnualPerformance = ({ chartData }) => {
   const selectedChartData =
     chartData['annual'][chartCategories[activeChart].key];
 
+  const uniqueYears = [
+    ...new Set(selectedChartData.yearly.map((record) => record.year)),
+  ];
+
+  const yearRange =
+    uniqueYears.length > 1
+      ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
+      : ` (${uniqueYears[0]})`;
+
   function yearOnChange(event) {
     const year = event.target.value;
     setAnnualFilter(year);
@@ -131,21 +152,23 @@ const ChartsAnnualPerformance = ({ chartData }) => {
         <Col>
           <h1>
             {chartCategories[activeChart].title}
-            {annualFilter !== 'all' ? ` (${annualFilter})` : null}
+            {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
           </h1>
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col md={9}>
+        <Col md={10}>
           <AnnualChart
             chartData={selectedChartData}
             color="green"
             avgLineOnly={avgLineOnly}
             unitLabel={chartCategories[activeChart].unit}
             annualFilter={annualFilter}
+            rdep={chartData.rdep}
+            unit_type={chartData.unit_type}
           />
         </Col>
-        <Col md={3}>
+        <Col md={2}>
           <Row className="mb-1">
             <Col>
               <Label check for="avgLineOnly" style={{ marginLeft: 20 }}>
@@ -167,11 +190,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
                 onChange={yearOnChange}
               >
                 <option value="all">View all years</option>
-                {[
-                  ...new Set(
-                    selectedChartData.annual.map((record) => record.year)
-                  ),
-                ].map((year) => (
+                {uniqueYears.map((year) => (
                   <option key={year} value={year}>
                     {year}
                   </option>
