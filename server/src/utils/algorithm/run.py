@@ -1,4 +1,5 @@
 import argparse
+import calendar
 import json
 import os
 import sys
@@ -9,7 +10,7 @@ import pandas as pd
 from main import edwrd
 
 
-def convert_dataframe_to_monthly_json(data, column_name):
+def convert_dataframe_to_monthly_json(data, rvols, column_name):
     chart_data = {
         0: {},
         1: {},
@@ -20,34 +21,36 @@ def convert_dataframe_to_monthly_json(data, column_name):
 
     # loop through first five volumes
     for vol in range(0, 5):
+        chart_data[vol]["average"] = []
+        chart_data[vol]["yearly"] = []
+
         grouped_by_month = data[vol][column_name].groupby(level=1)
-        perc10 = grouped_by_month.quantile(0.1)
-        perc90 = grouped_by_month.quantile(0.9)
 
         monthly_means = grouped_by_month.aggregate(np.mean).values
 
-        chart_data[vol]["average"] = []
-        chart_data[vol]["area"] = []
-        chart_data[vol]["outliers"] = []
-
         for month in range(0, len(monthly_means)):
             chart_data[vol]["average"].append({
-                "x": str(month + 1),
+                "x": calendar.month_abbr[month + 1],
                 "y": monthly_means[month]
             })
 
-            chart_data[vol]["area"].append({
-                "x": str(month + 1),
-                "y": perc10.values[month],
-                "y0": perc90.values[month]
-            })
+        # annual records
+        unique_years = data[vol][column_name].index.get_level_values(
+            0).unique()
+        chart_data[vol]["yearly"] = []
+        for year in unique_years:
+            annual_monthly_values = data[vol][column_name][data[vol]
+                                                           [column_name].index.get_level_values(0) == year]
+
+            chart_data[vol]["yearly"] += [{"x": calendar.month_abbr[month + 1],
+                                           "y": val, "year": year} for month, val in enumerate(annual_monthly_values)]
 
     return chart_data
 
 
 def convert_dataframe_to_annual_json(data, rvols, column_name):
     chart_data = {
-        "annual": [],
+        "yearly": [],
         "average": [],
     }
     # loop through first five volumes
@@ -61,7 +64,7 @@ def convert_dataframe_to_annual_json(data, rvols, column_name):
         })
 
         # annual records
-        chart_data["annual"] += [
+        chart_data["yearly"] += [
             {"x": str(rvols[vol]), "y": record, "year": int(data[vol][column_name].index[index])} for index, record in enumerate(data[vol][column_name].values)]
 
     return chart_data
@@ -94,12 +97,21 @@ def main(input_file, param_file, unit_type):
                 "srpLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, rvols, "SRP Load Reduction (%)")
             },
             "monthly": {
-                # "appliedIrrigation": convert_dataframe_to_monthly_json(monthly_output, "Applied Irrigation Depth"),
-                # "irrigationSupply": convert_dataframe_to_monthly_json(monthly_output, "Relative Irrigation Supply"),
-                # "nitrateLoadReduction": convert_dataframe_to_monthly_json(monthly_output, "Nitrate Load Reduction (%)"),
-                # "capturedTileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, "Percent Captured Tile Drain Flow")
+                "precipitation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Precipitation"),
+                "cropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Transpiration"),
+                "evapotranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Crop ET"),
+                "soilEvaporation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Soil Evaporation"),
+                "upwardFlux": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Upward Flux"),
+                "runoff": convert_dataframe_to_monthly_json(monthly_output, rvols, "Runoff"),
+                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Transpiration"),
+                "potentialEvapotranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Crop ET"),
+                "readilyAvailableWater": convert_dataframe_to_monthly_json(monthly_output, rvols, "Readily Available Water"),
+                "irrigation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Irrigation Demand"),
+                "tileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, rvols, "Tile Drain Flow"),
+                "soilMoisture": convert_dataframe_to_monthly_json(monthly_output, rvols, "Root Zone Soil Moisture"),
             },
-            "rdep": param['rdep'].values[0][0],
+            "rvol": rvols,
+            "rdep": param["rdep"].values[0][0],
             "unit_type": unit_type
         }
     }

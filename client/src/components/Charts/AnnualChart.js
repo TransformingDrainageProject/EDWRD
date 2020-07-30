@@ -51,7 +51,6 @@ const AnnualChart = ({
           data={chartData.average}
           interpolation="natural"
         />
-        {/* <VictoryGroup> */}
         <VictoryScatter
           style={{ data: { fill: colorSchemes[color].lineStroke } }}
           data={chartData.average}
@@ -72,16 +71,15 @@ const AnnualChart = ({
               },
             }}
             symbol={'minus'}
-            data={chartData.annual}
+            data={chartData.yearly}
             size={2}
           />
         ) : null}
-        {/* </VictoryGroup> */}
       </VictoryGroup>
     ) : (
       <VictoryBar
         style={{ data: { fill: colorSchemes[color].areaFill } }}
-        data={chartData.annual.filter(
+        data={chartData.yearly.filter(
           (data) => data.year === parseInt(annualFilter)
         )}
         labels={({ datum }) => datum.y.toFixed(2)}

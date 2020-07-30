@@ -132,7 +132,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
     chartData['annual'][chartCategories[activeChart].key];
 
   const uniqueYears = [
-    ...new Set(selectedChartData.annual.map((record) => record.year)),
+    ...new Set(selectedChartData.yearly.map((record) => record.year)),
   ];
 
   const yearRange =
@@ -157,7 +157,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col md={9}>
+        <Col md={10}>
           <AnnualChart
             chartData={selectedChartData}
             color="green"
@@ -168,7 +168,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
             unit_type={chartData.unit_type}
           />
         </Col>
-        <Col md={3}>
+        <Col md={2}>
           <Row className="mb-1">
             <Col>
               <Label check for="avgLineOnly" style={{ marginLeft: 20 }}>
