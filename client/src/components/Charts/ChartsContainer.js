@@ -6,6 +6,7 @@ import ChartNavTabs from './ChartNavTabs';
 import ChartsAnnualPerformance from './ChartsAnnualPerformance';
 import ChartsFieldWaterBalance from './ChartsFieldWaterBalance';
 import ChartsReservoirWaterBalance from './ChartsReservoirWaterBalance';
+import ChartsNutrientCaptureOverflow from './ChartsNutrientCaptureOverflow';
 
 function showChart(tabIndex, chartData) {
   console.log('tabIndex', tabIndex);
@@ -16,6 +17,8 @@ function showChart(tabIndex, chartData) {
       return <ChartsFieldWaterBalance chartData={chartData} />;
     case 2:
       return <ChartsReservoirWaterBalance chartData={chartData} />;
+    case 3:
+      return <ChartsNutrientCaptureOverflow chartData={chartData} />;
     default:
       return <span>Please select a chart tab.</span>;
   }
