@@ -179,15 +179,13 @@ def monthly_output_calc(param,data,vol,dic):
     output['Reservoir Water Depth'] = data[vol]['Reservoir Water Depth'].groupby([(data[vol].index.year), (data[vol].index.month)]).mean()
     
     #MONTHLY OVERFLOW FROM THE RESERVOIR
-    rovr=data[vol]['Reservoir Overflow'] / param['darea'].values[0][0] * 1000
-    output['Reservoir Overflow']=rovr.groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Reservoir Overflow']=data[vol]['Reservoir Overflow'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
 
     #MONTHLY CAPTURED DRAIN FLOW BY THE RESERVOIR
-    rcap=data[vol]['Captured Tile Drain Flow'] / param['darea'].values[0][0] * 1000
-    output['Captured Tile Drain Flow']=rcap.groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Captured Tile Drain Flow']=data[vol]['Captured Tile Drain Flow'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
 
     #MONTHLY PERCENT CAPTURED TILE DRAIN FLOW
-    output['Percent Captured Tile Drain Flow'] = output['Captured Tile Drain Flow'] / output['Tile Drain Flow'] * 100
+    output['Percent Captured Tile Drain Flow'] = output['Captured Tile Drain Flow'] / output['Tile Drain Flow to Reservoir'] * 100
 
     #MONTHLY NITRATE LOAD
     output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
