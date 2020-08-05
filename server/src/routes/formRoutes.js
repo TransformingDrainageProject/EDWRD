@@ -68,24 +68,41 @@ module.exports = (app, io) => {
           } else if (!form.userInput && form.userSelectedStation > -1) {
             const stationFile =
               dailyStations.stations[form.userSelectedStation].file;
-            inputFile = path.resolve(req.session.workspace, stationFile);
+            inputFile = path.resolve(req.session.workspace, stationFile.input);
             fs.copyFileSync(
-              path.resolve('src', 'utils', 'daily_stations', stationFile),
+              path.resolve('src', 'utils', 'daily_stations', stationFile.input),
               inputFile
             );
-          } else {
-            inputFile = path.resolve(req.session.workspace, stationData.input);
+            paramFile = path.resolve(req.session.workspace, stationFile.param);
             fs.copyFileSync(
-              path.resolve('src', 'utils', 'daily_stations', stationData.input),
+              path.resolve('src', 'utils', 'daily_stations', stationFile.param),
+              paramFile
+            );
+          } else {
+            inputFile = path.resolve(
+              req.session.workspace,
+              stationData.file.input
+            );
+            fs.copyFileSync(
+              path.resolve(
+                'src',
+                'utils',
+                'daily_stations',
+                stationData.file.input
+              ),
               inputFile
             );
           }
-          if (req.session.paramFile && req.body.userParam) {
+          if (
+            req.session.paramFile &&
+            req.body.userParam &&
+            form.userSelectedStation < 0
+          ) {
             paramFile = path.resolve(
               req.session.workspace,
               req.session.paramFile
             );
-          } else {
+          } else if (form.userSelectedStation < 0) {
             // create param file
             try {
               paramFile = await createTaskObject(

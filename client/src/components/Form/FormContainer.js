@@ -75,9 +75,14 @@ const FormContainer = (props) => {
     socket.on('error', (err) => {
       setStatus('');
       updateProcessingStatus('');
-      setErrorMsg(
-        'An unexpected error has occurred. Please contact support if this issue persists.'
-      );
+
+      if (typeof err === 'object' && err.msg) {
+        setErrorMsg(err.msg);
+      } else {
+        setErrorMsg(
+          'An unexpected error has occurred. Please contact support if this issue persists.'
+        );
+      }
       setSubmitting(false);
       toggleShowReset(true);
     });

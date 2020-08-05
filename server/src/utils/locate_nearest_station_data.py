@@ -94,7 +94,7 @@ def main(longitude: float, latitude: float, user_data_flag: int, unit_type: str)
         nearest_daily_station = find_nearest_station(point, daily_gdf)
         daily_station = nearest_daily_station["file"].values[0]
 
-        data["input"] = daily_station
+        data["file"] = daily_station
 
     print(json.dumps(data))
     sys.stdout.flush()
