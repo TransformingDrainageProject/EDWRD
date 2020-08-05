@@ -55,27 +55,59 @@ const MonthlyChart = ({
     }}
     style={{ parent: { border: '1px solid #ccc' } }}
   >
-    {active.map((key, idx) => (
-      <VictoryGroup key={`vg-${key}`}>
-        <VictoryLine
-          style={{
-            data: { stroke: colorScale[idx] },
-            parent: { border: '1px solid #ccc' },
-          }}
-          data={chartData[key]}
-          interpolation="natural"
-        />
-        <VictoryScatter
-          style={{ data: { fill: colorScale[idx] } }}
-          data={chartData[key]}
-          labels={({ datum }) => datum.y.toFixed(2)}
-          labelComponent={
-            <VictoryTooltip flyoutStyle={{ stroke: colorScale[idx] }} />
-          }
-          size={3}
-        />
-      </VictoryGroup>
-    ))}
+    <VictoryGroup
+      offset={10}
+      categories={{
+        x: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ],
+      }}
+    >
+      {active.map((key, idx) => {
+        if (annualFilter === 'all') {
+          console.log('all');
+          return (
+            <VictoryGroup key={`vg-${key}`}>
+              <VictoryLine
+                style={{
+                  data: { stroke: colorScale[idx] },
+                  parent: { border: '1px solid #ccc' },
+                }}
+                data={chartData[key]}
+                interpolation="natural"
+              />
+              <VictoryScatter
+                style={{ data: { fill: colorScale[idx] } }}
+                data={chartData[key]}
+                labels={({ datum }) => datum.y.toFixed(2)}
+                labelComponent={
+                  <VictoryTooltip flyoutStyle={{ stroke: colorScale[idx] }} />
+                }
+                size={3}
+              />
+            </VictoryGroup>
+          );
+        } else {
+          console.log(chartData[key]);
+          return (
+            // <VictoryGroup key={`vb-${key}`}>
+            <VictoryBar data={chartData[key]} />
+            // </VictoryGroup>
+          );
+        }
+      })}
+    </VictoryGroup>
     <VictoryAxis
       dependentAxis
       style={{ axisLabel: { padding: 46 } }}
@@ -106,6 +138,70 @@ const MonthlyChart = ({
       }))}
     />
   </VictoryChart>
+  // <VictoryChart>
+  //   <VictoryGroup offset={25} categories={{ x: ['apples', 'oranges'] }}>
+  //     <VictoryBar
+  //       data={
+  //         {
+  //           usa: [
+  //             { x: 'apples', y: 30 },
+  //             { x: 'oranges', y: 8 },
+  //           ],
+  //           canada: [
+  //             { x: 'apples', y: 40 },
+  //             { x: 'oranges', y: 10 },
+  //           ],
+  //           mexico: [
+  //             { x: 'apples', y: 30 },
+  //             { x: 'oranges', y: 8 },
+  //           ],
+  //         }.usa
+  //       }
+  //       style={{ data: { fill: '#803E75' } }}
+  //       labels={['usa', 'usa']}
+  //     />
+  //     <VictoryBar
+  //       data={
+  //         {
+  //           usa: [
+  //             { x: 'apples', y: 30 },
+  //             { x: 'oranges', y: 8 },
+  //           ],
+  //           canada: [
+  //             { x: 'apples', y: 40 },
+  //             { x: 'oranges', y: 10 },
+  //           ],
+  //           mexico: [
+  //             { x: 'apples', y: 30 },
+  //             { x: 'oranges', y: 8 },
+  //           ],
+  //         }.canada
+  //       }
+  //       style={{ data: { fill: '#F3C300' } }}
+  //       labels={['canada', 'canada']}
+  //     />
+  //     <VictoryBar
+  //       data={
+  //         {
+  //           usa: [
+  //             { x: 'apples', y: 30 },
+  //             { x: 'oranges', y: 8 },
+  //           ],
+  //           canada: [
+  //             { x: 'apples', y: 40 },
+  //             { x: 'oranges', y: 10 },
+  //           ],
+  //           mexico: [
+  //             { x: 'apples', y: 30 },
+  //             { x: 'oranges', y: 8 },
+  //           ],
+  //         }.mexico
+  //       }
+  //       style={{ data: { fill: '#A1CAF1' } }}
+  //       labels={['mexico', 'mexico']}
+  //     />
+  //   </VictoryGroup>
+  // </VictoryChart>
 );
 
 export default MonthlyChart;

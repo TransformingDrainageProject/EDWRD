@@ -103,7 +103,7 @@ def main(input_file, param_file, unit_type):
                 "soilEvaporation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Soil Evaporation"),
                 "upwardFlux": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Upward Flux"),
                 "runoff": convert_dataframe_to_monthly_json(monthly_output, rvols, "Runoff"),
-                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Transpiration"),
+                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Transpiration"),
                 "potentialEvapotranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Crop ET"),
                 "readilyAvailableWater": convert_dataframe_to_monthly_json(monthly_output, rvols, "Readily Available Water"),
                 "irrigation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Irrigation Demand"),
