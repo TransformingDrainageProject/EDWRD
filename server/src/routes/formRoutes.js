@@ -21,7 +21,6 @@ module.exports = (app, io) => {
     '/api/form',
     checkSchema(getFormSchema()),
     async (req, res, next) => {
-      io.emit('test', { msg: '/api/form' });
       // validate and sanitize form values and return any errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) return res.status(422).json(errors);
@@ -93,16 +92,13 @@ module.exports = (app, io) => {
               inputFile
             );
           }
-          if (
-            req.session.paramFile &&
-            req.body.userParam &&
-            form.userSelectedStation < 0
-          ) {
+
+          if (req.session.paramFile && req.body.userParam && form.userInput) {
             paramFile = path.resolve(
               req.session.workspace,
               req.session.paramFile
             );
-          } else if (form.userSelectedStation < 0) {
+          } else if (form.userInput && !req.body.userParam) {
             // create param file
             try {
               paramFile = await createTaskObject(

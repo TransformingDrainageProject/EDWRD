@@ -4,13 +4,21 @@ import { Button, Col, FormGroup, Input, Label, Row } from 'reactstrap';
 import ChartDescription from './ChartDescription';
 import MonthlyChart from './MonthlyChart';
 
+import updateChartData from './utils/updateChartData';
+import getYearInfo from './utils/getYearInfo';
+
 const buttonStyle = {
   width: '70%',
   height: 75,
 };
 
 // category indices of water inputs
-const waterInputs = [0, 8, 9, 11];
+const waterInputs = [
+  'reservoirPrecipitation',
+  'capture',
+  'reservoirStoredVolume',
+  'reservoirWaterDepth',
+];
 
 const chartCategories = [
   [
@@ -94,7 +102,7 @@ const NavButtonRows = ({ active, updateActive }) =>
       {row.map((button) => (
         <Col key={button.index}>
           <Button
-            className={!waterInputs.includes(button.index) ? 'output' : null}
+            className={!waterInputs.includes(button.key) ? 'output' : null}
             style={buttonStyle}
             onClick={() => updateActive(button.key)}
             active={active.includes(button.key)}
@@ -125,92 +133,50 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
   const [annualFilter, setAnnualFilter] = useState('all');
   const [selectedChartData, updateSelectedChartData] = useState(null);
   const [selectedVol, setSelectedVol] = useState(2);
-  console.log('annualFilter', annualFilter);
-  useEffect(() => {
-    if (selectedVol) {
-      let temp = {};
-      active.map((key) => {
-        temp[key] = chartData['monthly'][key][selectedVol].average;
-      });
 
-      updateSelectedChartData(temp);
-    }
+  useEffect(() => {
+    const data = updateChartData(chartData, active, annualFilter, selectedVol);
+    updateSelectedChartData(data);
   }, [active, selectedVol]);
 
   function updateActive(index) {
-    let temp = active.slice();
+    let newActiveVariables = active.slice();
     if (active.includes(index)) {
-      temp = active.filter((i) => i !== index);
+      newActiveVariables = active.filter((i) => i !== index);
     } else {
-      temp.push(index);
+      newActiveVariables.push(index);
     }
-    setActive(temp);
+    setActive(newActiveVariables);
+    const data = updateChartData(
+      chartData,
+      newActiveVariables,
+      annualFilter,
+      selectedVol
+    );
+    updateSelectedChartData(data);
   }
 
   function updateSelectedVol(vol) {
-    if (vol && vol !== selectedVol) {
-      let temp = {};
-      if (annualFilter === 'all') {
-        active.forEach((key) => {
-          temp[key] = chartData['monthly'][key][vol].average;
-        });
-      } else {
-        active.forEach((key) => {
-          temp[key] = chartData['monthly'][key][vol].yearly.filter(
-            (dataset) => dataset.year.toString() === annualFilter
-          );
-        });
-      }
-      updateSelectedChartData(temp);
-    }
-
     setSelectedVol(vol);
+    const data = updateChartData(chartData, active, annualFilter, vol);
+    updateSelectedChartData(data);
   }
 
   function updateSelectedYear(year) {
-    let temp = {};
-    if (year !== 'all') {
-      active.forEach((key) => {
-        temp[key] = chartData['monthly'][key][
-          selectedVol ? selectedVol : 2
-        ].yearly.filter((dataset) => dataset.year.toString() === year);
-      });
-    } else {
-      active.forEach((key) => {
-        temp[key] =
-          chartData['monthly'][key][selectedVol ? selectedVol : 2].average;
-      });
-    }
-
-    updateSelectedChartData(temp);
     setAnnualFilter(year);
+    const data = updateChartData(chartData, active, year, selectedVol);
+    updateSelectedChartData(data);
   }
 
-  let uniqueYears = [];
-  if (active.length > 0 && selectedVol) {
-    uniqueYears = [
-      ...new Set(
-        chartData['monthly'][active[0]][selectedVol].yearly.map(
-          (record) => record.year
-        )
-      ),
-    ];
-  }
-  const yearRange =
-    uniqueYears.length > 1
-      ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
-      : ` (${uniqueYears[0]})`;
-  console.log('chartData', chartData);
-  console.log('selectedChartData', selectedChartData);
-  console.log(
-    'selectedChartData',
-    selectedChartData ? Object.keys(selectedChartData) : null
-  );
+  const yearInfo = getYearInfo(chartData, active, selectedVol);
+  const uniqueYears = yearInfo.uniqueYears;
+  const yearRange = yearInfo.yearRange;
+
   return (
     <>
       <NavButtons active={active} updateActive={updateActive} />
       <hr style={{ width: '50%' }} />
-      {active.length > 0 && selectedVol && selectedChartData ? (
+      {active.length > 0 && selectedVol ? (
         <>
           <Row className="text-center">
             <Col md={10}>
@@ -238,6 +204,7 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                 }
                 rdep={chartData.rdep}
                 unit_type={chartData.unit_type}
+                waterInputs={waterInputs}
               />
             </Col>
             <Col md={2}>

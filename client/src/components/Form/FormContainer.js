@@ -124,6 +124,7 @@ const FormContainer = (props) => {
                   setFieldError(fieldError.param, fieldError.msg)
                 );
               } else if (err.response && err.response.data) {
+                console.log(err.response.data);
                 setErrorMsg(await err.response.data.text());
               } else {
                 console.log(err);
