@@ -43,7 +43,7 @@ def convert_dataframe_to_monthly_json(data, rvols, column_name):
                                                            [column_name].index.get_level_values(0) == year]
 
             chart_data[vol]["yearly"] += [{"x": calendar.month_abbr[month + 1],
-                                           "y": val, "year": year} for month, val in enumerate(annual_monthly_values)]
+                                           "y": val, "year": year, "name": column_name} for month, val in enumerate(annual_monthly_values)]
 
     return chart_data
 
