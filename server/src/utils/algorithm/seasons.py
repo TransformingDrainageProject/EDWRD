@@ -49,7 +49,7 @@ def psthrvst_pstfrz_evap(row,param,data,data_dic,irr_init,zedepl_init):
         raise ValueError('Daily calculated values for the evaporation coefficient cannot exceed the available energy for evaporation.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
                          ' You can report this issue to developers at [INSERT URL HERE]')
-    if data.at[row.Index,'kc'] > data.at[row.Index,'kcb_max']:
+    if round(data.at[row.Index,'kc'],4) > round(data.at[row.Index,'kcb_max'],4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
                          ' You can report this issue to developers at [INSERT URL HERE]')
@@ -100,7 +100,7 @@ def winter_evap(row,param,data,data_dic,irr_init,zedepl_init):
         raise ValueError('Daily calculated values for the evaporation coefficient cannot exceed the available energy for evaporation.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
                          ' You can report this issue to developers at [INSERT URL HERE]')
-    if data.at[row.Index,'kc'] > data.at[row.Index,'kcb_max']:
+    if round(data.at[row.Index,'kc'],4) > round(data.at[row.Index,'kcb_max'],4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
                          ' You can report this issue to developers at [INSERT URL HERE]')
@@ -156,7 +156,7 @@ def evap(row,param,data,data_dic,irr_init,zedepl_init):
         raise ValueError('Daily calculated values for the evaporation coefficient cannot exceed the available energy for evaporation.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
                          ' You can report this issue to developers at [INSERT URL HERE]')
-    if data.at[row.Index,'kc'] > data.at[row.Index,'kcb_max']:
+    if round(data.at[row.Index,'kc'],4) > round(data.at[row.Index,'kcb_max'],4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
                          ' You can report this issue to developers at [INSERT URL HERE]')

@@ -43,7 +43,7 @@ def convert_dataframe_to_monthly_json(data, rvols, column_name):
                                                            [column_name].index.get_level_values(0) == year]
 
             chart_data[vol]["yearly"] += [{"x": calendar.month_abbr[month + 1],
-                                           "y": val, "year": year} for month, val in enumerate(annual_monthly_values)]
+                                           "y": val, "year": year, "name": column_name} for month, val in enumerate(annual_monthly_values)]
 
     return chart_data
 
@@ -103,10 +103,10 @@ def main(input_file, param_file, unit_type):
                 "soilEvaporation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Soil Evaporation"),
                 "upwardFlux": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Upward Flux"),
                 "runoff": convert_dataframe_to_monthly_json(monthly_output, rvols, "Runoff"),
-                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Transpiration"),
+                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Transpiration"),
                 "potentialEvapotranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Crop ET"),
                 "readilyAvailableWater": convert_dataframe_to_monthly_json(monthly_output, rvols, "Readily Available Water"),
-                "irrigation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Irrigation Demand"),
+                "irrigation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Applied Irrigation Depth"),
                 "tileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, rvols, "Tile Drain Flow"),
                 "soilMoisture": convert_dataframe_to_monthly_json(monthly_output, rvols, "Root Zone Soil Moisture"),
                 "reservoirPrecipitation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Precipitation to Reservoir"),

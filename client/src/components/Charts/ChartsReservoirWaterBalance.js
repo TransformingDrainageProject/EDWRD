@@ -125,7 +125,7 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
   const [annualFilter, setAnnualFilter] = useState('all');
   const [selectedChartData, updateSelectedChartData] = useState(null);
   const [selectedVol, setSelectedVol] = useState(2);
-
+  console.log('annualFilter', annualFilter);
   useEffect(() => {
     if (selectedVol) {
       let temp = {};
@@ -200,12 +200,17 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
     uniqueYears.length > 1
       ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
       : ` (${uniqueYears[0]})`;
-
+  console.log('chartData', chartData);
+  console.log('selectedChartData', selectedChartData);
+  console.log(
+    'selectedChartData',
+    selectedChartData ? Object.keys(selectedChartData) : null
+  );
   return (
     <>
       <NavButtons active={active} updateActive={updateActive} />
       <hr style={{ width: '50%' }} />
-      {active.length > 0 && selectedVol ? (
+      {active.length > 0 && selectedVol && selectedChartData ? (
         <>
           <Row className="text-center">
             <Col md={10}>
@@ -220,7 +225,6 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
               })`}</h2>
             </Col>
           </Row>
-
           <Row className="mb-3 text-center">
             <Col md={10}>
               <MonthlyChart
