@@ -124,10 +124,12 @@ const FormContainer = (props) => {
                   setFieldError(fieldError.param, fieldError.msg)
                 );
               } else if (err.response && err.response.data) {
-                console.log(err.response.data);
-                setErrorMsg(await err.response.data.text());
+                if (typeof err.response.data === 'string') {
+                  setErrorMsg(await err.response.data);
+                } else {
+                  setErrorMsg(await err.response.data.text());
+                }
               } else {
-                console.log(err);
                 setErrorMsg('Unable to process form submission at this time.');
               }
               setSubmitting(false);

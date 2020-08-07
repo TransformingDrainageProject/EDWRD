@@ -205,7 +205,81 @@ const ChartsAnnualPerformance = ({ chartData }) => {
           <ChartDescription
             name="annualAppliedIrrigation"
             title="Annual Applied Irrigation"
-            text="This graph shows the annual amount of irrigation applied from a given reservoir size across all years at this location. Click on the question mark to learn more about how this is estimated."
+            text={
+              <Row>
+                <Col>
+                  <Row>
+                    This graph shows the annual irrigation and water quality
+                    performance metrics for a range of reservoir sizes across
+                    all years at this location. Use the buttons at the top right
+                    of the graph to view a specific year. Click on the question
+                    mark to learn more about how these metrics are estimated.
+                  </Row>
+                  <hr />
+                  <Row>
+                    Individual Graph Buttons:
+                    <ul>
+                      <li>
+                        Applied Irrigation
+                        <ul>
+                          <li>
+                            The annual amount of irrigation applied to the
+                            field.
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        Annual Relative Irrigation Supply
+                        <ul>
+                          <li>
+                            The fraction of water supplied for irrigation from a
+                            given reservoir size relative to the total amount of
+                            water that would have been used for irrigation if
+                            water supply was unlimited.
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        Nitrate Load Reduction
+                        <ul>
+                          <li>
+                            The annual amount of nitrate load that is captured
+                            and stored by the reservoir.
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        Nitrate Load Reduction (%)
+                        <ul>
+                          <li>
+                            The percent of the annual nitrate load that is
+                            captured and stored by the reservoir.
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        Reactive phosphorus Load Reduction
+                        <ul>
+                          <li>
+                            The annual amount of reactive phosphorus load that
+                            is captured and stored by the reservoir.
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        Reactive phosphorus Load Reduction (%)
+                        <ul>
+                          <li>
+                            The percent of the annual reactive phosphorus load
+                            that is captured and stored by the reservoir.
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </Row>
+                </Col>
+              </Row>
+            }
           />
         </Col>
       </Row>

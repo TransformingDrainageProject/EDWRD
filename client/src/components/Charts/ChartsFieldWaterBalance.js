@@ -274,7 +274,163 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
           <ChartDescription
             name="fieldWaterBalance"
             title="Field Water Balance"
-            text="This graph shows the average monthly amount of water for each component of the field water balance for a particular reservoir size across all years. Click on the button at the top right of the graph to view a specific year. Click on the question mark to learn more about how this is estimated."
+            text={
+              <Row>
+                <Col>
+                  <Row>
+                    This graph shows the monthly amount of water for each
+                    component of the field water balance for a specific
+                    reservoir size across all years. Use the buttons at the top
+                    right of the graph to view a specific year or reservoir
+                    size. Click on the question mark to learn more about how
+                    this water balance is calculated.
+                  </Row>
+                  <hr />
+                  <Row>
+                    Individual Graph Buttons:
+                    <ul>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Water Inflow</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Precipitation
+                            <ul>
+                              <li>
+                                The total monthly amount of precipitation
+                                falling on the field.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Applied Irrigation
+                            <ul>
+                              <li>
+                                The total monthly amount of irrigation applied
+                                to the field.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Upward Flux
+                            <ul>
+                              <li>
+                                The total monthly amount of upward flux of water
+                                into the crop root zone from a shallow water
+                                table
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Water Outflow</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Crop Transpiration
+                            <ul>
+                              <li>
+                                The total monthly amount of water that is lost
+                                from the field through crop transpiration.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Potential Crop Transpiration
+                            <ul>
+                              <li>
+                                The total potential monthly amount of water that
+                                is lost from the field through crop
+                                transpiration.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Evapotranspiration
+                            <ul>
+                              <li>
+                                The total monthly amount of water lost from the
+                                field through crop transpiration and evaporation
+                                from the surface.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Potential Evapotranspiration
+                            <ul>
+                              <li>
+                                The total potential monthly amount of water lost
+                                from the field through crop transpiration and
+                                evaporation from the surface.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Soil Evaporation
+                            <ul>
+                              <li>
+                                The total monthly amount of water that is lost
+                                from the field through evaporation from the
+                                surface.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Runoff
+                            <ul>
+                              <li>
+                                The total monthly amount of water that is lost
+                                from the field through surface runoff.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Tile Drain Flow
+                            <ul>
+                              <li>
+                                The total monthly amount of water that is lost
+                                from the field through tile drain flow.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Not assigned</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Readily Available Water
+                            <ul>
+                              <li>
+                                The average monthly amount of water in the soil
+                                profile that defines the point at which crop
+                                stress occurs. If soil moisture is less than
+                                this value, crop stress occurs due to too little
+                                available water in the soil profile.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Soil Moisture
+                            <ul>
+                              <li>
+                                The average monthly amount of available water in
+                                the soil profile.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </Row>
+                </Col>
+              </Row>
+            }
           />
         </Col>
       </Row>
