@@ -205,7 +205,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
           <ChartDescription
             name="annualAppliedIrrigation"
             title="Annual Applied Irrigation"
-            text="This graph shows the annual amount of irrigation applied from a given reservoir size across all years at this location. Click on the question mark to learn more about how this is estimated."
+            text="<h2>This graph shows the annual amount of irrigation applied from a given reservoir size across all years at this location. Click on the question mark to learn more about how this is estimated.</h2>"
           />
         </Col>
       </Row>
