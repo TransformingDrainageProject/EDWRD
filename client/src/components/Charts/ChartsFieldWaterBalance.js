@@ -10,6 +10,7 @@ import getYearInfo from './utils/getYearInfo';
 const buttonStyle = {
   width: '70%',
   height: 75,
+  maxWidth: '170px',
 };
 
 // category indices of water inputs
@@ -318,7 +319,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
                               <li>
                                 The total monthly amount of upward flux of water
                                 into the crop root zone from a shallow water
-                                table
+                                table.
                               </li>
                             </ul>
                           </li>
