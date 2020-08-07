@@ -10,6 +10,7 @@ import getYearInfo from './utils/getYearInfo';
 const buttonStyle = {
   width: '70%',
   height: 75,
+  maxWidth: '170px',
 };
 
 // category indices of water inputs
@@ -261,7 +262,149 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
           <ChartDescription
             name="reservoirWaterBalance"
             title="Reservoir Water Balance"
-            text="This graph shows the average monthly amount of water for each component of the field water balance for a particular reservoir size across all years. Click on the button at the top right of the graph to view a specific year. Click on the question mark to learn more about how this is estimated."
+            text={
+              <Row>
+                <Col>
+                  <Row>
+                    This graph shows the monthly amount of water for each
+                    component of the reservoir water balance for a specific
+                    reservoir size across all years. Use the buttons at the top
+                    right of the graph to view a specific year or reservoir
+                    size. Click on the question mark to learn more about how
+                    this water balance is calculated.
+                  </Row>
+                  <hr />
+                  <Row>
+                    Individual Graph Buttons:
+                    <ul>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Water Inflow</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Precipitation
+                            <ul>
+                              <li>
+                                The total monthly amount of precipitation
+                                falling directly on the reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Tile Drain Flow
+                            <ul>
+                              <li>
+                                The total monthly amount of tile drain flow
+                                flowing into the reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Runoff
+                            <ul>
+                              <li>
+                                The total monthly amount of surface runoff
+                                flowing into the reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Water Outflow</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Irrigation Withdrawl
+                            <ul>
+                              <li>
+                                The total monthly amount of water withdrawn from
+                                the reservoir for irrigation purposes.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Seepage
+                            <ul>
+                              <li>
+                                The total monthly amount of water lost from the
+                                reservoir through seepage.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Evaporation
+                            <ul>
+                              <li>
+                                The total monthly amount of water lost from the
+                                reservoir through evaporation from water
+                                surface.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Potential Evapotranspiration
+                            <ul>
+                              <li>
+                                The total potential monthly amount of water lost
+                                from the field through crop transpiration and
+                                evaporation from the surface.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Overflow
+                            <ul>
+                              <li>
+                                The total monthly amount of water that must
+                                overflow from the reservoir due to exceeding the
+                                maximum water storage capacity.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Not assigned</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Water Capture
+                            <ul>
+                              <li>
+                                The total monthly amount of water that is
+                                captured and stored in the reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Water Storage Volume
+                            <ul>
+                              <li>
+                                The average monthly amount of water stored in
+                                the reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Water Depth
+                            <ul>
+                              <li>
+                                The average monthly depth of water in the
+                                reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </Row>
+                </Col>
+              </Row>
+            }
           />
         </Col>
       </Row>

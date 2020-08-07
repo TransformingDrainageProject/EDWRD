@@ -10,6 +10,7 @@ import getYearInfo from './utils/getYearInfo';
 const buttonStyle = {
   width: '70%',
   height: 75,
+  maxWidth: '170px',
 };
 
 // category indices of water inputs
@@ -231,7 +232,105 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
           <ChartDescription
             name="nutrientCaptureOverflow"
             title="Nutrient Capture and Overflow"
-            text="This graph shows the average monthly amount of water for each component of the field water balance for a particular reservoir size across all years. Click on the button at the top right of the graph to view a specific year. Click on the question mark to learn more about how this is estimated."
+            text={
+              <Row>
+                <Col>
+                  <Row>
+                    This graph shows the monthly amount of nitrate and reactive
+                    phosphorus load delivered through tile drain flow, and how
+                    much of this load is captured and stored, for a specific
+                    reservoir size across all years. Use the buttons at the top
+                    right of the graph to view a specific year or reservoir
+                    size. Click on the question mark to learn more about how
+                    this water balance is calculated.
+                  </Row>
+                  <hr />
+                  <Row>
+                    Individual Graph Buttons:
+                    <ul>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Nitrate</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Overflow Nitrate Load
+                            <ul>
+                              <li>
+                                The total monthly amount of nitrate load that
+                                overflows from the reservoir due to exceeding
+                                the maximum water storage capacity.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Captured Nitrate Load
+                            <ul>
+                              <li>
+                                The total monthly amount of nitrate load that is
+                                captured and stored in the reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Reactive phosphorus</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Overflow Reactive Phosphorus Load
+                            <ul>
+                              <li>
+                                The total monthly amount of reactive phosphorus
+                                load that overflows from the reservoir due to
+                                exceeding the maximum water storage capacity.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Captured Reactive Phosphorus Load
+                            <ul>
+                              <li>
+                                The total monthly amount of reactive phosphorus
+                                load that is captured and stored in the
+                                reservoir.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span style={{ color: '#007cb3' }}>
+                          <em>Not assigned</em>
+                        </span>
+                        <ul>
+                          <li>
+                            Tile Nitrate Load
+                            <ul>
+                              <li>
+                                The total monthly nitrated load in tile drain
+                                flow.
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Tile Reactive Phosphorus Load
+                            <ul>
+                              <li>
+                                The total monthly reactive phosphorus load in
+                                tile drain flow.
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </Row>
+                </Col>
+              </Row>
+            }
           />
         </Col>
       </Row>

@@ -7,6 +7,7 @@ import ChartDescription from './ChartDescription';
 const buttonStyle = {
   width: '70%',
   height: 75,
+  maxWidth: '170px',
 };
 
 const chartCategories = [
