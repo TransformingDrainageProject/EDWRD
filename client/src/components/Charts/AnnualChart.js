@@ -49,7 +49,7 @@ const AnnualChart = ({
             parent: { border: '1px solid #ccc' },
           }}
           data={chartData.average}
-          interpolation="natural"
+          interpolation="monotoneX"
         />
         <VictoryScatter
           style={{ data: { fill: colorSchemes[color].lineStroke } }}

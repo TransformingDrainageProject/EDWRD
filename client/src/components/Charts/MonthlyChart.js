@@ -103,7 +103,7 @@ const MonthlyChart = ({
                     parent: { border: '1px solid #ccc' },
                   }}
                   data={chartData[key]}
-                  interpolation="natural"
+                  interpolation="monotoneX"
                 />
                 <VictoryScatter
                   style={{ data: { fill: colors[idx] } }}
