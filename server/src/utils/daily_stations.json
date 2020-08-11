@@ -48,14 +48,22 @@
         "param": "4_davis_purdue_param.txt"
       },
       "lat": 40.266111,
-      "lon": -85.159936
+      "lon": -85.159936,
+      "years": "2007 - 2016",
+      "site_summary": "Placeholder",
+      "soil": "Silt Loam, Silty Clay Loam",
+      "location": "Randolph County, IN"
     },
     {
       "id": 5,
       "name": "Iowa State Southeast Research Farm",
       "file": { "input": "5_iowa_input.txt", "param": "5_iowa_param.txt" },
       "lat": 41.193683,
-      "lon": -91.483293
+      "lon": -91.483293,
+      "years": "2007 - 2016",
+      "site_summary": "Placeholder",
+      "soil": "Silty Clay Loam",
+      "location": "Washington County, IA"
     }
   ]
 }
