@@ -9,7 +9,6 @@ const VariableButtons = ({ active, setActive }) => (
       <Col md={4}>
         <ListGroup>
           <ListGroupItem
-            active
             tag="button"
             action
             onClick={() => setActive(0)}
@@ -23,7 +22,6 @@ const VariableButtons = ({ active, setActive }) => (
       <Col md={4}>
         <ListGroup>
           <ListGroupItem
-            active
             tag="button"
             action
             onClick={() => setActive(1)}
@@ -37,7 +35,6 @@ const VariableButtons = ({ active, setActive }) => (
       <Col md={4}>
         <ListGroup>
           <ListGroupItem
-            active
             tag="button"
             action
             onClick={() => setActive(2)}
@@ -53,7 +50,6 @@ const VariableButtons = ({ active, setActive }) => (
       <Col md={4}>
         <ListGroup>
           <ListGroupItem
-            active
             tag="button"
             action
             onClick={() => setActive(3)}
@@ -67,7 +63,6 @@ const VariableButtons = ({ active, setActive }) => (
       <Col md={4}>
         <ListGroup>
           <ListGroupItem
-            active
             tag="button"
             action
             onClick={() => setActive(4)}
@@ -81,7 +76,6 @@ const VariableButtons = ({ active, setActive }) => (
       <Col md={4}>
         <ListGroup>
           <ListGroupItem
-            active
             tag="button"
             action
             onClick={() => setActive(5)}

@@ -1,12 +1,19 @@
 import './Map.css';
 import React, { useEffect, useRef, useState } from 'react';
+import { Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { divIcon } from 'leaflet';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { GeoJSON, Map as LeafletMap, Marker, TileLayer } from 'react-leaflet';
+import {
+  GeoJSON,
+  Map as LeafletMap,
+  Marker,
+  Popup,
+  TileLayer,
+} from 'react-leaflet';
 
 import regionalGrid from './midwest_states.json';
 
@@ -118,7 +125,30 @@ const Map = (props) => {
                   : customMarkerIcon
               }
               onClick={onPrecompiledStationClick}
-            />
+            >
+              <Popup>
+                <Row>
+                  <strong>Site Name:&nbsp;</strong>
+                  {station.name}
+                </Row>
+                <Row>
+                  <strong>Location:&nbsp;</strong>
+                  {station.location ? station.location : 'NULL'}
+                </Row>
+                <Row>
+                  <strong>Soil Type:&nbsp;</strong>
+                  {station.soil ? station.soil : 'NULL'}
+                </Row>
+                <Row>
+                  <strong>Years:&nbsp;</strong>
+                  {station.years ? station.years : 'NULL'}
+                </Row>
+                <Row>
+                  <strong>Site Summary:&nbsp;</strong>
+                  {station.site_summary ? station.site_summary : 'NULL'}
+                </Row>
+              </Popup>
+            </Marker>
           ))
         ) : null}
         <GeoJSON
