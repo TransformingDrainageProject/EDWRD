@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { Container } from 'reactstrap';
 
 import ChartNavTabs from './ChartNavTabs';
-import ChartsAnnualPerformance from './ChartsAnnualPerformance';
-import ChartsFieldWaterBalance from './ChartsFieldWaterBalance';
-import ChartsReservoirWaterBalance from './ChartsReservoirWaterBalance';
-import ChartsNutrientCaptureOverflow from './ChartsNutrientCaptureOverflow';
+import ChartsAnnualPerformance from './AnnualPerformance/ChartsAnnualPerformance';
+import ChartsFieldWaterBalance from './FieldWaterBalance/ChartsFieldWaterBalance';
+import ChartsReservoirWaterBalance from './ReservoirWaterBalance/ChartsReservoirWaterBalance';
+import ChartsNutrientCaptureOverflow from './NutrientCaptureOverflow/ChartsNutrientCaptureOverflow';
 
 function showChart(tabIndex, chartData) {
   console.log('tabIndex', tabIndex);

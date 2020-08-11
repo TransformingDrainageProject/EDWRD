@@ -1,4 +1,4 @@
-module.exports = function getYearInfo(chartData, activeVariables, selectedVol) {
+function getYearInfo(chartData, activeVariables, selectedVol) {
   let uniqueYears = [];
   if (activeVariables.length > 0 && selectedVol) {
     uniqueYears = [
@@ -16,4 +16,6 @@ module.exports = function getYearInfo(chartData, activeVariables, selectedVol) {
       : ` (${uniqueYears[0]})`;
 
   return { uniqueYears, yearRange };
-};
+}
+
+export default getYearInfo;

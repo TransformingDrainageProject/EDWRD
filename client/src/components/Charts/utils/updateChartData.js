@@ -1,6 +1,4 @@
-const { setGlobalCssModule } = require('reactstrap/lib/utils');
-
-module.exports = function updateChartData(
+function updateChartData(
   chartData,
   activeVariables,
   selectedYear,
@@ -21,4 +19,6 @@ module.exports = function updateChartData(
   }
 
   return data;
-};
+}
+
+export default updateChartData;
