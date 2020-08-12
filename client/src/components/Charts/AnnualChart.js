@@ -41,6 +41,25 @@ const AnnualChart = ({
     padding={{ left: 66, bottom: 50, right: 15, top: 15 }}
     style={{ parent: { border: '1px solid #ccc' } }}
   >
+    <VictoryAxis
+      dependentAxis
+      style={{
+        axisLabel: { padding: 46, fontSize: 8 },
+        tickLabels: { fontSize: 6 },
+      }}
+      label={unitLabel}
+    />
+    <VictoryAxis
+      style={{
+        axisLabel: { padding: 30, fontSize: 8 },
+        tickLabels: { fontSize: 6 },
+      }}
+      label={
+        unit_type === 'us'
+          ? `Reservoir Area (ac), depth = ${rdep}ft`
+          : `Reservoir Area (ha), depth = ${rdep}m`
+      }
+    />
     {annualFilter === 'all' ? (
       <VictoryGroup>
         <VictoryLine
@@ -90,19 +109,6 @@ const AnnualChart = ({
         }
       />
     )}
-    <VictoryAxis
-      dependentAxis
-      style={{ axisLabel: { padding: 46 } }}
-      label={unitLabel}
-    />
-    <VictoryAxis
-      style={{ axisLabel: { padding: 30 } }}
-      label={
-        unit_type === 'us'
-          ? `Reservoir Area (ac), depth = ${rdep}ft`
-          : `Reservoir Area (ha), depth = ${rdep}m`
-      }
-    />
   </VictoryChart>
 );
 

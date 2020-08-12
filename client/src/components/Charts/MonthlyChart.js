@@ -109,6 +109,21 @@ const MonthlyChart = ({
       }}
       style={{ parent: { border: '1px solid #ccc' } }}
     >
+      <VictoryAxis
+        dependentAxis
+        style={{
+          axisLabel: { padding: 46, fontSize: 8 },
+          tickLabels: { fontSize: 6 },
+        }}
+        label={unitLabel}
+      />
+      <VictoryAxis
+        style={{
+          axisLabel: { padding: 30, fontSize: 8 },
+          tickLabels: { fontSize: 6 },
+        }}
+        label="Month"
+      />
       {annualFilter === 'all' ? (
         active.map((key, idx) => {
           if (annualFilter === 'all') {
@@ -217,15 +232,6 @@ const MonthlyChart = ({
             </VictoryGroup>
           ))
         : null}
-      <VictoryAxis
-        dependentAxis
-        style={{ axisLabel: { padding: 46 } }}
-        label={unitLabel}
-      />
-      <VictoryAxis
-        style={{ axisLabel: { padding: 30 }, tickLabels: { angle: 45 } }}
-        label="Month"
-      />
       <VictoryLegend
         x={33}
         y={
