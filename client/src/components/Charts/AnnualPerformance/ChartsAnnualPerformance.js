@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Col, Input, Label, Row } from 'reactstrap';
+import { Col, Input, Label, Row } from 'reactstrap';
 
 import AnnualChart from '../AnnualChart';
 import ChartDescription from '../ChartDescription';
+import DownloadDataButton from '../DownloadDataButton';
 
 import chartVariables from './variables';
 import VariableButtons from './VariableButtons';
@@ -111,6 +112,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
           />
         </Col>
       </Row>
+      <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
     </>
   );
 };

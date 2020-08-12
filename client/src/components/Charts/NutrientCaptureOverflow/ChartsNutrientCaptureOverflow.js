@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'reactstrap';
 
 import ChartDescription from '../ChartDescription';
+import DownloadDataButton from '../DownloadDataButton';
 import MonthlyChart from '../MonthlyChart';
 import MonthlyOptions from '../MonthlyOptions';
 import VariableButtons from './VariableButtons';
@@ -111,6 +112,8 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
           />
         </Col>
       </Row>
+      <DownloadDataButton sessionID={chartData.sessionID} type="monthly" />
+      <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
     </>
   );
 };
