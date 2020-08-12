@@ -11,13 +11,20 @@ import updateSelectedVol from '../utils/updateSelectedVol';
 import updateSelectedYear from '../utils/updateSelectedYear';
 import getYearInfo from '../utils/getYearInfo';
 
-// category indices of water inputs
-const waterInputs = [
-  'precipitation',
-  'readilyAvailableWater',
-  'irrigation',
-  'soilMoisture',
-];
+// category keys for different variable subsets (inflow, outflow, other)
+const variableClasses = {
+  inflow: ['precipitation', 'irrigation', 'upwardFlux'],
+  outflow: [
+    'cropTranspiration',
+    'potentialCropTranspiration',
+    'evapotranspiration',
+    'potentialEvapotranspiration',
+    'soilEvaporation',
+    'runoff',
+    'tileDrainFlow',
+  ],
+  other: ['readilyAvailableWater', 'soilMoisture'],
+};
 
 const ChartsReservoirWaterBalance = ({ chartData }) => {
   const [active, setActive] = useState([]);
@@ -80,7 +87,7 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                 }
                 rdep={chartData.rdep}
                 unit_type={chartData.unit_type}
-                waterInputs={waterInputs}
+                variableClasses={variableClasses}
               />
             </Col>
             <Col md={2}>

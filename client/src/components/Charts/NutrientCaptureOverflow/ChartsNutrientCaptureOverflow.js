@@ -11,10 +11,12 @@ import updateSelectedVol from '../utils/updateSelectedVol';
 import updateSelectedYear from '../utils/updateSelectedYear';
 import getYearInfo from '../utils/getYearInfo';
 
-// category indices of water inputs
-const waterInputs = ['overflowNitrateLoad', 'capturedNitrateLoad'];
-const waterOutputs = ['overflowSRPLoad', 'capturedSRPLoad'];
-const notAssigned = ['tileNitrateLoad', 'tileSRPLoad'];
+// category keys for different variable subsets (inflow, outflow, other)
+const variableClasses = {
+  inflow: ['overflowNitrateLoad', 'capturedNitrateLoad'],
+  outflow: ['overflowSRPLoad', 'capturedSRPLoad'],
+  other: ['tileNitrateLoad', 'tileSRPLoad'],
+};
 
 const ChartsNutrientCaptureOverflow = ({ chartData }) => {
   const [active, setActive] = useState([]);
@@ -77,7 +79,7 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
                 }
                 rdep={chartData.rdep}
                 unit_type={chartData.unit_type}
-                waterInputs={waterInputs}
+                variableClasses={variableClasses}
               />
             </Col>
             <Col md={2}>
