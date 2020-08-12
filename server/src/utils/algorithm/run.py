@@ -75,17 +75,25 @@ def main(input_file, param_file, unit_type):
     param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
         input_file, param_file)
 
-    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "data.xlsx")) as writer:
+    # convert rvols from square meters to hectares
+    rvols = (param["rvol"] * 0.0001)['rvol'].tolist()
+
+    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "daily_output.xlsx")) as writer:
         for key in daily_data:
-            daily_data[key].to_excel(writer, sheet_name=f"Vol {key}")
+            daily_data[key].to_excel(
+                writer, sheet_name=f"Vol  {round(rvols[key], 2)}")
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "annual_output.xlsx")) as writer:
         for key in annual_output:
-            annual_output[key].to_excel(writer, sheet_name=f"Vol {key}")
+            annual_output[key].to_excel(
+                writer, sheet_name=f"Vol {round(rvols[key], 2)}")
 
-    # convert rvols from square meters to hectares
-    rvols = (param["rvol"] * 0.0001)['rvol'].tolist()[:5]
+    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "monthly_output.xlsx")) as writer:
+        for key in monthly_output:
+            monthly_output[key].to_excel(
+                writer, sheet_name=f"Vol {round(rvols[key], 2)}")
 
+    rvols = rvols[:5]
     json_output = {
         "data": {
             "annual": {

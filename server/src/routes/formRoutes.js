@@ -160,7 +160,10 @@ module.exports = (app, io) => {
                 io.emit('processing', {
                   msg: `Task completed in ${runtime} seconds.`,
                 });
-                io.emit('chartDataReady', results);
+                io.emit('chartDataReady', {
+                  ...results,
+                  sessionID: req.session.workspace.split('/')[2],
+                });
               }
             });
 
