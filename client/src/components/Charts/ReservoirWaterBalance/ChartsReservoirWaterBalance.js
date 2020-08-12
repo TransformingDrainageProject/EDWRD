@@ -11,13 +11,17 @@ import updateSelectedVol from '../utils/updateSelectedVol';
 import updateSelectedYear from '../utils/updateSelectedYear';
 import getYearInfo from '../utils/getYearInfo';
 
-// category indices of water inputs
-const waterInputs = [
-  'reservoirPrecipitation',
-  'capture',
-  'reservoirStoredVolume',
-  'reservoirWaterDepth',
-];
+// category keys for different variable subsets (inflow, outflow, other)
+const variableClasses = {
+  inflow: ['reservoirPrecipitation', 'reservoirDrainFlow', 'reservoirRunoff'],
+  outflow: [
+    'irrigationWithdrawl',
+    'seepage',
+    'reservoirEvaporation',
+    'overflow',
+  ],
+  other: ['capture', 'reservoirStoredVolume', 'reservoirWaterDepth'],
+};
 
 const ChartsFieldWaterBalance = ({ chartData }) => {
   const [active, setActive] = useState([]);
@@ -80,7 +84,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
                 }
                 rdep={chartData.rdep}
                 unit_type={chartData.unit_type}
-                waterInputs={waterInputs}
+                variableClasses={variableClasses}
               />
             </Col>
             <Col md={2}>
