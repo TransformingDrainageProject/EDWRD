@@ -93,12 +93,12 @@ module.exports = (app, io) => {
             );
           }
 
-          if (req.session.paramFile && req.body.userParam) {
+          if (req.session.paramFile && form.userParam) {
             paramFile = path.resolve(
               req.session.workspace,
               req.session.paramFile
             );
-          } else if (!req.body.userParam && form.userSelectedStation < 0) {
+          } else if (!form.userParam && !paramFile) {
             // create param file
             try {
               paramFile = await createTaskObject(

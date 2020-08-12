@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Col, FormGroup, Input, Label, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 
 import ChartDescription from '../ChartDescription';
 import MonthlyChart from '../MonthlyChart';
+import MonthlyOptions from '../MonthlyOptions';
 import VariableButtons from './VariableButtons';
 
 import chartVariables from './variables';
 import updateChartData from '../utils/updateChartData';
-import updateSelectedVol from '../utils/updateSelectedVol';
-import updateSelectedYear from '../utils/updateSelectedYear';
 import getYearInfo from '../utils/getYearInfo';
 
 // category keys for different variable subsets (inflow, outflow, other)
@@ -83,68 +82,16 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
               />
             </Col>
             <Col md={2}>
-              <Row className="mb-1">
-                <Col>
-                  <FormGroup style={{ width: '100%' }}>
-                    <Label check for="selectYear">
-                      Select year
-                    </Label>
-                    <Input
-                      type="select"
-                      name="displaySpecifcYear"
-                      onChange={(e) =>
-                        updateSelectedYear(
-                          e.target.value,
-                          chartData,
-                          active,
-                          selectedVol,
-                          setAnnualFilter,
-                          updateSelectedChartData
-                        )
-                      }
-                      value={annualFilter}
-                    >
-                      <option value="all">All years</option>
-                      {uniqueYears.map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Label check for="changeReservoirSize">
-                      Select reservoir size
-                    </Label>
-                    <Input
-                      type="select"
-                      name="changeReservoirSize"
-                      onChange={(e) =>
-                        updateSelectedVol(
-                          e.target.value,
-                          chartData,
-                          active,
-                          annualFilter,
-                          setSelectedVol,
-                          updateSelectedChartData
-                        )
-                      }
-                      value={selectedVol}
-                      style={{ width: '100%' }}
-                    >
-                      {chartData.rvol.map((vol, idx) => (
-                        <option key={vol} value={idx}>
-                          {vol}
-                        </option>
-                      ))}
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
+              <MonthlyOptions
+                chartData={chartData}
+                active={active}
+                selectedVol={selectedVol}
+                setAnnualFilter={setAnnualFilter}
+                updateSelectedChartData={updateSelectedChartData}
+                uniqueYears={uniqueYears}
+                annualFilter={annualFilter}
+                setSelectedVol={setSelectedVol}
+              />
             </Col>
           </Row>
         </>
