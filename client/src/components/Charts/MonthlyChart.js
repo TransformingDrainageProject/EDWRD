@@ -43,6 +43,30 @@ let months = {
   ],
 };
 
+function getMin(data) {
+  const min = data.reduce((a, b) => {
+    if (b.y < a.y) {
+      return b;
+    } else {
+      return a;
+    }
+  });
+  console.log('min', min);
+  return min.y;
+}
+
+function getMax(data) {
+  const max = data.reduce((a, b) => {
+    if (b.y > a.y) {
+      return b;
+    } else {
+      return a;
+    }
+  });
+  console.log('max', max);
+  return max.y;
+}
+
 function getVariableColor(variableName, variableClasses) {
   let color = '#000000';
   if (variableClasses.inflow.includes(variableName)) {
@@ -95,7 +119,7 @@ const MonthlyChart = ({
       domainPadding={15}
       height={300}
       padding={{
-        left: 66,
+        left: 50,
         bottom:
           active.length < 4
             ? 80
@@ -104,7 +128,7 @@ const MonthlyChart = ({
             : active.length < 10
             ? 100
             : 110,
-        right: 15,
+        right: 45,
         top: 15,
       }}
       style={{ parent: { border: '1px solid #ccc' } }}
@@ -112,7 +136,7 @@ const MonthlyChart = ({
       <VictoryAxis
         dependentAxis
         style={{
-          axisLabel: { padding: 46, fontSize: 8 },
+          axisLabel: { padding: 40, fontSize: 8 },
           tickLabels: { fontSize: 6 },
         }}
         label={unitLabel}
@@ -124,40 +148,64 @@ const MonthlyChart = ({
         }}
         label="Month"
       />
+      {console.log(chartData['reservoirWaterDepth'])}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryAxis
+          dependentAxis
+          domain={[0, 10]}
+          orientation="right"
+          standalone={false}
+          style={{
+            axisLabel: { fontSize: 8 },
+            tickLabels: { fontSize: 6 },
+          }}
+        />
+      ) : null}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryLine
+          style={{
+            data: {
+              stroke: getVariableColor('reservoirWaterDepth', variableClasses),
+            },
+            parent: { border: '1px solid #ccc' },
+          }}
+          data={chartData['reservoirWaterDepth']}
+          interpolation="monotoneX"
+        />
+      ) : null}
       {annualFilter === 'all' ? (
-        active.map((key, idx) => {
-          if (annualFilter === 'all') {
-            return (
-              <VictoryGroup key={`vg-${key}`} categories={months}>
-                <VictoryLine
-                  style={{
-                    data: { stroke: getVariableColor(key, variableClasses) },
-                    parent: { border: '1px solid #ccc' },
-                  }}
-                  data={chartData[key]}
-                  interpolation="monotoneX"
-                />
-                <VictoryScatter
-                  style={{
-                    data: { fill: getVariableColor(key, variableClasses) },
-                  }}
-                  data={chartData[key]}
-                  labels={({ datum }) => datum.y.toFixed(2)}
-                  labelComponent={
-                    <VictoryTooltip
-                      flyoutStyle={{
-                        stroke: getVariableColor(key, variableClasses),
-                      }}
-                    />
-                  }
-                  size={3}
-                />
-              </VictoryGroup>
-            );
-          }
-        })
+        active.map((key, idx) =>
+          key !== 'reservoirWaterDepth' ? (
+            <VictoryGroup key={`vg-${key}`} categories={months}>
+              <VictoryLine
+                style={{
+                  data: { stroke: getVariableColor(key, variableClasses) },
+                  parent: { border: '1px solid #ccc' },
+                }}
+                data={chartData[key]}
+                interpolation="monotoneX"
+              />
+              <VictoryScatter
+                style={{
+                  data: { fill: getVariableColor(key, variableClasses) },
+                }}
+                data={chartData[key]}
+                labels={({ datum }) => datum.y.toFixed(2)}
+                labelComponent={
+                  <VictoryTooltip
+                    flyoutStyle={{
+                      stroke: getVariableColor(key, variableClasses),
+                    }}
+                  />
+                }
+                size={2}
+              />
+            </VictoryGroup>
+          ) : null
+        )
       ) : monthlyData[0].length > 0 || monthlyData[1].length > 1 ? (
         <VictoryGroup offset={10} categories={months}>
+          {console.log('monthlyData')}
           {monthlyData[0].length > 0 ? (
             <VictoryStack colorScale={colorScales.blue}>
               {monthlyData[0].map((data, index) => (
@@ -190,7 +238,7 @@ const MonthlyChart = ({
           ) : null}
         </VictoryGroup>
       ) : null}
-      {monthlyData[2].length > 0
+      {annualFilter !== 'all' && monthlyData[2].length > 0
         ? monthlyData[2].map((data, index) => (
             <VictoryGroup key={`vg-other-${index}`} categories={months}>
               <VictoryLine
