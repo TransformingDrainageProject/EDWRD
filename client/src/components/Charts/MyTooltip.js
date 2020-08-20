@@ -1,0 +1,24 @@
+import './MyTooltip.css';
+import React from 'react';
+import { Tooltip } from 'reactstrap';
+
+const toggle = (id, setTooltipOpen, tooltipOpen) => {
+  let temp = new Array(tooltipOpen.length).fill(false);
+  temp[id] = !tooltipOpen[id];
+  setTooltipOpen(temp);
+};
+
+const MyTooltip = ({ children, id, setTooltipOpen, tooltipOpen }) => (
+  <Tooltip
+    placement="auto"
+    fade={false}
+    hideArrow={true}
+    isOpen={tooltipOpen[id]}
+    toggle={() => toggle(id, setTooltipOpen, tooltipOpen)}
+    target={`variable${id}`}
+  >
+    {children}
+  </Tooltip>
+);
+
+export default MyTooltip;

@@ -67,6 +67,11 @@ def convert_dataframe_to_annual_json(data, rvols, column_name, unit):
     }
 
     conversion_factor = 1.0
+    frac_to_perc = 1.0
+
+    if column_name == "Relative Irrigation Supply":
+        frac_to_perc = 100.0
+
     if unit in conversion_factors.keys():
         conversion_factor = conversion_factors[unit]
 
@@ -75,12 +80,12 @@ def convert_dataframe_to_annual_json(data, rvols, column_name, unit):
         temp = json.loads(data[vol].to_json())[column_name]
         # calculate annual average
         chart_data["average"].append({
-            "x": str(rvols[vol]),
-            "y": round(data[vol][column_name].mean() * conversion_factor, 2)
+            "x": str(round(rvols[vol], 2)),
+            "y": round(data[vol][column_name].mean() * conversion_factor * frac_to_perc, 2)
         })
         # annual records
         chart_data["yearly"] += [
-            {"x": str(rvols[vol]), "y": record * conversion_factor, "year": int(data[vol][column_name].index[index])} for index, record in enumerate(data[vol][column_name].values)]
+            {"x": str(round(rvols[vol], 2)), "y": record * conversion_factor * frac_to_perc, "year": int(data[vol][column_name].index[index])} for index, record in enumerate(data[vol][column_name].values)]
 
     return chart_data
 
@@ -91,7 +96,12 @@ def main(input_file, param_file, unit_type):
         input_file, param_file)
 
     # convert rvols from square meters to hectares
-    rvols = (param["rvol"] * 0.0001)['rvol'].tolist()
+    if unit_type == "us":
+        rvols = (param["rvol"] * 0.000247105)["rvol"].tolist()
+        rdep = param["rdep"].values[0][0] * 3.28084
+    else:
+        rvols = (param["rvol"] * 0.0001)["rvol"].tolist()
+        rdep = param["rdep"].values[0][0]
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "daily_output.xlsx")) as writer:
         for key in daily_data:
@@ -113,7 +123,7 @@ def main(input_file, param_file, unit_type):
     m3_to_gal = "m3"
     kgha_to_lbac = "kg/ha"
 
-    if unit_type == 'us':
+    if unit_type == "us":
         mm_to_in = "in"
         m_to_ft = "ft"
         m3_to_gal = "gal"
@@ -161,7 +171,7 @@ def main(input_file, param_file, unit_type):
                 "capturedSRPLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Captured SRP Load (Tile)", kgha_to_lbac),
             },
             "rvol": rvols,
-            "rdep": param["rdep"].values[0][0],
+            "rdep": round(rdep, 2),
             "unit_type": unit_type
         }
     }
