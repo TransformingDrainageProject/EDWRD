@@ -115,7 +115,6 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
         </Col>
       </Row>
       <DownloadDataButton sessionID={chartData.sessionID} type="monthly" />
-      <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
     </>
   );
 };

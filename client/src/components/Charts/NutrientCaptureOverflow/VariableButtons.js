@@ -98,7 +98,7 @@ const VariableButtons = ({
       </ListGroup>
     </Col>
     <Col md={4}>
-      <strong>Not assigned</strong>
+      <strong>Nutrient Load</strong>
       <ListGroup style={{ lineHeight: '1.0rem' }}>
         <ListGroupItem
           tag="button"
