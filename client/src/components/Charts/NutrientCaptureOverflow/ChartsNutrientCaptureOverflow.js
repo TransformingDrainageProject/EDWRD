@@ -74,9 +74,7 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
                 chartData={selectedChartData}
                 datasetNames={chartVariables}
                 color="green"
-                unitLabel={
-                  chartData.unit_type === 'us' ? 'inches' : 'millimeters'
-                }
+                unitLabel={chartData.unit_type === 'us' ? 'lbs/ac' : 'kg/ha'}
                 rdep={chartData.rdep}
                 unit_type={chartData.unit_type}
                 variableClasses={variableClasses}
@@ -113,7 +111,6 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
         </Col>
       </Row>
       <DownloadDataButton sessionID={chartData.sessionID} type="monthly" />
-      <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
     </>
   );
 };

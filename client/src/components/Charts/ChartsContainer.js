@@ -31,7 +31,11 @@ const ChartsContainer = ({ chartData }) => {
 
   return (
     <Container>
-      <ChartNavTabs active={activeNavTab} setActive={setActiveNavTab} />
+      <ChartNavTabs
+        active={activeNavTab}
+        sessionID={chartData.sessionID}
+        setActive={setActiveNavTab}
+      />
       {showChart(activeNavTab, chartData)}
     </Container>
   );
