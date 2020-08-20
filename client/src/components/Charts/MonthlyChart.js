@@ -95,7 +95,7 @@ const MonthlyChart = ({
       domainPadding={15}
       height={300}
       padding={{
-        left: 66,
+        left: 53,
         bottom:
           active.length < 4
             ? 80
@@ -112,7 +112,7 @@ const MonthlyChart = ({
       <VictoryAxis
         dependentAxis
         style={{
-          axisLabel: { padding: 46, fontSize: 8 },
+          axisLabel: { padding: 43, fontSize: 8 },
           tickLabels: { fontSize: 6 },
         }}
         label={unitLabel}

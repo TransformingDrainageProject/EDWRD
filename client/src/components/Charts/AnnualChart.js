@@ -38,16 +38,16 @@ const AnnualChart = ({
     theme={VictoryTheme.material}
     domainPadding={15}
     height={300}
-    padding={{ left: 66, bottom: 50, right: 15, top: 15 }}
+    padding={{ left: 50, bottom: 50, right: 15, top: 15 }}
     style={{ parent: { border: '1px solid #ccc' } }}
   >
     <VictoryAxis
       dependentAxis
       style={{
-        axisLabel: { padding: 46, fontSize: 8 },
+        axisLabel: { padding: 36, fontSize: 8 },
         tickLabels: { fontSize: 6 },
       }}
-      label={unitLabel}
+      label={chartData.unit}
     />
     <VictoryAxis
       style={{

@@ -82,11 +82,9 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                 chartData={selectedChartData}
                 datasetNames={chartVariables}
                 color="green"
-                unitLabel={
-                  chartData.unit_type === 'us' ? 'inches' : 'millimeters'
-                }
+                unitLabel={chartData.unit_type === 'us' ? 'in' : 'mm'}
                 rdep={chartData.rdep}
-                unit_type={chartData.unit_type}
+                unit={chartData.unit_type}
                 variableClasses={variableClasses}
               />
             </Col>

@@ -79,9 +79,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
                 chartData={selectedChartData}
                 datasetNames={chartVariables}
                 color="green"
-                unitLabel={
-                  chartData.unit_type === 'us' ? 'inches' : 'millimeters'
-                }
+                unitLabel={chartData.unit_type === 'us' ? 'gal' : 'm3'}
                 rdep={chartData.rdep}
                 unit_type={chartData.unit_type}
                 variableClasses={variableClasses}
