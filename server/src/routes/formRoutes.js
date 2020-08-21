@@ -12,7 +12,6 @@ const dailyStations = require('../utils/daily_stations.json');
 const { getFormSchema } = require('../validation/schema');
 const { pythonPath } = require('../config');
 const winston = require('../config/winston');
-const { create } = require('../models/Task');
 
 const Form = mongoose.model('forms');
 

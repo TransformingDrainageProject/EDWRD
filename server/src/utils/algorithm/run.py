@@ -17,7 +17,7 @@ conversion_factors = {
 }
 
 
-def convert_dataframe_to_monthly_json(data, rvols, column_name, unit):
+def convert_dataframe_to_monthly_json(data, column_name, unit):
     chart_data = {
         0: {},
         1: {},
@@ -59,7 +59,7 @@ def convert_dataframe_to_monthly_json(data, rvols, column_name, unit):
     return chart_data
 
 
-def convert_dataframe_to_annual_json(data, rvols, column_name, unit):
+def convert_dataframe_to_annual_json(data, rarea, column_name, unit):
     chart_data = {
         "yearly": [],
         "average": [],
@@ -76,16 +76,16 @@ def convert_dataframe_to_annual_json(data, rvols, column_name, unit):
         conversion_factor = conversion_factors[unit]
 
     # loop through first five volumes
-    for vol in range(0, 5):
-        temp = json.loads(data[vol].to_json())[column_name]
+    for area in range(0, 5):
+        temp = json.loads(data[area].to_json())[column_name]
         # calculate annual average
         chart_data["average"].append({
-            "x": str(round(rvols[vol], 2)),
-            "y": round(data[vol][column_name].mean() * conversion_factor * frac_to_perc, 2)
+            "x": str(round(rarea[area], 2)),
+            "y": round(data[area][column_name].mean() * conversion_factor * frac_to_perc, 2)
         })
         # annual records
         chart_data["yearly"] += [
-            {"x": str(round(rvols[vol], 2)), "y": record * conversion_factor * frac_to_perc, "year": int(data[vol][column_name].index[index])} for index, record in enumerate(data[vol][column_name].values)]
+            {"x": str(round(rarea[area], 2)), "y": record * conversion_factor * frac_to_perc, "year": int(data[area][column_name].index[index])} for index, record in enumerate(data[area][column_name].values)]
 
     return chart_data
 
@@ -95,28 +95,30 @@ def main(input_file, param_file, unit_type):
     param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
         input_file, param_file)
 
-    # convert rvols from square meters to hectares
+    # convert rarea from sqm to acre and hectare, rdep from meter to ft
     if unit_type == "us":
-        rvols = (param["rvol"] * 0.000247105)["rvol"].tolist()
+        rvol = (param["rvol"] * 264.172)["rvol"].tolist()
+        rarea = (param["rarea"] * 0.000247105)["rarea"].tolist()
         rdep = param["rdep"].values[0][0] * 3.28084
     else:
-        rvols = (param["rvol"] * 0.0001)["rvol"].tolist()
+        rvol = param["rvol"].tolist()
+        rarea = (param["rarea"] * 0.0001)["rarea"].tolist()
         rdep = param["rdep"].values[0][0]
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "daily_output.xlsx")) as writer:
         for key in daily_data:
             daily_data[key].to_excel(
-                writer, sheet_name=f"Vol  {round(rvols[key], 2)}")
+                writer, sheet_name=f"Vol  {round(rvol[key], 2)}")
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "annual_output.xlsx")) as writer:
         for key in annual_output:
             annual_output[key].to_excel(
-                writer, sheet_name=f"Vol {round(rvols[key], 2)}")
+                writer, sheet_name=f"Vol {round(rvol[key], 2)}")
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "monthly_output.xlsx")) as writer:
         for key in monthly_output:
             monthly_output[key].to_excel(
-                writer, sheet_name=f"Vol {round(rvols[key], 2)}")
+                writer, sheet_name=f"Vol {round(rvol[key], 2)}")
 
     mm_to_in = "mm"
     m_to_ft = "m"
@@ -129,49 +131,51 @@ def main(input_file, param_file, unit_type):
         m3_to_gal = "gal"
         kgha_to_lbac = "lbs/ac"
 
-    rvols = rvols[:5]
+    rvol = rvol[:5]
+    rarea = rarea[:5]
     json_output = {
         "data": {
             "annual": {
-                "appliedIrrigation": convert_dataframe_to_annual_json(annual_output, rvols, "Applied Irrigation Depth", mm_to_in),
-                "irrigationSupply": convert_dataframe_to_annual_json(annual_output, rvols, "Relative Irrigation Supply", "%"),
-                "nitrateLoadReduction": convert_dataframe_to_annual_json(annual_output, rvols, "Captured Nitrate Load (Tile)", kgha_to_lbac),
-                "nitrateLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, rvols, "Nitrate Load Reduction (%)", "%"),
-                "srpLoadReduction": convert_dataframe_to_annual_json(annual_output, rvols, "Captured SRP Load (Tile)", kgha_to_lbac),
-                "srpLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, rvols, "SRP Load Reduction (%)", "%")
+                "appliedIrrigation": convert_dataframe_to_annual_json(annual_output, rarea, "Applied Irrigation Depth", mm_to_in),
+                "irrigationSupply": convert_dataframe_to_annual_json(annual_output, rarea, "Relative Irrigation Supply", "%"),
+                "nitrateLoadReduction": convert_dataframe_to_annual_json(annual_output, rarea, "Captured Nitrate Load (Tile)", kgha_to_lbac),
+                "nitrateLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, rarea, "Nitrate Load Reduction (%)", "%"),
+                "srpLoadReduction": convert_dataframe_to_annual_json(annual_output, rarea, "Captured SRP Load (Tile)", kgha_to_lbac),
+                "srpLoadReductionPerc": convert_dataframe_to_annual_json(annual_output, rarea, "SRP Load Reduction (%)", "%")
             },
             "monthly": {
-                "precipitation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Precipitation", mm_to_in),
-                "cropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Transpiration", mm_to_in),
-                "evapotranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Crop ET", mm_to_in),
-                "soilEvaporation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Soil Evaporation", mm_to_in),
-                "upwardFlux": convert_dataframe_to_monthly_json(monthly_output, rvols, "Actual Upward Flux", mm_to_in),
-                "runoff": convert_dataframe_to_monthly_json(monthly_output, rvols, "Runoff", mm_to_in),
-                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Transpiration", mm_to_in),
-                "potentialEvapotranspiration": convert_dataframe_to_monthly_json(monthly_output, rvols, "Potential Crop ET", mm_to_in),
-                "readilyAvailableWater": convert_dataframe_to_monthly_json(monthly_output, rvols, "Readily Available Water", mm_to_in),
-                "irrigation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Applied Irrigation Depth", mm_to_in),
-                "tileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, rvols, "Tile Drain Flow", mm_to_in),
-                "soilMoisture": convert_dataframe_to_monthly_json(monthly_output, rvols, "Root Zone Soil Moisture", mm_to_in),
-                "reservoirPrecipitation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Precipitation to Reservoir", m3_to_gal),
-                "reservoirDrainFlow": convert_dataframe_to_monthly_json(monthly_output, rvols, "Tile Drain Flow to Reservoir", m3_to_gal),
-                "reservoirRunoff": convert_dataframe_to_monthly_json(monthly_output, rvols, "Runoff to Reservoir", m3_to_gal),
-                "irrigationWithdrawl": convert_dataframe_to_monthly_json(monthly_output, rvols, "Irrigation Withdrawal", m3_to_gal),
-                "seepage": convert_dataframe_to_monthly_json(monthly_output, rvols, "Reservoir Seepage", m3_to_gal),
-                "reservoirEvaporation": convert_dataframe_to_monthly_json(monthly_output, rvols, "Reservoir Evaporation", m3_to_gal),
-                "overflow": convert_dataframe_to_monthly_json(monthly_output, rvols, "Reservoir Overflow", m3_to_gal),
-                "capture": convert_dataframe_to_monthly_json(monthly_output, rvols, "Captured Tile Drain Flow", m3_to_gal),
-                "reservoirStoredVolume": convert_dataframe_to_monthly_json(monthly_output, rvols, "Reservoir Water Volume", m3_to_gal),
-                "reservoirWaterDepth": convert_dataframe_to_monthly_json(monthly_output, rvols, "Reservoir Water Depth", m_to_ft),
-                "tileNitrateLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Tile Drain Nitrate Load", kgha_to_lbac),
-                "tileSRPLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Tile Drain SRP Load", kgha_to_lbac),
-                "overflowNitrateLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Overflow Nitrate Load (Tile)", kgha_to_lbac),
-                "capturedNitrateLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Captured Nitrate Load (Tile)", kgha_to_lbac),
-                "overflowSRPLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Overflow SRP Load (Tile)", kgha_to_lbac),
-                "capturedSRPLoad": convert_dataframe_to_monthly_json(monthly_output, rvols, "Captured SRP Load (Tile)", kgha_to_lbac),
+                "precipitation": convert_dataframe_to_monthly_json(monthly_output, "Precipitation", mm_to_in),
+                "cropTranspiration": convert_dataframe_to_monthly_json(monthly_output, "Actual Transpiration", mm_to_in),
+                "evapotranspiration": convert_dataframe_to_monthly_json(monthly_output, "Actual Crop ET", mm_to_in),
+                "soilEvaporation": convert_dataframe_to_monthly_json(monthly_output, "Soil Evaporation", mm_to_in),
+                "upwardFlux": convert_dataframe_to_monthly_json(monthly_output, "Actual Upward Flux", mm_to_in),
+                "runoff": convert_dataframe_to_monthly_json(monthly_output, "Runoff", mm_to_in),
+                "potentialCropTranspiration": convert_dataframe_to_monthly_json(monthly_output, "Potential Transpiration", mm_to_in),
+                "potentialEvapotranspiration": convert_dataframe_to_monthly_json(monthly_output, "Potential Crop ET", mm_to_in),
+                "readilyAvailableWater": convert_dataframe_to_monthly_json(monthly_output, "Readily Available Water", mm_to_in),
+                "irrigation": convert_dataframe_to_monthly_json(monthly_output, "Applied Irrigation Depth", mm_to_in),
+                "tileDrainFlow": convert_dataframe_to_monthly_json(monthly_output, "Tile Drain Flow", mm_to_in),
+                "soilMoisture": convert_dataframe_to_monthly_json(monthly_output, "Root Zone Soil Moisture", mm_to_in),
+                "reservoirPrecipitation": convert_dataframe_to_monthly_json(monthly_output, "Precipitation to Reservoir", m3_to_gal),
+                "reservoirDrainFlow": convert_dataframe_to_monthly_json(monthly_output, "Tile Drain Flow to Reservoir", m3_to_gal),
+                "reservoirRunoff": convert_dataframe_to_monthly_json(monthly_output, "Runoff to Reservoir", m3_to_gal),
+                "irrigationWithdrawl": convert_dataframe_to_monthly_json(monthly_output, "Irrigation Withdrawal", m3_to_gal),
+                "seepage": convert_dataframe_to_monthly_json(monthly_output, "Reservoir Seepage", m3_to_gal),
+                "reservoirEvaporation": convert_dataframe_to_monthly_json(monthly_output, "Reservoir Evaporation", m3_to_gal),
+                "overflow": convert_dataframe_to_monthly_json(monthly_output, "Reservoir Overflow", m3_to_gal),
+                "capture": convert_dataframe_to_monthly_json(monthly_output, "Captured Tile Drain Flow", m3_to_gal),
+                "reservoirStoredVolume": convert_dataframe_to_monthly_json(monthly_output, "Reservoir Water Volume", m3_to_gal),
+                "reservoirWaterDepth": convert_dataframe_to_monthly_json(monthly_output, "Reservoir Water Depth", m_to_ft),
+                "tileNitrateLoad": convert_dataframe_to_monthly_json(monthly_output, "Tile Drain Nitrate Load", kgha_to_lbac),
+                "tileSRPLoad": convert_dataframe_to_monthly_json(monthly_output, "Tile Drain SRP Load", kgha_to_lbac),
+                "overflowNitrateLoad": convert_dataframe_to_monthly_json(monthly_output, "Overflow Nitrate Load (Tile)", kgha_to_lbac),
+                "capturedNitrateLoad": convert_dataframe_to_monthly_json(monthly_output, "Captured Nitrate Load (Tile)", kgha_to_lbac),
+                "overflowSRPLoad": convert_dataframe_to_monthly_json(monthly_output, "Overflow SRP Load (Tile)", kgha_to_lbac),
+                "capturedSRPLoad": convert_dataframe_to_monthly_json(monthly_output, "Captured SRP Load (Tile)", kgha_to_lbac),
             },
-            "rvol": rvols,
-            "rdep": round(rdep, 2),
+            "rarea": rarea,
+            "rvol": rvol,
+            "rdep": rdep,
             "unit_type": unit_type
         }
     }

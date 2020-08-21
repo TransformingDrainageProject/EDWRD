@@ -68,49 +68,6 @@ const upload = multer({
   }),
 });
 
-const formatInputData = (data) => {
-  const columnHeaders = Object.keys(data[0]);
-  let formattedData = {};
-
-  columnHeaders.forEach((header) => (formattedData[header] = []));
-
-  data.forEach((row) => {
-    columnHeaders.forEach((header) => formattedData[header].push(row[header]));
-  });
-
-  return formattedData;
-};
-
-const formatParamData = (data) => {
-  const columnHeaders = Object.keys(data[0]);
-  let formattedData = {};
-
-  const arrayHeaders = ['wind', 'rhmin', 'cstage', 'ngrw_stage', 'cht', 'kc'];
-  columnHeaders.forEach((header) => {
-    if (arrayHeaders.indexOf(header) > -1) {
-      formattedData[header] = [];
-    } else {
-      formattedData[header] = undefined;
-    }
-  });
-
-  data.forEach((row, index) => {
-    columnHeaders.forEach((header) => {
-      if ((header === 'wind' || header === 'rhmin') && index < 12) {
-        formattedData[header].push(row[header]);
-      } else if ((header === 'cstage' || header === 'kc') && index < 4) {
-        formattedData[header].push(row[header]);
-      } else if ((header === 'ngrw_stage' || header === 'cht') && index < 3) {
-        formattedData[header].push(row[header]);
-      } else if (index < 1) {
-        formattedData[header] = row[header];
-      }
-    });
-  });
-
-  return formattedData;
-};
-
 const checkForMissingHeaders = (fileHeaders, type) => {
   // check if all column headers are present
   const requiredHeaders = type === 'input' ? INPUT_HEADERS : PARAM_HEADERS;

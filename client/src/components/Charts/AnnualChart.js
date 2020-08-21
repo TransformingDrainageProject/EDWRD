@@ -34,6 +34,7 @@ const AnnualChart = ({
   annualFilter,
   unitLabel,
   rdep,
+  rarea,
   unit_type,
 }) => (
   <VictoryChart

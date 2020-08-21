@@ -8,14 +8,6 @@ import DownloadDataButton from '../DownloadDataButton';
 import chartVariables from './variables';
 import VariableButtons from './VariableButtons';
 
-const buttonStyle = {
-  width: '100%',
-  height: '85px',
-  marginBottom: '1rem',
-  minWidth: '150px',
-  maxWidth: '175px',
-};
-
 const ChartsAnnualPerformance = ({ chartData }) => {
   const [activeChart, setActiveChart] = useState(0);
   const [annualFilter, setAnnualFilter] = useState('all');
@@ -64,6 +56,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
             unitLabel={chartVariables[activeChart].unit}
             annualFilter={annualFilter}
             rdep={chartData.rdep}
+            rarea={chartData.rarea}
             unit_type={chartData.unit_type}
           />
         </Col>
