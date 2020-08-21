@@ -63,12 +63,12 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
           <Row className="text-center">
             <Col md={10}>
               <h1>
-                {`Reservoir size = ${chartData.rvol[selectedVol]}${
+                {`Reservoir size = ${chartData.rvol[selectedVol].toFixed(2)}${
                   chartData.unit_type === 'us' ? 'ac' : 'ha'
                 }`}
                 {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
               </h1>
-              <h2>{`(depth = ${chartData.rdep}${
+              <h2>{`(depth = ${chartData.rdep.toFixed(2)}${
                 chartData.unit_type === 'us' ? 'ft' : 'm'
               })`}</h2>
             </Col>
@@ -82,11 +82,9 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                 chartData={selectedChartData}
                 datasetNames={chartVariables}
                 color="green"
-                unitLabel={
-                  chartData.unit_type === 'us' ? 'inches' : 'millimeters'
-                }
+                unitLabel={chartData.unit_type === 'us' ? 'in' : 'mm'}
                 rdep={chartData.rdep}
-                unit_type={chartData.unit_type}
+                unit={chartData.unit_type}
                 variableClasses={variableClasses}
               />
             </Col>
@@ -120,7 +118,6 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
         </Col>
       </Row>
       <DownloadDataButton sessionID={chartData.sessionID} type="monthly" />
-      <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
     </>
   );
 };

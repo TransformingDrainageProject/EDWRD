@@ -16,13 +16,13 @@ const colorScales = {
   blue: ['#bdd7e7', '#6baed6', '#2171b5'],
   grey: ['#cccccc', '#969696', '#525252'],
   yellow: [
-    '#fff7bc',
     '#fee391',
     '#fec44f',
     '#fe9929',
     '#ec7014',
     '#cc4c02',
-    '#8c2d04',
+    '#993404',
+    '#662506',
   ],
 };
 
@@ -119,7 +119,7 @@ const MonthlyChart = ({
       domainPadding={15}
       height={300}
       padding={{
-        left: 50,
+        left: 53,
         bottom:
           active.length < 4
             ? 80
@@ -136,7 +136,7 @@ const MonthlyChart = ({
       <VictoryAxis
         dependentAxis
         style={{
-          axisLabel: { padding: 40, fontSize: 8 },
+          axisLabel: { padding: 43, fontSize: 8 },
           tickLabels: { fontSize: 6 },
         }}
         label={unitLabel}
