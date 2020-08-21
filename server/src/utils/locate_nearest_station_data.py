@@ -30,10 +30,8 @@ def find_nearest_station(point: Point, stations: gpd.GeoDataFrame) -> gpd.GeoDat
 
 
 def format_for_edwrd(station: pd.DataFrame, unit_type: str) -> None:
-    conversion_factor = 1
-
-    if unit_type == "metric":
-        conversion_factor = 0.44704
+    # convert from us to metric
+    conversion_factor = 0.44704
 
     data = {
         "rhmin": [

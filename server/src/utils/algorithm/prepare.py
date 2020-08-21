@@ -12,14 +12,17 @@ import pandas as pd
 import numpy as np
 import warnings
 
+from convert import convert_input_to_metric, convert_param_to_metric
+
 
 class EDWRD_Output_Warning(UserWarning):
     pass
 
 
-def edwrd_input(infile, pfile):
+def edwrd_input(infile, pfile, convert_input, convert_param):
     """Reads in the input and parameter files. Prepares the main pandas dataframe that will be used to track variables and
-    calculated values"""
+    calculated values. If convert_input or convert_param equal 1, then their values need to 
+    be converted to metric."""
     print(json.dumps({'msg': 'Preparing inputs...'}))
     # Attempt to detect which delimiter was used (default to tab)
     sep = '\t'
@@ -80,6 +83,10 @@ def edwrd_input(infile, pfile):
                              ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
     #--END OF ERROR CHECK--#
 
+    # convert input to metric if necessary
+    if convert_input == 1:
+        data = convert_input_to_metric(data)
+
     print(json.dumps({'msg': 'Preparing parameters...'}))
     # CREATE DICTIONARY OF INPUT PARAMETERS
     param = {
@@ -104,6 +111,9 @@ def edwrd_input(infile, pfile):
     for i in param:
         param[i] = pd.read_csv(pfile, sep=sep, header=0,
                                usecols=[param[i]], engine='python').dropna()
+
+    if convert_param == 1:
+        param = convert_param_to_metric(param)
 
     # CONVERT FIELD AND RESERVOIR AREAS TO SQUARE METERS
     param['darea'] = param['darea'] * 10000

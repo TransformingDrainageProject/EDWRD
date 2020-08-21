@@ -68,9 +68,9 @@ const MonthlyOptions = ({
             value={selectedVol}
             style={{ width: '100%' }}
           >
-            {chartData.rvol.map((vol, idx) => (
-              <option key={vol} value={idx}>
-                {vol.toFixed(2)}
+            {chartData.rarea.map((area, idx) => (
+              <option key={area} value={idx}>
+                {area.toFixed(2)}
               </option>
             ))}
           </Input>

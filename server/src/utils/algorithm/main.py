@@ -17,10 +17,11 @@ from field import soilwater_calc
 from output import annual_output_calc, monthly_output_calc
 
 
-def edwrd(infile, pfile):
+def edwrd(infile, pfile, convert_input, convert_param):
     """Reads in the input and parameter files and conducts field and reservoir water balances for a drainage water recycling system."""
     # READ IN THE INPUT AND PARAMETER FILES
-    param, data, data_dic = edwrd_input(infile, pfile)
+    param, data, data_dic = edwrd_input(
+        infile, pfile, convert_input, convert_param)
 
     # CREATE EMPTY DICTIONARIES TO STORE THE DAILY DATA AND OUTPUT FROM VARIOUS RESERVOIR VOLUMES
     daily_data = {}
