@@ -51,7 +51,7 @@ function getMin(data) {
       return a;
     }
   });
-  console.log('min', min);
+
   return min.y;
 }
 
@@ -63,7 +63,7 @@ function getMax(data) {
       return a;
     }
   });
-  console.log('max', max);
+
   return max.y;
 }
 
@@ -108,10 +108,19 @@ const MonthlyChart = ({
   annualFilter,
   unitLabel,
   rdep,
-  unit_type,
+  unitType,
   variableClasses,
 }) => {
   const monthlyData = prepDataForMonthlyStackedBars(chartData, variableClasses);
+
+  // find overall maximum for current active datasets
+  let maxima = 0;
+  for (let i = 0; i < 3; i++) {
+    monthlyData[i].forEach((dataset) => {
+      const max = getMax(dataset);
+      if (max > maxima) maxima = max;
+    });
+  }
 
   return (
     <VictoryChart
@@ -133,14 +142,18 @@ const MonthlyChart = ({
       }}
       style={{ parent: { border: '1px solid #ccc' } }}
     >
-      <VictoryAxis
-        dependentAxis
-        style={{
-          axisLabel: { padding: 43, fontSize: 8 },
-          tickLabels: { fontSize: 6 },
-        }}
-        label={unitLabel}
-      />
+      {active.length > 1 || !active.includes('reservoirWaterDepth') ? (
+        <VictoryAxis
+          dependentAxis
+          style={{
+            axisLabel: { padding: 43, fontSize: 8 },
+            tickLabels: { fontSize: 6 },
+          }}
+          label={unitLabel}
+          tickValues={[0.25, 0.5, 0.75, 1]}
+          tickFormat={(t) => Math.ceil((t * maxima) / 10) * 10}
+        />
+      ) : null}
       <VictoryAxis
         style={{
           axisLabel: { padding: 30, fontSize: 8 },
@@ -148,17 +161,20 @@ const MonthlyChart = ({
         }}
         label="Month"
       />
-      {console.log(chartData['reservoirWaterDepth'])}
       {active.includes('reservoirWaterDepth') ? (
         <VictoryAxis
           dependentAxis
-          domain={[0, 10]}
           orientation="right"
           standalone={false}
           style={{
-            axisLabel: { fontSize: 8 },
+            axisLabel: { marginRight: -50, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
+          label={unitType === 'us' ? 'ft' : 'm'}
+          tickValues={[0.25, 0.5, 0.75, 1]}
+          tickFormat={(t) =>
+            t * getMax(chartData['reservoirWaterDepth']).toFixed(0)
+          }
         />
       ) : null}
       {active.includes('reservoirWaterDepth') ? (
@@ -170,7 +186,31 @@ const MonthlyChart = ({
             parent: { border: '1px solid #ccc' },
           }}
           data={chartData['reservoirWaterDepth']}
+          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
           interpolation="monotoneX"
+        />
+      ) : null}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryScatter
+          style={{
+            data: {
+              fill: getVariableColor('reservoirWaterDepth', variableClasses),
+            },
+          }}
+          data={chartData['reservoirWaterDepth']}
+          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
+          labels={({ datum }) => datum.y.toFixed(2)}
+          labelComponent={
+            <VictoryTooltip
+              flyoutStyle={{
+                stroke: getVariableColor(
+                  'reservoirWaterDepth',
+                  variableClasses
+                ),
+              }}
+            />
+          }
+          size={2}
         />
       ) : null}
       {annualFilter === 'all' ? (
@@ -183,6 +223,7 @@ const MonthlyChart = ({
                   parent: { border: '1px solid #ccc' },
                 }}
                 data={chartData[key]}
+                y={(datum) => datum.y / maxima}
                 interpolation="monotoneX"
               />
               <VictoryScatter
@@ -190,6 +231,7 @@ const MonthlyChart = ({
                   data: { fill: getVariableColor(key, variableClasses) },
                 }}
                 data={chartData[key]}
+                y={(datum) => datum.y / maxima}
                 labels={({ datum }) => datum.y.toFixed(2)}
                 labelComponent={
                   <VictoryTooltip
@@ -205,7 +247,6 @@ const MonthlyChart = ({
         )
       ) : monthlyData[0].length > 0 || monthlyData[1].length > 1 ? (
         <VictoryGroup offset={10} categories={months}>
-          {console.log('monthlyData')}
           {monthlyData[0].length > 0 ? (
             <VictoryStack colorScale={colorScales.blue}>
               {monthlyData[0].map((data, index) => (
@@ -213,6 +254,7 @@ const MonthlyChart = ({
                   key={`vb-inflow-${index}`}
                   barWidth={4}
                   data={data}
+                  y={(datum) => datum.y / maxima}
                   labels={({ datum }) => `${datum.name}: ${datum.y.toFixed(2)}`}
                   labelComponent={
                     <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
@@ -228,6 +270,7 @@ const MonthlyChart = ({
                   key={`vb-outflow-${index}`}
                   barWidth={4}
                   data={data}
+                  y={(datum) => datum.y / maxima}
                   labels={({ datum }) => `${datum.name}: ${datum.y.toFixed(2)}`}
                   labelComponent={
                     <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
@@ -238,7 +281,10 @@ const MonthlyChart = ({
           ) : null}
         </VictoryGroup>
       ) : null}
-      {annualFilter !== 'all' && monthlyData[2].length > 0
+      {annualFilter !== 'all' &&
+      monthlyData[2].length > 0 &&
+      monthlyData[2].length !== 1 &&
+      active.includes('reservoirWaterDepth')
         ? monthlyData[2].map((data, index) => (
             <VictoryGroup key={`vg-other-${index}`} categories={months}>
               <VictoryLine
@@ -252,6 +298,7 @@ const MonthlyChart = ({
                   parent: { border: '1px solid #ccc' },
                 }}
                 data={data}
+                y={(datum) => datum.y / maxima}
                 interpolation="monotoneX"
               />
               <VictoryScatter
@@ -264,6 +311,7 @@ const MonthlyChart = ({
                   },
                 }}
                 data={data}
+                y={(datum) => datum.y / maxima}
                 labels={({ datum }) => datum.y.toFixed(2)}
                 labelComponent={
                   <VictoryTooltip
