@@ -10,6 +10,8 @@ import {
   VictoryTooltip,
 } from 'victory';
 
+import numberWithCommas from './utils/numberWithCommas';
+
 const colorSchemes = {
   blue: {
     areaFill: '#acc1d7',
@@ -59,6 +61,7 @@ const AnnualChart = ({
           ? `Reservoir Area (ac), depth = ${rdep}ft`
           : `Reservoir Area (ha), depth = ${rdep}m`
       }
+      tickFormat={(t) => numberWithCommas(t)}
     />
     {annualFilter === 'all' ? (
       <VictoryGroup>
@@ -73,7 +76,7 @@ const AnnualChart = ({
         <VictoryScatter
           style={{ data: { fill: colorSchemes[color].lineStroke } }}
           data={chartData.average}
-          labels={({ datum }) => datum.y}
+          labels={({ datum }) => numberWithCommas(datum.y)}
           labelComponent={
             <VictoryTooltip
               flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
@@ -101,7 +104,7 @@ const AnnualChart = ({
         data={chartData.yearly.filter(
           (data) => data.year === parseInt(annualFilter)
         )}
-        labels={({ datum }) => datum.y.toFixed(2)}
+        labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
         labelComponent={
           <VictoryTooltip
             flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}

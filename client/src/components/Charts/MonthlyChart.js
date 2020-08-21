@@ -12,6 +12,8 @@ import {
   VictoryTooltip,
 } from 'victory';
 
+import numberWithCommas from './utils/numberWithCommas';
+
 const colorScales = {
   blue: ['#bdd7e7', '#6baed6', '#2171b5'],
   grey: ['#cccccc', '#969696', '#525252'],
@@ -42,18 +44,6 @@ let months = {
     'Dec',
   ],
 };
-
-function getMin(data) {
-  const min = data.reduce((a, b) => {
-    if (b.y < a.y) {
-      return b;
-    } else {
-      return a;
-    }
-  });
-
-  return min.y;
-}
 
 function getMax(data) {
   const max = data.reduce((a, b) => {
@@ -146,12 +136,14 @@ const MonthlyChart = ({
         <VictoryAxis
           dependentAxis
           style={{
-            axisLabel: { padding: 43, fontSize: 8 },
+            axisLabel: { padding: 40, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
           label={unitLabel}
           tickValues={[0.25, 0.5, 0.75, 1]}
-          tickFormat={(t) => Math.ceil((t * maxima) / 10) * 10}
+          tickFormat={(t) =>
+            numberWithCommas(Math.ceil((t * maxima) / 10) * 10)
+          }
         />
       ) : null}
       <VictoryAxis
@@ -167,50 +159,16 @@ const MonthlyChart = ({
           orientation="right"
           standalone={false}
           style={{
-            axisLabel: { marginRight: -50, fontSize: 8 },
+            axisLabel: { padding: 30, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
           label={unitType === 'us' ? 'ft' : 'm'}
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
-            t * getMax(chartData['reservoirWaterDepth']).toFixed(0)
+            numberWithCommas(
+              t * getMax(chartData['reservoirWaterDepth']).toFixed(0)
+            )
           }
-        />
-      ) : null}
-      {active.includes('reservoirWaterDepth') ? (
-        <VictoryLine
-          style={{
-            data: {
-              stroke: getVariableColor('reservoirWaterDepth', variableClasses),
-            },
-            parent: { border: '1px solid #ccc' },
-          }}
-          data={chartData['reservoirWaterDepth']}
-          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
-          interpolation="monotoneX"
-        />
-      ) : null}
-      {active.includes('reservoirWaterDepth') ? (
-        <VictoryScatter
-          style={{
-            data: {
-              fill: getVariableColor('reservoirWaterDepth', variableClasses),
-            },
-          }}
-          data={chartData['reservoirWaterDepth']}
-          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
-          labels={({ datum }) => datum.y.toFixed(2)}
-          labelComponent={
-            <VictoryTooltip
-              flyoutStyle={{
-                stroke: getVariableColor(
-                  'reservoirWaterDepth',
-                  variableClasses
-                ),
-              }}
-            />
-          }
-          size={2}
         />
       ) : null}
       {annualFilter === 'all' ? (
@@ -232,9 +190,10 @@ const MonthlyChart = ({
                 }}
                 data={chartData[key]}
                 y={(datum) => datum.y / maxima}
-                labels={({ datum }) => datum.y.toFixed(2)}
+                labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
                 labelComponent={
                   <VictoryTooltip
+                    style={{ fontSize: 6 }}
                     flyoutStyle={{
                       stroke: getVariableColor(key, variableClasses),
                     }}
@@ -255,7 +214,9 @@ const MonthlyChart = ({
                   barWidth={4}
                   data={data}
                   y={(datum) => datum.y / maxima}
-                  labels={({ datum }) => `${datum.name}: ${datum.y.toFixed(2)}`}
+                  labels={({ datum }) =>
+                    `${datum.name}: ${numberWithCommas(datum.y.toFixed(2))}`
+                  }
                   labelComponent={
                     <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
                   }
@@ -271,7 +232,9 @@ const MonthlyChart = ({
                   barWidth={4}
                   data={data}
                   y={(datum) => datum.y / maxima}
-                  labels={({ datum }) => `${datum.name}: ${datum.y.toFixed(2)}`}
+                  labels={({ datum }) =>
+                    `${datum.name}: ${numberWithCommas(datum.y.toFixed(2))}`
+                  }
                   labelComponent={
                     <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
                   }
@@ -312,9 +275,10 @@ const MonthlyChart = ({
                 }}
                 data={data}
                 y={(datum) => datum.y / maxima}
-                labels={({ datum }) => datum.y.toFixed(2)}
+                labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
                 labelComponent={
                   <VictoryTooltip
+                    style={{ fontSize: 6 }}
                     flyoutStyle={{
                       stroke: getVariableColor(
                         monthlyData[3][index],
@@ -328,6 +292,43 @@ const MonthlyChart = ({
             </VictoryGroup>
           ))
         : null}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryLine
+          style={{
+            data: {
+              stroke: getVariableColor('reservoirWaterDepth', variableClasses),
+            },
+            parent: { border: '1px solid #ccc' },
+          }}
+          data={chartData['reservoirWaterDepth']}
+          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
+          interpolation="monotoneX"
+        />
+      ) : null}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryScatter
+          style={{
+            data: {
+              fill: getVariableColor('reservoirWaterDepth', variableClasses),
+            },
+          }}
+          data={chartData['reservoirWaterDepth']}
+          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
+          labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
+          labelComponent={
+            <VictoryTooltip
+              style={{ fontSize: 6 }}
+              flyoutStyle={{
+                stroke: getVariableColor(
+                  'reservoirWaterDepth',
+                  variableClasses
+                ),
+              }}
+            />
+          }
+          size={2}
+        />
+      ) : null}
       <VictoryLegend
         x={33}
         y={
