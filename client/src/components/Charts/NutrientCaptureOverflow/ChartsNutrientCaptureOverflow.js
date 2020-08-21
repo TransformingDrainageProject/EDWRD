@@ -55,12 +55,12 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
           <Row className="text-center">
             <Col md={10}>
               <h1>
-                {`Reservoir size = ${chartData.rvol[selectedVol]}${
+                {`Reservoir size = ${chartData.rvol[selectedVol].toFixed(2)}${
                   chartData.unit_type === 'us' ? 'ac' : 'ha'
                 }`}
                 {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
               </h1>
-              <h2>{`(depth = ${chartData.rdep}${
+              <h2>{`(depth = ${chartData.rdep.toFixed(2)}${
                 chartData.unit_type === 'us' ? 'ft' : 'm'
               })`}</h2>
             </Col>
