@@ -16,13 +16,13 @@ const colorScales = {
   blue: ['#bdd7e7', '#6baed6', '#2171b5'],
   grey: ['#cccccc', '#969696', '#525252'],
   yellow: [
-    '#fff7bc',
     '#fee391',
     '#fec44f',
     '#fe9929',
     '#ec7014',
     '#cc4c02',
-    '#8c2d04',
+    '#993404',
+    '#662506',
   ],
 };
 
