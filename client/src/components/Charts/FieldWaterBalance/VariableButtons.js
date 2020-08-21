@@ -36,7 +36,6 @@ const VariableButtons = ({
           <ListGroup style={{ lineHeight: '1.0rem' }}>
             <ListGroupItem
               id="variable0"
-              active
               tag="button"
               action
               onClick={() =>
@@ -121,7 +120,6 @@ const VariableButtons = ({
           <ListGroup style={{ lineHeight: '1.0rem' }}>
             <ListGroupItem
               id="variable3"
-              active
               tag="button"
               action
               onClick={() =>
