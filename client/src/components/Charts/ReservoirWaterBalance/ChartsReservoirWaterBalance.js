@@ -60,12 +60,12 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
           <Row className="text-center">
             <Col md={10}>
               <h1>
-                {`Reservoir size = ${chartData.rvol[selectedVol]}${
+                {`Reservoir size = ${chartData.rvol[selectedVol].toFixed(2)}${
                   chartData.unit_type === 'us' ? 'ac' : 'ha'
                 }`}
                 {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
               </h1>
-              <h2>{`(depth = ${chartData.rdep}${
+              <h2>{`(depth = ${chartData.rdep.toFixed(2)}${
                 chartData.unit_type === 'us' ? 'ft' : 'm'
               })`}</h2>
             </Col>
@@ -81,7 +81,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
                 color="green"
                 unitLabel={chartData.unit_type === 'us' ? 'gal' : 'm3'}
                 rdep={chartData.rdep}
-                unit_type={chartData.unit_type}
+                unitType={chartData.unit_type}
                 variableClasses={variableClasses}
               />
             </Col>
