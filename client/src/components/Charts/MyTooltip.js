@@ -12,7 +12,6 @@ const MyTooltip = ({ children, id, setTooltipOpen, tooltipOpen }) => (
   <Tooltip
     placement="auto"
     fade={false}
-    hideArrow={true}
     isOpen={tooltipOpen[id]}
     toggle={() => toggle(id, setTooltipOpen, tooltipOpen)}
     target={`variable${id}`}
