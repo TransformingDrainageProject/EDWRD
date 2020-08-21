@@ -57,26 +57,12 @@ module.exports = (app, io) => {
 
         pythonStationFinder.on('close', async (code) => {
           let inputFile, paramFile;
+          let inputNeedsUnitConv = false,
+            paramNeedsUnitConv = false;
 
-          if (req.session.inputFile && form.userInput) {
-            inputFile = path.resolve(
-              req.session.workspace,
-              req.session.inputFile
-            );
-          } else if (!form.userInput && form.userSelectedStation > -1) {
-            const stationFile =
-              dailyStations.stations[form.userSelectedStation].file;
-            inputFile = path.resolve(req.session.workspace, stationFile.input);
-            fs.copyFileSync(
-              path.resolve('src', 'utils', 'daily_stations', stationFile.input),
-              inputFile
-            );
-            paramFile = path.resolve(req.session.workspace, stationFile.param);
-            fs.copyFileSync(
-              path.resolve('src', 'utils', 'daily_stations', stationFile.param),
-              paramFile
-            );
-          } else {
+          // if this is a quick analysis, use input and
+          // param files from nearest station
+          if (form.quickAnalysis) {
             inputFile = path.resolve(
               req.session.workspace,
               stationData.file.input
@@ -90,23 +76,92 @@ module.exports = (app, io) => {
               ),
               inputFile
             );
-          }
 
-          if (req.session.paramFile && form.userParam) {
             paramFile = path.resolve(
               req.session.workspace,
-              req.session.paramFile
+              stationData.file.param
             );
-          } else if (!form.userParam && !paramFile) {
-            // create param file
-            try {
-              paramFile = await createTaskObject(
+            fs.copyFileSync(
+              path.resolve(
+                'src',
+                'utils',
+                'daily_stations',
+                stationData.file.param
+              ),
+              paramFile
+            );
+          } else {
+            // check if input file was uploaded
+            if (form.userInput && req.session.inputFile) {
+              inputFile = path.resolve(
                 req.session.workspace,
-                req.body,
-                stationData.param
+                req.session.inputFile
               );
-            } catch (err) {
-              return next(err);
+
+              // if selected unit type is "us" then values
+              // will need to be converted to metric
+              if (form.unitType === 'us') {
+                inputNeedsUnitConv = true;
+              }
+            } else {
+              // user selected a station instead of uploading an input file
+              // minus 4 to account for 4 missing stations
+              const stationFile =
+                dailyStations.stations[form.userSelectedStation - 4].file;
+              inputFile = path.resolve(
+                req.session.workspace,
+                stationFile.input
+              );
+              fs.copyFileSync(
+                path.resolve(
+                  'src',
+                  'utils',
+                  'daily_stations',
+                  stationFile.input
+                ),
+                inputFile
+              );
+              paramFile = path.resolve(
+                req.session.workspace,
+                stationFile.param
+              );
+              fs.copyFileSync(
+                path.resolve(
+                  'src',
+                  'utils',
+                  'daily_stations',
+                  stationFile.param
+                ),
+                paramFile
+              );
+            }
+
+            if (!paramFile) {
+              // check if param file was uploaded by user
+              if (form.userParam && req.session.paramFile) {
+                // user uploaded a param file
+                paramFile = path.resolve(
+                  req.session.workspace,
+                  req.session.paramFile
+                );
+              } else {
+                // use param values from form
+                // create param file
+                try {
+                  paramFile = await createTaskObject(
+                    req.session.workspace,
+                    req.body,
+                    stationData.param
+                  );
+                } catch (err) {
+                  return next(err);
+                }
+              }
+              // if selected unit type is us then values
+              // will need to be converted to metric
+              if (form.unitType === 'us') {
+                paramNeedsUnitConv = true;
+              }
             }
           }
 
@@ -121,7 +176,13 @@ module.exports = (app, io) => {
               pythonPath: pythonPath,
               pythonOptions: ['-u'],
               scriptPath: './src/utils/algorithm',
-              args: [inputFile, paramFile, req.body.unitType],
+              args: [
+                inputFile,
+                paramFile,
+                req.body.unitType,
+                inputNeedsUnitConv ? 1 : 0,
+                paramNeedsUnitConv ? 1 : 0,
+              ],
               stderrParser: (line) => JSON.stringify(line),
             };
 

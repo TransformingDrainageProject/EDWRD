@@ -10,10 +10,10 @@ import pandas as pd
 from main import edwrd
 
 conversion_factors = {
-    "Inches": 0.0393701,
-    "Feet": 3.28084,
-    "Gallons": 264.172,
-    "Pounds per acre": 0.892179
+    "in": 0.0393701,
+    "ft": 3.28084,
+    "gal": 264.172,
+    "lbs/ac": 0.892179
 }
 
 
@@ -90,10 +90,10 @@ def convert_dataframe_to_annual_json(data, rarea, column_name, unit):
     return chart_data
 
 
-def main(input_file, param_file, unit_type):
+def main(input_file, param_file, unit_type, convert_input, convert_param):
 
     param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
-        input_file, param_file)
+        input_file, param_file, convert_input, convert_param)
 
     # convert rarea from sqm to acre and hectare, rdep from meter to ft
     if unit_type == "us":
@@ -192,11 +192,17 @@ if __name__ == "__main__":
                         help="Parameter file containing parameters from web form.")
     parser.add_argument("unit_type", type=str,
                         help="Unit type (US or metric).")
+    parser.add_argument("convert_input", type=int,
+                        help="Input file values need to be converted to metric.")
+    parser.add_argument("convert_param", type=int,
+                        help="Param file values need to be converted to metric.")
 
     # Get passed in arguments
     args = parser.parse_args()
     input_file = args.input_file
     param_file = args.param_file
     unit_type = args.unit_type
+    convert_input = args.convert_input
+    convert_param = args.convert_param
 
-    main(input_file, param_file, unit_type)
+    main(input_file, param_file, unit_type, convert_input, convert_param)

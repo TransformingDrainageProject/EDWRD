@@ -4,6 +4,7 @@ import { Alert, Button, Col, Row, Spinner } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
+import * as yup from 'yup';
 
 // forms
 import FieldReservoirForm from './FieldReservoirForm';
@@ -37,6 +38,7 @@ const metricInitialValues = {
   ...cropMetricInitialValues,
   ...userInitialValues,
   ...advMetricInitialValues,
+  quickAnalysis: 'true',
 };
 
 const usInitialValues = {
@@ -44,13 +46,19 @@ const usInitialValues = {
   ...cropUSInitialValues,
   ...userInitialValues,
   ...advUSInitialValues,
+  quickAnalysis: 'true',
 };
 
 const validationSchema = fieldReservoirFormSchema
   .concat(cropManagementFormSchema)
   .concat(advancedSettingsFormSchema)
   .concat(userDataFormSchema)
-  .concat(advancedSettingsFormSchema);
+  .concat(advancedSettingsFormSchema)
+  .concat(
+    yup.object().shape({
+      quickAnalysis: yup.boolean().required(),
+    })
+  );
 
 const FormContainer = (props) => {
   const {
@@ -220,11 +228,15 @@ const FormContainer = (props) => {
                     color="secondary"
                     onClick={() => {
                       if (!showModifyInputs) {
+                        setFieldValue('quickAnalysis', 'false');
+                        setFieldTouched('quickAnalysis', true);
                         setFieldValue('userInput', 'true');
                         setFieldTouched('userInput', true);
                         setFieldValue('userSelectedStation', 2);
                         setFieldTouched('userSelectedStation', true);
                       } else {
+                        setFieldValue('quickAnalysis', 'true');
+                        setFieldTouched('quickAnalysis', true);
                         setFieldValue('userInput', 'false');
                         setFieldTouched('userInput', true);
                         setFieldValue('userSelectedStation', -1);

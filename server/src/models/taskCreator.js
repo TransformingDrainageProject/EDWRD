@@ -2,6 +2,8 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const moment = require('moment');
 const path = require('path');
 
+const Task = require('./Task');
+
 module.exports = {
   createTaskObject: async (workspace, paramValues, rhminWnd) => {
     try {

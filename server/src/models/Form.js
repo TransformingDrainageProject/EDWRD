@@ -30,6 +30,7 @@ const formSchema = new Schema({
   midKC: Number,
   pfact: Number,
   plantDateStart: Date,
+  quickAnalysis: Boolean,
   rarea: Number,
   rdep: Number,
   rdepMin: Number,

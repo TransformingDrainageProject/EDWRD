@@ -1,46 +1,6 @@
 {
   "stations": [
     {
-      "id": 0,
-      "name": "Minnesota Southern Research and Outreach Center",
-      "file": {
-        "input": "0_minnesota_input.txt",
-        "param": "0_minnesota_param.txt"
-      },
-      "lat": 42.19672,
-      "lon": -93.5975
-    },
-    {
-      "id": 1,
-      "name": "Story City Research Site",
-      "file": {
-        "input": "1_story_city_input.txt",
-        "param": "1_story_city_param.txt"
-      },
-      "lat": 39.79139,
-      "lon": -88.18556
-    },
-    {
-      "id": 2,
-      "name": "Purdue Water Quality Field Station",
-      "file": {
-        "input": "2_purdue_water_input.txt",
-        "param": "2_purdue_water_param.txt"
-      },
-      "lat": 40.499336,
-      "lon": -86.997403
-    },
-    {
-      "id": 3,
-      "name": "Camargo Research Site",
-      "file": {
-        "input": "3_camargo_input.txt",
-        "param": "3_camargo_param.txt"
-      },
-      "lat": 44.074114,
-      "lon": -93.52249
-    },
-    {
       "id": 4,
       "name": "Davis Purdue Agricultural Center",
       "file": {

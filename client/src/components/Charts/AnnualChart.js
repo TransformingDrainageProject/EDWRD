@@ -59,8 +59,8 @@ const AnnualChart = ({
       }}
       label={
         unit_type === 'us'
-          ? `Reservoir Area (ac), depth = ${rdep}ft`
-          : `Reservoir Area (ha), depth = ${rdep}m`
+          ? `Reservoir Area (ac), depth = ${rdep.toFixed(1)}ft`
+          : `Reservoir Area (ha), depth = ${rdep.toFixed(1)}m`
       }
       tickFormat={(t) => numberWithCommas(t)}
     />
