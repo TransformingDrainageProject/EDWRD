@@ -3,19 +3,20 @@ import { Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 
 import MyTooltip from '../MyTooltip';
 
-import chartVariables from './variables';
 import updateActive from '../utils/updateActive';
 
 const VariableButtons = ({
   active,
   annualFilter,
+  chart,
   chartData,
   selectedVol,
   setActive,
   updateSelectedChartData,
 }) => {
+  const keys = Object.keys(chartData.monthly[chart]);
   const [tooltipOpen, setTooltipOpen] = useState(
-    new Array(chartVariables.length).fill(false)
+    new Array(keys.length).fill(false)
   );
 
   return (
@@ -35,168 +36,174 @@ const VariableButtons = ({
         <Col md={4}>
           <ListGroup style={{ lineHeight: '1.0rem' }}>
             <ListGroupItem
-              id="variable0"
+              id={keys[0]}
               tag="button"
               action
               onClick={() =>
                 updateActive(
-                  chartVariables[0].key,
+                  keys[0],
                   active,
                   setActive,
                   chartData,
                   annualFilter,
                   selectedVol,
-                  updateSelectedChartData
+                  updateSelectedChartData,
+                  chart
                 )
               }
-              active={active.includes(chartVariables[0].key)}
+              active={active.includes(keys[0])}
             >
-              {chartVariables[0].title}
+              {chartData.monthly[chart][keys[0]].label}
             </ListGroupItem>
             <MyTooltip
-              id={0}
+              id={keys[0]}
               tooltipOpen={tooltipOpen}
               setTooltipOpen={setTooltipOpen}
             >
-              {chartVariables[0].description}
+              {chartData.monthly[chart][keys[0]].description}
             </MyTooltip>
             <ListGroupItem
-              id="variable1"
+              id={keys[1]}
               tag="button"
               action
               onClick={() =>
                 updateActive(
-                  chartVariables[1].key,
+                  keys[1],
                   active,
                   setActive,
                   chartData,
                   annualFilter,
                   selectedVol,
-                  updateSelectedChartData
+                  updateSelectedChartData,
+                  chart
                 )
               }
-              active={active.includes(chartVariables[1].key)}
+              active={active.includes(keys[1])}
             >
-              {chartVariables[1].title}
+              {chartData.monthly[chart][keys[1]].label}
             </ListGroupItem>
             <MyTooltip
-              id={1}
+              id={keys[1]}
               tooltipOpen={tooltipOpen}
               setTooltipOpen={setTooltipOpen}
             >
-              {chartVariables[1].description}
-            </MyTooltip>
-          </ListGroup>
-        </Col>
-        <Col md={4}>
-          <ListGroup style={{ lineHeight: '1.0rem' }}>
-            <ListGroupItem
-              id="variable2"
-              tag="button"
-              action
-              onClick={() =>
-                updateActive(
-                  chartVariables[2].key,
-                  active,
-                  setActive,
-                  chartData,
-                  annualFilter,
-                  selectedVol,
-                  updateSelectedChartData
-                )
-              }
-              active={active.includes(chartVariables[2].key)}
-            >
-              {chartVariables[2].title}
-            </ListGroupItem>
-            <MyTooltip
-              id={2}
-              tooltipOpen={tooltipOpen}
-              setTooltipOpen={setTooltipOpen}
-            >
-              {chartVariables[2].description}
-            </MyTooltip>
-            <ListGroupItem
-              id="variable3"
-              tag="button"
-              action
-              onClick={() =>
-                updateActive(
-                  chartVariables[3].key,
-                  active,
-                  setActive,
-                  chartData,
-                  annualFilter,
-                  selectedVol,
-                  updateSelectedChartData
-                )
-              }
-              active={active.includes(chartVariables[3].key)}
-            >
-              {chartVariables[3].title}
-            </ListGroupItem>
-            <MyTooltip
-              id={3}
-              tooltipOpen={tooltipOpen}
-              setTooltipOpen={setTooltipOpen}
-            >
-              {chartVariables[3].description}
+              {chartData.monthly[chart][keys[1]].description}
             </MyTooltip>
           </ListGroup>
         </Col>
         <Col md={4}>
           <ListGroup style={{ lineHeight: '1.0rem' }}>
             <ListGroupItem
-              id="variable4"
+              id={keys[2]}
               tag="button"
               action
               onClick={() =>
                 updateActive(
-                  chartVariables[4].key,
+                  keys[2],
                   active,
                   setActive,
                   chartData,
                   annualFilter,
                   selectedVol,
-                  updateSelectedChartData
+                  updateSelectedChartData,
+                  chart
                 )
               }
-              active={active.includes(chartVariables[4].key)}
+              active={active.includes(keys[2])}
             >
-              {chartVariables[4].title}
+              {chartData.monthly[chart][keys[2]].label}
             </ListGroupItem>
             <MyTooltip
-              id={4}
+              id={keys[2]}
               tooltipOpen={tooltipOpen}
               setTooltipOpen={setTooltipOpen}
             >
-              {chartVariables[4].description}
+              {chartData.monthly[chart][keys[2]].description}
             </MyTooltip>
             <ListGroupItem
-              id="variable5"
+              id={keys[3]}
               tag="button"
               action
               onClick={() =>
                 updateActive(
-                  chartVariables[5].key,
+                  keys[3],
                   active,
                   setActive,
                   chartData,
                   annualFilter,
                   selectedVol,
-                  updateSelectedChartData
+                  updateSelectedChartData,
+                  chart
                 )
               }
-              active={active.includes(chartVariables[5].key)}
+              active={active.includes(keys[3])}
             >
-              {chartVariables[5].title}
+              {chartData.monthly[chart][keys[3]].label}
             </ListGroupItem>
             <MyTooltip
-              id={5}
+              id={keys[3]}
               tooltipOpen={tooltipOpen}
               setTooltipOpen={setTooltipOpen}
             >
-              {chartVariables[5].description}
+              {chartData.monthly[chart][keys[3]].description}
+            </MyTooltip>
+          </ListGroup>
+        </Col>
+        <Col md={4}>
+          <ListGroup style={{ lineHeight: '1.0rem' }}>
+            <ListGroupItem
+              id={keys[4]}
+              tag="button"
+              action
+              onClick={() =>
+                updateActive(
+                  keys[4],
+                  active,
+                  setActive,
+                  chartData,
+                  annualFilter,
+                  selectedVol,
+                  updateSelectedChartData,
+                  chart
+                )
+              }
+              active={active.includes(keys[4])}
+            >
+              {chartData.monthly[chart][keys[4]].label}
+            </ListGroupItem>
+            <MyTooltip
+              id={keys[4]}
+              tooltipOpen={tooltipOpen}
+              setTooltipOpen={setTooltipOpen}
+            >
+              {chartData.monthly[chart][keys[4]].description}
+            </MyTooltip>
+            <ListGroupItem
+              id={keys[5]}
+              tag="button"
+              action
+              onClick={() =>
+                updateActive(
+                  keys[5],
+                  active,
+                  setActive,
+                  chartData,
+                  annualFilter,
+                  selectedVol,
+                  updateSelectedChartData,
+                  chart
+                )
+              }
+              active={active.includes(keys[5])}
+            >
+              {chartData.monthly[chart][keys[5]].label}
+            </ListGroupItem>
+            <MyTooltip
+              id={keys[5]}
+              tooltipOpen={tooltipOpen}
+              setTooltipOpen={setTooltipOpen}
+            >
+              {chartData.monthly[chart][keys[5]].description}
             </MyTooltip>
           </ListGroup>
         </Col>

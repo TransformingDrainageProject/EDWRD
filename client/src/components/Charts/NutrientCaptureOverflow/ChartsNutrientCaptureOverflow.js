@@ -7,7 +7,6 @@ import MonthlyChart from '../MonthlyChart';
 import MonthlyOptions from '../MonthlyOptions';
 import VariableButtons from './VariableButtons';
 
-import chartVariables from './variables';
 import updateChartData from '../utils/updateChartData';
 import getYearInfo from '../utils/getYearInfo';
 
@@ -25,11 +24,22 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
   const [selectedVol, setSelectedVol] = useState(2);
 
   useEffect(() => {
-    const data = updateChartData(chartData, active, annualFilter, selectedVol);
+    const data = updateChartData(
+      'nutrientCaptureOverflow',
+      chartData,
+      active,
+      annualFilter,
+      selectedVol
+    );
     updateSelectedChartData(data);
   }, [active, selectedVol]);
 
-  const yearInfo = getYearInfo(chartData, active, selectedVol);
+  const yearInfo = getYearInfo(
+    chartData,
+    'nutrientCaptureOverflow',
+    active,
+    selectedVol
+  );
   const uniqueYears = yearInfo.uniqueYears;
   const yearRange = yearInfo.yearRange;
 
@@ -44,6 +54,7 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
       <VariableButtons
         active={active}
         annualFilter={annualFilter}
+        chart="nutrientCaptureOverflow"
         chartData={chartData}
         selectedVol={selectedVol}
         setActive={setActive}
@@ -71,17 +82,15 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
               <MonthlyChart
                 active={active}
                 annualFilter={annualFilter}
+                chart="nutrientCaptureOverflow"
                 chartData={selectedChartData}
-                datasetNames={chartVariables}
-                color="green"
-                unitLabel={chartData.unit_type === 'us' ? 'lbs/ac' : 'kg/ha'}
-                rdep={chartData.rdep}
-                unit_type={chartData.unit_type}
+                datasetNames={chartData}
                 variableClasses={variableClasses}
               />
             </Col>
             <Col md={2}>
               <MonthlyOptions
+                chart="nutrientCaptureOverflow"
                 chartData={chartData}
                 active={active}
                 selectedVol={selectedVol}

@@ -2,6 +2,7 @@ import updateChartData from './updateChartData';
 
 function updateSelectedYear(
   year,
+  chart,
   chartData,
   active,
   selectedVol,
@@ -9,7 +10,7 @@ function updateSelectedYear(
   updateSelectedChartData
 ) {
   setAnnualFilter(year);
-  const data = updateChartData(chartData, active, year, selectedVol);
+  const data = updateChartData(chart, chartData, active, year, selectedVol);
   updateSelectedChartData(data);
 }
 

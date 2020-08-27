@@ -2,6 +2,7 @@ import updateChartData from './updateChartData';
 
 function updateSelectedVol(
   vol,
+  chart,
   chartData,
   active,
   annualFilter,
@@ -9,7 +10,7 @@ function updateSelectedVol(
   updateSelectedChartData
 ) {
   setSelectedVol(vol);
-  const data = updateChartData(chartData, active, annualFilter, vol);
+  const data = updateChartData(chart, chartData, active, annualFilter, vol);
   updateSelectedChartData(data);
 }
 

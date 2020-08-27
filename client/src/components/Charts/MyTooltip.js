@@ -14,7 +14,7 @@ const MyTooltip = ({ children, id, setTooltipOpen, tooltipOpen }) => (
     fade={false}
     isOpen={tooltipOpen[id]}
     toggle={() => toggle(id, setTooltipOpen, tooltipOpen)}
-    target={`variable${id}`}
+    target={id}
   >
     {children}
   </Tooltip>

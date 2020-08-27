@@ -5,6 +5,7 @@ import updateSelectedVol from './utils/updateSelectedVol';
 import updateSelectedYear from './utils/updateSelectedYear';
 
 const MonthlyOptions = ({
+  chart,
   chartData,
   active,
   selectedVol,
@@ -27,6 +28,7 @@ const MonthlyOptions = ({
             onChange={(e) =>
               updateSelectedYear(
                 e.target.value,
+                chart,
                 chartData,
                 active,
                 selectedVol,
@@ -58,6 +60,7 @@ const MonthlyOptions = ({
             onChange={(e) =>
               updateSelectedVol(
                 e.target.value,
+                chart,
                 chartData,
                 active,
                 annualFilter,

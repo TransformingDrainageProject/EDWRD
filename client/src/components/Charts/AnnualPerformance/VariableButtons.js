@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Col, ListGroup, ListGroupItem, Row, Tooltip } from 'reactstrap';
+import { Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 
 import MyTooltip from '../MyTooltip';
 
-import chartVariables from './variables';
+const VariableButtons = ({ active, setActive, chartVariables }) => {
+  const keys = Object.keys(chartVariables);
 
-const VariableButtons = ({ active, setActive }) => {
   const [tooltipOpen, setTooltipOpen] = useState(
-    new Array(chartVariables.length).fill(false)
+    new Array(keys.length).fill(false)
   );
 
   return (
@@ -16,61 +16,61 @@ const VariableButtons = ({ active, setActive }) => {
         <Col md={4}>
           <ListGroup>
             <ListGroupItem
-              id="variable0"
+              id={keys[0]}
               tag="button"
               action
-              onClick={() => setActive(0)}
-              active={active === 0}
+              onClick={() => setActive(keys[0])}
+              active={active === keys[0]}
             >
-              {chartVariables[0].title}
+              {chartVariables[keys[0]].label}
             </ListGroupItem>
           </ListGroup>
           <MyTooltip
-            id={0}
+            id={keys[0]}
             tooltipOpen={tooltipOpen}
             setTooltipOpen={setTooltipOpen}
           >
-            {chartVariables[0].description}
+            {chartVariables[keys[0]].description}
           </MyTooltip>
         </Col>
         <Col md={4}>
           <ListGroup>
             <ListGroupItem
-              id="variable1"
+              id={keys[1]}
               tag="button"
               action
-              onClick={() => setActive(1)}
-              active={active === 1}
+              onClick={() => setActive(keys[1])}
+              active={active === keys[1]}
             >
-              {chartVariables[1].title}
+              {chartVariables[keys[1]].label}
             </ListGroupItem>
           </ListGroup>
           <MyTooltip
-            id={1}
+            id={keys[1]}
             tooltipOpen={tooltipOpen}
             setTooltipOpen={setTooltipOpen}
           >
-            {chartVariables[1].description}
+            {chartVariables[keys[1]].description}
           </MyTooltip>
         </Col>
         <Col md={4}>
           <ListGroup>
             <ListGroupItem
-              id="variable2"
+              id={keys[2]}
               tag="button"
               action
-              onClick={() => setActive(2)}
-              active={active === 2}
+              onClick={() => setActive(keys[2])}
+              active={active === keys[2]}
             >
-              {chartVariables[2].title}
+              {chartVariables[keys[2]].label}
             </ListGroupItem>
           </ListGroup>
           <MyTooltip
-            id={2}
+            id={keys[2]}
             tooltipOpen={tooltipOpen}
             setTooltipOpen={setTooltipOpen}
           >
-            {chartVariables[2].description}
+            {chartVariables[keys[2]].description}
           </MyTooltip>
         </Col>
       </Row>
@@ -78,61 +78,61 @@ const VariableButtons = ({ active, setActive }) => {
         <Col md={4}>
           <ListGroup>
             <ListGroupItem
-              id="variable3"
+              id={keys[3]}
               tag="button"
               action
-              onClick={() => setActive(3)}
-              active={active === 3}
+              onClick={() => setActive(keys[3])}
+              active={active === keys[3]}
             >
-              {chartVariables[3].title}
+              {chartVariables[keys[3]].label}
             </ListGroupItem>
           </ListGroup>
           <MyTooltip
-            id={3}
+            id={keys[3]}
             tooltipOpen={tooltipOpen}
             setTooltipOpen={setTooltipOpen}
           >
-            {chartVariables[3].description}
+            {chartVariables[keys[3]].description}
           </MyTooltip>
         </Col>
         <Col md={4}>
           <ListGroup>
             <ListGroupItem
-              id="variable4"
+              id={keys[4]}
               tag="button"
               action
-              onClick={() => setActive(4)}
-              active={active === 4}
+              onClick={() => setActive(keys[4])}
+              active={active === keys[4]}
             >
-              {chartVariables[4].title}
+              {chartVariables[keys[4]].label}
             </ListGroupItem>
           </ListGroup>
           <MyTooltip
-            id={4}
+            id={keys[4]}
             tooltipOpen={tooltipOpen}
             setTooltipOpen={setTooltipOpen}
           >
-            {chartVariables[4].description}
+            {chartVariables[keys[4]].description}
           </MyTooltip>
         </Col>
         <Col md={4}>
           <ListGroup>
             <ListGroupItem
-              id="variable5"
+              id={keys[5]}
               tag="button"
               action
-              onClick={() => setActive(5)}
-              active={active === 5}
+              onClick={() => setActive(keys[5])}
+              active={active === keys[5]}
             >
-              {chartVariables[5].title}
+              {chartVariables[keys[5]].label}
             </ListGroupItem>
           </ListGroup>
           <MyTooltip
-            id={5}
+            id={keys[5]}
             tooltipOpen={tooltipOpen}
             setTooltipOpen={setTooltipOpen}
           >
-            {chartVariables[5].description}
+            {chartVariables[keys[5]].description}
           </MyTooltip>
         </Col>
       </Row>
