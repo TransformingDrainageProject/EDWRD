@@ -7,7 +7,6 @@ import MonthlyChart from '../MonthlyChart';
 import MonthlyOptions from '../MonthlyOptions';
 import VariableButtons from './VariableButtons';
 
-import chartVariables from './variables';
 import updateChartData from '../utils/updateChartData';
 import getYearInfo from '../utils/getYearInfo';
 
@@ -30,11 +29,22 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
   const [selectedVol, setSelectedVol] = useState(2);
 
   useEffect(() => {
-    const data = updateChartData(chartData, active, annualFilter, selectedVol);
+    const data = updateChartData(
+      'reservoirWaterBalance',
+      chartData,
+      active,
+      annualFilter,
+      selectedVol
+    );
     updateSelectedChartData(data);
   }, [active, selectedVol]);
 
-  const yearInfo = getYearInfo(chartData, active, selectedVol);
+  const yearInfo = getYearInfo(
+    chartData,
+    'reservoirWaterBalance',
+    active,
+    selectedVol
+  );
   const uniqueYears = yearInfo.uniqueYears;
   const yearRange = yearInfo.yearRange;
 
@@ -49,6 +59,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
       <VariableButtons
         active={active}
         annualFilter={annualFilter}
+        chart="reservoirWaterBalance"
         chartData={chartData}
         selectedVol={selectedVol}
         setActive={setActive}
@@ -76,17 +87,15 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
               <MonthlyChart
                 active={active}
                 annualFilter={annualFilter}
+                chart="reservoirWaterBalance"
                 chartData={selectedChartData}
-                datasetNames={chartVariables}
-                color="green"
-                unitLabel={chartData.unit_type === 'us' ? 'gal' : 'm3'}
-                rdep={chartData.rdep}
-                unitType={chartData.unit_type}
+                datasetNames={chartData}
                 variableClasses={variableClasses}
               />
             </Col>
             <Col md={2}>
               <MonthlyOptions
+                chart="reservoirWaterBalance"
                 chartData={chartData}
                 active={active}
                 selectedVol={selectedVol}

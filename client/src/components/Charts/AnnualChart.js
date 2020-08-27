@@ -12,6 +12,8 @@ import {
 
 import numberWithCommas from './utils/numberWithCommas';
 
+const color = 'green';
+
 const colorSchemes = {
   blue: {
     areaFill: '#acc1d7',
@@ -28,14 +30,11 @@ const colorSchemes = {
 };
 
 const AnnualChart = ({
+  annualFilter,
   avgLineOnly,
   chartData,
-  color,
-  annualFilter,
-  unitLabel,
   rdep,
-  rarea,
-  unit_type,
+  unitType,
 }) => (
   <VictoryChart
     theme={VictoryTheme.material}
@@ -58,7 +57,7 @@ const AnnualChart = ({
         tickLabels: { fontSize: 6 },
       }}
       label={
-        unit_type === 'us'
+        unitType === 'us'
           ? `Reservoir Area (ac), depth = ${rdep.toFixed(1)}ft`
           : `Reservoir Area (ha), depth = ${rdep.toFixed(1)}m`
       }
@@ -71,13 +70,15 @@ const AnnualChart = ({
             data: { stroke: colorSchemes[color].lineStroke },
             parent: { border: '1px solid #ccc' },
           }}
-          data={chartData.average}
+          data={chartData.values.average}
           interpolation="monotoneX"
         />
         <VictoryScatter
           style={{ data: { fill: colorSchemes[color].lineStroke } }}
-          data={chartData.average}
-          labels={({ datum }) => numberWithCommas(datum.y)}
+          data={chartData.values.average}
+          labels={({ datum }) =>
+            numberWithCommas(datum.y.toFixed(chartData.precision))
+          }
           labelComponent={
             <VictoryTooltip
               flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
@@ -94,7 +95,7 @@ const AnnualChart = ({
               },
             }}
             symbol={'minus'}
-            data={chartData.yearly}
+            data={chartData.values.yearly}
             size={2}
           />
         ) : null}
@@ -102,10 +103,12 @@ const AnnualChart = ({
     ) : (
       <VictoryBar
         style={{ data: { fill: colorSchemes[color].areaFill } }}
-        data={chartData.yearly.filter(
+        data={chartData.values.yearly.filter(
           (data) => data.year === parseInt(annualFilter)
         )}
-        labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
+        labels={({ datum }) =>
+          numberWithCommas(datum.y.toFixed(chartData.precision))
+        }
         labelComponent={
           <VictoryTooltip
             flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}

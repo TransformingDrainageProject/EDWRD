@@ -1,11 +1,11 @@
-function getYearInfo(chartData, activeVariables, selectedVol) {
+function getYearInfo(chartData, chart, activeVariables, selectedVol) {
   let uniqueYears = [];
   if (activeVariables.length > 0 && selectedVol) {
     uniqueYears = [
       ...new Set(
-        chartData['monthly'][activeVariables[0]][selectedVol].yearly.map(
-          (record) => record.year
-        )
+        chartData['monthly'][chart][activeVariables[0]].values[
+          selectedVol
+        ].yearly.map((record) => record.year)
       ),
     ];
   }

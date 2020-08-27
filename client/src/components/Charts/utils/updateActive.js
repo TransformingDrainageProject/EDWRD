@@ -7,7 +7,8 @@ function updateActive(
   chartData,
   annualFilter,
   selectedVol,
-  updateSelectedChartData
+  updateSelectedChartData,
+  chart
 ) {
   let newActiveVariables = active.slice();
   if (active.includes(index)) {
@@ -16,7 +17,9 @@ function updateActive(
     newActiveVariables.push(index);
   }
   setActive(newActiveVariables);
+
   const data = updateChartData(
+    chart,
     chartData,
     newActiveVariables,
     annualFilter,

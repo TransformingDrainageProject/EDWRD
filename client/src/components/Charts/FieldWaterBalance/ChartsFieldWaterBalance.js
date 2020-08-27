@@ -4,12 +4,11 @@ import { Col, Row } from 'reactstrap';
 import ChartDescription from '../ChartDescription';
 import DownloadDataButton from '../DownloadDataButton';
 import MonthlyChart from '../MonthlyChart';
+import MonthlyOptions from '../MonthlyOptions';
 import VariableButtons from './VariableButtons';
 
-import chartVariables from './variables';
 import updateChartData from '../utils/updateChartData';
 import getYearInfo from '../utils/getYearInfo';
-import MonthlyOptions from '../MonthlyOptions';
 
 // category keys for different variable subsets (inflow, outflow, other)
 const variableClasses = {
@@ -33,11 +32,22 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
   const [selectedVol, setSelectedVol] = useState(2);
 
   useEffect(() => {
-    const data = updateChartData(chartData, active, annualFilter, selectedVol);
+    const data = updateChartData(
+      'fieldWaterBalance',
+      chartData,
+      active,
+      annualFilter,
+      selectedVol
+    );
     updateSelectedChartData(data);
   }, [active, selectedVol]);
 
-  const yearInfo = getYearInfo(chartData, active, selectedVol);
+  const yearInfo = getYearInfo(
+    chartData,
+    'fieldWaterBalance',
+    active,
+    selectedVol
+  );
   const uniqueYears = yearInfo.uniqueYears;
   const yearRange = yearInfo.yearRange;
 
@@ -52,6 +62,7 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
       <VariableButtons
         active={active}
         annualFilter={annualFilter}
+        chart="fieldWaterBalance"
         chartData={chartData}
         selectedVol={selectedVol}
         setActive={setActive}
@@ -79,17 +90,15 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
               <MonthlyChart
                 active={active}
                 annualFilter={annualFilter}
+                chart="fieldWaterBalance"
                 chartData={selectedChartData}
-                datasetNames={chartVariables}
-                color="green"
-                unitLabel={chartData.unit_type === 'us' ? 'in' : 'mm'}
-                rdep={chartData.rdep}
-                unit={chartData.unit_type}
+                datasetNames={chartData}
                 variableClasses={variableClasses}
               />
             </Col>
             <Col md={2}>
               <MonthlyOptions
+                chart="fieldWaterBalance"
                 chartData={chartData}
                 active={active}
                 selectedVol={selectedVol}

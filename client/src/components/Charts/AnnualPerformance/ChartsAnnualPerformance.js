@@ -5,25 +5,27 @@ import AnnualChart from '../AnnualChart';
 import ChartDescription from '../ChartDescription';
 import DownloadDataButton from '../DownloadDataButton';
 
-import chartVariables from './variables';
 import VariableButtons from './VariableButtons';
 
 const ChartsAnnualPerformance = ({ chartData }) => {
-  const [activeChart, setActiveChart] = useState(0);
+  const [activeChart, setActiveChart] = useState('');
   const [annualFilter, setAnnualFilter] = useState('all');
   const [avgLineOnly, toggleAvgLineOnly] = useState(false);
 
-  const selectedChartData =
-    chartData['annual'][chartVariables[activeChart].key];
+  let selectedChartData, uniqueYears, yearRange;
 
-  const uniqueYears = [
-    ...new Set(selectedChartData.yearly.map((record) => record.year)),
-  ];
+  if (activeChart) {
+    selectedChartData = chartData.annual[activeChart];
 
-  const yearRange =
-    uniqueYears.length > 1
-      ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
-      : ` (${uniqueYears[0]})`;
+    uniqueYears = [
+      ...new Set(selectedChartData.values.yearly.map((record) => record.year)),
+    ];
+
+    yearRange =
+      uniqueYears.length > 1
+        ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
+        : ` (${uniqueYears[0]})`;
+  }
 
   function yearOnChange(event) {
     const year = event.target.value;
@@ -38,60 +40,65 @@ const ChartsAnnualPerformance = ({ chartData }) => {
           metric across multiple reservoir sizes.
         </Col>
       </Row>
-      <VariableButtons active={activeChart} setActive={setActiveChart} />
-      <Row className="text-center">
-        <Col>
-          <h1>
-            {chartVariables[activeChart].title}
-            {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
-          </h1>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={10}>
-          <AnnualChart
-            chartData={selectedChartData}
-            color="green"
-            avgLineOnly={avgLineOnly}
-            unitLabel={chartVariables[activeChart].unit}
-            annualFilter={annualFilter}
-            rdep={chartData.rdep}
-            rarea={chartData.rarea}
-            unit_type={chartData.unit_type}
-          />
-        </Col>
-        <Col md={2}>
-          <Row className="mb-1">
+      <VariableButtons
+        active={activeChart}
+        setActive={setActiveChart}
+        chartVariables={chartData.annual}
+      />
+      {activeChart ? (
+        <>
+          <Row className="text-center">
             <Col>
-              <Label check for="avgLineOnly" style={{ marginLeft: 20 }}>
-                <Input
-                  type="checkbox"
-                  name="avgLineOnly"
-                  checked={avgLineOnly}
-                  onChange={() => toggleAvgLineOnly(!avgLineOnly)}
-                />
-                View average line only
-              </Label>
+              <h1>
+                {selectedChartData.label}
+                {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
+              </h1>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Input
-                type="select"
-                name="displaySpecifcYear"
-                onChange={yearOnChange}
-              >
-                <option value="all">View all years</option>
-                {uniqueYears.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </Input>
+          <Row className="mb-3">
+            <Col md={10}>
+              <AnnualChart
+                annualFilter={annualFilter}
+                avgLineOnly={avgLineOnly}
+                chartData={selectedChartData}
+                rdep={chartData.rdep}
+                unitType={chartData.unitType}
+              />
+            </Col>
+            <Col md={2}>
+              <Row className="mb-1">
+                <Col>
+                  <Label check for="avgLineOnly" style={{ marginLeft: 20 }}>
+                    <Input
+                      type="checkbox"
+                      name="avgLineOnly"
+                      checked={avgLineOnly}
+                      onChange={() => toggleAvgLineOnly(!avgLineOnly)}
+                    />
+                    View average line only
+                  </Label>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Input
+                    type="select"
+                    name="displaySpecifcYear"
+                    onChange={yearOnChange}
+                  >
+                    <option value="all">View all years</option>
+                    {uniqueYears.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </Input>
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
+        </>
+      ) : null}
       <Row>
         <Col>
           <ChartDescription

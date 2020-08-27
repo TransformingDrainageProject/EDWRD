@@ -1,4 +1,5 @@
 function updateChartData(
+  chart,
   chartData,
   activeVariables,
   selectedYear,
@@ -8,13 +9,21 @@ function updateChartData(
 
   if (selectedYear === 'all') {
     activeVariables.forEach((key) => {
-      data[key] = chartData['monthly'][key][selectedVol].average;
+      data[key] = {
+        values: chartData['monthly'][chart][key].values[selectedVol].average,
+        unit: chartData['monthly'][chart][key].unit,
+        label: chartData['monthly'][chart][key].label,
+      };
     });
   } else {
     activeVariables.forEach((key) => {
-      data[key] = chartData['monthly'][key][selectedVol].yearly.filter(
-        (dataset) => dataset.year.toString() === selectedYear
-      );
+      data[key] = {
+        values: chartData['monthly'][chart][key].values[
+          selectedVol
+        ].yearly.filter((dataset) => dataset.year.toString() === selectedYear),
+        unit: chartData['monthly'][chart][key].unit,
+        label: chartData['monthly'][chart][key].label,
+      };
     });
   }
 

@@ -78,11 +78,11 @@ function prepDataForMonthlyStackedBars(data, variableClasses) {
 
   Object.keys(data).forEach((key) => {
     if (variableClasses.inflow.includes(key)) {
-      waterInStacks.push(data[key]);
+      waterInStacks.push(data[key].values);
     } else if (variableClasses.outflow.includes(key)) {
-      waterOutStacks.push(data[key]);
+      waterOutStacks.push(data[key].values);
     } else {
-      waterOtherLines.push(data[key]);
+      waterOtherLines.push(data[key].values);
       waterOtherKeys.push(key);
     }
   });
@@ -92,13 +92,10 @@ function prepDataForMonthlyStackedBars(data, variableClasses) {
 
 const MonthlyChart = ({
   active,
-  chartData,
-  color,
-  datasetNames,
   annualFilter,
-  unitLabel,
-  rdep,
-  unitType,
+  chart,
+  chartData,
+  datasetNames,
   variableClasses,
 }) => {
   const monthlyData = prepDataForMonthlyStackedBars(chartData, variableClasses);
@@ -139,7 +136,7 @@ const MonthlyChart = ({
             axisLabel: { padding: 40, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
-          label={unitLabel}
+          label={chartData[active[0]].unit}
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
             numberWithCommas(Math.ceil((t * maxima) / 10) * 10)
@@ -162,11 +159,11 @@ const MonthlyChart = ({
             axisLabel: { padding: 30, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
-          label={unitType === 'us' ? 'ft' : 'm'}
+          label={chartData['reservoirWaterDepth'].unit}
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
             numberWithCommas(
-              t * getMax(chartData['reservoirWaterDepth']).toFixed(0)
+              t * getMax(chartData['reservoirWaterDepth'].values).toFixed(0)
             )
           }
         />
@@ -180,7 +177,7 @@ const MonthlyChart = ({
                   data: { stroke: getVariableColor(key, variableClasses) },
                   parent: { border: '1px solid #ccc' },
                 }}
-                data={chartData[key]}
+                data={chartData[key].values}
                 y={(datum) => datum.y / maxima}
                 interpolation="monotoneX"
               />
@@ -188,7 +185,7 @@ const MonthlyChart = ({
                 style={{
                   data: { fill: getVariableColor(key, variableClasses) },
                 }}
-                data={chartData[key]}
+                data={chartData[key].values}
                 y={(datum) => datum.y / maxima}
                 labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
                 labelComponent={
@@ -300,8 +297,10 @@ const MonthlyChart = ({
             },
             parent: { border: '1px solid #ccc' },
           }}
-          data={chartData['reservoirWaterDepth']}
-          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
+          data={chartData['reservoirWaterDepth'].values}
+          y={(datum) =>
+            datum.y / getMax(chartData['reservoirWaterDepth'].values)
+          }
           interpolation="monotoneX"
         />
       ) : null}
@@ -312,8 +311,10 @@ const MonthlyChart = ({
               fill: getVariableColor('reservoirWaterDepth', variableClasses),
             },
           }}
-          data={chartData['reservoirWaterDepth']}
-          y={(datum) => datum.y / getMax(chartData['reservoirWaterDepth'])}
+          data={chartData['reservoirWaterDepth'].values}
+          y={(datum) =>
+            datum.y / getMax(chartData['reservoirWaterDepth'].values)
+          }
           labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
           labelComponent={
             <VictoryTooltip
@@ -346,9 +347,9 @@ const MonthlyChart = ({
         style={{ border: { stroke: 'black' }, labels: { fontSize: 6 } }}
         data={active.map((key, idx) => {
           const color = getVariableColor(key, variableClasses);
+
           return {
-            name: datasetNames.filter((dataset) => dataset.key === key)[0]
-              .title,
+            name: chartData[key].label,
             symbol: { type: 'minus', fill: color },
           };
         })}

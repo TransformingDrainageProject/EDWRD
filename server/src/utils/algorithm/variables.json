@@ -1,0 +1,284 @@
+{
+  "annual": [
+    {
+      "key": "appliedIrrigation",
+      "column": "Applied Irrigation Depth",
+      "label": "Applied Irrigation",
+      "description": "The annual amount of irrigation applied to the field.",
+      "unit": { "us": "in", "metric": "mm" },
+      "precision": 2
+    },
+    {
+      "key": "nitrateLoadReduction",
+      "column": "Captured Nitrate Load (Tile)",
+      "label": "Nitrate Load Reduction",
+      "description": "The annual amount of nitrate load that is captured and stored by the reservoir.",
+      "unit": { "us": "lb/ac", "metric": "kg/ha" },
+      "precision": 2
+    },
+    {
+      "key": "srpLoadReduction",
+      "column": "Captured SRP Load (Tile)",
+      "label": "SRP Load Reduction",
+      "description": "The annual amount of reactive phosphorus load that is captured and stored by the reservoir.",
+      "unit": { "us": "lb/ac", "metric": "kg/ha" },
+      "precision": 2
+    },
+    {
+      "key": "irrigationSupply",
+      "column": "Relative Irrigation Supply",
+      "label": "Annual Relative Irrigation Supply",
+      "description": "The fraction of water supplied for irrigation from a given reservoir size relative to the total amount of water that would have been used for irrigation if water supply was unlimited.",
+      "unit": { "us": "%", "metric": "%" },
+      "precision": 2
+    },
+    {
+      "key": "nitrateLoadReductionPerc",
+      "column": "Nitrate Load Reduction (%)",
+      "label": "Nitrate Load Reduction (%)",
+      "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
+      "unit": { "us": "%", "metric": "%" },
+      "precision": 2
+    },
+    {
+      "key": "srpLoadReductionPerc",
+      "column": "SRP Load Reduction (%)",
+      "label": "SRP Load Reduction (%)",
+      "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
+      "unit": { "us": "%", "metric": "%" },
+      "precision": 2
+    }
+  ],
+  "monthly": {
+    "fieldWaterBalance": [
+      {
+        "key": "precipitation",
+        "column": "Precipitation",
+        "label": "Precipitation",
+        "description": "The total monthly amount of precipitation falling on the field.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "irrigation",
+        "column": "Applied Irrigation Depth",
+        "label": "Irrigation",
+        "description": "The total monthly amount of irrigation applied to the field.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "upwardFlux",
+        "column": "Actual Upward Flux",
+        "label": "Upward Flux",
+        "description": "The total monthly amount of upward flux of water into the crop root zone from a shallow water table.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "cropTranspiration",
+        "column": "Actual Transpiration",
+        "label": "Crop Transpiration",
+        "description": "The total monthly amount of water that is lost from the field through crop transpiration.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "potentialCropTranspiration",
+        "column": "Potential Transpiration",
+        "label": "Potential Crop Transpiration",
+        "description": "The total potential monthly amount of water that is lost from the field through crop transpiration.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "evapotranspiration",
+        "column": "Actual Crop ET",
+        "label": "Evapotranspiration",
+        "description": "The total monthly amount of water lost from the field through crop transpiration and evaporation from the surface.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "potentialEvapotranspiration",
+        "column": "Potential Crop ET",
+        "label": "Potential Evapotranspiration",
+        "description": "The total potential monthly amount of water lost from the field through crop transpiration and evaporation from the surface.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "soilEvaporation",
+        "column": "Root Zone Soil Moisture",
+        "label": "Soil Evaporation",
+        "description": "The total monthly amount of water that is lost from the field through evaporation from the surface.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "runoff",
+        "column": "Runoff",
+        "label": "Runoff",
+        "description": "The total monthly amount of water that is lost from the field through surface runoff.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "tileDrainFlow",
+        "column": "Tile Drain Flow",
+        "label": "Tile Drain Flow",
+        "description": "The total monthly amount of water that is lost from the field through tile drain flow.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "readilyAvailableWater",
+        "column": "Readily Available Water",
+        "label": "Readily Available Water",
+        "description": "The average monthly amount of water in the soil profile that defines the point at which crop stress occurs. If soil moisture is less than this value, crop stress occurs due to too little available water in the soil profile.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 1
+      },
+      {
+        "key": "soilMoisture",
+        "column": "Root Zone Soil Moisture",
+        "label": "Soil Moisture",
+        "description": "The average monthly amount of available water in the soil profile.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 1
+      }
+    ],
+    "nutrientCaptureOverflow": [
+      {
+        "key": "overflowNitrateLoad",
+        "column": "Overflow Nitrate Load (Tile)",
+        "label": "Overflow Nitrate Load (Tile)",
+        "description": "The total monthly amount of nitrate load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
+        "precision": 2
+      },
+      {
+        "key": "capturedNitrateLoad",
+        "column": "Captured Nitrate Load (Tile)",
+        "label": "Captured Nitrate Load",
+        "description": "The total monthly amount of nitrate load that is captured and stored in the reservoir.",
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
+        "precision": 2
+      },
+      {
+        "key": "overflowSRPLoad",
+        "column": "Overflow SRP Load (Tile)",
+        "label": "Overflow SRP Load",
+        "description": "The total monthly amount of reactive phosphorus load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
+        "precision": 2
+      },
+      {
+        "key": "capturedSRPLoad",
+        "column": "Captured SRP Load (Tile)",
+        "label": "Captured SRP Load",
+        "description": "The total monthly amount of reactive phosphorus load that is captured and stored in the reservoir.",
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
+        "precision": 2
+      },
+      {
+        "key": "tileNitrateLoad",
+        "column": "Tile Drain Nitrate Load",
+        "label": "Tile Nitrate Load",
+        "description": "The total monthly amount of nitrate load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
+        "precision": 1
+      },
+      {
+        "key": "tileSRPLoad",
+        "column": "Tile Drain SRP Load",
+        "label": "Tile SRP Load",
+        "description": "The total monthly reactive phosphorus load in tile drain flow.",
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
+        "precision": 3
+      }
+    ],
+    "reservoirWaterBalance": [
+      {
+        "key": "reservoirPrecipitation",
+        "column": "Precipitation to Reservoir",
+        "label": "Reservoir Precipitation",
+        "description": "The total monthly amount of precipitation falling directly on the reservoir.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "reservoirDrainFlow",
+        "column": "Tile Drain Flow to Reservoir",
+        "label": "Reservoir Drain Flow",
+        "description": "The total monthly amount of tile drain flow flowing into the reservoir.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "reservoirRunoff",
+        "column": "Runoff to Reservoir",
+        "label": "Reservoir Runoff",
+        "description": "The total monthly amount of surface runoff flowing into the reservoir.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "irrigationWithdrawl",
+        "column": "Irrigation Withdrawal",
+        "label": "Irrigation Withdrawl",
+        "description": "The total monthly amount of water withdrawn from the reservoir for irrigation purposes.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "seepage",
+        "column": "Reservoir Seepage",
+        "label": "Seepage",
+        "description": "The total monthly amount of water lost from the reservoir through seepage.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "reservoirEvaporation",
+        "column": "Reservoir Evaporation",
+        "label": "Reservoir Evaporation",
+        "description": "The total monthly amount of water lost from the reservoir through evaporation from water surface.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "overflow",
+        "column": "Reservoir Overflow",
+        "label": "Overflow",
+        "description": "The total monthly amount of water that must overflow from the reservoir due to exceeding the maximum water storage capacity.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "capture",
+        "column": "Captured Tile Drain Flow",
+        "label": "Capture",
+        "description": "The total monthly amount of water that is captured and stored in the reservoir.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "reservoirStoredVolume",
+        "column": "Reservoir Water Volume",
+        "label": "Reservoir Stored Volume",
+        "description": "The average monthly amount of water stored in the reservoir.",
+        "unit": { "us": "gal", "metric": "m3" },
+        "precision": 3
+      },
+      {
+        "key": "reservoirWaterDepth",
+        "column": "Reservoir Water Depth",
+        "label": "Reservoir Water Depth",
+        "description": "The average monthly depth of water in the reservoir.",
+        "unit": { "us": "ft", "metric": "m" },
+        "precision": 3
+      }
+    ]
+  }
+}
