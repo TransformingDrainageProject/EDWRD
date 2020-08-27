@@ -82,9 +82,8 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
               <MonthlyChart
                 active={active}
                 annualFilter={annualFilter}
-                chart="nutrientCaptureOverflow"
                 chartData={selectedChartData}
-                datasetNames={chartData}
+                datasetNames={chartData['monthly']['nutrientCaptureOverflow']}
                 variableClasses={variableClasses}
               />
             </Col>

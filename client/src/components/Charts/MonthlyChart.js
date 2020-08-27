@@ -93,7 +93,6 @@ function prepDataForMonthlyStackedBars(data, variableClasses) {
 const MonthlyChart = ({
   active,
   annualFilter,
-  chart,
   chartData,
   datasetNames,
   variableClasses,
@@ -349,7 +348,7 @@ const MonthlyChart = ({
           const color = getVariableColor(key, variableClasses);
 
           return {
-            name: chartData[key].label,
+            name: datasetNames[key].label,
             symbol: { type: 'minus', fill: color },
           };
         })}
