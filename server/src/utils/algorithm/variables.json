@@ -29,7 +29,7 @@
       "column": "Relative Irrigation Supply",
       "label": "Annual Relative Irrigation Supply",
       "description": "The fraction of water supplied for irrigation from a given reservoir size relative to the total amount of water that would have been used for irrigation if water supply was unlimited.",
-      "unit": { "us": "%", "metric": "%" },
+      "unit": { "us": "index value", "metric": "index value" },
       "precision": 2
     },
     {
