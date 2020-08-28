@@ -108,6 +108,25 @@ const MonthlyChart = ({
     });
   }
 
+  let unitLabel = '';
+  if (active.length > 1 || !active.includes('reservoirWaterDepth')) {
+    if (active[0] !== 'reservoirWaterDepth') {
+      unitLabel =
+        chartData[active[0]].unit === 'gal'
+          ? `${chartData[active[0]].unit} per 1,000,000`
+          : chartData[active[0]].unit === 'm3'
+          ? `${chartData[active[0]].unit} per 1,000`
+          : chartData[active[0]].unit;
+    } else {
+      unitLabel =
+        chartData[active[1]].unit === 'gal'
+          ? `${chartData[active[1]].unit} per 1,000,000`
+          : chartData[active[1]].unit === 'm3'
+          ? `${chartData[active[1]].unit} per 1,000`
+          : chartData[active[1]].unit;
+    }
+  }
+
   return (
     <VictoryChart
       theme={VictoryTheme.material}
@@ -135,13 +154,7 @@ const MonthlyChart = ({
             axisLabel: { padding: 40, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
-          label={
-            chartData[active[0]].unit === 'gal'
-              ? `${chartData[active[0]].unit} per 1,000,000`
-              : chartData[active[0]].unit === 'm3'
-              ? `${chartData[active[0]].unit} per 1,000`
-              : chartData[active[0]].unit
-          }
+          label={unitLabel}
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
             numberWithCommas(
