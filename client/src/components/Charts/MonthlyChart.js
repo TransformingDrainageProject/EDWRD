@@ -135,10 +135,18 @@ const MonthlyChart = ({
             axisLabel: { padding: 40, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
-          label={chartData[active[0]].unit}
+          label={
+            chartData[active[0]].unit === 'gal'
+              ? `${chartData[active[0]].unit} per 1,000,000`
+              : chartData[active[0]].unit === 'm3'
+              ? `${chartData[active[0]].unit} per 1,000`
+              : chartData[active[0]].unit
+          }
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
-            numberWithCommas(Math.ceil((t * maxima) / 10) * 10)
+            numberWithCommas(
+              (t * maxima).toFixed(datasetNames[active[0]].precision)
+            )
           }
         />
       ) : null}
@@ -162,7 +170,10 @@ const MonthlyChart = ({
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
             numberWithCommas(
-              t * getMax(chartData['reservoirWaterDepth'].values).toFixed(0)
+              t *
+                getMax(chartData['reservoirWaterDepth'].values).toFixed(
+                  chartData['reservoirWaterDepth'].precision
+                )
             )
           }
         />
