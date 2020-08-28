@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, CardTitle } from 'reactstrap';
 
 import HelpPopover from '../Form/HelpPopover';
 
-const ChartDescription = ({ name, text, title }) => (
+const ChartDescription = ({ children, name, text, title }) => (
   <Card
     className="mb-3"
     body
@@ -22,6 +22,7 @@ const ChartDescription = ({ name, text, title }) => (
         name={name}
       />
       <CardText tag="div">{text}</CardText>
+      {children}
     </CardBody>
   </Card>
 );

@@ -122,10 +122,14 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                   right of the graph to view a specific year or reservoir
                   size. Click on the question mark to learn more about how
                   this water balance is calculated."
-          />
+          >
+            <DownloadDataButton
+              sessionID={chartData.sessionID}
+              type="monthly"
+            />
+          </ChartDescription>
         </Col>
       </Row>
-      <DownloadDataButton sessionID={chartData.sessionID} type="monthly" />
     </>
   );
 };

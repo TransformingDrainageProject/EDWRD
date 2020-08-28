@@ -109,10 +109,11 @@ const ChartsAnnualPerformance = ({ chartData }) => {
                   all years at this location. Use the buttons at the top right
                   of the graph to view a specific year. Click on the question
                   mark to learn more about how these metrics are estimated."
-          />
+          >
+            <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
+          </ChartDescription>
         </Col>
       </Row>
-      <DownloadDataButton sessionID={chartData.sessionID} type="annual" />
     </>
   );
 };
