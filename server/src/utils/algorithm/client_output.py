@@ -62,13 +62,16 @@ def convert_dataframe_to_annual_json(data, rarea, unit_type, variable):
     return chart_data
 
 
-def convert_dataframe_to_monthly_json(data, unit_type, variable):
+def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
     key = variable["key"]
     column_name = variable["column"]
     description = variable["description"]
     label = variable["label"]
     unit = variable["unit"][unit_type]
     precision = variable["precision"]
+
+    if key == "reservoirWaterDepth":
+        scale = 1
 
     chart_data = {
         "values": {
@@ -101,7 +104,7 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable):
         for month in range(0, len(monthly_means)):
             chart_data["values"][vol]["average"].append({
                 "x": calendar.month_abbr[month + 1],
-                "y": monthly_means[month] * conversion_factor
+                "y": (monthly_means[month] * conversion_factor) / scale
             })
 
         # annual records
@@ -113,7 +116,7 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable):
                                                            [column_name].index.get_level_values(0) == year]
 
             chart_data["values"][vol]["yearly"] += [{"x": calendar.month_abbr[month + 1],
-                                                     "y": val * conversion_factor, "year": year, "name": column_name} for month, val in enumerate(annual_monthly_values)]
+                                                     "y": (val * conversion_factor) / scale, "year": year, "name": column_name} for month, val in enumerate(annual_monthly_values)]
 
     return chart_data
 
@@ -141,10 +144,17 @@ def get_monthly_data(monthly_output, reservoir_area, unit_type):
 
     for category in monthly_data.keys():
         for variable in monthly_variables[category]:
+            scale = 1.0
+            if category == "reservoirWaterBalance":
+                if unit_type == "us":
+                    scale = 1000000.0
+                else:
+                    scale = 1000.0
             monthly_data[category][variable["key"]] = convert_dataframe_to_monthly_json(
                 monthly_output,
                 unit_type,
-                variable
+                variable,
+                scale
             )
 
     return monthly_data

@@ -90,9 +90,8 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
               <MonthlyChart
                 active={active}
                 annualFilter={annualFilter}
-                chart="fieldWaterBalance"
                 chartData={selectedChartData}
-                datasetNames={chartData}
+                datasetNames={chartData['monthly']['fieldWaterBalance']}
                 variableClasses={variableClasses}
               />
             </Col>
