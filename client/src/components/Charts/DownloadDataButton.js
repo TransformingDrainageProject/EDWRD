@@ -4,11 +4,10 @@ import { Button, Col, Row } from 'reactstrap';
 import downloadResults from './utils/download';
 
 const DownloadDataButton = ({ sessionID, type }) => (
-  <Row>
+  <Row className="mt-3">
     <Col>
       <Button
-        className="mb-3"
-        style={{ backgroundColor: '#007cb3', width: '250px' }}
+        style={{ backgroundColor: '#007cb3', width: '275px' }}
         onClick={() => downloadResults(sessionID, type)}
       >
         Download {type} results (.xlsx)
