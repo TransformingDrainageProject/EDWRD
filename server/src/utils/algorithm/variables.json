@@ -109,7 +109,7 @@
       },
       {
         "key": "soilEvaporation",
-        "column": "Root Zone Soil Moisture",
+        "column": "Soil Evaporation",
         "label": "Soil Evaporation",
         "description": "The total monthly amount of water that is lost from the field through evaporation from the surface.",
         "unit": { "us": "in", "metric": "mm" },
