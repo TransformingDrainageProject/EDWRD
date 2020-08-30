@@ -158,7 +158,7 @@ const MonthlyChart = ({
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
             numberWithCommas(
-              (t * maxima).toFixed(datasetNames[active[0]].precision)
+              Math.ceil((t * maxima).toFixed(datasetNames[active[0]].precision))
             )
           }
         />
