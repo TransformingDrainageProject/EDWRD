@@ -3,6 +3,7 @@ import {
   VictoryAxis,
   VictoryBar,
   VictoryChart,
+  VictoryLegend,
   VictoryLine,
   VictoryGroup,
   VictoryScatter,
@@ -40,7 +41,7 @@ const AnnualChart = ({
     theme={VictoryTheme.material}
     domainPadding={15}
     height={300}
-    padding={{ left: 50, bottom: 50, right: 15, top: 15 }}
+    padding={{ left: 50, bottom: 80, right: 15, top: 15 }}
     style={{ parent: { border: '1px solid #ccc' } }}
   >
     <VictoryAxis
@@ -116,6 +117,24 @@ const AnnualChart = ({
         }
       />
     )}
+    <VictoryLegend
+      x={50}
+      y={273}
+      orientation="horizontal"
+      itemsPerRow={3}
+      gutter={20}
+      style={{ border: { stroke: 'black' }, labels: { fontSize: 6 } }}
+      data={[
+        {
+          name: 'Annual value',
+          symbol: { type: 'minus', fill: '#636363', fillOpacity: 0.7 },
+        },
+        {
+          name: 'Average',
+          symbol: { fill: '#3faf46' },
+        },
+      ]}
+    />
   </VictoryChart>
 );
 

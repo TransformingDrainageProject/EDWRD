@@ -133,7 +133,7 @@ const MonthlyChart = ({
       domainPadding={15}
       height={300}
       padding={{
-        left: 53,
+        left: 50,
         bottom:
           active.length < 4
             ? 80
@@ -354,7 +354,7 @@ const MonthlyChart = ({
         />
       ) : null}
       <VictoryLegend
-        x={33}
+        x={50}
         y={
           active.length < 4
             ? 275
