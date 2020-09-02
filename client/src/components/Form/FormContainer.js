@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import * as yup from 'yup';
 
+import FileSummary from './FileSummary';
+
 // forms
 import FieldReservoirForm from './FieldReservoirForm';
 import CropManagementForm from './CropManagementForm';
@@ -152,6 +154,7 @@ const FormContainer = (props) => {
           setFieldTouched,
           setFieldValue,
           status,
+          values,
         }) => (
           <Form>
             {showModifyInputs ? (
@@ -195,6 +198,16 @@ const FormContainer = (props) => {
                 </Row>
               </>
             ) : null}
+            {(values.userInput === 'true' && values.userInputFile) ||
+            (values.userParam && values.userParamFile) ? (
+              <FileSummary
+                inputFile={
+                  values.userInput === 'true' ? values.userInputFile : null
+                }
+                paramFile={values.userParam ? values.userParamFile : null}
+              />
+            ) : null}
+
             <Row style={{ padding: '0 15px 0 15px' }}>
               <Col className="text-center">
                 <Button
