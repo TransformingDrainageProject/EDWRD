@@ -90,6 +90,16 @@ function prepDataForMonthlyStackedBars(data, variableClasses) {
   return [waterInStacks, waterOutStacks, waterOtherLines, waterOtherKeys];
 }
 
+function roundTick(max, value) {
+  if (max < 5) {
+    return value;
+  } else if (max < 10) {
+    return Math.round(value);
+  } else {
+    return Math.ceil(value);
+  }
+}
+
 const MonthlyChart = ({
   active,
   annualFilter,
@@ -158,7 +168,10 @@ const MonthlyChart = ({
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
             numberWithCommas(
-              Math.ceil((t * maxima).toFixed(datasetNames[active[0]].precision))
+              roundTick(
+                maxima,
+                (t * maxima).toFixed(datasetNames[active[0]].precision)
+              )
             )
           }
         />
