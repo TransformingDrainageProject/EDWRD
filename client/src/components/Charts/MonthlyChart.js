@@ -10,9 +10,8 @@ import {
   VictoryStack,
   VictoryTheme,
   VictoryTooltip,
+  VictoryVoronoiContainer,
 } from 'victory';
-
-import numberWithCommas from './utils/numberWithCommas';
 
 const colorScales = {
   blue: ['#bdd7e7', '#6baed6', '#2171b5'],
@@ -118,23 +117,13 @@ const MonthlyChart = ({
     });
   }
 
-  let unitLabel = '';
-  if (active.length > 1 || !active.includes('reservoirWaterDepth')) {
-    if (active[0] !== 'reservoirWaterDepth') {
-      unitLabel =
-        chartData[active[0]].unit === 'gal'
-          ? `${chartData[active[0]].unit} per 1,000,000`
-          : chartData[active[0]].unit === 'm3'
-          ? `${chartData[active[0]].unit} per 1,000`
-          : chartData[active[0]].unit;
-    } else {
-      unitLabel =
-        chartData[active[1]].unit === 'gal'
-          ? `${chartData[active[1]].unit} per 1,000,000`
-          : chartData[active[1]].unit === 'm3'
-          ? `${chartData[active[1]].unit} per 1,000`
-          : chartData[active[1]].unit;
-    }
+  let activeNotDepth = -1;
+  if (active.length > 0 && active[0] !== 'reservoirWaterDepth') {
+    activeNotDepth = 0;
+  } else if (active.length > 1 && active[0] !== 'reservoirWaterDepth') {
+    activeNotDepth = 0;
+  } else {
+    activeNotDepth = 1;
   }
 
   return (
@@ -156,6 +145,7 @@ const MonthlyChart = ({
         top: 15,
       }}
       style={{ parent: { border: '1px solid #ccc' } }}
+      containerComponent={<VictoryVoronoiContainer radius={1} />}
     >
       {active.length > 1 || !active.includes('reservoirWaterDepth') ? (
         <VictoryAxis
@@ -164,15 +154,10 @@ const MonthlyChart = ({
             axisLabel: { padding: 40, fontSize: 8 },
             tickLabels: { fontSize: 6 },
           }}
-          label={unitLabel}
+          label={chartData[active[activeNotDepth]].unit}
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
-            numberWithCommas(
-              roundTick(
-                maxima,
-                (t * maxima).toFixed(datasetNames[active[0]].precision)
-              )
-            )
+            (t * maxima).toFixed(datasetNames[active[activeNotDepth]].precision)
           }
         />
       ) : null}
@@ -195,11 +180,8 @@ const MonthlyChart = ({
           label={chartData['reservoirWaterDepth'].unit}
           tickValues={[0.25, 0.5, 0.75, 1]}
           tickFormat={(t) =>
-            numberWithCommas(
-              t *
-                getMax(chartData['reservoirWaterDepth'].values).toFixed(
-                  chartData['reservoirWaterDepth'].precision
-                )
+            (t * getMax(chartData['reservoirWaterDepth'].values)).toFixed(
+              datasetNames['reservoirWaterDepth'].precision
             )
           }
         />
@@ -223,7 +205,9 @@ const MonthlyChart = ({
                 }}
                 data={chartData[key].values}
                 y={(datum) => datum.y / maxima}
-                labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
+                labels={({ datum }) =>
+                  datum.y.toFixed(datasetNames[key].precision)
+                }
                 labelComponent={
                   <VictoryTooltip
                     style={{ fontSize: 6 }}
@@ -237,7 +221,7 @@ const MonthlyChart = ({
             </VictoryGroup>
           ) : null
         )
-      ) : monthlyData[0].length > 0 || monthlyData[1].length > 1 ? (
+      ) : monthlyData[0].length > 0 ? ( // inflow stacked bar
         <VictoryGroup offset={10} categories={months}>
           {monthlyData[0].length > 0 ? (
             <VictoryStack colorScale={colorScales.blue}>
@@ -248,7 +232,7 @@ const MonthlyChart = ({
                   data={data}
                   y={(datum) => datum.y / maxima}
                   labels={({ datum }) =>
-                    `${datum.name}: ${numberWithCommas(datum.y.toFixed(2))}`
+                    `${datum.name}: ${datum.y.toFixed(datum.precision)}`
                   }
                   labelComponent={
                     <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
@@ -257,7 +241,7 @@ const MonthlyChart = ({
               ))}
             </VictoryStack>
           ) : null}
-          {monthlyData[1].length > 0 ? (
+          {monthlyData[1].length > 0 ? ( // outflow stacked bar
             <VictoryStack colorScale={colorScales.yellow}>
               {monthlyData[1].map((data, index) => (
                 <VictoryBar
@@ -266,7 +250,7 @@ const MonthlyChart = ({
                   data={data}
                   y={(datum) => datum.y / maxima}
                   labels={({ datum }) =>
-                    `${datum.name}: ${numberWithCommas(datum.y.toFixed(2))}`
+                    `${datum.name}: ${datum.y.toFixed(datum.precision)}`
                   }
                   labelComponent={
                     <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
@@ -277,53 +261,53 @@ const MonthlyChart = ({
           ) : null}
         </VictoryGroup>
       ) : null}
-      {annualFilter !== 'all' &&
-      monthlyData[2].length > 0 &&
-      monthlyData[2].length !== 1 &&
-      active.includes('reservoirWaterDepth')
-        ? monthlyData[2].map((data, index) => (
-            <VictoryGroup key={`vg-other-${index}`} categories={months}>
-              <VictoryLine
-                style={{
-                  data: {
-                    stroke: getVariableColor(
-                      monthlyData[3][index],
-                      variableClasses
-                    ),
-                  },
-                  parent: { border: '1px solid #ccc' },
-                }}
-                data={data}
-                y={(datum) => datum.y / maxima}
-                interpolation="monotoneX"
-              />
-              <VictoryScatter
-                style={{
-                  data: {
-                    fill: getVariableColor(
-                      monthlyData[3][index],
-                      variableClasses
-                    ),
-                  },
-                }}
-                data={data}
-                y={(datum) => datum.y / maxima}
-                labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
-                labelComponent={
-                  <VictoryTooltip
-                    style={{ fontSize: 6 }}
-                    flyoutStyle={{
+      {annualFilter !== 'all' && monthlyData[2].length > 0
+        ? monthlyData[2].map((data, index) =>
+            data[0].name !== 'Reservoir Water Depth' ? (
+              <VictoryGroup key={`vg-other-${index}`} categories={months}>
+                <VictoryLine
+                  style={{
+                    data: {
                       stroke: getVariableColor(
                         monthlyData[3][index],
                         variableClasses
                       ),
-                    }}
-                  />
-                }
-                size={2}
-              />
-            </VictoryGroup>
-          ))
+                    },
+                    parent: { border: '1px solid #ccc' },
+                  }}
+                  data={data}
+                  y={(datum) => datum.y / maxima}
+                  interpolation="monotoneX"
+                />
+                <VictoryScatter
+                  style={{
+                    data: {
+                      fill: getVariableColor(
+                        monthlyData[3][index],
+                        variableClasses
+                      ),
+                    },
+                  }}
+                  data={data}
+                  y={(datum) => datum.y / maxima}
+                  // labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
+                  labels={({ datum }) => datum.y.toFixed(datum.precision)}
+                  labelComponent={
+                    <VictoryTooltip
+                      style={{ fontSize: 6 }}
+                      flyoutStyle={{
+                        stroke: getVariableColor(
+                          monthlyData[3][index],
+                          variableClasses
+                        ),
+                      }}
+                    />
+                  }
+                  size={2}
+                />
+              </VictoryGroup>
+            ) : null
+          )
         : null}
       {active.includes('reservoirWaterDepth') ? (
         <VictoryLine
@@ -351,7 +335,7 @@ const MonthlyChart = ({
           y={(datum) =>
             datum.y / getMax(chartData['reservoirWaterDepth'].values)
           }
-          labels={({ datum }) => numberWithCommas(datum.y.toFixed(2))}
+          labels={({ datum }) => datum.y.toFixed(datum.precision)}
           labelComponent={
             <VictoryTooltip
               style={{ fontSize: 6 }}

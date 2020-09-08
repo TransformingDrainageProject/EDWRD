@@ -66,6 +66,19 @@ const AnnualChart = ({
     />
     {annualFilter === 'all' ? (
       <VictoryGroup>
+        {!avgLineOnly ? (
+          <VictoryScatter
+            style={{
+              data: {
+                fill: '#636363',
+                fillOpacity: 0.7,
+              },
+            }}
+            symbol={'minus'}
+            data={chartData.values.yearly}
+            size={2}
+          />
+        ) : null}
         <VictoryLine
           style={{
             data: { stroke: colorSchemes[color].lineStroke },
@@ -87,19 +100,6 @@ const AnnualChart = ({
           }
           size={3}
         />
-        {!avgLineOnly ? (
-          <VictoryScatter
-            style={{
-              data: {
-                fill: '#636363',
-                fillOpacity: 0.7,
-              },
-            }}
-            symbol={'minus'}
-            data={chartData.values.yearly}
-            size={2}
-          />
-        ) : null}
       </VictoryGroup>
     ) : (
       <VictoryBar
