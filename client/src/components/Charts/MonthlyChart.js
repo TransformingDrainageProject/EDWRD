@@ -96,7 +96,7 @@ function roundTick(max, value) {
   } else if (max < 10) {
     return Math.round(value);
   } else {
-    return Math.ceil(value);
+    return Math.ceil(value / 5) * 5;
   }
 }
 
