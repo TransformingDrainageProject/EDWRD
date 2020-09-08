@@ -1,5 +1,5 @@
 export const userInitialValues = {
   userInputFile: '',
   userInput: 'false',
-  userSelectedStation: -1,
+  userSelectedStation: 4,
 };

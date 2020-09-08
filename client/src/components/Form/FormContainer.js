@@ -243,9 +243,9 @@ const FormContainer = (props) => {
                       if (!showModifyInputs) {
                         setFieldValue('quickAnalysis', 'false');
                         setFieldTouched('quickAnalysis', true);
-                        setFieldValue('userInput', 'true');
-                        setFieldTouched('userInput', true);
-                        setFieldValue('userSelectedStation', 2);
+                        setFieldValue('userInput', 'false');
+                        setFieldTouched('userInput', false);
+                        setFieldValue('userSelectedStation', 4);
                         setFieldTouched('userSelectedStation', true);
                       } else {
                         setFieldValue('quickAnalysis', 'true');

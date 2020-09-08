@@ -9,8 +9,8 @@ import Map from './Map';
 function SelectStationLocationMap(props) {
   const [displayMap, toggleDisplayMap] = useState(true);
   const [selectedSite, setSelectedSite] = useState({
-    id: 2,
-    name: 'Purdue Water Quality Field Station',
+    id: 4,
+    name: 'Davis Purdue Agricultural Center',
   });
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
