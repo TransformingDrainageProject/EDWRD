@@ -12,7 +12,6 @@ const YearlyTable = ({ data }) => {
       uniqueYears.push(data[i].year);
     }
   }
-
   return (
     <Table responsive striped>
       <thead>
@@ -30,7 +29,7 @@ const YearlyTable = ({ data }) => {
             {data
               .filter((record) => record.x === area)
               .map((record, index) => (
-                <td key={`td-${index}`}>{record.y}</td>
+                <td key={`td-${index}`}>{record.y.toFixed(2)}</td>
               ))}
           </tr>
         ))}
