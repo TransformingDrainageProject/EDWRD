@@ -52,6 +52,11 @@ const AdvancedSettings = (props) => {
       >
         <strong>Open Advanced Settings</strong>
       </Button>
+      {values.userParam && values.userParamFile ? (
+        <div className="mt-3">
+          <strong>Parameter file:</strong> {values.userParamFile}
+        </div>
+      ) : null}
       <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Advanced Settings</ModalHeader>
         <ModalBody>
