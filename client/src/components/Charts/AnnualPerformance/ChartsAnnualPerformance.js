@@ -107,7 +107,9 @@ const ChartsAnnualPerformance = ({ chartData }) => {
             className="mb-3"
             style={{ backgroundColor: '#007cb3' }}
             onClick={() => toggleShowAnnualTable(!showAnnualTable)}
-          >{`${showAnnualTable ? 'Hide' : 'View'} Annual Values`}</Button>
+          >{`${
+            showAnnualTable ? 'Hide' : 'View'
+          } Table of Annual Values`}</Button>
         ) : null}
         {activeChart && showAnnualTable ? (
           <YearlyTable data={selectedChartData.values.yearly} />
