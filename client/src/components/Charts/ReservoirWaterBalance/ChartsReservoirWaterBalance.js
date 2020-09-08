@@ -27,7 +27,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
   const [annualFilter, setAnnualFilter] = useState('all');
   const [selectedChartData, updateSelectedChartData] = useState(null);
   const [selectedVol, setSelectedVol] = useState(2);
-  console.log(chartData);
+
   useEffect(() => {
     const data = updateChartData(
       'reservoirWaterBalance',

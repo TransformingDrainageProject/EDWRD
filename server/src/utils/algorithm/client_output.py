@@ -35,6 +35,12 @@ def convert_dataframe_to_annual_json(data, rarea, unit_type, variable):
         "precision": precision
     }
 
+    if unit == "gal":
+        chart_data["unit"] = "gal per 1,000,000"
+
+    if unit == "m3":
+        chart_data["unit"] = "m3 per 1,000"
+
     conversion_factor = 1.0
 
     if unit in conversion_factors.keys():
@@ -116,7 +122,7 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
                                                            [column_name].index.get_level_values(0) == year]
 
             chart_data["values"][vol]["yearly"] += [{"x": calendar.month_abbr[month + 1],
-                                                     "y": (val * conversion_factor) / scale, "year": year, "name": column_name} for month, val in enumerate(annual_monthly_values)]
+                                                     "y": (val * conversion_factor) / scale, "year": year, "name": column_name, "precision": precision} for month, val in enumerate(annual_monthly_values)]
 
     return chart_data
 
