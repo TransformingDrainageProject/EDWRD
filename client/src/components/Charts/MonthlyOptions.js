@@ -73,7 +73,7 @@ const MonthlyOptions = ({
           >
             {chartData.rarea.map((area, idx) => (
               <option key={area} value={idx}>
-                {area.toFixed(2)}
+                {area.toFixed(1)}
               </option>
             ))}
           </Input>

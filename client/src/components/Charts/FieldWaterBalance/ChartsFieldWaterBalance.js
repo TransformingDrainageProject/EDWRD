@@ -79,7 +79,7 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                 }`}
                 {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
               </h1>
-              <h2>{`(depth = ${chartData.rdep.toFixed(1)}${
+              <h2>{`(Max depth = ${chartData.rdep.toFixed(1)}${
                 chartData.unitType === 'us' ? 'ft' : 'm'
               })`}</h2>
             </Col>
