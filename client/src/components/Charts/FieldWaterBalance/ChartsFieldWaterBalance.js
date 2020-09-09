@@ -13,15 +13,7 @@ import getYearInfo from '../utils/getYearInfo';
 // category keys for different variable subsets (inflow, outflow, other)
 const variableClasses = {
   inflow: ['precipitation', 'irrigation', 'upwardFlux'],
-  outflow: [
-    'cropTranspiration',
-    'potentialCropTranspiration',
-    'evapotranspiration',
-    'potentialEvapotranspiration',
-    'soilEvaporation',
-    'runoff',
-    'tileDrainFlow',
-  ],
+  outflow: ['evapotranspiration', 'runoff', 'tileDrainFlow'],
   other: ['readilyAvailableWater', 'soilMoisture'],
 };
 
@@ -79,7 +71,7 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
                 }`}
                 {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
               </h1>
-              <h2>{`(depth = ${chartData.rdep.toFixed(1)}${
+              <h2>{`(Max depth = ${chartData.rdep.toFixed(1)}${
                 chartData.unitType === 'us' ? 'ft' : 'm'
               })`}</h2>
             </Col>

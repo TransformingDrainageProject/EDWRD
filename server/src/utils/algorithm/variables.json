@@ -76,42 +76,10 @@
         "precision": 2
       },
       {
-        "key": "cropTranspiration",
-        "column": "Actual Transpiration",
-        "label": "Crop Transpiration",
-        "description": "The total monthly amount of water that is lost from the field through crop transpiration.",
-        "unit": { "us": "in", "metric": "mm" },
-        "precision": 2
-      },
-      {
-        "key": "potentialCropTranspiration",
-        "column": "Potential Transpiration",
-        "label": "Potential Crop Transpiration",
-        "description": "The total potential monthly amount of water that is lost from the field through crop transpiration.",
-        "unit": { "us": "in", "metric": "mm" },
-        "precision": 2
-      },
-      {
         "key": "evapotranspiration",
         "column": "Actual Crop ET",
         "label": "Evapotranspiration",
         "description": "The total monthly amount of water lost from the field through crop transpiration and evaporation from the surface.",
-        "unit": { "us": "in", "metric": "mm" },
-        "precision": 2
-      },
-      {
-        "key": "potentialEvapotranspiration",
-        "column": "Potential Crop ET",
-        "label": "Potential Evapotranspiration",
-        "description": "The total potential monthly amount of water lost from the field through crop transpiration and evaporation from the surface.",
-        "unit": { "us": "in", "metric": "mm" },
-        "precision": 2
-      },
-      {
-        "key": "soilEvaporation",
-        "column": "Soil Evaporation",
-        "label": "Soil Evaporation",
-        "description": "The total monthly amount of water that is lost from the field through evaporation from the surface.",
         "unit": { "us": "in", "metric": "mm" },
         "precision": 2
       },
