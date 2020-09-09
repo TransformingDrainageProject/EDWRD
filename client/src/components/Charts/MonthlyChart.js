@@ -16,15 +16,7 @@ import {
 const colorScales = {
   blue: ['#bdd7e7', '#6baed6', '#2171b5'],
   grey: ['#cccccc', '#969696', '#525252'],
-  yellow: [
-    '#fee391',
-    '#fec44f',
-    '#fe9929',
-    '#ec7014',
-    '#cc4c02',
-    '#993404',
-    '#662506',
-  ],
+  yellow: ['#fed98e', '#fe9929', '#cc4c02'],
 };
 
 let months = {
@@ -145,7 +137,6 @@ const MonthlyChart = ({
         top: 15,
       }}
       style={{ parent: { border: '1px solid #ccc' } }}
-      containerComponent={<VictoryVoronoiContainer radius={1} />}
     >
       {active.length > 1 || !active.includes('reservoirWaterDepth') ? (
         <VictoryAxis
@@ -221,7 +212,7 @@ const MonthlyChart = ({
             </VictoryGroup>
           ) : null
         )
-      ) : monthlyData[0].length > 0 ? ( // inflow stacked bar
+      ) : monthlyData[0].length > 0 || monthlyData[1].length > 0 ? ( // inflow stacked bar
         <VictoryGroup offset={10} categories={months}>
           {monthlyData[0].length > 0 ? (
             <VictoryStack colorScale={colorScales.blue}>
