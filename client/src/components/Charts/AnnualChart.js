@@ -95,6 +95,7 @@ const AnnualChart = ({
           }
           labelComponent={
             <VictoryTooltip
+              style={{ fontSize: 6 }}
               flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
             />
           }
