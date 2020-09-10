@@ -93,12 +93,7 @@ const AnnualChart = ({
           labels={({ datum }) =>
             numberWithCommas(datum.y.toFixed(chartData.precision))
           }
-          labelComponent={
-            <VictoryTooltip
-              style={{ fontSize: 6 }}
-              flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
-            />
-          }
+          labelComponent={<VictoryTooltip style={{ fontSize: 6 }} />}
           size={3}
         />
       </VictoryGroup>
@@ -111,11 +106,7 @@ const AnnualChart = ({
         labels={({ datum }) =>
           numberWithCommas(datum.y.toFixed(chartData.precision))
         }
-        labelComponent={
-          <VictoryTooltip
-            flyoutStyle={{ stroke: colorSchemes[color].lineStroke }}
-          />
-        }
+        labelComponent={<VictoryTooltip style={{ fontSize: 6 }} />}
       />
     )}
     <VictoryLegend

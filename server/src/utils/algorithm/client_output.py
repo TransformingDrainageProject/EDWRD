@@ -110,7 +110,9 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
         for month in range(0, len(monthly_means)):
             chart_data["values"][vol]["average"].append({
                 "x": calendar.month_abbr[month + 1],
-                "y": (monthly_means[month] * conversion_factor) / scale
+                "y": (monthly_means[month] * conversion_factor) / scale,
+                "precision": precision,
+                "name": label
             })
 
         # annual records
@@ -122,7 +124,8 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
                                                            [column_name].index.get_level_values(0) == year]
 
             chart_data["values"][vol]["yearly"] += [{"x": calendar.month_abbr[month + 1],
-                                                     "y": (val * conversion_factor) / scale, "year": year, "name": column_name} for month, val in enumerate(annual_monthly_values)]
+                                                     "y": (val * conversion_factor) / scale, "year": year, "precision": precision,
+                                                     "name": label} for month, val in enumerate(annual_monthly_values)]
 
     return chart_data
 
