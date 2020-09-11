@@ -9,18 +9,11 @@ const Instructions = () => {
         <Col md={6}>
           <strong>For a quick analysis,</strong> to learn more about this tool
           and to see a few results describing the potential benefits of drainage
-          water recycling, we've{' '}
-          <a
-            href="https://precision.ag.purdue.edu/edwrd/pdfdocument"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            preloaded default values
-          </a>{' '}
-          representing a corn crop grown in silty clay loam soil. Simply drag
-          the pin in the map to a location of your choice and click on "Run
-          EDWRD". Once the tool finishes running, you can scroll down to view
-          the results.
+          water recycling, we've preloaded default values{' '}
+          <em>&lt;insert link&gt;</em> representing a corn crop grown in
+          east-central Indiana on silty clay loam soil. Simply drag the pin in
+          the map to a location of your choice and click on "Run EDWRD". Once
+          the tool finishes running, you can scroll down to view the results.
         </Col>
         <Col md={6}>
           <strong>For a more in-depth analysis,</strong> to learn more about

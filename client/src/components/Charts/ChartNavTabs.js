@@ -12,7 +12,7 @@ const ChartNavTabs = ({ active, sessionID, setActive }) => (
         active={active === 0}
         onClick={() => setActive(0)}
       >
-        Performance
+        Annual Performance Metrics
         <br />
         <small>(Annual)</small>
       </NavLink>
