@@ -308,18 +308,6 @@ const MonthlyChart = ({
           y={(datum) =>
             datum.y / getMax(chartData['reservoirWaterDepth'].values)
           }
-          // labels={({ datum }) => datum.y.toFixed(datum.precision)}
-          // labelComponent={
-          //   <VictoryTooltip
-          //     style={styles.tooltip}
-          //     flyoutStyle={{
-          //       stroke: getVariableColor(
-          //         'reservoirWaterDepth',
-          //         variableClasses
-          //       ),
-          //     }}
-          //   />
-          // }
           size={2}
         />
       ) : null}
