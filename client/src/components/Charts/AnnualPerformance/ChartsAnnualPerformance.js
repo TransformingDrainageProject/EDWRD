@@ -119,11 +119,7 @@ const ChartsAnnualPerformance = ({ chartData }) => {
             <ChartDescription
               name="annualAppliedIrrigation"
               title="Annual Applied Irrigation"
-              text="This graph shows the annual irrigation and water quality
-                  performance metrics for a range of reservoir sizes across
-                  all years at this location. Use the buttons at the top right
-                  of the graph to view a specific year. Click on the question
-                  mark to learn more about how these metrics are estimated."
+              text="This graph shows the annual performance irrigation and water quality metrics for a range of reservoir sizes across all years at this location. Use the buttons at the top right of the graph to view only the average results, or results for a specific year."
             >
               <DownloadDataButton
                 sessionID={chartData.sessionID}

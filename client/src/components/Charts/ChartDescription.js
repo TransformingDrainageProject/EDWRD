@@ -17,7 +17,9 @@ const ChartDescription = ({ children, name, text, title }) => (
       </CardTitle>
       <HelpPopover
         key={name}
-        helpText={<span>help text</span>}
+        helpText={
+          <span>A link to the tool documentation will be provided here</span>
+        }
         label={title}
         name={name}
       />
