@@ -59,3 +59,29 @@ export function getStyles(active, variableClasses) {
     tooltip: { fontSize: 6 },
   };
 }
+
+export function getLegendYPosition(active) {
+  return active.length < 4
+    ? 275
+    : active.length < 7
+    ? 265
+    : active.length < 10
+    ? 255
+    : 245;
+}
+
+export function getChartPadding(active) {
+  return {
+    left: 50,
+    bottom:
+      active.length < 4
+        ? 80
+        : active.length < 7
+        ? 90
+        : active.length < 10
+        ? 100
+        : 110,
+    right: 45,
+    top: 15,
+  };
+}

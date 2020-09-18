@@ -13,7 +13,13 @@ import {
   VictoryVoronoiContainer,
 } from 'victory';
 
-import { colorScales, getVariableColor, getStyles } from './MonthlyChartStyles';
+import {
+  colorScales,
+  getChartPadding,
+  getLegendYPosition,
+  getVariableColor,
+  getStyles,
+} from './MonthlyChartStyles';
 import { getMax, getMaxima } from './utils/getMaxima';
 
 let months = {
@@ -89,19 +95,7 @@ const MonthlyChart = ({
       }
       domainPadding={15}
       height={300}
-      padding={{
-        left: 50,
-        bottom:
-          active.length < 4
-            ? 80
-            : active.length < 7
-            ? 90
-            : active.length < 10
-            ? 100
-            : 110,
-        right: 45,
-        top: 15,
-      }}
+      padding={getChartPadding(active)}
       style={styles.chart}
     >
       {active.length > 1 || !active.includes('reservoirWaterDepth') ? (
@@ -138,15 +132,15 @@ const MonthlyChart = ({
               <VictoryLine
                 name="lines"
                 style={styles.line(key)}
+                interpolation="monotoneX"
                 data={chartData[key].values}
                 y={(datum) => datum.y / maxima}
-                interpolation="monotoneX"
               />
               <VictoryScatter
                 style={styles.scatter(key)}
+                size={2}
                 data={chartData[key].values}
                 y={(datum) => datum.y / maxima}
-                size={2}
               />
             </VictoryGroup>
           ) : null
@@ -155,22 +149,13 @@ const MonthlyChart = ({
         <VictoryGroup offset={10} categories={months}>
           {monthlyData.slice(0, 2).map((dataGroup, group) => {
             if (dataGroup.length > 0) {
+              const colorScale =
+                group === 0 ? colorScales.blue : colorScales.yellow;
               return (
-                <VictoryStack
-                  key={
-                    group === 0 ? `vs-inflow-${group}` : `vs-outflow-${group}`
-                  }
-                  colorScale={
-                    group === 0 ? colorScales.blue : colorScales.yellow
-                  }
-                >
+                <VictoryStack key={`vs-${group}`} colorScale={colorScale}>
                   {dataGroup.map((data, index) => (
                     <VictoryBar
-                      key={
-                        group === 0
-                          ? `vb-inflow-${index}`
-                          : `vb-outflow-${index}`
-                      }
+                      key={`vb-${index}`}
                       name="bars"
                       data={data.values}
                       y={(datum) => datum.y / maxima}
@@ -200,15 +185,15 @@ const MonthlyChart = ({
                 <VictoryLine
                   name="lines"
                   style={styles.lineMonthly(monthlyData[3][index])}
+                  interpolation="monotoneX"
                   data={data.values}
                   y={(datum) => datum.y / maxima}
-                  interpolation="monotoneX"
                 />
                 <VictoryScatter
                   style={styles.scatter(monthlyData[3][index])}
+                  size={2}
                   data={data.values}
                   y={(datum) => datum.y / maxima}
-                  size={2}
                 />
               </VictoryGroup>
             ) : null
@@ -218,34 +203,26 @@ const MonthlyChart = ({
         <VictoryLine
           name="lines"
           style={styles.lineMonthly('reservoirWaterDepth')}
+          interpolation="monotoneX"
           data={chartData['reservoirWaterDepth'].values}
           y={(datum) =>
             datum.y / getMax(chartData['reservoirWaterDepth'].values)
           }
-          interpolation="monotoneX"
         />
       ) : null}
       {active.includes('reservoirWaterDepth') ? (
         <VictoryScatter
           style={styles.scatter('reservoirWaterDepth')}
+          size={2}
           data={chartData['reservoirWaterDepth'].values}
           y={(datum) =>
             datum.y / getMax(chartData['reservoirWaterDepth'].values)
           }
-          size={2}
         />
       ) : null}
       <VictoryLegend
         x={50}
-        y={
-          active.length < 4
-            ? 275
-            : active.length < 7
-            ? 265
-            : active.length < 10
-            ? 255
-            : 245
-        }
+        y={getLegendYPosition(active)}
         orientation="horizontal"
         itemsPerRow={3}
         gutter={20}
