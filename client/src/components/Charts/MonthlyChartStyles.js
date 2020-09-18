@@ -4,20 +4,34 @@ export const colorScales = {
   yellow: ['#fed98e', '#fe9929', '#cc4c02'],
 };
 
-export function getVariableColor(variableName, variableClasses) {
+export function getVariableColor(active, variableName, variableClasses) {
+  let inflow = [];
+  let outflow = [];
+  let other = [];
+
+  active.forEach((variable) => {
+    if (variableClasses.inflow.includes(variable)) {
+      inflow.push(variable);
+    } else if (variableClasses.outflow.includes(variable)) {
+      outflow.push(variable);
+    } else {
+      other.push(variable);
+    }
+  });
+
   let color = '#000000';
-  if (variableClasses.inflow.includes(variableName)) {
-    color = colorScales.blue[variableClasses.inflow.indexOf(variableName)];
-  } else if (variableClasses.outflow.includes(variableName)) {
-    color = colorScales.yellow[variableClasses.outflow.indexOf(variableName)];
+  if (inflow.includes(variableName)) {
+    color = colorScales.blue[inflow.indexOf(variableName)];
+  } else if (outflow.includes(variableName)) {
+    color = colorScales.yellow[outflow.indexOf(variableName)];
   } else {
-    color = colorScales.grey[variableClasses.other.indexOf(variableName)];
+    color = colorScales.grey[other.indexOf(variableName)];
   }
 
   return color;
 }
 
-export function getStyles(variableClasses) {
+export function getStyles(active, variableClasses) {
   return {
     axis: {
       axisLabel: { padding: 35, fontSize: 8 },
@@ -30,17 +44,17 @@ export function getStyles(variableClasses) {
     },
     legend: { border: { stroke: 'black' }, labels: { fontSize: 6 } },
     line: (key) => ({
-      data: { stroke: getVariableColor(key, variableClasses) },
+      data: { stroke: getVariableColor(active, key, variableClasses) },
       parent: { border: '1px solid #ccc' },
     }),
     lineMonthly: (key) => ({
       data: {
-        stroke: getVariableColor(key, variableClasses),
+        stroke: getVariableColor(active, key, variableClasses),
       },
       parent: { border: '1px solid #ccc' },
     }),
     scatter: (key) => ({
-      data: { fill: getVariableColor(key, variableClasses) },
+      data: { fill: getVariableColor(active, key, variableClasses) },
     }),
     tooltip: { fontSize: 6 },
   };

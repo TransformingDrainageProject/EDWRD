@@ -62,7 +62,7 @@ const MonthlyChart = ({
 }) => {
   const monthlyData = prepDataForMonthlyStackedBars(chartData, variableClasses);
   const maxima = getMaxima(monthlyData);
-  const styles = getStyles(variableClasses);
+  const styles = getStyles(active, variableClasses);
 
   let activeNotDepth = -1;
   if (active.length > 0 && active[0] !== 'reservoirWaterDepth') {
@@ -254,7 +254,7 @@ const MonthlyChart = ({
           name: datasetNames[key].label,
           symbol: {
             type: 'minus',
-            fill: getVariableColor(key, variableClasses),
+            fill: getVariableColor(active, key, variableClasses),
           },
         }))}
       />
