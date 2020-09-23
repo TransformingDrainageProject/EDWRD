@@ -90,7 +90,7 @@ const MonthlyChart = ({
           labelComponent={
             <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
           }
-          voronoiBlacklist={['lines', 'bars']}
+          voronoiBlacklist={['lines', 'bars', 'scatter']}
         />
       }
       domainPadding={15}
@@ -122,6 +122,63 @@ const MonthlyChart = ({
             (t * getMax(chartData['reservoirWaterDepth'].values)).toFixed(
               datasetNames['reservoirWaterDepth'].precision
             )
+          }
+        />
+      ) : null}
+
+      {annualFilter !== 'all' && monthlyData[2].length > 0
+        ? monthlyData[2].map((data, index) =>
+            data.key !== 'reservoirWaterDepth' ? (
+              <VictoryGroup key={`vg-other-${index}`} categories={months}>
+                <VictoryLine
+                  name="lines"
+                  style={styles.lineMonthly(monthlyData[3][index])}
+                  interpolation="monotoneX"
+                  data={data.values}
+                  y={(datum) => datum.y / maxima}
+                />
+                <VictoryScatter
+                  name="scatter"
+                  style={styles.scatter(monthlyData[3][index])}
+                  size={2}
+                  data={data.values}
+                  y={(datum) => datum.y / maxima}
+                  labels={({ datum }) =>
+                    `${datum.name}: ${datum.y.toFixed(datum.precision)}`
+                  }
+                  labelComponent={
+                    <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
+                  }
+                />
+              </VictoryGroup>
+            ) : null
+          )
+        : null}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryLine
+          name="lines"
+          style={styles.lineMonthly('reservoirWaterDepth')}
+          interpolation="monotoneX"
+          data={chartData['reservoirWaterDepth'].values}
+          y={(datum) =>
+            datum.y / getMax(chartData['reservoirWaterDepth'].values)
+          }
+        />
+      ) : null}
+      {active.includes('reservoirWaterDepth') ? (
+        <VictoryScatter
+          name="scatter"
+          style={styles.scatter('reservoirWaterDepth')}
+          size={2}
+          data={chartData['reservoirWaterDepth'].values}
+          y={(datum) =>
+            datum.y / getMax(chartData['reservoirWaterDepth'].values)
+          }
+          labels={({ datum }) =>
+            `${datum.name}: ${datum.y.toFixed(datum.precision)}`
+          }
+          labelComponent={
+            <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
           }
         />
       ) : null}
@@ -177,48 +234,6 @@ const MonthlyChart = ({
             }
           })}
         </VictoryGroup>
-      ) : null}
-      {annualFilter !== 'all' && monthlyData[2].length > 0
-        ? monthlyData[2].map((data, index) =>
-            data.key !== 'reservoirWaterDepth' ? (
-              <VictoryGroup key={`vg-other-${index}`} categories={months}>
-                <VictoryLine
-                  name="lines"
-                  style={styles.lineMonthly(monthlyData[3][index])}
-                  interpolation="monotoneX"
-                  data={data.values}
-                  y={(datum) => datum.y / maxima}
-                />
-                <VictoryScatter
-                  style={styles.scatter(monthlyData[3][index])}
-                  size={2}
-                  data={data.values}
-                  y={(datum) => datum.y / maxima}
-                />
-              </VictoryGroup>
-            ) : null
-          )
-        : null}
-      {active.includes('reservoirWaterDepth') ? (
-        <VictoryLine
-          name="lines"
-          style={styles.lineMonthly('reservoirWaterDepth')}
-          interpolation="monotoneX"
-          data={chartData['reservoirWaterDepth'].values}
-          y={(datum) =>
-            datum.y / getMax(chartData['reservoirWaterDepth'].values)
-          }
-        />
-      ) : null}
-      {active.includes('reservoirWaterDepth') ? (
-        <VictoryScatter
-          style={styles.scatter('reservoirWaterDepth')}
-          size={2}
-          data={chartData['reservoirWaterDepth'].values}
-          y={(datum) =>
-            datum.y / getMax(chartData['reservoirWaterDepth'].values)
-          }
-        />
       ) : null}
       <VictoryLegend
         x={50}
