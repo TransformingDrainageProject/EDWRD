@@ -13,11 +13,14 @@ import {
   VictoryVoronoiContainer,
 } from 'victory';
 
-const colorScales = {
-  blue: ['#bdd7e7', '#6baed6', '#2171b5'],
-  grey: ['#cccccc', '#969696', '#525252'],
-  yellow: ['#fed98e', '#fe9929', '#cc4c02'],
-};
+import {
+  colorScales,
+  getChartPadding,
+  getLegendYPosition,
+  getVariableColor,
+  getStyles,
+} from './MonthlyChartStyles';
+import { getMax, getMaxima } from './utils/getMaxima';
 
 let months = {
   x: [
@@ -35,31 +38,6 @@ let months = {
     'Dec',
   ],
 };
-
-function getMax(data) {
-  const max = data.reduce((a, b) => {
-    if (b.y > a.y) {
-      return b;
-    } else {
-      return a;
-    }
-  });
-
-  return max.y;
-}
-
-function getVariableColor(variableName, variableClasses) {
-  let color = '#000000';
-  if (variableClasses.inflow.includes(variableName)) {
-    color = colorScales.blue[variableClasses.inflow.indexOf(variableName)];
-  } else if (variableClasses.outflow.includes(variableName)) {
-    color = colorScales.yellow[variableClasses.outflow.indexOf(variableName)];
-  } else {
-    color = colorScales.grey[variableClasses.other.indexOf(variableName)];
-  }
-
-  return color;
-}
 
 function prepDataForMonthlyStackedBars(data, variableClasses) {
   let waterInStacks = [];
@@ -81,16 +59,6 @@ function prepDataForMonthlyStackedBars(data, variableClasses) {
   return [waterInStacks, waterOutStacks, waterOtherLines, waterOtherKeys];
 }
 
-function roundTick(max, value) {
-  if (max < 5) {
-    return value;
-  } else if (max < 10) {
-    return Math.round(value);
-  } else {
-    return Math.ceil(value / 5) * 5;
-  }
-}
-
 const MonthlyChart = ({
   active,
   annualFilter,
@@ -99,15 +67,8 @@ const MonthlyChart = ({
   variableClasses,
 }) => {
   const monthlyData = prepDataForMonthlyStackedBars(chartData, variableClasses);
-
-  // find overall maximum for current active datasets
-  let maxima = 0;
-  for (let i = 0; i < 3; i++) {
-    monthlyData[i].forEach((dataset) => {
-      const max = getMax(dataset.values);
-      if (max > maxima) maxima = max;
-    });
-  }
+  const maxima = getMaxima(monthlyData);
+  const styles = getStyles(active, variableClasses);
 
   let activeNotDepth = -1;
   if (active.length > 0 && active[0] !== 'reservoirWaterDepth') {
@@ -117,33 +78,6 @@ const MonthlyChart = ({
   } else {
     activeNotDepth = 1;
   }
-
-  const styles = {
-    axis: {
-      axisLabel: { padding: 35, fontSize: 8 },
-      tickLabels: { fontSize: 6 },
-    },
-    chart: {
-      parent: {
-        border: '1px solid #ccc',
-      },
-    },
-    legend: { border: { stroke: 'black' }, labels: { fontSize: 6 } },
-    line: (key) => ({
-      data: { stroke: getVariableColor(key, variableClasses) },
-      parent: { border: '1px solid #ccc' },
-    }),
-    lineMonthly: (key) => ({
-      data: {
-        stroke: getVariableColor(key, variableClasses),
-      },
-      parent: { border: '1px solid #ccc' },
-    }),
-    scatter: (key) => ({
-      data: { fill: getVariableColor(key, variableClasses) },
-    }),
-    tooltip: { fontSize: 6 },
-  };
 
   return (
     <VictoryChart
@@ -156,24 +90,12 @@ const MonthlyChart = ({
           labelComponent={
             <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
           }
-          voronoiBlacklist={['lines', 'bars']}
+          voronoiBlacklist={['lines', 'bars', 'scatter']}
         />
       }
       domainPadding={15}
       height={300}
-      padding={{
-        left: 50,
-        bottom:
-          active.length < 4
-            ? 80
-            : active.length < 7
-            ? 90
-            : active.length < 10
-            ? 100
-            : 110,
-        right: 45,
-        top: 15,
-      }}
+      padding={getChartPadding(active)}
       style={styles.chart}
     >
       {active.length > 1 || !active.includes('reservoirWaterDepth') ? (
@@ -203,72 +125,7 @@ const MonthlyChart = ({
           }
         />
       ) : null}
-      {annualFilter === 'all' ? (
-        active.map((key, idx) =>
-          key !== 'reservoirWaterDepth' ? (
-            <VictoryGroup key={`vg-${key}`} categories={months}>
-              <VictoryLine
-                name="lines"
-                style={styles.line(key)}
-                data={chartData[key].values}
-                y={(datum) => datum.y / maxima}
-                interpolation="monotoneX"
-              />
-              <VictoryScatter
-                style={styles.scatter(key)}
-                data={chartData[key].values}
-                y={(datum) => datum.y / maxima}
-                size={2}
-              />
-            </VictoryGroup>
-          ) : null
-        )
-      ) : monthlyData[0].length > 0 || monthlyData[1].length > 0 ? ( // inflow stacked bar
-        <VictoryGroup offset={10} categories={months}>
-          {monthlyData[0].length > 0 ? (
-            <VictoryStack colorScale={colorScales.blue}>
-              {monthlyData[0].map((data, index) => (
-                <VictoryBar
-                  name="bars"
-                  key={`vb-inflow-${index}`}
-                  barWidth={4}
-                  data={data.values}
-                  y={(datum) => datum.y / maxima}
-                  labels={({ datum }) =>
-                    `${datasetNames[data.key].label}: ${datum.y.toFixed(
-                      datasetNames[data.key].precision
-                    )}`
-                  }
-                  labelComponent={
-                    <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
-                  }
-                />
-              ))}
-            </VictoryStack>
-          ) : null}
-          {monthlyData[1].length > 0 ? ( // outflow stacked bar
-            <VictoryStack colorScale={colorScales.yellow}>
-              {monthlyData[1].map((data, index) => (
-                <VictoryBar
-                  name="bars"
-                  key={`vb-outflow-${index}`}
-                  barWidth={4}
-                  data={data.values}
-                  y={(datum) => datum.y / maxima}
-                  labels={({ datum }) =>
-                    `${datasetNames[data.key].label}: ${datum.y.toFixed(
-                      datasetNames[data.key].precision
-                    )}`
-                  }
-                  labelComponent={
-                    <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
-                  }
-                />
-              ))}
-            </VictoryStack>
-          ) : null}
-        </VictoryGroup>
-      ) : null}
+
       {annualFilter !== 'all' && monthlyData[2].length > 0
         ? monthlyData[2].map((data, index) =>
             data.key !== 'reservoirWaterDepth' ? (
@@ -276,15 +133,22 @@ const MonthlyChart = ({
                 <VictoryLine
                   name="lines"
                   style={styles.lineMonthly(monthlyData[3][index])}
+                  interpolation="monotoneX"
                   data={data.values}
                   y={(datum) => datum.y / maxima}
-                  interpolation="monotoneX"
                 />
                 <VictoryScatter
+                  name="scatter"
                   style={styles.scatter(monthlyData[3][index])}
+                  size={2}
                   data={data.values}
                   y={(datum) => datum.y / maxima}
-                  size={2}
+                  labels={({ datum }) =>
+                    `${datum.name}: ${datum.y.toFixed(datum.precision)}`
+                  }
+                  labelComponent={
+                    <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
+                  }
                 />
               </VictoryGroup>
             ) : null
@@ -294,34 +158,86 @@ const MonthlyChart = ({
         <VictoryLine
           name="lines"
           style={styles.lineMonthly('reservoirWaterDepth')}
+          interpolation="monotoneX"
           data={chartData['reservoirWaterDepth'].values}
           y={(datum) =>
             datum.y / getMax(chartData['reservoirWaterDepth'].values)
           }
-          interpolation="monotoneX"
         />
       ) : null}
       {active.includes('reservoirWaterDepth') ? (
         <VictoryScatter
+          name="scatter"
           style={styles.scatter('reservoirWaterDepth')}
+          size={2}
           data={chartData['reservoirWaterDepth'].values}
           y={(datum) =>
             datum.y / getMax(chartData['reservoirWaterDepth'].values)
           }
-          size={2}
+          labels={({ datum }) =>
+            `${datum.name}: ${datum.y.toFixed(datum.precision)}`
+          }
+          labelComponent={
+            <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
+          }
         />
+      ) : null}
+      {annualFilter === 'all' ? (
+        active.map((key, idx) =>
+          key !== 'reservoirWaterDepth' ? (
+            <VictoryGroup key={`vg-${key}`} categories={months}>
+              <VictoryLine
+                name="lines"
+                style={styles.line(key)}
+                interpolation="monotoneX"
+                data={chartData[key].values}
+                y={(datum) => datum.y / maxima}
+              />
+              <VictoryScatter
+                style={styles.scatter(key)}
+                size={2}
+                data={chartData[key].values}
+                y={(datum) => datum.y / maxima}
+              />
+            </VictoryGroup>
+          ) : null
+        )
+      ) : monthlyData[0].length > 0 || monthlyData[1].length > 0 ? ( // inflow stacked bar
+        <VictoryGroup offset={10} categories={months}>
+          {monthlyData.slice(0, 2).map((dataGroup, group) => {
+            if (dataGroup.length > 0) {
+              const colorScale =
+                group === 0 ? colorScales.blue : colorScales.yellow;
+              return (
+                <VictoryStack key={`vs-${group}`} colorScale={colorScale}>
+                  {dataGroup.map((data, index) => (
+                    <VictoryBar
+                      key={`vb-${index}`}
+                      name="bars"
+                      data={data.values}
+                      y={(datum) => datum.y / maxima}
+                      labels={({ datum }) =>
+                        `${datasetNames[data.key].label}: ${datum.y.toFixed(
+                          datasetNames[data.key].precision
+                        )}`
+                      }
+                      labelComponent={
+                        <VictoryTooltip
+                          style={styles.tooltip}
+                          flyoutWidth={120}
+                        />
+                      }
+                    />
+                  ))}
+                </VictoryStack>
+              );
+            }
+          })}
+        </VictoryGroup>
       ) : null}
       <VictoryLegend
         x={50}
-        y={
-          active.length < 4
-            ? 275
-            : active.length < 7
-            ? 265
-            : active.length < 10
-            ? 255
-            : 245
-        }
+        y={getLegendYPosition(active)}
         orientation="horizontal"
         itemsPerRow={3}
         gutter={20}
@@ -330,7 +246,7 @@ const MonthlyChart = ({
           name: datasetNames[key].label,
           symbol: {
             type: 'minus',
-            fill: getVariableColor(key, variableClasses),
+            fill: getVariableColor(active, key, variableClasses),
           },
         }))}
       />
