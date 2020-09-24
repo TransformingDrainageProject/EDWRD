@@ -34,7 +34,7 @@ const App = () => {
     const fetchData = async () => {
       try {
         const result = await axios.get('/api/site_info', {
-          params: { ...ORIGIN },
+          params: { lat: ORIGIN.lat, lon: ORIGIN.lon, zoom: ORIGIN.zoom },
         });
         updateFieldState(result.data.results.state.trim().toLowerCase());
         updateFrzThwDates({
