@@ -5,8 +5,9 @@ import AnnualChart from '../AnnualChart';
 import ChartDescription from '../ChartDescription';
 import DownloadDataButton from '../DownloadDataButton';
 import YearlyTable from '../YearlyTable';
-
 import VariableButtons from './VariableButtons';
+
+import { getUniqueYears, getYearRange } from '../utils/getYearInfo';
 
 const ChartsAnnualPerformance = ({ chartData }) => {
   const [activeChart, setActiveChart] = useState('');
@@ -16,22 +17,21 @@ const ChartsAnnualPerformance = ({ chartData }) => {
 
   let selectedChartData, uniqueYears, yearRange;
 
-  if (activeChart) {
-    selectedChartData = chartData.annual[activeChart];
-
-    uniqueYears = [
-      ...new Set(selectedChartData.values.yearly.map((record) => record.year)),
-    ];
-
-    yearRange =
-      uniqueYears.length > 1
-        ? ` (${uniqueYears[0]} - ${uniqueYears.slice(-1)[0]})`
-        : ` (${uniqueYears[0]})`;
-  }
-
   function yearOnChange(event) {
     const year = event.target.value;
     setAnnualFilter(year);
+  }
+
+  if (activeChart) {
+    selectedChartData = {
+      precision: chartData.annual[activeChart].precision,
+      rdep: chartData.rdep,
+      unit: chartData.annual[activeChart].unit,
+      unitType: chartData.unitType,
+      values: chartData.annual[activeChart].values,
+    };
+    uniqueYears = getUniqueYears(selectedChartData.values);
+    yearRange = getYearRange(uniqueYears);
   }
 
   return (
@@ -63,8 +63,6 @@ const ChartsAnnualPerformance = ({ chartData }) => {
                 annualFilter={annualFilter}
                 avgLineOnly={avgLineOnly}
                 chartData={selectedChartData}
-                rdep={chartData.rdep}
-                unitType={chartData.unitType}
               />
             </Col>
             <Col md={2}>

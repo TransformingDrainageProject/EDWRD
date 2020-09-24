@@ -14,10 +14,12 @@ export function getMaxima(data) {
   // find overall maximum for current active datasets
   let maxima = 0;
   for (let i = 0; i < 3; i++) {
-    data[i].forEach((dataset) => {
-      const max = getMax(dataset.values);
-      if (max > maxima) maxima = max;
-    });
+    for (let j = 0; j < data[i].length; j++) {
+      const max = getMax(data[i][j].values);
+      if (max > maxima) {
+        maxima = max;
+      }
+    }
   }
 
   return maxima;

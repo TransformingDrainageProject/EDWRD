@@ -231,6 +231,8 @@ const MonthlyChart = ({
                   ))}
                 </VictoryStack>
               );
+            } else {
+              return null;
             }
           })}
         </VictoryGroup>

@@ -18,4 +18,17 @@ function getYearInfo(chartData, chart, activeVariables, selectedVol) {
   return { uniqueYears, yearRange };
 }
 
+export function getUniqueYears(chartDataValues) {
+  const years = chartDataValues.yearly.map((record) => record.year);
+  return [...new Set(years)];
+}
+
+export function getYearRange(years) {
+  if (years.length > 1) {
+    return `(${years[0]} - ${years.slice(-1)[0]})`;
+  } else {
+    return `(${years[0]})`;
+  }
+}
+
 export default getYearInfo;
