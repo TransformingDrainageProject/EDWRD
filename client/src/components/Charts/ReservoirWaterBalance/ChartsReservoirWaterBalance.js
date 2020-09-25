@@ -37,7 +37,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
       selectedVol
     );
     updateSelectedChartData(data);
-  }, [active, selectedVol]);
+  }, [active, annualFilter, chartData, selectedVol]);
 
   const yearInfo = getYearInfo(
     chartData,

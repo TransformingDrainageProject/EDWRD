@@ -28,13 +28,7 @@ const colorSchemes = {
   },
 };
 
-const AnnualChart = ({
-  annualFilter,
-  avgLineOnly,
-  chartData,
-  rdep,
-  unitType,
-}) => (
+const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
   <VictoryChart
     theme={VictoryTheme.material}
     domainPadding={15}
@@ -56,9 +50,9 @@ const AnnualChart = ({
         tickLabels: { fontSize: 6 },
       }}
       label={
-        unitType === 'us'
-          ? `Reservoir Area (ac), depth = ${rdep.toFixed(1)}ft`
-          : `Reservoir Area (ha), depth = ${rdep.toFixed(1)}m`
+        chartData.unitType === 'us'
+          ? `Reservoir Area (ac), depth = ${chartData.rdep.toFixed(1)}ft`
+          : `Reservoir Area (ha), depth = ${chartData.rdep.toFixed(1)}m`
       }
       tickFormat={(t) => t}
     />
