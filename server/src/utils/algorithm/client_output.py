@@ -89,10 +89,10 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
     }
 
     if unit == "gal":
-        chart_data["unit"] = "gal per 1,000,000"
+        chart_data["unit"] = "gallons (millions)"
 
     if unit == "m3":
-        chart_data["unit"] = "m3 per 1,000"
+        chart_data["unit"] = "cubic meters (thousands)"
 
     conversion_factor = 1.0
     if unit in conversion_factors.keys():
