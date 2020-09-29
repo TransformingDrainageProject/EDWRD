@@ -73,6 +73,7 @@ const FormContainer = (props) => {
   } = props;
 
   const [errorMsg, setErrorMsg] = useState('');
+  const [initialValues, setInitialValues] = useState(null);
   const [processingStatus, updateProcessingStatus] = useState('');
   const [showModifyInputs, toggleShowModifyInputs] = useState(false);
   const [showReset, toggleShowReset] = useState(false);
@@ -104,13 +105,34 @@ const FormContainer = (props) => {
     });
   }
 
+  async function updateInitialValues() {
+    try {
+      const result = await axios.get('/api/nearest_station', {
+        params: {
+          lat: markerCoords.location.latitude,
+          lon: markerCoords.location.longitude,
+          unit: unitType,
+        },
+      });
+
+      if (result) {
+        setInitialValues(result.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  let formValues =
+    unitType === 'us'
+      ? { unitType, ...usInitialValues }
+      : { unitType, ...metricInitialValues };
+
   return (
     <>
       <Formik
         initialValues={
-          unitType === 'us'
-            ? { unitType, ...usInitialValues }
-            : { unitType, ...metricInitialValues }
+          initialValues ? { ...formValues, ...initialValues } : formValues
         }
         enableReinitialize={true}
         validationSchema={validationSchema}
@@ -193,7 +215,15 @@ const FormContainer = (props) => {
                 </Row>
                 <Row>
                   <Col>
-                    <UserDataForm origin={origin} />
+                    {values.station_id && values.station_name ? (
+                      <UserDataForm
+                        origin={origin}
+                        stationId={values.station_id ? values.station_id : null}
+                        stationName={
+                          values.station_name ? values.station_name : null
+                        }
+                      />
+                    ) : null}
                   </Col>
                 </Row>
               </>
@@ -245,8 +275,13 @@ const FormContainer = (props) => {
                         setFieldTouched('quickAnalysis', true);
                         setFieldValue('userInput', 'false');
                         setFieldTouched('userInput', false);
-                        setFieldValue('userSelectedStation', 4);
+                        setFieldValue(
+                          'userSelectedStation',
+                          values.station_id ? values.station_id : 4
+                        );
                         setFieldTouched('userSelectedStation', true);
+
+                        updateInitialValues();
                       } else {
                         setFieldValue('quickAnalysis', 'true');
                         setFieldTouched('quickAnalysis', true);
@@ -254,6 +289,8 @@ const FormContainer = (props) => {
                         setFieldTouched('userInput', true);
                         setFieldValue('userSelectedStation', -1);
                         setFieldTouched('userSelectedStation', true);
+
+                        setInitialValues(null);
                       }
 
                       toggleShowModifyInputs(!showModifyInputs);

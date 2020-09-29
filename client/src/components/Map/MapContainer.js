@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Row } from 'reactstrap';
 import { useFormikContext } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,11 +8,12 @@ import Map from './Map';
 
 function SelectStationLocationMap(props) {
   const [displayMap, toggleDisplayMap] = useState(true);
-  const [selectedSite, setSelectedSite] = useState({
-    id: 4,
-    name: 'Davis Purdue Agricultural Center',
-  });
+  const [selectedSite, setSelectedSite] = useState(null);
   const { setFieldValue, setFieldTouched } = useFormikContext();
+
+  useEffect(() => {
+    setSelectedSite({ id: props.stationId, name: props.stationName });
+  }, [props.stationId, props.stationName]);
 
   function updateSelectedSite(site) {
     setFieldValue('userSelectedStation', site);
@@ -28,11 +29,13 @@ function SelectStationLocationMap(props) {
       <Row>
         <span className="mr-2">Currently selected station:</span>
         <strong>
-          <span style={{ color: '#edb229' }}>{selectedSite.name}</span>
+          <span style={{ color: '#edb229' }}>
+            {selectedSite ? selectedSite.name : ''}
+          </span>
         </strong>
       </Row>
       <Row>
-        {displayMap ? (
+        {displayMap && selectedSite && selectedSite.id && selectedSite.name ? (
           <Map
             {...props}
             selectedSite={selectedSite}
