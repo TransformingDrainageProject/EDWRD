@@ -10,7 +10,7 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { MyRadioField } from '../FormikComponents/MyFields';
 
 const UserDataForm = (props) => {
-  const { origin } = props;
+  const { origin, stationId, stationName } = props;
   const { values } = useFormikContext();
 
   const userDataSelectionOptions = [
@@ -55,7 +55,12 @@ const UserDataForm = (props) => {
                     type="input"
                   />
                 ) : (
-                  <MapContainer origin={origin} type="selectStationLocation" />
+                  <MapContainer
+                    origin={origin}
+                    type="selectStationLocation"
+                    stationId={stationId}
+                    stationName={stationName}
+                  />
                 )}
               </Col>
             </Row>
