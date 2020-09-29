@@ -19,6 +19,7 @@ const ORIGIN = {
 };
 
 const App = () => {
+  const [analysisType, setAnalysisType] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [unitType, setUnitType] = useState('us');
   const [fieldState, updateFieldState] = useState('il');
@@ -56,7 +57,7 @@ const App = () => {
     <div>
       <Container>
         <Header />
-        <Introduction setUnitType={setUnitType} unitType={unitType} />
+        <Introduction />
         <hr />
         <MapContainer
           origin={ORIGIN}
@@ -65,13 +66,21 @@ const App = () => {
           updateMarkerCoords={updateMarkerCoords}
           type="selectFieldLocation"
         />
-        {markerCoords ? <Instructions /> : null}
         {markerCoords ? (
+          <Instructions
+            setAnalysisType={setAnalysisType}
+            setUnitType={setUnitType}
+            unitType={unitType}
+          />
+        ) : null}
+        {markerCoords && analysisType ? (
           <FormContainer
+            analysisType={analysisType}
             origin={ORIGIN}
             fieldState={fieldState}
             frzThwDates={frzThwDates}
             markerCoords={markerCoords}
+            setAnalysisType={setAnalysisType}
             setChartData={setChartData}
             unitType={unitType}
           />

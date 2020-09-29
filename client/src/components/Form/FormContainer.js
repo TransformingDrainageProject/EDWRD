@@ -64,10 +64,12 @@ const validationSchema = fieldReservoirFormSchema
 
 const FormContainer = (props) => {
   const {
+    analysisType,
     origin,
     fieldState,
     frzThwDates,
     markerCoords,
+    setAnalysisType,
     setChartData,
     unitType,
   } = props;
@@ -75,7 +77,7 @@ const FormContainer = (props) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [initialValues, setInitialValues] = useState(null);
   const [processingStatus, updateProcessingStatus] = useState('');
-  const [showModifyInputs, toggleShowModifyInputs] = useState(false);
+  // const [showModifyInputs, toggleShowModifyInputs] = useState(false);
   const [showReset, toggleShowReset] = useState(false);
 
   function makeSocketConnection(setSubmitting, setStatus) {
@@ -179,7 +181,7 @@ const FormContainer = (props) => {
           values,
         }) => (
           <Form>
-            {showModifyInputs ? (
+            {analysisType == 'indepth' ? (
               <>
                 <Row>
                   <Col>
@@ -237,7 +239,11 @@ const FormContainer = (props) => {
                 paramFile={values.userParam ? values.userParamFile : null}
               />
             ) : null}
-
+            <Row>
+              <Col>
+                <h1>Step 3: Run EDWRD</h1>
+              </Col>
+            </Row>
             <Row style={{ padding: '0 15px 0 15px' }}>
               <Col className="text-center">
                 <Button
@@ -248,7 +254,7 @@ const FormContainer = (props) => {
                     backgroundColor: '#007cb3',
                     height: '75px',
                     width: '150px',
-                    marginLeft: '150px',
+                    // marginLeft: '150px',
                   }}
                 >
                   {isSubmitting ? (
@@ -262,7 +268,7 @@ const FormContainer = (props) => {
                     <strong>Run EDWRD</strong>
                   )}
                 </Button>
-                {!showReset ? (
+                {/* {!showReset ? (
                   <Button
                     className="mb-4"
                     type="button"
@@ -270,11 +276,7 @@ const FormContainer = (props) => {
                     outline
                     color="secondary"
                     onClick={() => {
-                      if (!showModifyInputs) {
-                        setFieldValue('quickAnalysis', 'false');
-                        setFieldTouched('quickAnalysis', true);
-                        setFieldValue('userInput', 'false');
-                        setFieldTouched('userInput', false);
+                      if (analysisType === 'indepth') {
                         setFieldValue(
                           'userSelectedStation',
                           values.station_id ? values.station_id : 4
@@ -283,17 +285,11 @@ const FormContainer = (props) => {
 
                         updateInitialValues();
                       } else {
-                        setFieldValue('quickAnalysis', 'true');
-                        setFieldTouched('quickAnalysis', true);
-                        setFieldValue('userInput', 'false');
-                        setFieldTouched('userInput', true);
                         setFieldValue('userSelectedStation', -1);
                         setFieldTouched('userSelectedStation', true);
 
                         setInitialValues(null);
                       }
-
-                      toggleShowModifyInputs(!showModifyInputs);
                     }}
                     style={{
                       height: '75px',
@@ -301,13 +297,13 @@ const FormContainer = (props) => {
                       float: 'right',
                     }}
                   >
-                    {!showModifyInputs ? (
-                      <strong>Modify Inputs</strong>
+                    {analysisType === 'indepth' ? (
+                      <strong>Switch to In-Depth Analysis</strong>
                     ) : (
-                      <strong>Return to Quick Analysis</strong>
+                      <strong>Switch to Quick Analysis</strong>
                     )}
                   </Button>
-                ) : null}
+                ) : null} */}
                 {showReset ? (
                   <Button
                     className="mb-4"
