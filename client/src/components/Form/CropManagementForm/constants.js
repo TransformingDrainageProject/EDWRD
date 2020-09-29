@@ -4,11 +4,11 @@ export const irrdepOptions = [
     value: 'capacity90',
   },
   {
-    name: 'Refill soil profile to 80% waterholding capacity',
+    name: 'Refill soil profile to 80% water holding capacity',
     value: 'capacity80',
   },
   {
-    name: 'Refill soil profile to 70% waterholding capacity',
+    name: 'Refill soil profile to 70% water holding capacity',
     value: 'capacity70',
   },
   { name: 'Deficit amount only', value: 'deficitOnly' },
