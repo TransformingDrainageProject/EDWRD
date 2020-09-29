@@ -26,9 +26,7 @@ const App = () => {
     freeze: 311.46277,
     thaw: 86.998985,
   });
-  const [markerCoords, updateMarkerCoords] = useState({
-    location: { latitude: ORIGIN.lat, longitude: ORIGIN.lon },
-  });
+  const [markerCoords, updateMarkerCoords] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +58,6 @@ const App = () => {
         <Header />
         <Introduction setUnitType={setUnitType} unitType={unitType} />
         <hr />
-        <Instructions />
         <MapContainer
           origin={ORIGIN}
           updateFieldState={updateFieldState}
@@ -68,14 +65,17 @@ const App = () => {
           updateMarkerCoords={updateMarkerCoords}
           type="selectFieldLocation"
         />
-        <FormContainer
-          origin={ORIGIN}
-          fieldState={fieldState}
-          frzThwDates={frzThwDates}
-          markerCoords={markerCoords}
-          setChartData={setChartData}
-          unitType={unitType}
-        />
+        {markerCoords ? <Instructions /> : null}
+        {markerCoords ? (
+          <FormContainer
+            origin={ORIGIN}
+            fieldState={fieldState}
+            frzThwDates={frzThwDates}
+            markerCoords={markerCoords}
+            setChartData={setChartData}
+            unitType={unitType}
+          />
+        ) : null}
         {chartData ? (
           <>
             <hr />
