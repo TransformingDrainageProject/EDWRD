@@ -45,6 +45,7 @@ const CropManagementForm = (props) => {
       <Row>
         <Col className="mb-4" md={4} lg={2}>
           <FormCard
+            label="Select crop"
             helpText={cropManagementHelp.cropSelection}
             name="cropSelection"
           >
@@ -127,7 +128,6 @@ const CropManagementForm = (props) => {
         <Col className="mb-4" md={12} lg={5}>
           <FormCard
             label="Show crop growth and other advanced inputs"
-            position="bottom"
             helpText={cropManagementHelp.advSettings}
             name="advSettings"
           >

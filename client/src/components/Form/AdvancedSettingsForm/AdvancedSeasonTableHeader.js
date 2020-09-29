@@ -9,7 +9,7 @@ const startEndDateHeaderStyle = {
   width: '130px',
 };
 
-const AdvancedSeasonTableHeader = props => {
+const AdvancedSeasonTableHeader = (props) => {
   return (
     <thead>
       <tr>
@@ -19,7 +19,7 @@ const AdvancedSeasonTableHeader = props => {
           <Arrow />
           <span style={startEndDateHeaderStyle}>End Date</span>
         </th>
-        <th>Crop Coefficient</th>
+        <th>Crop Coefficient (short crop reference)</th>
         <th>Maximum Crop Height ({props.unitType === 'us' ? 'ft' : 'm'})</th>
       </tr>
     </thead>

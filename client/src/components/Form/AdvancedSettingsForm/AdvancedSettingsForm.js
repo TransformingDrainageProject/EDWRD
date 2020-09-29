@@ -284,7 +284,7 @@ const AdvancedSettings = (props) => {
                 <Row>
                   <Col>
                     <h4>
-                      <u>Upload Custom Input File</u>
+                      <u>Upload Custom Parameter File</u>
                     </h4>
                   </Col>
                 </Row>
