@@ -11,6 +11,7 @@ conversion_factors = {
     "in": 0.0393701,
     "ft": 3.28084,
     "gal": 264.172,
+    "ac-in": 0.0097,
     "lb": 2.20462
 }
 
@@ -88,8 +89,8 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
         "precision": precision
     }
 
-    if unit == "gal":
-        chart_data["unit"] = "gallons (millions)"
+    if unit == "ac-ft":
+        chart_data["unit"] = "acre-feet"
 
     if unit == "m3":
         chart_data["unit"] = "cubic meters (thousands)"
@@ -155,9 +156,11 @@ def get_monthly_data(monthly_output, reservoir_area, unit_type):
         for variable in monthly_variables[category]:
             scale = 1.0
             if category == "reservoirWaterBalance":
-                if unit_type == "us":
-                    scale = 1000000.0
-                else:
+                # if unit_type == "us":
+                #     scale = 1000000.0
+                # else:
+                #     scale = 1000.0
+                if unit_type == "metric":
                     scale = 1000.0
             monthly_data[category][variable["key"]] = convert_dataframe_to_monthly_json(
                 monthly_output,
