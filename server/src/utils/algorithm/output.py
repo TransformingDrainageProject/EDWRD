@@ -74,25 +74,25 @@ def annual_output_calc(param,data,vol,dic):
     output['Percent Captured Tile Drain Flow'] = output['Captured Tile Drain Flow'] / output['Tile Drain Flow'] * 100
 
     #ANNUAL NITRATE LOAD
-    output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby(data[vol].index.year).sum()
+    output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
 
     #ANNUAL NITRATE LOAD THAT OVERFLOWED THE RESERVOIR
-    output['Overflow Nitrate Load (Tile)']=data[vol]['Overflow Nitrate Load (Tile)'].groupby(data[vol].index.year).sum()
+    output['Overflow Nitrate Load (Tile)']=data[vol]['Overflow Nitrate Load (Tile)'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
     
     #ANNUAL NITRATE LOAD CAPTURED BY THE RESERVOIR
-    output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby(data[vol].index.year).sum()
+    output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
 
     #ANNUAL PERCENT NITRATE LOAD REDUCTION
     output['Nitrate Load Reduction (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Drain Nitrate Load'] * 100
 
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD
-    output['Tile Drain SRP Load']=data[vol]['Tile Drain SRP Load'].groupby(data[vol].index.year).sum()
+    output['Tile Drain SRP Load']=data[vol]['Tile Drain SRP Load'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
 
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD THAT OVERFLOWED THE RESERVOIR
-    output['Overflow SRP Load (Tile)']=data[vol]['Overflow SRP Load (Tile)'].groupby(data[vol].index.year).sum()
+    output['Overflow SRP Load (Tile)']=data[vol]['Overflow SRP Load (Tile)'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
     
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD CAPTURED BY THE RESERVOIR
-    output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby(data[vol].index.year).sum()
+    output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
 
     #ANNUAL PERCENT SOLUBLE REACTIVE PHOSPHORUS LOAD REDUCTION
     output['SRP Load Reduction (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile Drain SRP Load'] * 100
@@ -188,25 +188,25 @@ def monthly_output_calc(param,data,vol,dic):
     output['Percent Captured Tile Drain Flow'] = output['Captured Tile Drain Flow'] / output['Tile Drain Flow to Reservoir'] * 100
 
     #MONTHLY NITRATE LOAD
-    output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Tile Drain Nitrate Load']=data[vol]['Tile Drain Nitrate Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
 
     #MONTHLY NITRATE LOAD THAT OVERFLOWED THE RESERVOIR
-    output['Overflow Nitrate Load (Tile)']=data[vol]['Overflow Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Overflow Nitrate Load (Tile)']=data[vol]['Overflow Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
     
     #MONTHLY NITRATE LOAD CAPTURED BY THE RESERVOIR
-    output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
 
     #MONTHLY PERCENT NITRATE LOAD REDUCTION
     output['Nitrate Load Reduction (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Drain Nitrate Load'] * 100
 
     #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD
-    output['Tile Drain SRP Load']=data[vol]['Tile Drain SRP Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Tile Drain SRP Load']=data[vol]['Tile Drain SRP Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
 
     #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD THAT OVERFLOWED THE RESERVOIR
-    output['Overflow SRP Load (Tile)']=data[vol]['Overflow SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Overflow SRP Load (Tile)']=data[vol]['Overflow SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
     
     #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD CAPTURED BY THE RESERVOIR
-    output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum()
+    output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
 
     #MONTHLY PERCENT SOLUBLE REACTIVE PHOSPHORUS LOAD REDUCTION
     output['SRP Load Reduction (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile Drain SRP Load'] * 100
