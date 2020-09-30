@@ -51,15 +51,15 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
             irr_vol = irr_req / 1000 * param['iarea'].values[0][0] #volume in m3
 
         elif param['irrdep'].values[0][0] == 'capacity70': #Then use an irrigation approach to refill the soil water holding capacity to 70%
-            irr_req = data.at[row.Index,'zrdepl'] * 0.7 #depth in mm
+            irr_req = (param['taw'].at[0,'taw'] * 0.7) - (param['taw'].at[0,'taw'] - data.at[row.Index,'zrdepl']) #Set irrigation requirement equal to the difference between 70% water holding capacity and current depletion level, depth in mm
             irr_vol = irr_req / 1000 * param['iarea'].values[0][0] #volume in m3
 
         elif param['irrdep'].values[0][0] == 'capacity80': #Then use an irrigation approach to refill the soil water holding capacity to 80%
-            irr_req = data.at[row.Index,'zrdepl'] * 0.8 #depth
+            irr_req = (param['taw'].at[0,'taw'] * 0.8) - (param['taw'].at[0,'taw'] - data.at[row.Index,'zrdepl']) #Set irrigation requirement equal to the difference between 80% water holding capacity and current depletion level, depth in mm
             irr_vol = irr_req / 1000 * param['iarea'].values[0][0] #volume
 
         elif param['irrdep'].values[0][0] == 'capacity90': #Then use an irrigation approach to refill the soil water holding capacity to 90%
-            irr_req = data.at[row.Index,'zrdepl'] * 0.9 #depth
+            irr_req = (param['taw'].at[0,'taw'] * 0.9) - (param['taw'].at[0,'taw'] - data.at[row.Index,'zrdepl']) #Set irrigation requirement equal to the difference between 90% water holding capacity and current depletion level, depth in mm
             irr_vol = irr_req / 1000 * param['iarea'].values[0][0] #volume
 
         else: #Irrigate based on the fixed amount given by user based on availability in the reservoir
