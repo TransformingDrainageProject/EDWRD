@@ -68,10 +68,10 @@ function SelectFieldLocationMap(props) {
         closest weather station. This data is used in calculating crop
         evapotranspiration and typical dates for frozen soil conditions. You may
         further refine these values by choosing In-depth Analysis in the next
-        step.
+        step. After you have chosen your location on the map, scroll down to
+        complete Step 2.
       </p>
       <Map {...props} />
-      <hr />
     </div>
   );
 }

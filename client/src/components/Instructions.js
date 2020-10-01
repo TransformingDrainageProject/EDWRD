@@ -1,7 +1,12 @@
 import React from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
 
-const Instructions = ({ setAnalysisType, setUnitType, unitType }) => {
+const Instructions = ({
+  executeScroll,
+  setAnalysisType,
+  setUnitType,
+  unitType,
+}) => {
   return (
     <Container fluid>
       <Row className="mb-3">
@@ -44,16 +49,22 @@ const Instructions = ({ setAnalysisType, setUnitType, unitType }) => {
       <Row className="mb-3 text-center">
         <Col md={6}>
           <Button
-            style={{ backgroundColor: '#007cb3', width: '150px' }}
-            onClick={() => setAnalysisType('quick')}
+            style={{ backgroundColor: '#007cb3', width: '100%' }}
+            onClick={() => {
+              setAnalysisType('quick');
+              executeScroll();
+            }}
           >
             Quick Analysis
           </Button>
         </Col>
         <Col md={6}>
           <Button
-            style={{ backgroundColor: '#007cb3', width: '150px' }}
-            onClick={() => setAnalysisType('indepth')}
+            style={{ backgroundColor: '#007cb3', width: '100%' }}
+            onClick={() => {
+              setAnalysisType('indepth');
+              executeScroll();
+            }}
           >
             In-depth Analysis
           </Button>
@@ -61,22 +72,36 @@ const Instructions = ({ setAnalysisType, setUnitType, unitType }) => {
       </Row>
       <Row className="mb-3">
         <Col md={6}>
-          <strong>For a quick analysis,</strong> to learn more about this tool
-          and to see a few results describing the potential benefits of drainage
-          water recycling, we've preloaded default values{' '}
-          <em>&lt;insert link&gt;</em> representing a corn crop grown in
-          east-central Indiana on silty clay loam soil. Simply drag the pin in
-          the map to a location of your choice and click on "Run EDWRD". Once
-          the tool finishes running, you can scroll down to view the results.
+          <p>
+            Choose <strong>Quick Analysis</strong> to easily view results
+            describing the potential benefits of drainage water recycling.
+            Choosing this analysis will load default values representing a corn
+            crop grown on a silty clay loam soil. The drained and irrigated
+            field size is 80 acres (32 hectares). The base reservoir size is 5
+            acres (2 hectares), with an average depth of 10 feet (3 meters).
+            Irrigation is applied in 1 inch (25 millimeters) increments. Example
+            datasets from either southeast Iowa or east-central Indiana for
+            daily weather, drain flow, and nutrient concentrations will be used
+            based on your chosen location from Step 1.
+          </p>
         </Col>
         <Col md={6}>
-          <strong>For a more in-depth analysis,</strong> to learn more about
-          potential benefits at a particular site, or to upload your own input
-          data, click on "Modify Inputs". Additional input fields will appear
-          allowing you to describe your field, reservoir, crop, and management
-          settings, choose preloaded datasets from different sites across the
-          Midwest, or upload your own data. You can always click the ? Icon to
-          find out more about a specific input field.
+          <p>
+            Choose <strong>In-depth Analysis</strong> to learn more about each
+            input to the tool and customize your values for:
+          </p>
+          <ul>
+            <li>Soil type and characteristics</li>
+            <li>Field and reservoir size</li>
+            <li>Tile drain depth</li>
+            <li>Crop type and characteristics</li>
+            <li>Irrigation management</li>
+            <li>
+              Upload your own daily weather, drain flow, and nutrient
+              concentrations, or choose from preloaded datasets from across the
+              Midwest.
+            </li>
+          </ul>
         </Col>
       </Row>
     </Container>

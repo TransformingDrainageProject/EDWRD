@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import * as yup from 'yup';
 
-import FileSummary from './FileSummary';
-
 // forms
 import FieldReservoirForm from './FieldReservoirForm';
 import CropManagementForm from './CropManagementForm';
@@ -69,16 +67,13 @@ const FormContainer = (props) => {
     fieldState,
     frzThwDates,
     markerCoords,
-    setAnalysisType,
+    nearestStation,
     setChartData,
     unitType,
   } = props;
 
   const [errorMsg, setErrorMsg] = useState('');
-  const [initialValues, setInitialValues] = useState(null);
   const [processingStatus, updateProcessingStatus] = useState('');
-  // const [showModifyInputs, toggleShowModifyInputs] = useState(false);
-  const [showReset, toggleShowReset] = useState(false);
 
   function makeSocketConnection(setSubmitting, setStatus) {
     const socket = io('http://localhost:3000');
@@ -97,32 +92,12 @@ const FormContainer = (props) => {
         );
       }
       setSubmitting(false);
-      toggleShowReset(true);
     });
     socket.on('chartDataReady', (chartData) => {
       setChartData(chartData);
       setStatus('');
       setSubmitting(false);
-      toggleShowReset(true);
     });
-  }
-
-  async function updateInitialValues() {
-    try {
-      const result = await axios.get('/api/nearest_station', {
-        params: {
-          lat: markerCoords.location.latitude,
-          lon: markerCoords.location.longitude,
-          unit: unitType,
-        },
-      });
-
-      if (result) {
-        setInitialValues(result.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
   }
 
   let formValues =
@@ -134,7 +109,7 @@ const FormContainer = (props) => {
     <>
       <Formik
         initialValues={
-          initialValues ? { ...formValues, ...initialValues } : formValues
+          nearestStation ? { ...formValues, ...nearestStation } : formValues
         }
         enableReinitialize={true}
         validationSchema={validationSchema}
@@ -143,6 +118,9 @@ const FormContainer = (props) => {
           setErrorMsg('');
           setChartData(null);
           updateProcessingStatus('');
+
+          values['quickAnalysis'] = analysisType === 'quick';
+
           axios
             .post('/api/form', { ...markerCoords, ...frzThwDates, ...values })
             .then((response) => {
@@ -167,25 +145,16 @@ const FormContainer = (props) => {
                 setErrorMsg('Unable to process form submission at this time.');
               }
               setSubmitting(false);
-              toggleShowReset(true);
             });
         }}
       >
-        {({
-          dirty,
-          handleReset,
-          isSubmitting,
-          setFieldTouched,
-          setFieldValue,
-          status,
-          values,
-        }) => (
+        {({ isSubmitting, status, values }) => (
           <Form>
-            {analysisType == 'indepth' ? (
+            {analysisType === 'indepth' ? (
               <>
                 <Row>
                   <Col>
-                    <h1>2. Describe your field and reservoir</h1>
+                    <h1>A. Describe your field and reservoir</h1>
                   </Col>
                 </Row>
                 <Row>
@@ -195,7 +164,7 @@ const FormContainer = (props) => {
                 </Row>
                 <Row>
                   <Col>
-                    <h1>3. Describe your crop and management</h1>
+                    <h1>B. Describe your crop and management</h1>
                   </Col>
                 </Row>
                 <Row>
@@ -210,8 +179,8 @@ const FormContainer = (props) => {
                 <Row>
                   <Col>
                     <h1>
-                      4. Select your data source for daily weather, drain flow,
-                      and nutrient concentrations.
+                      C. Select your data source for daily weather, drain flow,
+                      and nutrient concentrations
                     </h1>
                   </Col>
                 </Row>
@@ -230,18 +199,64 @@ const FormContainer = (props) => {
                 </Row>
               </>
             ) : null}
-            {(values.userInput === 'true' && values.userInputFile) ||
-            (values.userParam && values.userParamFile) ? (
-              <FileSummary
-                inputFile={
-                  values.userInput === 'true' ? values.userInputFile : null
-                }
-                paramFile={values.userParam ? values.userParamFile : null}
-              />
-            ) : null}
             <Row>
               <Col>
                 <h1>Step 3: Run EDWRD</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <p>
+                  Chosen location:{' '}
+                  <strong>
+                    {markerCoords.location.longitude.toFixed(3)},{' '}
+                    {markerCoords.location.latitude.toFixed(3)}
+                  </strong>
+                  <br />
+                  Chosen units:{' '}
+                  {unitType === 'us' ? (
+                    <strong>U.S. Standard</strong>
+                  ) : (
+                    <strong>Metric</strong>
+                  )}
+                  <br />
+                  Chosen analysis:{' '}
+                  {analysisType === 'quick' ? (
+                    <strong>Quick Analysis</strong>
+                  ) : (
+                    <strong>In-depth Analysis</strong>
+                  )}
+                  <br />
+                  Daily weather, drain flow, and nutrient concentrations:{' '}
+                  {values.userInput === 'false' ? (
+                    values.station_id ? (
+                      values.station_id === 4 ? (
+                        <strong>Randolph County, IN</strong>
+                      ) : (
+                        <strong>Washington County, IA</strong>
+                      )
+                    ) : null
+                  ) : (
+                    <strong>{values.userInputFile}</strong>
+                  )}
+                  {(values.userInput === 'true' && values.userInputFile) ||
+                  (values.userParam === 'true' && values.userParamFile) ? (
+                    <>
+                      <br />
+                      File summary:
+                      <br />
+                      {values.userInputFile ? (
+                        <strong>{values.userInputFile} (input)</strong>
+                      ) : null}
+                      {values.userInputFile && values.userParamFile ? (
+                        <br />
+                      ) : null}
+                      {values.userParamFile ? (
+                        <strong>{values.userParamFile} (param)</strong>
+                      ) : null}
+                    </>
+                  ) : null}
+                </p>
               </Col>
             </Row>
             <Row style={{ padding: '0 15px 0 15px' }}>
@@ -268,76 +283,6 @@ const FormContainer = (props) => {
                     <strong>Run EDWRD</strong>
                   )}
                 </Button>
-                {/* {!showReset ? (
-                  <Button
-                    className="mb-4"
-                    type="button"
-                    disabled={isSubmitting}
-                    outline
-                    color="secondary"
-                    onClick={() => {
-                      if (analysisType === 'indepth') {
-                        setFieldValue(
-                          'userSelectedStation',
-                          values.station_id ? values.station_id : 4
-                        );
-                        setFieldTouched('userSelectedStation', true);
-
-                        updateInitialValues();
-                      } else {
-                        setFieldValue('userSelectedStation', -1);
-                        setFieldTouched('userSelectedStation', true);
-
-                        setInitialValues(null);
-                      }
-                    }}
-                    style={{
-                      height: '75px',
-                      width: '150px',
-                      float: 'right',
-                    }}
-                  >
-                    {analysisType === 'indepth' ? (
-                      <strong>Switch to In-Depth Analysis</strong>
-                    ) : (
-                      <strong>Switch to Quick Analysis</strong>
-                    )}
-                  </Button>
-                ) : null} */}
-                {showReset ? (
-                  <Button
-                    className="mb-4"
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      const inputUpload = document.getElementsByName(
-                        'input-upload'
-                      );
-                      const paramUpload = document.getElementsByName(
-                        'param-upload'
-                      );
-
-                      if (inputUpload && inputUpload.length > 0) {
-                        inputUpload[0].value = '';
-                      }
-                      if (paramUpload && paramUpload.length > 0) {
-                        paramUpload[0].value = '';
-                      }
-
-                      updateProcessingStatus('');
-                      handleReset();
-                      toggleShowReset(false);
-                    }}
-                    style={{
-                      backgroundColor: '#edb229',
-                      height: '75px',
-                      width: '150px',
-                      float: 'right',
-                    }}
-                  >
-                    <strong>Restore Default Values</strong>
-                  </Button>
-                ) : null}
               </Col>
             </Row>
             {status ? (
