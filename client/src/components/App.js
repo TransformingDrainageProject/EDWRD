@@ -32,8 +32,10 @@ const App = () => {
   });
   const [markerCoords, updateMarkerCoords] = useState(null);
 
+  const chartRef = useRef(null);
   const formRef = useRef(null);
-  const executeScroll = () => scrollToRef(formRef);
+  const executeScrollToChart = () => scrollToRef(chartRef);
+  const executeScrollToForm = () => scrollToRef(formRef);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,7 +101,7 @@ const App = () => {
         <hr />
         {markerCoords ? (
           <Instructions
-            executeScroll={executeScroll}
+            executeScroll={executeScrollToForm}
             setAnalysisType={setAnalysisType}
             setUnitType={setUnitType}
             unitType={unitType}
@@ -109,6 +111,7 @@ const App = () => {
         {markerCoords && analysisType ? (
           <FormContainer
             analysisType={analysisType}
+            executeScroll={executeScrollToChart}
             origin={ORIGIN}
             fieldState={fieldState}
             frzThwDates={frzThwDates}
@@ -119,6 +122,7 @@ const App = () => {
           />
         ) : null}
         {markerCoords && analysisType ? <hr /> : null}
+        <div ref={chartRef}></div>
         {chartData ? <ChartsContainer chartData={chartData} /> : null}
         {chartData ? <hr /> : null}
       </Container>

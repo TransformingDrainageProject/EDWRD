@@ -63,6 +63,7 @@ const validationSchema = fieldReservoirFormSchema
 const FormContainer = (props) => {
   const {
     analysisType,
+    executeScroll,
     origin,
     fieldState,
     frzThwDates,
@@ -97,6 +98,7 @@ const FormContainer = (props) => {
       setChartData(chartData);
       setStatus('');
       setSubmitting(false);
+      executeScroll();
     });
   }
 
