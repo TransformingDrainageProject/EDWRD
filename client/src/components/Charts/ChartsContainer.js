@@ -31,6 +31,8 @@ const ChartsContainer = ({ chartData }) => {
 
   return (
     <Container>
+      <h1>View Results</h1>
+      <hr />
       <ChartNavTabs
         active={activeNavTab}
         sessionID={chartData.sessionID}
