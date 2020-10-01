@@ -61,9 +61,17 @@ function SelectStationLocationMap(props) {
 function SelectFieldLocationMap(props) {
   return (
     <div>
-      <h1>1. Click and drag the pin to your field's location</h1>
+      <h1>Step 1: Choose Your Location</h1>
+      <p>
+        Click a spot on the map to choose your location. Based on your chosen
+        location we will identify the average annual climate conditions from the
+        closest weather station. This data is used in calculating crop
+        evapotranspiration and typical dates for frozen soil conditions. You may
+        further refine these values by choosing In-depth Analysis in the next
+        step. After you have chosen your location on the map, scroll down to
+        complete Step 2.
+      </p>
       <Map {...props} />
-      <hr />
     </div>
   );
 }

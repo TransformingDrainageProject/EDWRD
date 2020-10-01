@@ -1,6 +1,6 @@
 import './App.css';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Container } from 'reactstrap';
 
 import ChartsContainer from './Charts/ChartsContainer';
@@ -18,17 +18,22 @@ const ORIGIN = {
   zoom: 6,
 };
 
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
+
 const App = () => {
+  const [analysisType, setAnalysisType] = useState(null);
   const [chartData, setChartData] = useState(null);
+  const [nearestStation, setNearestStation] = useState(null);
   const [unitType, setUnitType] = useState('us');
   const [fieldState, updateFieldState] = useState('il');
   const [frzThwDates, updateFrzThwDates] = useState({
     freeze: 311.46277,
     thaw: 86.998985,
   });
-  const [markerCoords, updateMarkerCoords] = useState({
-    location: { latitude: ORIGIN.lat, longitude: ORIGIN.lon },
-  });
+  const [markerCoords, updateMarkerCoords] = useState(null);
+
+  const formRef = useRef(null);
+  const executeScroll = () => scrollToRef(formRef);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,13 +59,36 @@ const App = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const findNearestStation = async () => {
+      try {
+        const result = await axios.get('/api/nearest_station', {
+          params: {
+            lat: markerCoords.location.latitude,
+            lon: markerCoords.location.longitude,
+            unit: unitType,
+          },
+        });
+
+        if (result) {
+          setNearestStation(result.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (markerCoords) {
+      findNearestStation();
+    }
+  }, [markerCoords, unitType]);
+
   return (
     <div>
       <Container>
         <Header />
-        <Introduction setUnitType={setUnitType} unitType={unitType} />
+        <Introduction />
         <hr />
-        <Instructions />
         <MapContainer
           origin={ORIGIN}
           updateFieldState={updateFieldState}
@@ -68,20 +96,31 @@ const App = () => {
           updateMarkerCoords={updateMarkerCoords}
           type="selectFieldLocation"
         />
-        <FormContainer
-          origin={ORIGIN}
-          fieldState={fieldState}
-          frzThwDates={frzThwDates}
-          markerCoords={markerCoords}
-          setChartData={setChartData}
-          unitType={unitType}
-        />
-        {chartData ? (
-          <>
-            <hr />
-            <ChartsContainer chartData={chartData} />
-          </>
+        <hr />
+        {markerCoords ? (
+          <Instructions
+            executeScroll={executeScroll}
+            setAnalysisType={setAnalysisType}
+            setUnitType={setUnitType}
+            unitType={unitType}
+          />
         ) : null}
+        {markerCoords ? <hr ref={formRef} /> : null}
+        {markerCoords && analysisType ? (
+          <FormContainer
+            analysisType={analysisType}
+            origin={ORIGIN}
+            fieldState={fieldState}
+            frzThwDates={frzThwDates}
+            markerCoords={markerCoords}
+            nearestStation={nearestStation}
+            setChartData={setChartData}
+            unitType={unitType}
+          />
+        ) : null}
+        {markerCoords && analysisType ? <hr /> : null}
+        {chartData ? <ChartsContainer chartData={chartData} /> : null}
+        {chartData ? <hr /> : null}
       </Container>
       <Footer />
     </div>

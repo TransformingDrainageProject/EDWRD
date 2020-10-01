@@ -40,10 +40,7 @@ const Map = (props) => {
     setSelectedSite,
     updateSelectedSite,
   } = props;
-  const [markerPosition, updateMarkerPosition] = useState([
-    origin.lat,
-    origin.lon,
-  ]);
+  const [markerPosition, updateMarkerPosition] = useState(null);
   const [precompiledDataStations, setPrecompiledDataStations] = useState(
     undefined
   );
@@ -63,9 +60,9 @@ const Map = (props) => {
     fetchData();
   }, []);
 
-  function onDragend(e) {
+  function onDragend(latLng) {
     // update the marker position
-    const coords = e.target.getLatLng();
+    const coords = latLng;
     const marker = refMarker.current;
 
     if (marker !== null) {
@@ -105,15 +102,24 @@ const Map = (props) => {
 
   return (
     <div className="container">
-      <LeafletMap center={[origin.lat, origin.lon]} zoom={origin.zoom}>
+      <LeafletMap
+        center={[origin.lat, origin.lon]}
+        zoom={origin.zoom}
+        onClick={(e) => {
+          updateMarkerPosition([e.latlng.lat, e.latlng.lng]);
+          onDragend(e.latlng);
+        }}
+      >
         {type === 'selectFieldLocation' ? (
-          <Marker
-            ref={refMarker}
-            position={markerPosition}
-            draggable={true}
-            onDragend={onDragend}
-            icon={customMarkerIcon}
-          />
+          markerPosition ? (
+            <Marker
+              ref={refMarker}
+              position={markerPosition}
+              draggable={true}
+              onDragend={(e) => onDragend(e.target.getLatLng())}
+              icon={customMarkerIcon}
+            />
+          ) : null
         ) : precompiledDataStations ? (
           precompiledDataStations.map((station) => (
             <Marker

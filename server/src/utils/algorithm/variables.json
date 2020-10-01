@@ -172,72 +172,72 @@
         "column": "Precipitation to Reservoir",
         "label": "Reservoir Precipitation",
         "description": "The total monthly amount of precipitation falling directly on the reservoir.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "reservoirDrainFlow",
         "column": "Tile Drain Flow to Reservoir",
         "label": "Reservoir Drain Flow",
         "description": "The total monthly amount of tile drain flow flowing into the reservoir.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "reservoirRunoff",
         "column": "Runoff to Reservoir",
         "label": "Reservoir Runoff",
         "description": "The total monthly amount of surface runoff flowing into the reservoir.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "irrigationWithdrawl",
         "column": "Irrigation Withdrawal",
         "label": "Irrigation Withdrawl",
         "description": "The total monthly amount of water withdrawn from the reservoir for irrigation purposes.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "seepage",
         "column": "Reservoir Seepage",
         "label": "Seepage",
         "description": "The total monthly amount of water lost from the reservoir through seepage.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "reservoirEvaporation",
         "column": "Reservoir Evaporation",
         "label": "Reservoir Evaporation",
         "description": "The total monthly amount of water lost from the reservoir through evaporation from water surface.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "overflow",
         "column": "Reservoir Overflow",
         "label": "Overflow",
         "description": "The total monthly amount of water that must overflow from the reservoir due to exceeding the maximum water storage capacity.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "capture",
         "column": "Captured Tile Drain Flow",
         "label": "Capture",
         "description": "The total monthly amount of water that is captured and stored in the reservoir.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "reservoirStoredVolume",
         "column": "Reservoir Water Volume",
         "label": "Reservoir Stored Volume",
         "description": "The average monthly amount of water stored in the reservoir.",
-        "unit": { "us": "gal", "metric": "m3" },
-        "precision": 3
+        "unit": { "us": "ac-in", "metric": "m3" },
+        "precision": 1
       },
       {
         "key": "reservoirWaterDepth",
