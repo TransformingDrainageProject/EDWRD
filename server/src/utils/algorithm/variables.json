@@ -20,45 +20,48 @@
         "precision": 2
       }
     ],
-    "waterQualityMetrics": [
-      {
-        "key": "nitrateLoadReduction",
-        "column": "Captured Nitrate Load (Tile)",
-        "label": "Nitrate Load Reduction",
-        "label2": "Nitrate Load Reduction",
-        "description": "The annual amount of nitrate load that is captured and stored by the reservoir.",
-        "unit": { "us": "lb", "metric": "kg" },
-        "precision": 2
-      },
-      {
-        "key": "srpLoadReduction",
-        "column": "Captured SRP Load (Tile)",
-        "label": "SRP Load Reduction",
-        "label2": "SRP Load Reduction",
-        "description": "The annual amount of reactive phosphorus load that is captured and stored by the reservoir.",
-        "unit": { "us": "lb", "metric": "kg" },
-        "precision": 2
-      },
-
-      {
-        "key": "nitrateLoadReductionPerc",
-        "column": "Nitrate Load Reduction (%)",
-        "label": "Nitrate Load Reduction (%)",
-        "label2": "Nitrate Load Reduction (%)",
-        "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
-        "unit": { "us": "%", "metric": "%" },
-        "precision": 2
-      },
-      {
-        "key": "srpLoadReductionPerc",
-        "column": "SRP Load Reduction (%)",
-        "label": "SRP Load Reduction (%)",
-        "label2": "SRP Load Reduction (%)",
-        "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
-        "unit": { "us": "%", "metric": "%" },
-        "precision": 2
-      }
-    ]
+    "waterQualityMetrics": {
+      "real": [
+        {
+          "key": "nitrateLoadReduction",
+          "column": "Captured Nitrate Load (Tile)",
+          "label": "Nitrate Load Reduction",
+          "label2": "Nitrate-N Load Reduction",
+          "description": "The annual amount of nitrate load that is captured and stored by the reservoir.",
+          "unit": { "us": "lb/ac", "metric": "kg/ha" },
+          "precision": 2
+        },
+        {
+          "key": "srpLoadReduction",
+          "column": "Captured SRP Load (Tile)",
+          "label": "SRP Load Reduction",
+          "label2": "Soluble Reactive Phosphorus Load Reduction",
+          "description": "The annual amount of reactive phosphorus load that is captured and stored by the reservoir.",
+          "unit": { "us": "lb/ac", "metric": "kg/ha" },
+          "precision": 2
+        }
+      ],
+      "percent": [
+        {
+          "key": "nitrateLoadReductionPerc",
+          "column": "Nitrate Load Reduction (%)",
+          "label": "Nitrate Load Reduction (%)",
+          "label2": "Nitrate-N Load Reduction",
+          "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
+          "unit": { "us": "%", "metric": "%" },
+          "precision": 2
+        },
+        {
+          "key": "srpLoadReductionPerc",
+          "column": "SRP Load Reduction (%)",
+          "label": "SRP Load Reduction (%)",
+          "label2": "Soluble Reactive Phosphorus Load Reduction",
+          "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
+          "unit": { "us": "%", "metric": "%" },
+          "precision": 2
+        }
+      ]
+    }
   },
   "monthly": {
     "fieldWaterBalance": [

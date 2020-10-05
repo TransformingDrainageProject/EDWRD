@@ -136,17 +136,36 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
 def get_annual_data(annual_output, reservoir_area, unit_type):
     annual_data = {
         "irrigationMetrics": {},
-        "waterQualityMetrics": {}
+        "waterQualityMetrics": {
+            "real": {},
+            "percent": {}
+        }
     }
 
     for category in annual_data.keys():
-        for variable in annual_variables[category]:
-            annual_data[category][variable["key"]] = convert_dataframe_to_annual_json(
-                annual_output,
-                reservoir_area,
-                unit_type,
-                variable,
-            )
+        if category == "waterQualityMetrics":
+            for variable in annual_variables[category]["real"]:
+                annual_data[category]["real"][variable["key"]] = convert_dataframe_to_annual_json(
+                    annual_output,
+                    reservoir_area,
+                    unit_type,
+                    variable
+                )
+            for variable in annual_variables[category]["percent"]:
+                annual_data[category]["percent"][variable["key"]] = convert_dataframe_to_annual_json(
+                    annual_output,
+                    reservoir_area,
+                    unit_type,
+                    variable
+                )
+        else:
+            for variable in annual_variables[category]:
+                annual_data[category][variable["key"]] = convert_dataframe_to_annual_json(
+                    annual_output,
+                    reservoir_area,
+                    unit_type,
+                    variable,
+                )
 
     return annual_data
 

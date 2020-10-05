@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Container } from 'reactstrap';
 
 import AnnualIrrigationMetrics from './AnnualIrrigationMetrics';
+import AnnualWaterQualityMetrics from './AnnualWaterQualityMetrics';
 import ChartsDownloadResults from './ChartsDownloadResults';
 import ChartsFieldWaterBalance from './FieldWaterBalance/ChartsFieldWaterBalance';
 import ChartsReservoirWaterBalance from './ReservoirWaterBalance/ChartsReservoirWaterBalance';
@@ -15,7 +16,7 @@ function showChart(tabIndex, chartData) {
     case 0:
       return <AnnualIrrigationMetrics chartData={chartData} />;
     case 1:
-      return <ChartsFieldWaterBalance chartData={chartData} />;
+      return <AnnualWaterQualityMetrics chartData={chartData} />;
     case 2:
       return <ChartsReservoirWaterBalance chartData={chartData} />;
     case 3:

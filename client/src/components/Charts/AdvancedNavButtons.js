@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
 
 const AdvancedNavButtons = ({ active, setActive }) => (
-  <ButtonGroup className="nav-btn-grp mb-3" style={{ width: '100%' }}>
+  <ButtonGroup className="nav-btn-grp mb-3 nav-bg" style={{ width: '100%' }}>
     <Button color="primary" onClick={() => setActive(0)} active={active === 0}>
       Monthly Field Water Balance
     </Button>
