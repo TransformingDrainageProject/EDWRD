@@ -9,7 +9,7 @@ import VariableButtons from './VariableButtons';
 
 import { getUniqueYears, getYearRange } from '../utils/getYearInfo';
 
-const ChartsAnnualPerformance = ({ chartData }) => {
+const AnnualIrrigationMetrics = ({ chartData }) => {
   const [activeChart, setActiveChart] = useState('');
   const [annualFilter, setAnnualFilter] = useState('all');
   const [avgLineOnly, toggleAvgLineOnly] = useState(false);
@@ -24,11 +24,12 @@ const ChartsAnnualPerformance = ({ chartData }) => {
 
   if (activeChart) {
     selectedChartData = {
-      precision: chartData.annual[activeChart].precision,
+      label: chartData.annual.irrigationMetrics[activeChart].label2,
+      precision: chartData.annual.irrigationMetrics[activeChart].precision,
       rdep: chartData.rdep,
-      unit: chartData.annual[activeChart].unit,
+      unit: chartData.annual.irrigationMetrics[activeChart].unit,
       unitType: chartData.unitType,
-      values: chartData.annual[activeChart].values,
+      values: chartData.annual.irrigationMetrics[activeChart].values,
     };
     uniqueYears = getUniqueYears(selectedChartData.values);
     yearRange = getYearRange(uniqueYears);
@@ -45,14 +46,14 @@ const ChartsAnnualPerformance = ({ chartData }) => {
       <VariableButtons
         active={activeChart}
         setActive={setActiveChart}
-        chartVariables={chartData.annual}
+        chartVariables={chartData.annual.irrigationMetrics}
       />
       {activeChart ? (
         <>
           <Row className="text-center">
             <Col>
               <h1>
-                {selectedChartData.label}
+                {selectedChartData.label}{' '}
                 {annualFilter !== 'all' ? ` (${annualFilter})` : `${yearRange}`}
               </h1>
             </Col>
@@ -115,9 +116,9 @@ const ChartsAnnualPerformance = ({ chartData }) => {
         <Row>
           <Col>
             <ChartDescription
-              name="annualAppliedIrrigation"
-              title="Annual Applied Irrigation"
-              text="This graph shows the annual performance irrigation and water quality metrics for a range of reservoir sizes across all years at this location. Use the buttons at the top right of the graph to view only the average results, or results for a specific year."
+              name="annualIrrigationMetrics"
+              title="Annual Irrigation Metrics"
+              text="Annual irrigation performance is estimated based on two metrics. The first is the annual amount of irrigation that can be applied from a given reservoir size. The second is a measure of the ability of a particular reservoir size to meet the total annual irrigation requirement, which we refer to as the Annual Relative Irrigation Supply (ARIS). ARIS is calculated as the amount of applied irrigation provided by a particular reservoir size divided by the amount of irrigation that would have been applied given an unlimited water supply. An ARIS value of 1.0 indicates that the reservoir was able to fully meet the annual irrigation requirement. You can find out more about how these metrics and others are calculated in the tool documentation <insert link to documentation>."
             >
               <DownloadDataButton
                 sessionID={chartData.sessionID}
@@ -131,4 +132,4 @@ const ChartsAnnualPerformance = ({ chartData }) => {
   );
 };
 
-export default ChartsAnnualPerformance;
+export default AnnualIrrigationMetrics;

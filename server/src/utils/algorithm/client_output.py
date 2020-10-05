@@ -21,6 +21,7 @@ def convert_dataframe_to_annual_json(data, rarea, unit_type, variable):
     column_name = variable["column"]
     description = variable["description"]
     label = variable["label"]
+    label2 = variable["label2"]
     unit = variable["unit"][unit_type]
     precision = variable["precision"]
 
@@ -31,6 +32,7 @@ def convert_dataframe_to_annual_json(data, rarea, unit_type, variable):
         },
         "key": key,
         "label": label,
+        "label2": label2,
         "description": description,
         "unit": unit,
         "precision": precision
@@ -132,15 +134,38 @@ def convert_dataframe_to_monthly_json(data, unit_type, variable, scale):
 
 
 def get_annual_data(annual_output, reservoir_area, unit_type):
-    annual_data = {}
+    annual_data = {
+        "irrigationMetrics": {},
+        "waterQualityMetrics": {
+            "real": {},
+            "percent": {}
+        }
+    }
 
-    for variable in annual_variables:
-        annual_data[variable["key"]] = convert_dataframe_to_annual_json(
-            annual_output,
-            reservoir_area,
-            unit_type,
-            variable
-        )
+    for category in annual_data.keys():
+        if category == "waterQualityMetrics":
+            for variable in annual_variables[category]["real"]:
+                annual_data[category]["real"][variable["key"]] = convert_dataframe_to_annual_json(
+                    annual_output,
+                    reservoir_area,
+                    unit_type,
+                    variable
+                )
+            for variable in annual_variables[category]["percent"]:
+                annual_data[category]["percent"][variable["key"]] = convert_dataframe_to_annual_json(
+                    annual_output,
+                    reservoir_area,
+                    unit_type,
+                    variable
+                )
+        else:
+            for variable in annual_variables[category]:
+                annual_data[category][variable["key"]] = convert_dataframe_to_annual_json(
+                    annual_output,
+                    reservoir_area,
+                    unit_type,
+                    variable,
+                )
 
     return annual_data
 

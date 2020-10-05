@@ -1,54 +1,68 @@
 {
-  "annual": [
-    {
-      "key": "appliedIrrigation",
-      "column": "Applied Irrigation Depth",
-      "label": "Applied Irrigation",
-      "description": "The annual amount of irrigation applied to the field.",
-      "unit": { "us": "in", "metric": "mm" },
-      "precision": 2
-    },
-    {
-      "key": "nitrateLoadReduction",
-      "column": "Captured Nitrate Load (Tile)",
-      "label": "Nitrate Load Reduction",
-      "description": "The annual amount of nitrate load that is captured and stored by the reservoir.",
-      "unit": { "us": "lb", "metric": "kg" },
-      "precision": 2
-    },
-    {
-      "key": "srpLoadReduction",
-      "column": "Captured SRP Load (Tile)",
-      "label": "SRP Load Reduction",
-      "description": "The annual amount of reactive phosphorus load that is captured and stored by the reservoir.",
-      "unit": { "us": "lb", "metric": "kg" },
-      "precision": 2
-    },
-    {
-      "key": "irrigationSupply",
-      "column": "Relative Irrigation Supply",
-      "label": "Annual Relative Irrigation Supply",
-      "description": "The fraction of water supplied for irrigation from a given reservoir size relative to the total amount of water that would have been used for irrigation if water supply was unlimited.",
-      "unit": { "us": "index value", "metric": "index value" },
-      "precision": 2
-    },
-    {
-      "key": "nitrateLoadReductionPerc",
-      "column": "Nitrate Load Reduction (%)",
-      "label": "Nitrate Load Reduction (%)",
-      "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
-      "unit": { "us": "%", "metric": "%" },
-      "precision": 2
-    },
-    {
-      "key": "srpLoadReductionPerc",
-      "column": "SRP Load Reduction (%)",
-      "label": "SRP Load Reduction (%)",
-      "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
-      "unit": { "us": "%", "metric": "%" },
-      "precision": 2
+  "annual": {
+    "irrigationMetrics": [
+      {
+        "key": "appliedIrrigation",
+        "column": "Applied Irrigation Depth",
+        "label": "Applied Irrigation",
+        "label2": "Annual applied irrigation",
+        "description": "The annual amount of irrigation applied to the field.",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
+        "key": "irrigationSupply",
+        "column": "Relative Irrigation Supply",
+        "label": "Annual Relative Irrigation Supply (ARIS)",
+        "label2": "Annual Relative Irrigation Supply",
+        "description": "The fraction of water supplied for irrigation from a given reservoir size relative to the total amount of water that would have been used for irrigation if water supply was unlimited. An ARIS value of 1.0 indicates that the reservoir was able to fully meet the annual irrigation requirement.",
+        "unit": { "us": "decimal fraction", "metric": "decimal fraction" },
+        "precision": 2
+      }
+    ],
+    "waterQualityMetrics": {
+      "real": [
+        {
+          "key": "nitrateLoadReduction",
+          "column": "Captured Nitrate Load (Tile)",
+          "label": "Nitrate Load Reduction",
+          "label2": "Nitrate-N Load Reduction",
+          "description": "The annual amount of nitrate load that is captured and stored by the reservoir.",
+          "unit": { "us": "lb/ac", "metric": "kg/ha" },
+          "precision": 2
+        },
+        {
+          "key": "srpLoadReduction",
+          "column": "Captured SRP Load (Tile)",
+          "label": "SRP Load Reduction",
+          "label2": "Soluble Reactive Phosphorus Load Reduction",
+          "description": "The annual amount of reactive phosphorus load that is captured and stored by the reservoir.",
+          "unit": { "us": "lb/ac", "metric": "kg/ha" },
+          "precision": 2
+        }
+      ],
+      "percent": [
+        {
+          "key": "nitrateLoadReductionPerc",
+          "column": "Nitrate Load Reduction (%)",
+          "label": "Nitrate Load Reduction (%)",
+          "label2": "Nitrate-N Load Reduction",
+          "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
+          "unit": { "us": "%", "metric": "%" },
+          "precision": 2
+        },
+        {
+          "key": "srpLoadReductionPerc",
+          "column": "SRP Load Reduction (%)",
+          "label": "SRP Load Reduction (%)",
+          "label2": "Soluble Reactive Phosphorus Load Reduction",
+          "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
+          "unit": { "us": "%", "metric": "%" },
+          "precision": 2
+        }
+      ]
     }
-  ],
+  },
   "monthly": {
     "fieldWaterBalance": [
       {
