@@ -109,15 +109,17 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
             name="nutrientCaptureOverflow"
             title="Nutrient Capture Overflow"
             text="This graph shows the monthly amount of nitrate and reactive 
-                  phosphorus delivered through tile drain flow, and how much is 
-                  captured and stored for a specific reservoir size across all 
-                  years. Nitrate loads are shown in blue. Phosphorus loads are 
-                  shown in yellow. The total loads are shown in gray. Use the 
-                  buttons at the top right of the graph to view a specific year 
-                  or reservoir size. Results for individual years are shown as 
-                  stacked bar graphs allowing you to view what proportion of 
-                  the load was captured. Click on the question mark to learn more 
-                  about how this water balance is calculated."
+                  phosphorus delivered through tile drain flow, and how much 
+                  is captured and stored for a specific reservoir size across 
+                  all years. Nitrate loads are shown in blue. Phosphorus loads 
+                  are shown in yellow. The total loads are shown in gray. Use 
+                  the buttons at the top right of the graph to view a specific 
+                  year or reservoir size. Results for individual years are shown 
+                  as stacked bar graphs allowing you to view what proportion of 
+                  the load was captured. Users can download all monthly results 
+                  to get more information.  You can find out more about how 
+                  these components are calculated in the tool documentation 
+                  <insert link to documentation>."
           >
             <DownloadDataButton
               sessionID={chartData.sessionID}

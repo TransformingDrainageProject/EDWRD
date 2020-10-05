@@ -17,19 +17,22 @@ function showChart(tabIndex, chartData) {
       return <AnnualIrrigationMetrics chartData={chartData} />;
     case 1:
       return <AnnualWaterQualityMetrics chartData={chartData} />;
-    case 2:
-      return <ChartsReservoirWaterBalance chartData={chartData} />;
-    case 3:
-      return <ChartsNutrientCaptureOverflow chartData={chartData} />;
-    case 4:
-      return <ChartsDownloadResults sessionID={chartData.sessionID} />;
     default:
       return <span>Please select a chart tab.</span>;
   }
 }
 
 function showAdvancedChart(tabIndex, chartData) {
-  return <div>Adv Chart</div>;
+  switch (tabIndex) {
+    case 0:
+      return <ChartsReservoirWaterBalance chartData={chartData} />;
+    case 1:
+      return <ChartsNutrientCaptureOverflow chartData={chartData} />;
+    case 2:
+      return <ChartsDownloadResults sessionID={chartData.sessionID} />;
+    default:
+      return <span>Please select a chart tab.</span>;
+  }
 }
 
 const ChartsContainer = ({ chartData }) => {

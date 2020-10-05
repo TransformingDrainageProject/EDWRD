@@ -109,20 +109,22 @@ const ChartsReservoirWaterBalance = ({ chartData }) => {
             name="fieldWaterBalance"
             title="Field Water Balance"
             text="This graph shows the monthly amount of water for each 
-                  component of the field water balance for a specific reservoir 
-                  size across all years. Water inflows to the soil profile are 
-                  shown in blue. Water outflows are shown in shades of yellow 
-                  to red. Use the buttons at the top right of the graph to view 
-                  a specific year or reservoir size. Results from individual 
-                  years are shown as stacked bar graphs allowing you to add 
-                  each bar to estimate total water inflows and outflows and 
-                  compare the field water balance throughout the year. Users 
-                  can download all monthly results to get more information 
-                  about potential evapotranspiration (to see how actual ET 
-                  compares to potential ET), and how ET breaks down into 
-                  separate components of crop transpiration and soil 
-                  evaporation. Click on the question mark to learn more about 
-                  how this water balance is calculated."
+                  component of the field water balance for a specific 
+                  reservoir size across all years. Water inflows to the 
+                  soil profile are shown in blue. Water outflows are 
+                  shown in shades of yellow to red. Use the buttons at 
+                  the top right of the graph to view a specific year or 
+                  reservoir size. Results from individual years are shown 
+                  as stacked bar graphs allowing you to add each bar to 
+                  estimate total water inflows and outflows and compare 
+                  the field water balance throughout the year. Users can 
+                  download all monthly results to get more information 
+                  about potential evapotranspiration (to see how actual 
+                  ET compares to potential ET), and how ET breaks down 
+                  into separate components of crop transpiration and 
+                  soil evaporation.  You can find out more about how 
+                  these components are calculated in the tool documentation 
+                  <insert link to documentation>."
           >
             <DownloadDataButton
               sessionID={chartData.sessionID}
