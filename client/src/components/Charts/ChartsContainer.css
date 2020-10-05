@@ -1,20 +1,18 @@
-.nav-tabs .nav-link.active,
-.list-group-item.active {
+.list-group-item,
+.nav-bg > .btn-secondary:not(:disabled):not(.disabled) {
+  background-color: #eefaff;
+  border-color: #004767;
+  color: #000;
+}
+
+.list-group-item:hover,
+.nav-bg > .btn-secondary:not(:disabled):not(.disabled):hover {
+  background-color: #c7eeff;
+}
+
+.list-group-item.active,
+.nav-bg > .btn-secondary:not(:disabled):not(.disabled).active {
+  background-color: #007cb3;
   color: #fff;
-  background-color: #007cb3;
   font-weight: bold;
-  border-color: #fff;
-}
-
-.nav-tabs .nav-link:hover,
-.list-group-item:hover {
-  font-weight: bold;
-}
-
-.btn-secondary:not(:disabled):not(.disabled).active {
-  background-color: #007cb3;
-}
-
-.btn-secondary:not(:disabled):not(.disabled).active.output {
-  background-color: #3faf46;
 }

@@ -42,7 +42,7 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
         axisLabel: { padding: 36, fontSize: 8 },
         tickLabels: { fontSize: 6 },
       }}
-      label={chartData.unit}
+      label={`${chartData.label} (${chartData.unit})`}
     />
     <VictoryAxis
       style={{
