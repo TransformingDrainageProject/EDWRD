@@ -42,7 +42,7 @@ export function getStyles(active, variableClasses) {
         border: '1px solid #ccc',
       },
     },
-    legend: { border: { stroke: 'black' }, labels: { fontSize: 6 } },
+    legend: { labels: { fontSize: 6 } },
     line: (key) => ({
       data: { stroke: getVariableColor(active, key, variableClasses) },
       parent: { border: '1px solid #ccc' },
@@ -73,7 +73,7 @@ export function getLegendYPosition(active) {
 export function getChartPadding(active) {
   return {
     left: 50,
-    bottom: 45,
+    bottom: 50,
     right: 45,
     top:
       active.length < 4

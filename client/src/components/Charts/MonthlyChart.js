@@ -237,7 +237,7 @@ const MonthlyChart = ({
         </VictoryGroup>
       ) : null}
       <VictoryLegend
-        x={65}
+        x={50}
         y={15}
         orientation="horizontal"
         itemsPerRow={3}

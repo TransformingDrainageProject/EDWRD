@@ -153,7 +153,7 @@
         "label": "Overflow SRP Load",
         "description": "The total monthly amount of reactive phosphorus load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
-        "precision": 2
+        "precision": 3
       },
       {
         "key": "capturedSRPLoad",
@@ -161,7 +161,7 @@
         "label": "Captured SRP Load",
         "description": "The total monthly amount of reactive phosphorus load that is captured and stored in the reservoir.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
-        "precision": 2
+        "precision": 3
       },
       {
         "key": "tileNitrateLoad",
@@ -169,7 +169,7 @@
         "label": "Tile Nitrate Load",
         "description": "The total monthly amount of nitrate load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
-        "precision": 1
+        "precision": 2
       },
       {
         "key": "tileSRPLoad",

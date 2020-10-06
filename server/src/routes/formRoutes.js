@@ -59,7 +59,6 @@ module.exports = (app, io) => {
           let inputFile, paramFile;
           let inputNeedsUnitConv = false,
             paramNeedsUnitConv = false;
-
           // if this is a quick analysis, use input and
           // param files from nearest station
           if (form.quickAnalysis) {
@@ -92,7 +91,10 @@ module.exports = (app, io) => {
             );
           } else {
             // check if input file was uploaded
-            if (form.userInput && req.session.inputFile) {
+            if (
+              (form.userInput && req.session.inputFile) ||
+              req.session.inputFile
+            ) {
               inputFile = path.resolve(
                 req.session.workspace,
                 req.session.inputFile
@@ -121,21 +123,7 @@ module.exports = (app, io) => {
                 ),
                 inputFile
               );
-              paramFile = path.resolve(
-                req.session.workspace,
-                stationFile.param
-              );
-              fs.copyFileSync(
-                path.resolve(
-                  'src',
-                  'utils',
-                  'daily_stations',
-                  stationFile.param
-                ),
-                paramFile
-              );
             }
-
             if (!paramFile) {
               // check if param file was uploaded by user
               if (form.userParam && req.session.paramFile) {
@@ -164,7 +152,6 @@ module.exports = (app, io) => {
               }
             }
           }
-
           if (inputFile && paramFile) {
             const startTime = process.hrtime();
 

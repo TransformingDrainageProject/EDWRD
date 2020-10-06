@@ -44,12 +44,6 @@ const AnnualWaterQualityMetrics = ({ chartData }) => {
 
   return (
     <>
-      <Row>
-        <Col>
-          Click on the buttons below to see results for each annual performance
-          metric across multiple reservoir sizes.
-        </Col>
-      </Row>
       <VariableButtons
         active={activeChart}
         setActive={setActiveChart}

@@ -25,7 +25,7 @@ const YearlyTable = ({ data }) => {
       <tbody>
         {uniqueAreas.map((area) => (
           <tr key={`tr-${area}`}>
-            <th scope="row">{area}</th>
+            <th scope="row">{area.toFixed(1)}</th>
             {data
               .filter((record) => record.x === area)
               .map((record, index) => (

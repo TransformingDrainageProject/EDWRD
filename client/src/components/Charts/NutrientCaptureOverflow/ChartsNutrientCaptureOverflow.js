@@ -45,12 +45,6 @@ const ChartsNutrientCaptureOverflow = ({ chartData }) => {
 
   return (
     <>
-      <Row>
-        <Col>
-          Click on the buttons below to see results for each reservoir water
-          balance metric across multiple reservoir sizes.
-        </Col>
-      </Row>
       <VariableButtons
         active={active}
         annualFilter={annualFilter}

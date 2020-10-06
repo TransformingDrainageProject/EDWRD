@@ -1,11 +1,9 @@
-.list-group-item,
 .nav-bg > .btn-secondary:not(:disabled):not(.disabled) {
   background-color: #eefaff;
   border-color: #004767;
   color: #000;
 }
 
-.list-group-item:hover,
 .nav-bg > .btn-secondary:not(:disabled):not(.disabled):hover {
   background-color: #c7eeff;
 }
@@ -14,6 +12,16 @@
 .nav-bg > .btn-secondary:not(:disabled):not(.disabled).active {
   background-color: #007cb3;
   color: #fff;
+  font-weight: bold;
+}
+
+.list-group-item {
+  background-color: #ffffff;
+  border-color: #004767;
+  color: #000;
+}
+
+.list-group-item:hover {
   font-weight: bold;
 }
 
