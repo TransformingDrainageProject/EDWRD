@@ -33,7 +33,7 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
     theme={VictoryTheme.material}
     domainPadding={15}
     height={300}
-    padding={{ left: 50, bottom: 80, right: 15, top: 15 }}
+    padding={{ left: 50, bottom: 45, right: 15, top: 35 }}
     style={{ parent: { border: '1px solid #ccc' } }}
   >
     <VictoryAxis
@@ -98,8 +98,8 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
       />
     )}
     <VictoryLegend
-      x={50}
-      y={273}
+      x={65}
+      y={15}
       orientation="horizontal"
       itemsPerRow={3}
       gutter={20}
