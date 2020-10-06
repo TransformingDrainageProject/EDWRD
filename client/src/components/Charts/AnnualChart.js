@@ -63,10 +63,10 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
             style={{
               data: {
                 fill: '#636363',
-                fillOpacity: 0.7,
+                fillOpacity: 0.4,
               },
             }}
-            symbol={'minus'}
+            symbol={'circle'}
             data={chartData.values.yearly}
             size={2}
           />
@@ -107,7 +107,7 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
       data={[
         {
           name: 'Annual value',
-          symbol: { type: 'minus', fill: '#636363', fillOpacity: 0.7 },
+          symbol: { type: 'circle', fill: '#636363', fillOpacity: 0.7 },
         },
         {
           name: 'Average',
