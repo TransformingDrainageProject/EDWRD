@@ -11,11 +11,23 @@ function updateActive(
   chart
 ) {
   let newActiveVariables = active.slice();
+  console.log('active', active);
   if (active.includes(index)) {
-    newActiveVariables = active.filter((i) => i !== index);
+    if (index !== 'reservoirVolDep') {
+      newActiveVariables = active.filter((i) => i !== index);
+    } else {
+      newActiveVariables = active.filter((i) => i !== 'reservoirStoredVolume');
+      newActiveVariables = active.filter((i) => i !== 'reservoirWaterDepth');
+    }
   } else {
-    newActiveVariables.push(index);
+    if (index !== 'reservoirVolDep') {
+      newActiveVariables.push(index);
+    } else {
+      newActiveVariables.push('reservoirStoredVolume');
+      newActiveVariables.push('reservoirWaterDepth');
+    }
   }
+  console.log('newActiveVariables', newActiveVariables);
   setActive(newActiveVariables);
 
   const data = updateChartData(
@@ -25,6 +37,7 @@ function updateActive(
     annualFilter,
     selectedVol
   );
+  console.log('data', data);
   updateSelectedChartData(data);
 }
 
