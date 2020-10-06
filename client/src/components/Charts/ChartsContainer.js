@@ -25,10 +25,12 @@ function showChart(tabIndex, chartData) {
 function showAdvancedChart(tabIndex, chartData) {
   switch (tabIndex) {
     case 0:
-      return <ChartsReservoirWaterBalance chartData={chartData} />;
+      return <ChartsFieldWaterBalance chartData={chartData} />;
     case 1:
-      return <ChartsNutrientCaptureOverflow chartData={chartData} />;
+      return <ChartsReservoirWaterBalance chartData={chartData} />;
     case 2:
+      return <ChartsNutrientCaptureOverflow chartData={chartData} />;
+    case 3:
       return <ChartsDownloadResults sessionID={chartData.sessionID} />;
     default:
       return <span>Please select a chart tab.</span>;
