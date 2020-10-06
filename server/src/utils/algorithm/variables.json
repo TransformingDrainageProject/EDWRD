@@ -100,7 +100,7 @@
       {
         "key": "runoff",
         "column": "Runoff",
-        "label": "Runoff",
+        "label": "Surface Runoff",
         "description": "The total monthly amount of water that is lost from the field through surface runoff.",
         "unit": { "us": "in", "metric": "mm" },
         "precision": 2
@@ -116,15 +116,15 @@
       {
         "key": "readilyAvailableWater",
         "column": "Readily Available Water",
-        "label": "Readily Available Water",
-        "description": "The average monthly amount of water in the soil profile that defines the point at which crop stress occurs. If soil moisture is less than this value, crop stress occurs due to too little available water in the soil profile.",
+        "label": "Readily Available Water Threshold",
+        "description": "The fraction of total available water that can be used by the crop before crop stress occurs. If Available Soil Water drops below this threshold value crop stress occurs due to too little available water in the soil profile.",
         "unit": { "us": "in", "metric": "mm" },
         "precision": 1
       },
       {
         "key": "soilMoisture",
         "column": "Root Zone Soil Moisture",
-        "label": "Soil Moisture",
+        "label": "Available Soil Water",
         "description": "The average monthly amount of available water in the soil profile.",
         "unit": { "us": "in", "metric": "mm" },
         "precision": 1
@@ -136,7 +136,7 @@
         "column": "Overflow Nitrate Load (Tile)",
         "label": "Overflow Nitrate Load (Tile)",
         "description": "The total monthly amount of nitrate load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
-        "unit": { "us": "lb", "metric": "kg" },
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 2
       },
       {
@@ -144,7 +144,7 @@
         "column": "Captured Nitrate Load (Tile)",
         "label": "Captured Nitrate Load",
         "description": "The total monthly amount of nitrate load that is captured and stored in the reservoir.",
-        "unit": { "us": "lb", "metric": "kg" },
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 2
       },
       {
@@ -152,7 +152,7 @@
         "column": "Overflow SRP Load (Tile)",
         "label": "Overflow SRP Load",
         "description": "The total monthly amount of reactive phosphorus load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
-        "unit": { "us": "lb", "metric": "kg" },
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 2
       },
       {
@@ -160,7 +160,7 @@
         "column": "Captured SRP Load (Tile)",
         "label": "Captured SRP Load",
         "description": "The total monthly amount of reactive phosphorus load that is captured and stored in the reservoir.",
-        "unit": { "us": "lb", "metric": "kg" },
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 2
       },
       {
@@ -168,7 +168,7 @@
         "column": "Tile Drain Nitrate Load",
         "label": "Tile Nitrate Load",
         "description": "The total monthly amount of nitrate load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
-        "unit": { "us": "lb", "metric": "kg" },
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 1
       },
       {
@@ -176,7 +176,7 @@
         "column": "Tile Drain SRP Load",
         "label": "Tile SRP Load",
         "description": "The total monthly reactive phosphorus load in tile drain flow.",
-        "unit": { "us": "lb", "metric": "kg" },
+        "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 3
       }
     ],
