@@ -80,9 +80,10 @@ const Instructions = ({
             field size is 80 acres (32 hectares). The base reservoir size is 5
             acres (2 hectares), with an average depth of 10 feet (3 meters).
             Irrigation is applied in 1 inch (25 millimeters) increments. Example
-            datasets from either southeast Iowa or east-central Indiana for
-            daily weather, drain flow, and nutrient concentrations will be used
-            based on your chosen location from Step 1.
+            datasets from either southeast Iowa (Washington Co.) or east-central
+            Indiana (Randolph Co.) for daily weather, drain flow, and nutrient
+            concentrations will be used based on your chosen location from Step
+            1.
           </p>
         </Col>
         <Col md={6}>

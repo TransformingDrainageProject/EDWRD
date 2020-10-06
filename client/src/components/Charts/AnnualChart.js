@@ -62,13 +62,16 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
           <VictoryScatter
             style={{
               data: {
-                fill: '#636363',
-                fillOpacity: 0.4,
+                fill: '#ffffff',
+                fillOpacity: 0,
+                stroke: '#000000',
+                strokeWidth: 1,
+                strokeOpacity: 0.4,
               },
             }}
             symbol={'circle'}
             data={chartData.values.yearly}
-            size={2}
+            size={1}
           />
         ) : null}
         <VictoryLine
@@ -82,8 +85,16 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
         <VictoryScatter
           style={{ data: { fill: colorSchemes[color].lineStroke } }}
           data={chartData.values.average}
-          labels={({ datum }) => datum.y.toFixed(chartData.precision)}
-          labelComponent={<VictoryTooltip style={{ fontSize: 6 }} />}
+          labels={({ datum }) =>
+            `${datum.y.toFixed(
+              chartData.precision
+            )} - Reservoir area ${datum.x.toFixed(1)} (${
+              chartData.unitType === 'us' ? 'ac' : 'ha'
+            })`
+          }
+          labelComponent={
+            <VictoryTooltip style={{ fontSize: 6 }} flyoutWidth={120} />
+          }
           size={3}
         />
       </VictoryGroup>
@@ -98,16 +109,23 @@ const AnnualChart = ({ annualFilter, avgLineOnly, chartData }) => (
       />
     )}
     <VictoryLegend
-      x={65}
+      x={50}
       y={15}
       orientation="horizontal"
       itemsPerRow={3}
       gutter={20}
-      style={{ border: { stroke: 'black' }, labels: { fontSize: 6 } }}
+      style={{ labels: { fontSize: 6 } }}
       data={[
         {
           name: 'Annual value',
-          symbol: { type: 'circle', fill: '#636363', fillOpacity: 0.7 },
+          symbol: {
+            type: 'circle',
+            fill: '#ffffff',
+            fillOpacity: 0,
+            stroke: '#000000',
+            strokeWidth: 1,
+            strokeOpacity: 0.7,
+          },
         },
         {
           name: 'Average',

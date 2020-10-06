@@ -111,7 +111,13 @@ const FormContainer = (props) => {
     <>
       <Formik
         initialValues={
-          nearestStation ? { ...formValues, ...nearestStation } : formValues
+          nearestStation
+            ? {
+                ...formValues,
+                ...nearestStation,
+                userSelectedStation: nearestStation.station_id,
+              }
+            : formValues
         }
         enableReinitialize={true}
         validationSchema={validationSchema}
@@ -231,8 +237,8 @@ const FormContainer = (props) => {
                   <br />
                   Daily weather, drain flow, and nutrient concentrations:{' '}
                   {values.userInput === 'false' ? (
-                    values.station_id ? (
-                      values.station_id === 4 ? (
+                    values.userSelectedStation ? (
+                      values.userSelectedStation === 4 ? (
                         <strong>Randolph County, IN</strong>
                       ) : (
                         <strong>Washington County, IA</strong>
@@ -242,7 +248,7 @@ const FormContainer = (props) => {
                     <strong>{values.userInputFile}</strong>
                   )}
                   {(values.userInput === 'true' && values.userInputFile) ||
-                  (values.userParam === 'true' && values.userParamFile) ? (
+                  (values.userParam && values.userParamFile) ? (
                     <>
                       <br />
                       File summary:
