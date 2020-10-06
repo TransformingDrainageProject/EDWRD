@@ -16,7 +16,6 @@ import {
 import {
   colorScales,
   getChartPadding,
-  getLegendYPosition,
   getVariableColor,
   getStyles,
 } from './MonthlyChartStyles';
@@ -238,8 +237,8 @@ const MonthlyChart = ({
         </VictoryGroup>
       ) : null}
       <VictoryLegend
-        x={50}
-        y={getLegendYPosition(active)}
+        x={65}
+        y={15}
         orientation="horizontal"
         itemsPerRow={3}
         gutter={20}

@@ -73,15 +73,15 @@ export function getLegendYPosition(active) {
 export function getChartPadding(active) {
   return {
     left: 50,
-    bottom:
-      active.length < 4
-        ? 80
-        : active.length < 7
-        ? 90
-        : active.length < 10
-        ? 100
-        : 110,
+    bottom: 45,
     right: 45,
-    top: 15,
+    top:
+      active.length < 4
+        ? 35
+        : active.length < 7
+        ? 45
+        : active.length < 10
+        ? 58
+        : 73,
   };
 }
