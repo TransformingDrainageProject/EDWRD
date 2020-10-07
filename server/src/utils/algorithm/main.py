@@ -20,7 +20,7 @@ from output import annual_output_calc, monthly_output_calc
 def edwrd(infile, pfile, convert_input, convert_param):
     """Reads in the input and parameter files and conducts field and reservoir water balances for a drainage water recycling system."""
     # READ IN THE INPUT AND PARAMETER FILES
-    param, data, data_dic = edwrd_input(
+    param, data, data_dic, output_dic = edwrd_input(
         infile, pfile, convert_input, convert_param)
 
     # CREATE EMPTY DICTIONARIES TO STORE THE DAILY DATA AND OUTPUT FROM VARIOUS RESERVOIR VOLUMES
@@ -122,10 +122,14 @@ def edwrd(infile, pfile, convert_input, convert_param):
 
         # CREATE CONDENSED OUTPUT FILE FOR USER
         var_drop = ['max_upflx', 'water_evap', 'eto', 'no3c', 'srpc', 'wind', 'rhmin', 'cht', 'kcb', 'kcb_max', 'fc', 'few', 'zedepl',
-                    'zeperc', 'cn', 'kr', 'ke', 'p', 'zrdepl', 'zrperc', 'kc', 'kc_a', 'fw']
+                    'zeperc', 'cn', 'kr', 'ke', 'p', 'kc', 'kc_a', 'trans', 'fw']
         data_user = data.drop(columns=var_drop)
 
-        # RENAME COLUMNS TO MORE DESCRIPTIVE TITLE
+        #REORGANIZE COLUMNS AND RENAME TO MORE DESCRIPTIVE TITLE
+        data_user = data_user.copy()
+        data_user = data_user[['prcp', 'irr', 'upflx', 'dflw', 'ro', 'zrperc', 'etc', 'etc_a', 'evap', 'trans_a', 'zrsm', 'zrdepl', 'raw', 'ks',
+                               'rdep', 'rvol', 'rprcp', 'rdflw', 'rro', 'rseep', 'revap', 'rirr', 'rovr', 'rcap', 'no3l', 'no3l_ovr',
+                               'no3l_cap', 'srpl', 'srpl_ovr', 'srpl_cap']]
         data_user = data_user.rename(columns=data_dic)
 
         # COPY ALL DAILY DATA AND OUTPUT FOR A GIVEN RESERVOIR VOLUME TO THE DICTIONARY AND WRITE IT TO AN EXCEL WORKSHEET
@@ -140,4 +144,4 @@ def edwrd(infile, pfile, convert_input, convert_param):
         annual_output_calc(param, daily_data_user, vol, annual_output)
         monthly_output_calc(param, daily_data_user, vol, monthly_output)
 
-    return param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output
+    return param, output_dic, daily_data, daily_data_user, annual_output, monthly_output
