@@ -50,7 +50,6 @@ def convert_dataframe_to_annual_json(data, rarea, unit_type, variable):
 
         # calculate annual average
         chart_data["values"]["average"].append({
-            # "x": str(round(rarea[area], 1)),
             "x": rarea[area],
             "y": round(data[area][column_name].mean() * conversion_factor, precision)
         })
@@ -58,7 +57,6 @@ def convert_dataframe_to_annual_json(data, rarea, unit_type, variable):
         # annual records
         chart_data["values"]["yearly"] += [
             {
-                # "x": str(round(rarea[area], 1)),
                 "x": rarea[area],
                 "y": round(record * conversion_factor, precision),
                 "year": int(data[area][column_name].index[index])

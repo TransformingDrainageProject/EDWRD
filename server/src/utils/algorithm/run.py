@@ -13,7 +13,7 @@ from main import edwrd
 
 def main(input_file, param_file, unit_type, convert_input, convert_param):
 
-    param, data_dic, data, data_user, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
+    param, output_dic, daily_data, daily_data_user, monthly_output, annual_output = edwrd(
         input_file, param_file, convert_input, convert_param)
 
     # convert rarea from sqm to acre and hectare, rdep from meter to ft
