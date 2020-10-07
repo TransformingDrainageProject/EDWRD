@@ -11,7 +11,6 @@ function updateActive(
   chart
 ) {
   let newActiveVariables = active.slice();
-  console.log('active', active);
   if (active.includes(index)) {
     if (index !== 'reservoirVolDep') {
       newActiveVariables = active.filter((i) => i !== index);
@@ -27,7 +26,6 @@ function updateActive(
       newActiveVariables.push('reservoirWaterDepth');
     }
   }
-  console.log('newActiveVariables', newActiveVariables);
   setActive(newActiveVariables);
 
   const data = updateChartData(
@@ -37,7 +35,6 @@ function updateActive(
     annualFilter,
     selectedVol
   );
-  console.log('data', data);
   updateSelectedChartData(data);
 }
 
