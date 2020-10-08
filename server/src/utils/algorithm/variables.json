@@ -3,7 +3,7 @@
     "irrigationMetrics": [
       {
         "key": "appliedIrrigation",
-        "column": "Applied Irrigation Depth",
+        "column": "Applied Irrigation",
         "label": "Applied Irrigation",
         "label2": "Annual applied irrigation",
         "description": "The annual amount of irrigation applied to the field.",
@@ -44,8 +44,8 @@
       "percent": [
         {
           "key": "nitrateLoadReductionPerc",
-          "column": "Nitrate Load Reduction (%)",
-          "label": "Nitrate Load Reduction (%)",
+          "column": "Captured Tile Nitrate Load (%)",
+          "label": "Captured Tile Nitrate Load (%)",
           "label2": "Nitrate-N Load Reduction",
           "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
           "unit": { "us": "%", "metric": "%" },
@@ -53,8 +53,8 @@
         },
         {
           "key": "srpLoadReductionPerc",
-          "column": "SRP Load Reduction (%)",
-          "label": "SRP Load Reduction (%)",
+          "column": "Captured Tile SRP Load (%)",
+          "label": "Captured Tile SRP Load (%)",
           "label2": "Soluble Reactive Phosphorus Load Reduction",
           "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
           "unit": { "us": "%", "metric": "%" },
@@ -75,7 +75,7 @@
       },
       {
         "key": "irrigation",
-        "column": "Applied Irrigation Depth",
+        "column": "Applied Irrigation",
         "label": "Irrigation",
         "description": "The total monthly amount of irrigation applied to the field.",
         "unit": { "us": "in", "metric": "mm" },
@@ -83,7 +83,7 @@
       },
       {
         "key": "upwardFlux",
-        "column": "Actual Upward Flux",
+        "column": "Upward Flux",
         "label": "Upward Flux",
         "description": "The total monthly amount of upward flux of water into the crop root zone from a shallow water table.",
         "unit": { "us": "in", "metric": "mm" },
@@ -91,7 +91,7 @@
       },
       {
         "key": "evapotranspiration",
-        "column": "Actual Crop ET",
+        "column": "Evapotranspiration",
         "label": "Evapotranspiration",
         "description": "The total monthly amount of water lost from the field through crop transpiration and evaporation from the surface.",
         "unit": { "us": "in", "metric": "mm" },
@@ -99,7 +99,7 @@
       },
       {
         "key": "runoff",
-        "column": "Runoff",
+        "column": "Surface Runoff",
         "label": "Surface Runoff",
         "description": "The total monthly amount of water that is lost from the field through surface runoff.",
         "unit": { "us": "in", "metric": "mm" },
@@ -115,7 +115,7 @@
       },
       {
         "key": "readilyAvailableWater",
-        "column": "Readily Available Water",
+        "column": "Readily Available Water Threshold",
         "label": "Readily Available Water Threshold",
         "description": "The fraction of total available water that can be used by the crop before crop stress occurs. If Available Soil Water drops below this threshold value crop stress occurs due to too little available water in the soil profile.",
         "unit": { "us": "in", "metric": "mm" },
@@ -123,7 +123,7 @@
       },
       {
         "key": "soilMoisture",
-        "column": "Root Zone Soil Moisture",
+        "column": "Available Soil Water",
         "label": "Available Soil Water",
         "description": "The average monthly amount of available water in the soil profile.",
         "unit": { "us": "in", "metric": "mm" },
@@ -165,7 +165,7 @@
       },
       {
         "key": "tileNitrateLoad",
-        "column": "Tile Drain Nitrate Load",
+        "column": "Tile Nitrate Load",
         "label": "Tile Nitrate Load",
         "description": "The total monthly amount of nitrate load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
@@ -173,7 +173,7 @@
       },
       {
         "key": "tileSRPLoad",
-        "column": "Tile Drain SRP Load",
+        "column": "Tile SRP Load",
         "label": "Tile SRP Load",
         "description": "The total monthly reactive phosphorus load in tile drain flow.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
@@ -183,7 +183,7 @@
     "reservoirWaterBalance": [
       {
         "key": "reservoirPrecipitation",
-        "column": "Precipitation to Reservoir",
+        "column": "Reservoir Precipitation",
         "label": "Reservoir Precipitation",
         "description": "The total monthly amount of precipitation falling directly on the reservoir.",
         "unit": { "us": "ac-in", "metric": "m3" },
@@ -191,7 +191,7 @@
       },
       {
         "key": "reservoirDrainFlow",
-        "column": "Tile Drain Flow to Reservoir",
+        "column": "Reservoir Drain Flow",
         "label": "Reservoir Drain Flow",
         "description": "The total monthly amount of tile drain flow flowing into the reservoir.",
         "unit": { "us": "ac-in", "metric": "m3" },
@@ -199,7 +199,7 @@
       },
       {
         "key": "reservoirRunoff",
-        "column": "Runoff to Reservoir",
+        "column": "Reservoir Runoff",
         "label": "Reservoir Runoff",
         "description": "The total monthly amount of surface runoff flowing into the reservoir.",
         "unit": { "us": "ac-in", "metric": "m3" },
@@ -239,8 +239,8 @@
       },
       {
         "key": "capture",
-        "column": "Captured Tile Drain Flow",
-        "label": "Capture",
+        "column": "Captured Drain Flow",
+        "label": "Captured Drain Flow",
         "description": "The total monthly amount of water that is captured and stored in the reservoir.",
         "unit": { "us": "ac-in", "metric": "m3" },
         "precision": 1

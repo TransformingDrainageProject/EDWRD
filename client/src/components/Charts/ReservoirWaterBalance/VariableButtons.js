@@ -260,12 +260,12 @@ const VariableButtons = ({
               {chartData.monthly[chart][keys[7]].description}
             </MyTooltip>
             <ListGroupItem
-              id={keys[8]}
+              id="reservoirVolDep"
               tag="button"
               action
               onClick={() =>
                 updateActive(
-                  keys[8],
+                  'reservoirVolDep',
                   active,
                   setActive,
                   chartData,
@@ -277,41 +277,15 @@ const VariableButtons = ({
               }
               active={active.includes(keys[8])}
             >
-              {chartData.monthly[chart][keys[8]].label}
+              Reservoir Stored Volume and Depth
             </ListGroupItem>
             <MyTooltip
-              id={keys[8]}
+              id="reservoirVolDep"
               tooltipOpen={tooltipOpen}
               setTooltipOpen={setTooltipOpen}
             >
-              {chartData.monthly[chart][keys[8]].description}
-            </MyTooltip>
-            <ListGroupItem
-              id={keys[9]}
-              tag="button"
-              action
-              onClick={() =>
-                updateActive(
-                  keys[9],
-                  active,
-                  setActive,
-                  chartData,
-                  annualFilter,
-                  selectedVol,
-                  updateSelectedChartData,
-                  chart
-                )
-              }
-              active={active.includes(keys[9])}
-            >
-              {chartData.monthly[chart][keys[9]].label}
-            </ListGroupItem>
-            <MyTooltip
-              id={keys[9]}
-              tooltipOpen={tooltipOpen}
-              setTooltipOpen={setTooltipOpen}
-            >
-              {chartData.monthly[chart][keys[9]].description}
+              Reservoir Stored Volume and Depth as a volume on the left axis and
+              as depth on the right.
             </MyTooltip>
           </ListGroup>
         </Col>

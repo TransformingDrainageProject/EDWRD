@@ -83,11 +83,25 @@ const MonthlyChart = ({
       theme={VictoryTheme.material}
       containerComponent={
         <VictoryVoronoiContainer
-          labels={({ datum }) =>
-            `${datum.name}: ${datum.y.toFixed(datum.precision)}`
-          }
+          labels={(l) => {
+            if (l.datum.name === 'Reservoir Stored Volume') {
+              let resDepth, resDepthLabel, resDepthVal;
+              if (l.datum._x) {
+                resDepth = chartData['reservoirWaterDepth'].values;
+                resDepthVal = resDepth[l.datum._x - 1].y / getMax(resDepth);
+                resDepthLabel = `, Depth: ${resDepthVal.toFixed(
+                  resDepth[l.datum._x - 1].precision
+                )}`;
+              }
+              return `Stored Volume: ${l.datum.y.toFixed(
+                l.datum.precision
+              )}${resDepthLabel}`;
+            } else {
+              return `${l.datum.name}: ${l.datum.y.toFixed(l.datum.precision)}`;
+            }
+          }}
           labelComponent={
-            <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
+            <VictoryTooltip style={styles.tooltip} flyoutWidth={140} />
           }
           voronoiBlacklist={['lines', 'bars', 'scatter']}
         />
@@ -142,9 +156,12 @@ const MonthlyChart = ({
                   size={2}
                   data={data.values}
                   y={(datum) => datum.y / maxima}
-                  labels={({ datum }) =>
-                    `${datum.name}: ${datum.y.toFixed(datum.precision)}`
-                  }
+                  labels={(l) => {
+                    console.log(l);
+                    return `${l.datum.name}: ${l.datum.y.toFixed(
+                      l.datum.precision
+                    )}`;
+                  }}
                   labelComponent={
                     <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
                   }
@@ -153,7 +170,7 @@ const MonthlyChart = ({
             ) : null
           )
         : null}
-      {active.includes('reservoirWaterDepth') ? (
+      {/* {active.includes('reservoirWaterDepth') ? (
         <VictoryLine
           name="lines"
           style={styles.lineMonthly('reservoirWaterDepth')}
@@ -180,7 +197,7 @@ const MonthlyChart = ({
             <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
           }
         />
-      ) : null}
+      ) : null} */}
       {annualFilter === 'all' ? (
         active.map((key, idx) =>
           key !== 'reservoirWaterDepth' ? (
@@ -243,13 +260,36 @@ const MonthlyChart = ({
         itemsPerRow={3}
         gutter={20}
         style={styles.legend}
-        data={active.map((key) => ({
-          name: datasetNames[key].label,
-          symbol: {
-            type: 'minus',
-            fill: getVariableColor(active, key, variableClasses),
-          },
-        }))}
+        data={active.map((key) => {
+          if (
+            key !== 'reservoirWaterDepth' &&
+            key !== 'reservoirStoredVolume'
+          ) {
+            return {
+              name: datasetNames[key].label,
+              symbol: {
+                type: 'minus',
+                fill: getVariableColor(active, key, variableClasses),
+              },
+            };
+          } else if (key === 'reservoirStoredVolume') {
+            return {
+              name: 'Reservoir Stored Volume and Depth',
+              symbol: {
+                type: 'minus',
+                fill: getVariableColor(active, key, variableClasses),
+              },
+            };
+          } else {
+            return {
+              name: '',
+              symbol: {
+                type: 'minus',
+                fillOpacity: 0,
+              },
+            };
+          }
+        })}
       />
     </VictoryChart>
   );

@@ -12,9 +12,19 @@ function updateActive(
 ) {
   let newActiveVariables = active.slice();
   if (active.includes(index)) {
-    newActiveVariables = active.filter((i) => i !== index);
+    if (index !== 'reservoirVolDep') {
+      newActiveVariables = active.filter((i) => i !== index);
+    } else {
+      newActiveVariables = active.filter((i) => i !== 'reservoirStoredVolume');
+      newActiveVariables = active.filter((i) => i !== 'reservoirWaterDepth');
+    }
   } else {
-    newActiveVariables.push(index);
+    if (index !== 'reservoirVolDep') {
+      newActiveVariables.push(index);
+    } else {
+      newActiveVariables.push('reservoirStoredVolume');
+      newActiveVariables.push('reservoirWaterDepth');
+    }
   }
   setActive(newActiveVariables);
 
