@@ -125,7 +125,7 @@ def edwrd(infile, pfile, convert_input, convert_param):
                     'zeperc', 'cn', 'kr', 'ke', 'p', 'kc', 'kc_a', 'trans', 'fw']
         data_user = data.drop(columns=var_drop)
 
-        #REORGANIZE COLUMNS AND RENAME TO MORE DESCRIPTIVE TITLE
+        # REORGANIZE COLUMNS AND RENAME TO MORE DESCRIPTIVE TITLE
         data_user = data_user.copy()
         data_user = data_user[['prcp', 'irr', 'upflx', 'dflw', 'ro', 'zrperc', 'etc', 'etc_a', 'evap', 'trans_a', 'zrsm', 'zrdepl', 'raw', 'ks',
                                'rdep', 'rvol', 'rprcp', 'rdflw', 'rro', 'rseep', 'revap', 'rirr', 'rovr', 'rcap', 'no3l', 'no3l_ovr',

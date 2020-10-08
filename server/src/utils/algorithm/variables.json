@@ -44,8 +44,8 @@
       "percent": [
         {
           "key": "nitrateLoadReductionPerc",
-          "column": "Nitrate Load Reduction (%)",
-          "label": "Nitrate Load Reduction (%)",
+          "column": "Captured Tile Nitrate Load (%)",
+          "label": "Captured Tile Nitrate Load (%)",
           "label2": "Nitrate-N Load Reduction",
           "description": "The percent of the annual nitrate load that is captured and stored by the reservoir.",
           "unit": { "us": "%", "metric": "%" },
@@ -53,8 +53,8 @@
         },
         {
           "key": "srpLoadReductionPerc",
-          "column": "SRP Load Reduction (%)",
-          "label": "SRP Load Reduction (%)",
+          "column": "Captured Tile SRP Load (%)",
+          "label": "Captured Tile SRP Load (%)",
           "label2": "Soluble Reactive Phosphorus Load Reduction",
           "description": "The percent of the annual reactive phosphorus load that is captured and stored by the reservoir.",
           "unit": { "us": "%", "metric": "%" },
@@ -75,7 +75,7 @@
       },
       {
         "key": "irrigation",
-        "column": "Applied Irrigation Depth",
+        "column": "Applied Irrigation",
         "label": "Irrigation",
         "description": "The total monthly amount of irrigation applied to the field.",
         "unit": { "us": "in", "metric": "mm" },
@@ -239,8 +239,8 @@
       },
       {
         "key": "capture",
-        "column": "Capture Drain Flow",
-        "label": "Capture Drain Flow",
+        "column": "Captured Drain Flow",
+        "label": "Captured Drain Flow",
         "description": "The total monthly amount of water that is captured and stored in the reservoir.",
         "unit": { "us": "ac-in", "metric": "m3" },
         "precision": 1
