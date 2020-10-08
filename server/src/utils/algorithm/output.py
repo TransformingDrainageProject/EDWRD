@@ -114,7 +114,7 @@ def annual_output_calc(param,data,vol,dic):
     output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
 
     #ANNUAL PERCENT NITRATE LOAD REDUCTION
-    output['Tile Nitrate Load Reduction (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Nitrate Load'] * 100
+    output['Captured Tile Nitrate Load (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Nitrate Load'] * 100
 
     #ANNUAL SOLUBLE REACTIVE PHOSPHORUS LOAD
     output['Tile SRP Load']=data[vol]['Tile SRP Load'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
@@ -126,7 +126,7 @@ def annual_output_calc(param,data,vol,dic):
     output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby(data[vol].index.year).sum() / (param['darea'].values[0][0] / 10000)
 
     #ANNUAL PERCENT SOLUBLE REACTIVE PHOSPHORUS LOAD REDUCTION
-    output['Tile SRP Load Reduction (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile SRP Load'] * 100
+    output['Captured Tile SRP Load (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile SRP Load'] * 100
 
     #COPY ALL OUTPUT FROM A PARTICULAR RESERVOIR VOLUME TO A DICTIONARY AND WRITE TO AN EXCEL SHEET
     dic[vol]=output.copy()
@@ -235,7 +235,7 @@ def monthly_output_calc(param,data,vol,dic):
     output['Captured Nitrate Load (Tile)']=data[vol]['Captured Nitrate Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
 
     #MONTHLY PERCENT NITRATE LOAD REDUCTION
-    output['Nitrate Load Reduction (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Nitrate Load'] * 100
+    output['Captured Tile Nitrate Load (%)'] =  output['Captured Nitrate Load (Tile)'] / output['Tile Nitrate Load'] * 100
 
     #MONTHLY SOLUBLE REACTIVE PHOSPHORUS LOAD
     output['Tile SRP Load']=data[vol]['Tile SRP Load'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
@@ -247,7 +247,7 @@ def monthly_output_calc(param,data,vol,dic):
     output['Captured SRP Load (Tile)']=data[vol]['Captured SRP Load (Tile)'].groupby([(data[vol].index.year), (data[vol].index.month)]).sum() / (param['darea'].values[0][0] / 10000)
 
     #MONTHLY PERCENT SOLUBLE REACTIVE PHOSPHORUS LOAD REDUCTION
-    output['SRP Load Reduction (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile SRP Load'] * 100
+    output['Captured Tile SRP Load (%)'] =  output['Captured SRP Load (Tile)'] / output['Tile SRP Load'] * 100
 
     #COPY ALL OUTPUT FROM A PARTICULAR RESERVOIR VOLUME TO A DICTIONARY AND WRITE TO AN EXCEL SHEET
     dic[vol]=output.copy()
