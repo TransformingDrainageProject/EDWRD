@@ -26,21 +26,30 @@ def main(input_file, param_file, unit_type, convert_input, convert_param):
         rarea = (param["rarea"] * 0.0001)["rarea"].tolist()
         rdep = param["rdep"].values[0][0]
 
+    # convert output_dic dictionary to pandas dataframe for easy writing to spreadsheet
+    output_df = pd.DataFrame.from_dict(output_dic, orient="index")
+
     # create spreadsheets for daily, monthly, and annual output
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "daily_output.xlsx")) as writer:
         for key in daily_data_user:
             daily_data_user[key].to_excel(
-                writer, sheet_name=f"Vol  {round(rvol[key], 2)}")
+                writer, sheet_name=f"Reservoir Area  {round(rarea[key], 1)}")
+        output_df.to_excel(writer, header=[
+                           "Description"], index_label="Output", sheet_name=f"Output descriptions")
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "monthly_output.xlsx")) as writer:
         for key in monthly_output:
             monthly_output[key].to_excel(
-                writer, sheet_name=f"Vol {round(rvol[key], 2)}")
+                writer, sheet_name=f"Reservoir Area {round(rarea[key], 1)}")
+        output_df.to_excel(writer, header=[
+                           "Description"], index_label="Output", sheet_name=f"Output descriptions")
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "annual_output.xlsx")) as writer:
         for key in annual_output:
             annual_output[key].to_excel(
-                writer, sheet_name=f"Vol {round(rvol[key], 2)}")
+                writer, sheet_name=f"Reservoir Area {round(rarea[key], 1)}")
+        output_df.to_excel(writer, header=[
+                           "Description"], index_label="Output", sheet_name=f"Output descriptions")
 
     # only use first five items
     rvol = rvol[:5]
