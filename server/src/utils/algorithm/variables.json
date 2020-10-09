@@ -114,6 +114,14 @@
         "precision": 2
       },
       {
+        "key": "downwardFlux",
+        "column": "Downward Flux",
+        "label": "Downward Flux",
+        "description": "...",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
         "key": "readilyAvailableWater",
         "column": "Readily Available Water Threshold",
         "label": "Readily Available Water Threshold",

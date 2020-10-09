@@ -201,10 +201,6 @@ const VariableButtons = ({
             >
               {chartData.monthly[chart][keys[5]].description}
             </MyTooltip>
-          </ListGroup>
-        </Col>
-        <Col md={4}>
-          <ListGroup style={{ lineHeight: '1.0rem' }}>
             <ListGroupItem
               id={keys[6]}
               tag="button"
@@ -232,6 +228,10 @@ const VariableButtons = ({
             >
               {chartData.monthly[chart][keys[6]].description}
             </MyTooltip>
+          </ListGroup>
+        </Col>
+        <Col md={4}>
+          <ListGroup style={{ lineHeight: '1.0rem' }}>
             <ListGroupItem
               id={keys[7]}
               tag="button"
@@ -258,6 +258,33 @@ const VariableButtons = ({
               setTooltipOpen={setTooltipOpen}
             >
               {chartData.monthly[chart][keys[7]].description}
+            </MyTooltip>
+            <ListGroupItem
+              id={keys[8]}
+              tag="button"
+              action
+              onClick={() =>
+                updateActive(
+                  keys[8],
+                  active,
+                  setActive,
+                  chartData,
+                  annualFilter,
+                  selectedVol,
+                  updateSelectedChartData,
+                  chart
+                )
+              }
+              active={active.includes(keys[8])}
+            >
+              {chartData.monthly[chart][keys[8]].label}
+            </ListGroupItem>
+            <MyTooltip
+              id={keys[8]}
+              tooltipOpen={tooltipOpen}
+              setTooltipOpen={setTooltipOpen}
+            >
+              {chartData.monthly[chart][keys[8]].description}
             </MyTooltip>
           </ListGroup>
         </Col>

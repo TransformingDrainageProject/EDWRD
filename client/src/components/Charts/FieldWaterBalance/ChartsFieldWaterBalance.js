@@ -13,7 +13,7 @@ import getYearInfo from '../utils/getYearInfo';
 // category keys for different variable subsets (inflow, outflow, other)
 const variableClasses = {
   inflow: ['precipitation', 'irrigation', 'upwardFlux'],
-  outflow: ['evapotranspiration', 'runoff', 'tileDrainFlow'],
+  outflow: ['evapotranspiration', 'runoff', 'tileDrainFlow', 'downwardFlux'],
   other: ['readilyAvailableWater', 'soilMoisture'],
 };
 

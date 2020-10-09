@@ -1,7 +1,7 @@
 export const colorScales = {
   blue: ['#bdd7e7', '#6baed6', '#2171b5'],
   grey: ['#cccccc', '#969696', '#525252'],
-  yellow: ['#fed98e', '#fe9929', '#cc4c02'],
+  yellow: ['#fed98e', '#fe9929', '#d95f0e', '#993404'],
 };
 
 export function getVariableColor(active, variableName, variableClasses) {
