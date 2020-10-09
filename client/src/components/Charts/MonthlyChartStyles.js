@@ -9,6 +9,9 @@ export function getVariableColor(active, variableName, variableClasses) {
   let outflow = [];
   let other = [];
 
+  if (variableName === 'reservoirVolDep') {
+    variableName = 'reservoirWaterDepth';
+  }
   active.forEach((variable) => {
     if (variableClasses.inflow.includes(variable)) {
       inflow.push(variable);

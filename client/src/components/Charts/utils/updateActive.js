@@ -11,12 +11,18 @@ function updateActive(
   chart
 ) {
   let newActiveVariables = active.slice();
-  if (active.includes(index)) {
+  if (
+    active.includes(index) ||
+    (index === 'reservoirVolDep' &&
+      active.includes('reservoirStoredVolume') &&
+      active.includes('reservoirWaterDepth'))
+  ) {
     if (index !== 'reservoirVolDep') {
       newActiveVariables = active.filter((i) => i !== index);
     } else {
-      newActiveVariables = active.filter((i) => i !== 'reservoirStoredVolume');
-      newActiveVariables = active.filter((i) => i !== 'reservoirWaterDepth');
+      newActiveVariables = active.filter(
+        (i) => i !== 'reservoirStoredVolume' && i !== 'reservoirWaterDepth'
+      );
     }
   } else {
     if (index !== 'reservoirVolDep') {

@@ -58,6 +58,20 @@ function prepDataForMonthlyStackedBars(data, variableClasses) {
   return [waterInStacks, waterOutStacks, waterOtherLines, waterOtherKeys];
 }
 
+function filterForLegend(active) {
+  let activeLegend = active.slice();
+  if (
+    active.includes('reservoirStoredVolume') &&
+    active.includes('reservoirWaterDepth')
+  ) {
+    activeLegend = active.filter(
+      (i) => i !== 'reservoirStoredVolume' && i !== 'reservoirWaterDepth'
+    );
+    activeLegend.push('reservoirVolDep');
+  }
+  return activeLegend;
+}
+
 const MonthlyChart = ({
   active,
   annualFilter,
@@ -231,11 +245,8 @@ const MonthlyChart = ({
         itemsPerRow={3}
         gutter={20}
         style={styles.legend}
-        data={active.map((key) => {
-          if (
-            key !== 'reservoirWaterDepth' &&
-            key !== 'reservoirStoredVolume'
-          ) {
+        data={filterForLegend(active).map((key) => {
+          if (key !== 'reservoirVolDep') {
             return {
               name: datasetNames[key].label,
               symbol: {
@@ -243,20 +254,12 @@ const MonthlyChart = ({
                 fill: getVariableColor(active, key, variableClasses),
               },
             };
-          } else if (key === 'reservoirStoredVolume') {
+          } else {
             return {
               name: 'Reservoir Stored Volume and Depth',
               symbol: {
                 type: 'minus',
                 fill: getVariableColor(active, key, variableClasses),
-              },
-            };
-          } else {
-            return {
-              name: '',
-              symbol: {
-                type: 'minus',
-                fillOpacity: 0,
               },
             };
           }
