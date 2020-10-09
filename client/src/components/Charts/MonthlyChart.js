@@ -157,7 +157,6 @@ const MonthlyChart = ({
                   data={data.values}
                   y={(datum) => datum.y / maxima}
                   labels={(l) => {
-                    console.log(l);
                     return `${l.datum.name}: ${l.datum.y.toFixed(
                       l.datum.precision
                     )}`;
@@ -170,34 +169,6 @@ const MonthlyChart = ({
             ) : null
           )
         : null}
-      {/* {active.includes('reservoirWaterDepth') ? (
-        <VictoryLine
-          name="lines"
-          style={styles.lineMonthly('reservoirWaterDepth')}
-          interpolation="monotoneX"
-          data={chartData['reservoirWaterDepth'].values}
-          y={(datum) =>
-            datum.y / getMax(chartData['reservoirWaterDepth'].values)
-          }
-        />
-      ) : null}
-      {active.includes('reservoirWaterDepth') ? (
-        <VictoryScatter
-          name="scatter"
-          style={styles.scatter('reservoirWaterDepth')}
-          size={2}
-          data={chartData['reservoirWaterDepth'].values}
-          y={(datum) =>
-            datum.y / getMax(chartData['reservoirWaterDepth'].values)
-          }
-          labels={({ datum }) =>
-            `${datum.name}: ${datum.y.toFixed(datum.precision)}`
-          }
-          labelComponent={
-            <VictoryTooltip style={styles.tooltip} flyoutWidth={120} />
-          }
-        />
-      ) : null} */}
       {annualFilter === 'all' ? (
         active.map((key, idx) =>
           key !== 'reservoirWaterDepth' ? (
