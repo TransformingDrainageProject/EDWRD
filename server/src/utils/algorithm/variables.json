@@ -76,7 +76,7 @@
       {
         "key": "irrigation",
         "column": "Applied Irrigation",
-        "label": "Irrigation",
+        "label": "Applied Irrigation",
         "description": "The total monthly amount of irrigation applied to the field.",
         "unit": { "us": "in", "metric": "mm" },
         "precision": 2
@@ -114,6 +114,14 @@
         "precision": 2
       },
       {
+        "key": "downwardFlux",
+        "column": "Downward Flux",
+        "label": "Downward Flux",
+        "description": "...",
+        "unit": { "us": "in", "metric": "mm" },
+        "precision": 2
+      },
+      {
         "key": "readilyAvailableWater",
         "column": "Readily Available Water Threshold",
         "label": "Readily Available Water Threshold",
@@ -142,7 +150,7 @@
       {
         "key": "capturedNitrateLoad",
         "column": "Captured Nitrate Load (Tile)",
-        "label": "Captured Nitrate Load",
+        "label": "Captured Nitrate Load (Tile)",
         "description": "The total monthly amount of nitrate load that is captured and stored in the reservoir.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 2
@@ -150,7 +158,7 @@
       {
         "key": "overflowSRPLoad",
         "column": "Overflow SRP Load (Tile)",
-        "label": "Overflow SRP Load",
+        "label": "Overflow SRP Load (Tile)",
         "description": "The total monthly amount of reactive phosphorus load that overflows from the reservoir due to exceeding the maximum water storage capacity.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 3
@@ -158,7 +166,7 @@
       {
         "key": "capturedSRPLoad",
         "column": "Captured SRP Load (Tile)",
-        "label": "Captured SRP Load",
+        "label": "Captured SRP Load (Tile)",
         "description": "The total monthly amount of reactive phosphorus load that is captured and stored in the reservoir.",
         "unit": { "us": "lb/ac", "metric": "kg/ha" },
         "precision": 3
@@ -216,7 +224,7 @@
       {
         "key": "seepage",
         "column": "Reservoir Seepage",
-        "label": "Seepage",
+        "label": "Reservoir Seepage",
         "description": "The total monthly amount of water lost from the reservoir through seepage.",
         "unit": { "us": "ac-in", "metric": "m3" },
         "precision": 1
@@ -232,7 +240,7 @@
       {
         "key": "overflow",
         "column": "Reservoir Overflow",
-        "label": "Overflow",
+        "label": "Reservoir Overflow",
         "description": "The total monthly amount of water that must overflow from the reservoir due to exceeding the maximum water storage capacity.",
         "unit": { "us": "ac-in", "metric": "m3" },
         "precision": 1
@@ -248,7 +256,7 @@
       {
         "key": "reservoirStoredVolume",
         "column": "Reservoir Water Volume",
-        "label": "Reservoir Stored Volume",
+        "label": "Reservoir Water Volume",
         "description": "The average monthly amount of water stored in the reservoir.",
         "unit": { "us": "ac-in", "metric": "m3" },
         "precision": 1

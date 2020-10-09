@@ -28,8 +28,8 @@ def main(input_file, param_file, unit_type, convert_input, convert_param):
 
     # create spreadsheets for daily, monthly, and annual output
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "daily_output.xlsx")) as writer:
-        for key in daily_data:
-            daily_data[key].to_excel(
+        for key in daily_data_user:
+            daily_data_user[key].to_excel(
                 writer, sheet_name=f"Vol  {round(rvol[key], 2)}")
 
     with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "monthly_output.xlsx")) as writer:
