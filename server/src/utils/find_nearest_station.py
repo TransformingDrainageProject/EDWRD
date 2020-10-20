@@ -46,11 +46,11 @@ def main(longitude: float, latitude: float, unit: str) -> None:
         pfile = pfile[:-4] + "_us.txt"
 
     init_values = get_init_values(pfile)
-    init_values["station_id"] = int(
+    init_values["stationId"] = int(
         nearest_station["file"].values[0]["param"][0])
     for station in daily_json["stations"]:
         if station["id"] == int(nearest_station["file"].values[0]["param"][0]):
-            init_values["station_name"] = station["name"]
+            init_values["stationName"] = station["name"]
 
     print(json.dumps(init_values))
 

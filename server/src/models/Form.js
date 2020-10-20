@@ -39,6 +39,8 @@ const formSchema = new Schema({
   soilDateEnd: Date,
   soilDateStart: Date,
   soilType: String,
+  stationId: Number,
+  stationName: String,
   thaw: Number,
   unitType: String,
   userInput: Boolean,

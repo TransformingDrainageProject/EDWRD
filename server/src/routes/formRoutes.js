@@ -7,6 +7,7 @@ const { PythonShell } = require('python-shell');
 const { spawn } = require('child_process');
 const tmp = require('tmp');
 
+const { createSummaryObject } = require('../utils/createSummaryObject');
 const { createTaskObject } = require('../models/taskCreator');
 const dailyStations = require('../utils/daily_stations.json');
 const { getFormSchema } = require('../validation/schema');
@@ -33,7 +34,6 @@ module.exports = (app, io) => {
       if (req.body.userInput === 'true' && !req.session.inputFile) {
         return next(createError(400, 'Must upload file with daily values'));
       }
-
       const form = new Form(req.body);
       form.save((err) => {
         if (err) return next(err);
@@ -155,6 +155,8 @@ module.exports = (app, io) => {
           if (inputFile && paramFile) {
             const startTime = process.hrtime();
 
+            const summaryOverview = createSummaryObject(form, req.session);
+
             // while in json mode, python-shell library will throw an internal
             // error when the python script has an exception. work around is to
             // convert the stderr message to valid json (last line in options).
@@ -169,6 +171,7 @@ module.exports = (app, io) => {
                 req.body.unitType,
                 inputNeedsUnitConv ? 1 : 0,
                 paramNeedsUnitConv ? 1 : 0,
+                JSON.stringify(summaryOverview),
               ],
               stderrParser: (line) => JSON.stringify(line),
             };
