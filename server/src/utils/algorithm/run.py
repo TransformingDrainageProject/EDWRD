@@ -8,10 +8,11 @@ import numpy as np
 import pandas as pd
 
 from client_output import get_annual_data, get_monthly_data
+from create_summary_sheet import create_summary_sheet
 from main import edwrd
 
 
-def main(input_file, param_file, unit_type, convert_input, convert_param):
+def main(input_file, param_file, unit_type, convert_input, convert_param, summary_overview):
 
     param, output_dic, daily_data, daily_data_user, annual_output, monthly_output = edwrd(
         input_file, param_file, convert_input, convert_param)
@@ -30,26 +31,41 @@ def main(input_file, param_file, unit_type, convert_input, convert_param):
     output_df = pd.DataFrame.from_dict(output_dic, orient="index")
 
     # create spreadsheets for daily, monthly, and annual output
-    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "daily_output.xlsx")) as writer:
+    daily_filepath = os.path.join(
+        os.path.dirname(input_file), "daily_output.xlsx")
+    with pd.ExcelWriter(daily_filepath) as writer:
         for key in daily_data_user:
             daily_data_user[key].to_excel(
                 writer, sheet_name=f"Reservoir Area  {round(rarea[key], 1)}")
         output_df.to_excel(writer, header=[
                            "Description"], index_label="Output", sheet_name=f"Output descriptions")
+    # write summary data to sheet
+    create_summary_sheet(
+        daily_filepath, summary_overview, unit_type)
 
-    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "monthly_output.xlsx")) as writer:
+    monthly_filepath = os.path.join(
+        os.path.dirname(input_file), "monthly_output.xlsx")
+    with pd.ExcelWriter(monthly_filepath) as writer:
         for key in monthly_output:
             monthly_output[key].to_excel(
                 writer, sheet_name=f"Reservoir Area {round(rarea[key], 1)}")
         output_df.to_excel(writer, header=[
                            "Description"], index_label="Output", sheet_name=f"Output descriptions")
+    # write summary data to sheet
+    create_summary_sheet(
+        monthly_filepath, summary_overview, unit_type)
 
-    with pd.ExcelWriter(os.path.join(os.path.dirname(input_file), "annual_output.xlsx")) as writer:
+    annual_filepath = os.path.join(
+        os.path.dirname(input_file), "annual_output.xlsx")
+    with pd.ExcelWriter(annual_filepath) as writer:
         for key in annual_output:
             annual_output[key].to_excel(
                 writer, sheet_name=f"Reservoir Area {round(rarea[key], 1)}")
         output_df.to_excel(writer, header=[
                            "Description"], index_label="Output", sheet_name=f"Output descriptions")
+    # write summary data to sheet
+    create_summary_sheet(
+        annual_filepath, summary_overview, unit_type)
 
     # only use first five items
     rvol = rvol[:5]
@@ -82,6 +98,8 @@ if __name__ == "__main__":
                         help="Input file values need to be converted to metric.")
     parser.add_argument("convert_param", type=int,
                         help="Param file values need to be converted to metric.")
+    parser.add_argument("summary_overview", type=str,
+                        help="Summary overview of form inputs.")
 
     # Get passed in arguments
     args = parser.parse_args()
@@ -90,5 +108,9 @@ if __name__ == "__main__":
     unit_type = args.unit_type
     convert_input = args.convert_input
     convert_param = args.convert_param
+    print(json.dumps({"msg": args.summary_overview}))
+    summary_overview = json.loads(args.summary_overview)
+    print(json.dumps({"msg": str(type(summary_overview))}))
 
-    main(input_file, param_file, unit_type, convert_input, convert_param)
+    main(input_file, param_file, unit_type,
+         convert_input, convert_param, summary_overview)

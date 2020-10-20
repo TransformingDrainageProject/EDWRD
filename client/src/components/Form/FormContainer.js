@@ -115,7 +115,7 @@ const FormContainer = (props) => {
             ? {
                 ...formValues,
                 ...nearestStation,
-                userSelectedStation: nearestStation.station_id,
+                userSelectedStation: nearestStation.stationId,
               }
             : formValues
         }
@@ -194,12 +194,12 @@ const FormContainer = (props) => {
                 </Row>
                 <Row>
                   <Col>
-                    {values.station_id && values.station_name ? (
+                    {values.stationId && values.stationName ? (
                       <UserDataForm
                         origin={origin}
-                        stationId={values.station_id ? values.station_id : null}
+                        stationId={values.stationId ? values.stationId : null}
                         stationName={
-                          values.station_name ? values.station_name : null
+                          values.stationName ? values.stationName : null
                         }
                       />
                     ) : null}
