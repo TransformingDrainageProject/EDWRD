@@ -1,0 +1,13 @@
+darea	iarea	rarea	rdep	rdep_min	rseep	zr	zrfc	zrwp	ze	zefc	zewp	rew	cn	wind	rhmin	cstart	cstage	ngrw_stage	cht	kc	fw	pfact	irrdep	irrdep_min	resd	dareaIncSurfaceRunoff
+32.375	32.375	2.023	3	0.3	0.9	1	0.363	0.222	0.1	0.347	0.196	11	65	3.12	70	120	30	294	0.1	0.15	1	0.55	25.4	8	0.3	FALSE
+														3.06	66		40	330	2	1.15						
+														3.17	60		50	65	0.01	0.15						
+														3.17	55		30			0.44						
+														2.72	56											
+														2.4	56											
+														2.17	58											
+														2.06	58											
+														2.26	55											
+														2.57	55											
+														2.94	64											
+														2.94	71											
