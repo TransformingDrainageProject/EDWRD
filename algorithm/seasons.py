@@ -27,7 +27,7 @@ def psthrvst_pstfrz_evap(row,param,data,data_dic,irr_init,zedepl_init):
     #CONDUCT THE WATER BALANCE IN THE EVAPORATION LAYER
     data.at[row.Index,'zeperc'] = max((data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) + (irr_init / data.at[row.Index,'fw']) - zedepl_init,0)
     data.at[row.Index,'zedepl'] = min(max(zedepl_init - (data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) - (irr_init / data.at[row.Index,'fw']) + (data.at[row.Index,'evap'] / data.at[row.Index,'few']) + data.at[row.Index,'zeperc'],0),param['nongr_tew'].values[0][0])
-    
+
     #POPULATE THE CROP COEFFICIENT AND CROP ET
     data.at[row.Index,'kc'] = data.at[row.Index,'kcb'] + data.at[row.Index,'ke']
     data.at[row.Index,'etc'] = data.at[row.Index,'kc'] * data.at[row.Index,'eto']
@@ -75,7 +75,7 @@ def winter_evap(row,param,data,data_dic,irr_init,zedepl_init):
     #CONDUCT THE WATER BALANCE IN THE EVAPORATION LAYER
     data.at[row.Index,'zeperc'] = max((data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) + (irr_init / data.at[row.Index,'fw']) - zedepl_init,0)
     data.at[row.Index,'zedepl'] = min(max(zedepl_init - (data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) - (irr_init / data.at[row.Index,'fw']) + (data.at[row.Index,'evap'] / data.at[row.Index,'few']) + data.at[row.Index,'zeperc'],0),param['tew'].values[0][0])
-     
+
     #POPULATE THE CROP COEFFICIENT AND CROP ET
     data.at[row.Index,'kc'] = data.at[row.Index,'kcb'] + data.at[row.Index,'ke']
     data.at[row.Index,'etc'] = data.at[row.Index,'kc'] * data.at[row.Index,'eto']
@@ -128,7 +128,7 @@ def evap(row,param,data,data_dic,irr_init,zedepl_init):
     #CONDUCT THE WATER BALANCE IN THE EVAPORATION LAYER
     data.at[row.Index,'zeperc'] = max((data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) + (irr_init / data.at[row.Index,'fw']) - zedepl_init,0)
     data.at[row.Index,'zedepl'] = min(max(zedepl_init - (data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) - (irr_init / data.at[row.Index,'fw']) + (data.at[row.Index,'evap'] / data.at[row.Index,'few']) + data.at[row.Index,'zeperc'],0),param['tew'].values[0][0])
-    
+
     #POPULATE THE CROP COEFFICIENT AND CROP ET
     data.at[row.Index,'kc'] = data.at[row.Index,'kcb'] + data.at[row.Index,'ke']
     data.at[row.Index,'etc'] = data.at[row.Index,'kc'] * data.at[row.Index,'eto']
@@ -137,8 +137,8 @@ def evap(row,param,data,data_dic,irr_init,zedepl_init):
     for column in data[['evap','trans','etc','zeperc']]:
         if data.at[row.Index,column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + str(row.Index) + '.'
-                             ' Check your location file and input selections to ensure no negative values occur.'
-                             ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                              ' Check your location file and input selections to ensure no negative values occur.'
+                              ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
     if 0.0 > data.at[row.Index,'kr'] > 1.0:
         raise ValueError('Daily calculated values for the evaporation reduction coefficient must be between 0 and 1.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
@@ -149,8 +149,8 @@ def evap(row,param,data,data_dic,irr_init,zedepl_init):
                          ' You can report this issue to developers at [INSERT URL HERE]')
     if round(data.at[row.Index,'kc'],4) > round(data.at[row.Index,'kcb_max'],4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
-                         ' Error occurs at index value ' + str(row.Index) + '.'
-                         ' You can report this issue to developers at [INSERT URL HERE]')
+                          ' Error occurs at index value ' + str(row.Index) + '.'
+                          ' You can report this issue to developers at [INSERT URL HERE]')
     if data.at[row.Index,'kcb'] > data.at[row.Index,'kc']:
         raise ValueError('Daily calculated basal crop coefficient values cannot exceed the combined dual crop coefficient value.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
