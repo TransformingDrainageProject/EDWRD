@@ -28,9 +28,6 @@ def psthrvst_pstfrz_evap(row,param,data,data_dic,irr_init,zedepl_init):
     data.at[row.Index,'zeperc'] = max((data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) + (irr_init / data.at[row.Index,'fw']) - zedepl_init,0)
     data.at[row.Index,'zedepl'] = min(max(zedepl_init - (data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) - (irr_init / data.at[row.Index,'fw']) + (data.at[row.Index,'evap'] / data.at[row.Index,'few']) + data.at[row.Index,'zeperc'],0),param['nongr_tew'].values[0][0])
     
-    #POPULATE THE IRRIGATION AMOUNT BASED ON THE IRRIGATION REQUIREMENT FROM THE PREVIOUS DAY
-    data.at[row.Index,'irr'] = irr_init
-    
     #POPULATE THE CROP COEFFICIENT AND CROP ET
     data.at[row.Index,'kc'] = data.at[row.Index,'kcb'] + data.at[row.Index,'ke']
     data.at[row.Index,'etc'] = data.at[row.Index,'kc'] * data.at[row.Index,'eto']
@@ -78,10 +75,7 @@ def winter_evap(row,param,data,data_dic,irr_init,zedepl_init):
     #CONDUCT THE WATER BALANCE IN THE EVAPORATION LAYER
     data.at[row.Index,'zeperc'] = max((data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) + (irr_init / data.at[row.Index,'fw']) - zedepl_init,0)
     data.at[row.Index,'zedepl'] = min(max(zedepl_init - (data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) - (irr_init / data.at[row.Index,'fw']) + (data.at[row.Index,'evap'] / data.at[row.Index,'few']) + data.at[row.Index,'zeperc'],0),param['tew'].values[0][0])
-    
-    #POPULATE THE IRRIGATION AMOUNT BASED ON THE IRRIGATION REQUIREMENT FROM THE PREVIOUS DAY
-    data.at[row.Index,'irr'] = irr_init
-    
+     
     #POPULATE THE CROP COEFFICIENT AND CROP ET
     data.at[row.Index,'kc'] = data.at[row.Index,'kcb'] + data.at[row.Index,'ke']
     data.at[row.Index,'etc'] = data.at[row.Index,'kc'] * data.at[row.Index,'eto']
@@ -134,9 +128,6 @@ def evap(row,param,data,data_dic,irr_init,zedepl_init):
     #CONDUCT THE WATER BALANCE IN THE EVAPORATION LAYER
     data.at[row.Index,'zeperc'] = max((data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) + (irr_init / data.at[row.Index,'fw']) - zedepl_init,0)
     data.at[row.Index,'zedepl'] = min(max(zedepl_init - (data.at[row.Index,'prcp'] - data.at[row.Index,'ro']) - (irr_init / data.at[row.Index,'fw']) + (data.at[row.Index,'evap'] / data.at[row.Index,'few']) + data.at[row.Index,'zeperc'],0),param['tew'].values[0][0])
-    
-    #POPULATE THE IRRIGATION AMOUNT BASED ON THE IRRIGATION REQUIREMENT FROM THE PREVIOUS DAY
-    data.at[row.Index,'irr'] = irr_init
     
     #POPULATE THE CROP COEFFICIENT AND CROP ET
     data.at[row.Index,'kc'] = data.at[row.Index,'kcb'] + data.at[row.Index,'ke']
