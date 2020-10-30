@@ -21,8 +21,7 @@ class EDWRD_Output_Warning(UserWarning):
 
 def edwrd_input(infile, pfile, convert_input, convert_param):
     """Reads in the input and parameter files. Prepares the main pandas dataframe that will be used to track variables and
-    calculated values. If convert_input or convert_param equal 1, then their values need to 
-    be converted to metric."""
+    calculated values"""
     print(json.dumps({'msg': 'Preparing inputs...'}))
     # Attempt to detect which delimiter was used (default to tab)
     sep = '\t'
