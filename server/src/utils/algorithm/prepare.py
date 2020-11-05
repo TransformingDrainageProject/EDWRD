@@ -1,12 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 17 14:37:07 2019
+Copyright 2020, Benjamin Reinhart, Jane Frankenberger, Chris Hay, Benjamin Hancock
 
-@author: brein
+This file is part of Evaluating Drainage Water Recycling Decisions (EDWRD).
 
-Error checks are commented as #--ERROR CHECK--# // #--END OF ERROR CHECK--#
-Warnings are commented as #--WARNING--# // #--END OF WARNING--#
+EDWRD is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+EDWRD is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with EDWRD.  If not, see <https://www.gnu.org/licenses/>.
 """
+
 import json
 import pandas as pd
 import numpy as np
@@ -116,7 +127,7 @@ def edwrd_input(infile, pfile, convert_input, convert_param):
     for column in data[['prcp', 'dflw', 'max_upflx', 'water_evap', 'eto', 'no3c', 'srpc']].columns:
         if data[column].any() < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Check your location and input files to ensure no negative values occur.'
-                             ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                             ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
 
     # convert input to metric if necessary
@@ -216,7 +227,7 @@ def edwrd_input(infile, pfile, convert_input, convert_param):
     #--ERROR CHECK--#
     if param['taw'].at[0, 'taw'] <= 0.0:
         raise ValueError('Calculated values of total available water cannot be less than or equal to zero. Check your input selections.'
-                         ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                         ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
 
     #--WARNING--#
@@ -224,7 +235,7 @@ def edwrd_input(infile, pfile, convert_input, convert_param):
         warnings.warn('Calculated values of total evaporable water are outside the range of typical values (6.0-29.0). This may be cause by'
                       ' low field capacity estimates for the evaporation layer, high wilting point capacities, or a very deep/shallow'
                       ' evaporation layer depth. Check your input selections. If the problem persists, you can report this issue to developers at'
-                      ' [INSERT URL HERE]', EDWRD_Output_Warning)
+                      ' http://bit.ly/edwrd-issue', EDWRD_Output_Warning)
     #--END OF WARNING--#
 
     # CREATE DAILY INPUT RANGES FOR WIND AND RHMIN BY ASSIGNING MONTHLY VALUES
@@ -321,11 +332,11 @@ def edwrd_input(infile, pfile, convert_input, convert_param):
     if data['cht'].any() <= 0.0:
         raise ValueError('Daily calculated values for crop height must be greater than zero, even during the non-growing season.'
                          ' Check your input selections to ensure no zero or negative values occur.'
-                         ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                         ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     if data['kcb'].any() < 0.0:
         raise ValueError('Daily calculated values for the basal crop coefficient cannot be negative.'
                          ' Check your input selections to ensure no zero or negative values occur.'
-                         ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                         ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data['fc'].any() > 1.0:
         raise ValueError('Daily calculated values for the fraction of vegetative cover must be between 0 and 1. You can report this'
                          ' issue to developers at [INSERT URL HERE]')

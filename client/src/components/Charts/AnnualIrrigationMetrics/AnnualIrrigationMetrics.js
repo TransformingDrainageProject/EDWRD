@@ -112,7 +112,17 @@ const AnnualIrrigationMetrics = ({ chartData }) => {
             <ChartDescription
               name="annualIrrigationMetrics"
               title="Annual Irrigation Metrics"
-              text="Annual irrigation performance is estimated based on two metrics. The first is the annual amount of irrigation that can be applied from a given reservoir size. The second is a measure of the ability of a particular reservoir size to meet the total annual irrigation requirement, which we refer to as the Annual Relative Irrigation Supply (ARIS). ARIS is calculated as the amount of applied irrigation provided by a particular reservoir size divided by the amount of irrigation that would have been applied given an unlimited water supply. An ARIS value of 1.0 indicates that the reservoir was able to fully meet the annual irrigation requirement. You can find out more about how these metrics and others are calculated in the tool documentation <insert link to documentation>."
+              text={[
+                'Annual irrigation performance is estimated based on two metrics. The first is the annual amount of irrigation that can be applied from a given reservoir size. The second is a measure of the ability of a particular reservoir size to meet the total annual irrigation requirement, which we refer to as the Annual Relative Irrigation Supply (ARIS). ARIS is calculated as the amount of applied irrigation provided by a particular reservoir size divided by the amount of irrigation that would have been applied given an unlimited water supply. An ARIS value of 1.0 indicates that the reservoir was able to fully meet the annual irrigation requirement. You can find out more about how these metrics and others are calculated in the ',
+                <a
+                  href="https://transformingdrainage.org/tools/edwrd/documentation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  tool documentation
+                </a>,
+                '.',
+              ]}
             >
               <DownloadDataButton
                 sessionID={chartData.sessionID}

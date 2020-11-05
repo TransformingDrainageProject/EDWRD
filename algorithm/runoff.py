@@ -1,10 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 17 14:41:20 2019
+Copyright 2020, Benjamin Reinhart, Jane Frankenberger, Chris Hay, Benjamin Hancock
 
-@author: brein
+This file is part of Evaluating Drainage Water Recycling Decisions (EDWRD).
 
-Error checks are commented as #--ERROR CHECK--# // #--END OF ERROR CHECK--#
+EDWRD is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+EDWRD is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with EDWRD.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 def runoff_calc(row,param,data,zedepl_init):
@@ -36,10 +47,10 @@ def runoff_calc(row,param,data,zedepl_init):
     if param['cn1'].values[0][0] > data.at[row.Index,'cn'] > param['cn3'].values[0][0]:
         raise ValueError('Daily calculated curve number values should be between values representing dry and wet'
                          ' soil conditions. Error occurs at index value ' + str(row.Index) + '.' 
-                         ' You can report this issue to developers at [INSERT URL HERE]')
+                         ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     
     if data.at[row.Index,'ro'] < 0.0:
         raise ValueError('Daily calculated runoff values may not be negative. Error occurs at index value ' + 
                          str(row.Index) + '. Check your location file and input selections to ensure no negative values occur.'
-                         ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                         ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#

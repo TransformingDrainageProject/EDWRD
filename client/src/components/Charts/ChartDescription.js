@@ -18,7 +18,18 @@ const ChartDescription = ({ children, name, text, title }) => (
       <HelpPopover
         key={name}
         helpText={
-          <span>A link to the tool documentation will be provided here</span>
+          <span>
+            For more information on how these results are calculated, please
+            refer to{' '}
+            <a
+              href="https://transformingdrainage.org/tools/edwrd/documentation"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://transformingdrainage.org/tools/edwrd/documentation
+            </a>
+            .
+          </span>
         }
         label={title}
         name={name}
