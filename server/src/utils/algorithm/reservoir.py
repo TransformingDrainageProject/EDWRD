@@ -49,12 +49,12 @@ def reservoir_calc(row,param,data,data_dic,irr_init,rvol_init,rmax,rarea):
         if data.at[row.Index,column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + 
                          str(row.Index) + '. Check your location file and input selections to ensure no negative values occur.'
-                         'If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                         'If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     
     if data.at[row.Index,'rcap'] > data.at[row.Index,'rdflw']:
         raise ValueError(data_dic['rcap'] + ' cannot be greater than the amount of tile drain flow entering the'
                          ' reservoir. Error occurs at index value' + str(row.Index) + '. You can report this issue to'
-                         ' developers at [INSERT URL HERE]')
+                         ' developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
     
 def wq_calc(row,param,data,data_dic,load_conv):
@@ -70,5 +70,5 @@ def wq_calc(row,param,data,data_dic,load_conv):
         if data.at[row.Index,column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + 
                          str(row.Index) + '. Check your location file and input selections to ensure no negative values occur.'
-                         ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]') 
+                         ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue') 
     #--END OF ERROR CHECK--#
