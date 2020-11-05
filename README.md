@@ -2,6 +2,8 @@
 
 EDWRD provides an estimate of the potential benefits that result from capturing drained agricultural water in various sizes of water storage reservoirs for reuse as irrigation, a practiced referred to as drainage water recycling. The benefits of drainage water recycling include (1) the ability to apply supplemental irrigation during the growing season, and (2) a reduction of nutrient-rich drainage water into downstream water bodies. See Questions and Answers About Drainage Water Recycling for the Midwest for more information on this practice.
 
+EDWRD is an open-source tool licensed under the GNU GPL 3.0 (or later) license. A copy of this license is included in file called, "COPYING.txt", or users can go to https://www.gnu.org/licenses/.
+
 ## Getting started
 
 ---
