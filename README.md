@@ -2,7 +2,16 @@
 
 EDWRD provides an estimate of the potential benefits that result from capturing drained agricultural water in various sizes of water storage reservoirs for reuse as irrigation, a practiced referred to as drainage water recycling. The benefits of drainage water recycling include (1) the ability to apply supplemental irrigation during the growing season, and (2) a reduction of nutrient-rich drainage water into downstream water bodies. See [Questions and Answers About Drainage Water Recycling for the Midwest](https://mdc.itap.purdue.edu/item.asp?Item_Number=ABE-156-W) for more information on this practice.
 
-EDWRD is an open-source tool licensed under the GNU GPL 3.0 (or later) license. A copy of this license is included in file called, "COPYING.txt", or users can go to https://www.gnu.org/licenses/.
+
+Copyright 2020, Benjamin Reinhart, Jane Frankenberger, Chris Hay, Benjamin Hancock
+
+This file is part of Evaluating Drainage Water Recycling Decisions (EDWRD).
+
+EDWRD is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+EDWRD is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with EDWRD.  If not, see <https://www.gnu.org/licenses/>.
 
 ## Getting started
 
