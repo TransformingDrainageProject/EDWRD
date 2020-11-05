@@ -81,7 +81,7 @@ def edwrd(infile, pfile, convert_input, convert_param):
         for column in data[['rprcp', 'rdflw', 'rseep', 'revap', 'no3l', 'srpl']].columns:
             if data[column].any() < 0.0:
                 raise ValueError(data_dic[column] + ' cannot contain negative values. Check your location file and input selections to ensure no negative values occur.'
-                                 ' If the problem persists, you can report this issue to developers at [INSERT URL HERE]')
+                                 ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
         #--END OF ERROR CHECK--#
 
         # CALCULATE DAILY WATER BALANCES
