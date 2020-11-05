@@ -44,10 +44,31 @@ const Introduction = () => (
         and tile drainage. Crop evapotranspiration (ET) is calculated following
         the FAO-56 dual crop coefficient approach using information about the
         local weather, soils, crop, and drainage patterns. You can find out more
-        about methods used by EDWRD in the tool documentation{' '}
-        <em>&lt;insert link&gt;</em> and the associated peer-reviewed articles
-        (Reinhart et al. 2019, Reinhart et al. 2020{' '}
-        <em>&lt;insert links to papers&gt;</em>).
+        about methods used by EDWRD in the{' '}
+        <a
+          href="https://transformingdrainage.org/tools/edwrd/documentation"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          tool documentation
+        </a>{' '}
+        and the associated peer-reviewed articles (
+        <a
+          href="https://doi.org/10.1016/j.agwat.2019.105699"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Reinhart et al. 2019
+        </a>
+        ,{' '}
+        <a
+          href="https://elibrary.asabe.org/abstract.asp?aid=51797"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Reinhart et al. 2020
+        </a>
+        ).
       </p>
     </Col>
   </Row>
