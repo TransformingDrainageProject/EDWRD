@@ -1,10 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 17 14:44:49 2019
+Copyright 2020, Benjamin Reinhart, Jane Frankenberger, Chris Hay, Benjamin Hancock
 
-@author: brein
+This file is part of Evaluating Drainage Water Recycling Decisions (EDWRD).
 
-Error checks are commented as #--ERROR CHECK--# // #--END OF ERROR CHECK--#
+EDWRD is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+EDWRD is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with EDWRD.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 def reservoir_calc(row,param,data,data_dic,irr_init,rvol_init,rmax,rarea):
