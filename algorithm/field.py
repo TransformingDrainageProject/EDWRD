@@ -37,7 +37,7 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
                       ' This could be caused by unusually high/low input selections for the base value or extremely high estimates'
                       ' of potential crop ET. Check your location file and input selections, as well as daily calculated estimates'
                       ' of potential crop ET. Error occurs at index value' + str(row.Index) + '. If the problem persists, you can report'
-                      ' this issue to developers at [INSERT URL HERE]', EDWRD_Output_Warning)
+                      ' this issue to developers at http://bit.ly/edwrd-issue', EDWRD_Output_Warning)
     ##--END OF WARNING--#
     
     data.at[row.Index,'raw'] = data.at[row.Index,'p'] * param['taw'].values[0][0]
@@ -90,7 +90,7 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
                     raise ValueError('Daily calculated values of applied irrigation depth fall below the minimum threshold for irrigation, despite'
                                      ' water likely being available in the reservoir. Check to ensure water is available in the reservoir.'
                                      ' Error occurs at index value ' + str(row.Index) + '. If this problem persists, you can report this issue to'
-                                     ' developers at [INSERT URL HERE]')
+                                     ' developers at http://bit.ly/edwrd-issue')
                 #--END OF ERROR CHECK--#
 
             else:
@@ -128,43 +128,43 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
     #--ERROR CHECK--#
     if data.at[row.Index,'raw'] <= 0.0:
         raise ValueError('Daily calculated readily available water cannot be less than or equal to 0. Error occurs at index value ' + 
-                         str(row.Index) + '. You can report this issue to developers at [INSERT URL HERE]')
+                         str(row.Index) + '. You can report this issue to developers at http://bit.ly/edwrd-issue')
     for column in data[['irr','zrperc']]:
         if data.at[row.Index,column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + 
-                             str(row.Index) + '. You can report this issue to developers at [INSERT URL HERE]')
+                             str(row.Index) + '. You can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index,'upflx'] > data.at[row.Index,'max_upflx']:
         raise ValueError('Daily calculated upward flux must be between 0 and maximum potential upward flux for that specific day'
                          ' Error occurs at index value ' + str(row.Index) + '. If this problem persists, you can report this issue to'
-                         ' developers at [INSERT URL HERE]')
+                         ' developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index,'ks'] > 1.0:
         raise ValueError('Daily calculated values for the water stress coefficient must be between 0 and 1. Error occurs at index value ' + 
-                         str(row.Index) + '. You can report this issue to developers at [INSERT URL HERE]')
+                         str(row.Index) + '. You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'ks'] < 1 and data.at[row.Index,'zrdepl'] < data.at[row.Index,'raw']:
         raise ValueError('Daily calculated values for the water stress coefficient should be 1 when water depletion in the root zone'
                          ' is less than readily available water. Error occurs at index value ' + str(row.Index) + '. You can report this'
-                         ' issue to developers at [INSERT URL HERE]')
+                         ' issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'kc_a'] > data.at[row.Index,'kc']:
         raise ValueError('Daily calculated values for actual crop coefficient cannot exceed values of the potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '. If this problem persists, you can report this issue to'
-                         ' developers at [INSERT URL HERE]')
+                         ' developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'trans_a'] > data.at[row.Index,'trans']:
         raise ValueError('Daily calculated values for actual transpiration cannot exceed values of the potential transpiration.'
                          ' Error occurs at index value ' + str(row.Index) + '. If this problem persists, you can report this issue to'
-                         ' developers at [INSERT URL HERE]')
+                         ' developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'etc_a'] > data.at[row.Index,'etc']:
         raise ValueError('Daily calculated values for actual crop ET cannot exceed values of the potential crop ET.'
                          ' Error occurs at index value ' + str(row.Index) + '. If this problem persists, you can report this issue to'
-                         ' developers at [INSERT URL HERE]')
+                         ' developers at http://bit.ly/edwrd-issue')
     for column in data[['zrdepl','zrsm']]:
         if 0.0 > data.at[row.Index,column] > param['taw'].at[0,'taw']:
             raise ValueError('Daily calculated values for ' + data_dic[column] + ' must be between 0 and the estimated'
                              ' total available water in the root zone. Error occurs at index value ' + str(row.Index) + '. You can report this issue to'
-                             ' developers at [INSERT URL HERE]')
+                             ' developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'zrperc'] > 0 and data.at[row.Index,'zrdepl'] > 0.1:
         raise ValueError('Excess drainage from the root zone cannot occur along with notable water depletion from the root zone.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
-                         ' You can report this issue to developers at [INSERT URL HERE]')
+                         ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
     
     
