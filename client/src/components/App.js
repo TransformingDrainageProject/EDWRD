@@ -31,11 +31,25 @@ const App = () => {
     thaw: 86.998985,
   });
   const [markerCoords, updateMarkerCoords] = useState(null);
+  const [clientID, setClientID] = useState('');
 
   const chartRef = useRef(null);
   const formRef = useRef(null);
   const executeScrollToChart = () => scrollToRef(chartRef);
   const executeScrollToForm = () => scrollToRef(formRef);
+
+  useEffect(() => {
+    const fetchClientID = async () => {
+      try {
+        const result = await axios.get('/api/get_clientid');
+        setClientID(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchClientID();
+  }, [clientID]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,7 +140,7 @@ const App = () => {
         {chartData ? <ChartsContainer chartData={chartData} /> : null}
         {chartData ? <hr /> : null}
       </Container>
-      <Footer />
+      <Footer clientID={clientID} />
     </div>
   );
 };
