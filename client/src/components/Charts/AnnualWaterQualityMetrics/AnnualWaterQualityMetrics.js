@@ -141,7 +141,17 @@ const AnnualWaterQualityMetrics = ({ chartData }) => {
             <ChartDescription
               name="annualWaterQualityMetrics"
               title="Annual Irrigation Metrics"
-              text="Annual water quality performance is estimated based on the annual amount of nutrients that can be captured and stored by a given reservoir size, thereby preventing them from being discharged to downstream waters. These results can also be viewed as a percentage of the overall nutrient load that is present in the tile drain flow from the field. Users can view a table of the annual values by clicking the button below the figure, or download all annual results in an Excel file below. You can find out more about how these metrics and others are calculated in the tool documentation <insert link to documentation>."
+              text={[
+                'Annual water quality performance is estimated based on the annual amount of nutrients that can be captured and stored by a given reservoir size, thereby preventing them from being discharged to downstream waters. These results can also be viewed as a percentage of the overall nutrient load that is present in the tile drain flow from the field. Users can view a table of the annual values by clicking the button below the figure, or download all annual results in an Excel file below. You can find out more about how these metrics and others are calculated in the ',
+                <a
+                  href="https://transformingdrainage.org/tools/edwrd/documentation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  tool documentation
+                </a>,
+                '.',
+              ]}
             >
               <DownloadDataButton
                 sessionID={chartData.sessionID}

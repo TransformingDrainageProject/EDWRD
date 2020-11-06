@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const uniqid = require('uniqid');
 
 const app = express();
 const server = require('http').Server(app);
@@ -67,6 +68,14 @@ require('./routes/downloadRoutes')(app);
 require('./routes/formRoutes')(app, io);
 require('./routes/gisRoutes')(app);
 require('./routes/uploadRoutes')(app);
+
+// generate unique id for the client
+app.get('/api/get_clientid', (req, res) => {
+  if (!req.session.clientID) {
+    req.session.clientID = uniqid();
+  }
+  res.send(req.session.clientID);
+});
 
 // send requests not caught by a route to react client
 app.get('*', (req, res, next) => {
