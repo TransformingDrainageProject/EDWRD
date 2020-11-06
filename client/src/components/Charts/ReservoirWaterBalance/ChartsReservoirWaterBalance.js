@@ -110,6 +110,7 @@ const ChartsFieldWaterBalance = ({ chartData }) => {
             text={[
               'This graph shows the monthly amount of water for each component of the reservoir water balance for a specific reservoir size across all years. Water inflows to the reservoir are shown in blue. Water outflows are shown in shades of yellow to red. Use the buttons at the top right of the graph to view a specific year or reservoir size. Results from individual years are shown as stacked bar graphs allowing you to add each bar to estimate total water inflows and outflows and compare the reservoir water balance throughout the year. Users can download all monthly results to get more information about each water balance components.  You can find out more about how these components are calculated in the ',
               <a
+                key="reservoirWaterBalance"
                 href="https://transformingdrainage.org/tools/edwrd/documentation"
                 target="_blank"
                 rel="noopener noreferrer"
