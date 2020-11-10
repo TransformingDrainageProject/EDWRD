@@ -10,7 +10,7 @@ import ErrorMessage from '../FormikComponents/ErrorMessage';
 import { MyRadioField } from '../FormikComponents/MyFields';
 
 const UserDataForm = (props) => {
-  const { origin, stationId, stationName } = props;
+  const { origin, stationId, stationName, unitType } = props;
   const { values } = useFormikContext();
 
   const userDataSelectionOptions = [
@@ -60,6 +60,7 @@ const UserDataForm = (props) => {
                     type="selectStationLocation"
                     stationId={stationId}
                     stationName={stationName}
+                    unitType={unitType}
                   />
                 )}
               </Col>

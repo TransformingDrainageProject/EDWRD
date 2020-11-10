@@ -107,10 +107,10 @@ const App = () => {
         <hr />
         <MapContainer
           origin={ORIGIN}
+          type="selectFieldLocation"
           updateFieldState={updateFieldState}
           updateFrzThwDates={updateFrzThwDates}
           updateMarkerCoords={updateMarkerCoords}
-          type="selectFieldLocation"
         />
         <hr />
         {markerCoords ? (
