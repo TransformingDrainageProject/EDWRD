@@ -183,15 +183,4 @@ export const advancedSettingsHelp = {
       </p>
     </div>
   ),
-  advCustomInput: (
-    <div>
-      Custom input files may be uploaded to set all inputs according to your
-      specific conditions and scenarios. This file should be uploaded as a .txt
-      file and formatted following this{' '}
-      <a href="/api/example" target="_blank" rel="noopener noreferrer">
-        example input file
-      </a>
-      .
-    </div>
-  ),
 };

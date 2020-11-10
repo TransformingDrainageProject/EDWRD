@@ -288,15 +288,23 @@ const AdvancedSettings = (props) => {
                     </h4>
                   </Col>
                 </Row>
+                <Row>
+                  <Col>
+                    Custom input files may be uploaded to set all inputs
+                    according to your specific conditions and scenarios. This
+                    file should be uploaded as a .txt file and formatted
+                    following this{' '}
+                    <a
+                      href="/api/example"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      example parameter file
+                    </a>
+                    .
+                  </Col>
+                </Row>
                 <FileUpload name="userParamFile" type="param" />
-                <HelpPopover
-                  key="advCustomInput"
-                  helpText={advancedSettingsHelp.advCustomInput}
-                  label="Upload custom input file"
-                  name="advCustomInput"
-                  position="top"
-                  top="5px"
-                />
               </Col>
             </Row>
           </Container>
