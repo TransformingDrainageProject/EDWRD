@@ -197,6 +197,7 @@ const FormContainer = (props) => {
                         stationName={
                           values.stationName ? values.stationName : null
                         }
+                        unitType={unitType}
                       />
                     ) : null}
                   </Col>

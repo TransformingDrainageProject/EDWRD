@@ -32,13 +32,14 @@ const customMarkerIconSelected = divIcon({
 const Map = (props) => {
   const {
     origin,
+    selectedSite,
+    setSelectedSite,
     type,
     updateFieldState,
     updateFrzThwDates,
     updateMarkerCoords,
-    selectedSite,
-    setSelectedSite,
     updateSelectedSite,
+    unitType,
   } = props;
   const [markerPosition, updateMarkerPosition] = useState(null);
   const [precompiledDataStations, setPrecompiledDataStations] = useState(
@@ -152,6 +153,16 @@ const Map = (props) => {
                 <Row>
                   <strong>Site Summary:&nbsp;</strong>
                   {station.site_summary ? station.site_summary : 'NULL'}
+                </Row>
+                <br />
+                <Row>
+                  <a
+                    href={`/api/download_station_input?stationID=${station.id}&unit=${unitType}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download daily input (.txt)
+                  </a>
                 </Row>
               </Popup>
             </Marker>
