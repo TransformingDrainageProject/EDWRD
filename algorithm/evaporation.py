@@ -46,8 +46,9 @@ def evap_calc(row,param,data,data_dic,fw_init,irr_init,zedepl_init):
     for column in data[['fw','few']]:
         if 0.0 > data.at[row.Index,column] > 1.0:
             raise ValueError('Daily calculated values for the ' + data_dic[column] + ' must be between 0 and 1.'
-                             ' Error occurs at index value' + str(row.Index) + '. You can report this issue to developers at'
-                             ' http://bit.ly/edwrd-issue')
+                             ' Error occurs at index value' + str(row.Index) + '. If you have uploaded your own files,'
+                             'check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
+                             'You can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
     
     #IDENTIFY THE PERIOD OF THE YEAR (GROWING SEASON, POST-HARVEST, WINTER, POST-FREEZE, PRE-PLANT) AND APPLY THE APPROPRIATE WATER BALANCE 
