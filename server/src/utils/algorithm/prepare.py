@@ -234,7 +234,7 @@ def edwrd_input(infile, pfile, convert_input, convert_param):
     if 6.0 > param['tew'].at[0, 'tew'] > 29.0:
         warnings.warn('Calculated values of total evaporable water are outside the range of typical values (6.0-29.0). This may be cause by'
                       ' low field capacity estimates for the evaporation layer, high wilting point capacities, or a very deep/shallow'
-                      ' evaporation layer depth. Check your input selections. If you have uploaded your own files, check to make sure your 
+                      ' evaporation layer depth. Check your input selections. If you have uploaded your own files, check to make sure your' 
                       ' unit selection (U.S. vs metric) matches your uploaded files. If the problem persists, you can report this issue to developers at'
                       ' http://bit.ly/edwrd-issue', EDWRD_Output_Warning)
     #--END OF WARNING--#
@@ -264,7 +264,7 @@ def edwrd_input(infile, pfile, convert_input, convert_param):
         warnings.warn('Monthly average wind values are outside of the typical range (1-6 m/s [2-13 mph]).'
                     ' Low values lead to lower estimates of maximum potential evapotranspiration.'
                     ' High values lead to higher estimates of maximum potential evapotranspiration.'
-                    'If you have uploaded your own files, check to make sure your 
+                    'If you have uploaded your own files, check to make sure your' 
                       ' unit selection (U.S. vs metric) matches your uploaded files.', EDWRD_Output_Warning)
 
     if 20.0 > data['rhmin'].any() > 80.0:
