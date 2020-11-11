@@ -8,13 +8,14 @@ const { spawn } = require('child_process');
 const tmp = require('tmp');
 
 const { createSummaryObject } = require('../utils/createSummaryObject');
-const { createTaskObject } = require('../models/taskCreator');
+const { createTaskObject, endTask } = require('../models/taskCreator');
 const dailyStations = require('../utils/daily_stations.json');
 const { getFormSchema } = require('../validation/schema');
 const { pythonPath } = require('../config');
 const winston = require('../config/winston');
 
 const Form = mongoose.model('forms');
+const Task = mongoose.model('tasks');
 
 module.exports = (app, io) => {
   app.post(
@@ -30,13 +31,21 @@ module.exports = (app, io) => {
         req.session.workspace = tmp.dirSync().name;
       }
 
+      let task = new Task();
+
       // check for file uploads
       if (req.body.userInput === 'true' && !req.session.inputFile) {
+        task.statusCode = 0;
+        task.error = 'Must upload file with daily values';
+        endTask(task);
         return next(createError(400, 'Must upload file with daily values'));
       }
       const form = new Form(req.body);
+
       form.save((err) => {
         if (err) return next(err);
+        task.Form = form;
+        task.workspace = req.session.workspace;
         // find wind and rhmin
         const pythonStationFinder = spawn(pythonPath, [
           './src/utils/locate_nearest_station_data.py',
@@ -52,6 +61,9 @@ module.exports = (app, io) => {
         });
 
         pythonStationFinder.on('error', (err) => {
+          task.statusCode = 0;
+          task.error = err;
+          endTask(task);
           return next(err);
         });
 
@@ -142,6 +154,8 @@ module.exports = (app, io) => {
                     stationData.param
                   );
                 } catch (err) {
+                  task.error = err.message;
+                  endTask(task);
                   return next(err);
                 }
               }
@@ -153,6 +167,10 @@ module.exports = (app, io) => {
             }
           }
           if (inputFile && paramFile) {
+            task.inputFile = inputFile;
+            task.paramFile = paramFile;
+            task.clientID = req.session.clientID;
+
             const startTime = process.hrtime();
 
             const summaryOverview = createSummaryObject(form, req.session);
@@ -189,21 +207,28 @@ module.exports = (app, io) => {
             });
 
             pyshell.on('error', (err) => {
+              task.statusCode = 0;
+              task.error = err.stack;
+              endTask(task);
               winston.error(err.stack);
             });
 
             pyshell.end((err, code, signal) => {
               const runtime = process.hrtime(startTime)[0];
-
+              task.runtime = runtime;
               if (err || code !== 0) {
                 if (err) {
                   winston.error(err);
                   io.emit('error', {
                     msg: err.stack.split('\n')[0].split(':')[2].trim(),
                   });
+                  task.error = err.stack.split('\n')[0].split(':')[2].trim();
+                  task.statusCode = 0;
                 } else {
                   winston.error('Unexpected error has occurred');
                   io.emit('error', { msg: 'Unexpected error has occurred' });
+                  task.error = 'Unexpected error has occurred';
+                  task.statusCode = 0;
                 }
               } else {
                 winston.info(`edwrd took ${runtime} seconds`);
@@ -215,12 +240,17 @@ module.exports = (app, io) => {
                   sessionID: req.session.workspace.split('/')[2],
                 });
               }
+
+              endTask(task);
             });
 
             return res.send(
               'Please do not close this tab. Your request is currently processing.'
             );
           } else {
+            task.statusCode = 0;
+            task.error = 'Unable to find input and parameter file';
+            endTask(task);
             return res.sendStatus(500);
           }
         });
