@@ -192,7 +192,8 @@ def edwrd_input(infile,pfile):
     if 6.0 > param['tew'].at[0,'tew'] > 29.0:
         warnings.warn('Calculated values of total evaporable water are outside the range of typical values (6.0-29.0). This may be cause by'
                       ' low field capacity estimates for the evaporation layer, high wilting point capacities, or a very deep/shallow'
-                      ' evaporation layer depth. Check your input selections. If the problem persists, you can report this issue to developers at'
+                      ' evaporation layer depth. Check your input selections. If you have uploaded your own files, check to make sure your 
+                      ' unit selection (U.S. vs metric) matches your uploaded files. If the problem persists, you can report this issue to developers at'
                       ' http://bit.ly/edwrd-issue', EDWRD_Output_Warning)
     #--END OF WARNING--#
 
@@ -214,7 +215,9 @@ def edwrd_input(infile,pfile):
     if 1.0 > data['wind'].any() > 6.0:
         warnings.warn('Monthly average wind values are outside of the typical range (1-6 m/s [2-13 mph]).'
                     ' Low values lead to lower estimates of maximum potential evapotranspiration.'
-                    ' High values lead to higher estimates of maximum potential evapotranspiration.', EDWRD_Output_Warning)
+                    ' High values lead to higher estimates of maximum potential evapotranspiration.'
+                    'If you have uploaded your own files, check to make sure your 
+                      ' unit selection (U.S. vs metric) matches your uploaded files.', EDWRD_Output_Warning)
 
     if 20.0 > data['rhmin'].any() > 80.0:
         warnings.warn('Monthly average minimum relative humidity values are outside of the typical range (20%-80%).'
@@ -288,6 +291,7 @@ def edwrd_input(infile,pfile):
                       ' typical values (1.05 - 1.30). This could be caused by higher than normal wind speeds, lower than'
                       ' normal minimum relative humidities, or higher than normal crop coefficient values during portions'
                       ' of the year. Higher estimates of maximum potential crop coefficient allow for greater water use'
-                      ' through higher potential rates of evapotranspiration. Double check your input selections.', EDWRD_Output_Warning)
+                      ' through higher potential rates of evapotranspiration. Double check your input selections.'
+                      'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.', EDWRD_Output_Warning)
 
     return param,data,data_dic, output_dic
