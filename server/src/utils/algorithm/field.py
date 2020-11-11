@@ -90,8 +90,8 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
                 if data.at[row.Index,'irr'] < irrdep_min:
                     raise ValueError('Daily calculated values of applied irrigation depth fall below the minimum threshold for irrigation, despite'
                                      ' water likely being available in the reservoir. Check to ensure water is available in the reservoir.'
-                                     ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure 
-                                     'your unit selection (U.S. vs metric) matches your uploaded files. If this problem persists, you can report this 
+                                     ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
+                                     'your unit selection (U.S. vs metric) matches your uploaded files. If this problem persists, you can report this' 
                                      'issue to developers at http://bit.ly/edwrd-issue')
                 #--END OF ERROR CHECK--#
 
