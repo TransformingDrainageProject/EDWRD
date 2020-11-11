@@ -137,7 +137,7 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
                              str(row.Index) + '. You can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index,'upflx'] > data.at[row.Index,'max_upflx']:
         raise ValueError('Daily calculated upward flux must be between 0 and maximum potential upward flux for that specific day'
-                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure 
+                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
                          'your unit selection (U.S. vs metric) matches your uploaded files. If this problem persists, you can report this issue to'
                          ' developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index,'ks'] > 1.0:
@@ -151,28 +151,28 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'kc_a'] > data.at[row.Index,'kc']:
         raise ValueError('Daily calculated values for actual crop coefficient cannot exceed values of the potential crop coefficient.'
-                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure 
+                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
                          'your unit selection (U.S. vs metric) matches your uploaded files. If this problem persists, you can report this issue to'
                          ' developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'trans_a'] > data.at[row.Index,'trans']:
         raise ValueError('Daily calculated values for actual transpiration cannot exceed values of the potential transpiration.'
-                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure 
+                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
                          'your unit selection (U.S. vs metric) matches your uploaded files. If this problem persists, you can report this issue to'
                          ' developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'etc_a'] > data.at[row.Index,'etc']:
         raise ValueError('Daily calculated values for actual crop ET cannot exceed values of the potential crop ET.'
-                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure 
+                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
                          'your unit selection (U.S. vs metric) matches your uploaded files. If this problem persists, you can report this issue to'
                          ' developers at http://bit.ly/edwrd-issue')
     for column in data[['zrdepl','zrsm']]:
         if 0.0 > data.at[row.Index,column] > param['taw'].at[0,'taw']:
             raise ValueError('Daily calculated values for ' + data_dic[column] + ' must be between 0 and the estimated'
-                             ' total available water in the root zone. Error occurs at index value ' + str(row.Index) + '. 
+                             ' total available water in the root zone. Error occurs at index value ' + str(row.Index) + '.' 
                              'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric)'
                              ' matches your uploaded files. You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index,'zrperc'] > 0 and data.at[row.Index,'zrdepl'] > 0.1:
         raise ValueError('Excess drainage from the root zone cannot occur along with notable water depletion from the root zone.'
-                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure 
+                         ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
                          'your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
