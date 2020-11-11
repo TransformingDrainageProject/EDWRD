@@ -1,8 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const moment = require('moment');
 const path = require('path');
-
-const Task = require('./Task');
+const winston = require('../config/winston');
 
 module.exports = {
   createTaskObject: async (workspace, paramValues, rhminWnd) => {
@@ -120,6 +119,12 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  endTask: (task) => {
+    task.lastUpdatedAt = new Date().toUTCString();
+    task.save((err) => {
+      if (err) winston.error(err);
+    });
   },
 };
 
