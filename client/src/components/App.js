@@ -41,6 +41,7 @@ const App = () => {
 
   useEffect(() => {
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    ReactGA.pageview('/');
   }, []);
 
   useEffect(() => {
