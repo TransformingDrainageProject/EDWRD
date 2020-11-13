@@ -47,10 +47,12 @@ def runoff_calc(row,param,data,zedepl_init):
     if param['cn1'].values[0][0] > data.at[row.Index,'cn'] > param['cn3'].values[0][0]:
         raise ValueError('Daily calculated curve number values should be between values representing dry and wet'
                          ' soil conditions. Error occurs at index value ' + str(row.Index) + '.' 
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     
     if data.at[row.Index,'ro'] < 0.0:
         raise ValueError('Daily calculated runoff values may not be negative. Error occurs at index value ' + 
                          str(row.Index) + '. Check your location file and input selections to ensure no negative values occur.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#

@@ -72,6 +72,7 @@ def edwrd(infile,pfile):
         for column in data[['rprcp','rdflw','rseep','revap','no3l','srpl']].columns:
             if data[column].any() < 0.0:
                 raise ValueError(data_dic[column] + ' cannot contain negative values. Check your location file and input selections to ensure no negative values occur.'
+                                 'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                                  ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
         #--END OF ERROR CHECK--#
 

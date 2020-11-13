@@ -33,9 +33,9 @@ def edwrd_input(infile,pfile):
     data = pd.read_csv(infile,sep = '\t', header = 0)
 
     #--ERROR CHECK--#
-    if 1 > data['month'].any() > 12:
+    if (data['month']<1).any() | (data['month']>12).any():
         raise ValueError('Month values must be an integer between 1 and 12')
-    if 1 > data['day'].any() > 31:
+    if (data['day'] < 1).any() | (data['day'] > 31).any():
         raise ValueError('Day values must be an integer between 1 and 31')
     #--END OF ERROR CHECK--#
 
@@ -112,7 +112,7 @@ def edwrd_input(infile,pfile):
 
     #--ERROR CHECK--#
     for column in data[['prcp','dflw','max_upflx','water_evap','eto','no3c','srpc']].columns:
-        if data[column].any() < 0.0:
+        if (data[column] < 0.0).any():
             raise ValueError(data_dic[column] + ' cannot contain negative values. Check your location and input files to ensure no negative values occur.'
                          ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
@@ -192,7 +192,8 @@ def edwrd_input(infile,pfile):
     if 6.0 > param['tew'].at[0,'tew'] > 29.0:
         warnings.warn('Calculated values of total evaporable water are outside the range of typical values (6.0-29.0). This may be cause by'
                       ' low field capacity estimates for the evaporation layer, high wilting point capacities, or a very deep/shallow'
-                      ' evaporation layer depth. Check your input selections. If the problem persists, you can report this issue to developers at'
+                      ' evaporation layer depth. Check your input selections. If you have uploaded your own files, check to make sure your' 
+                      ' unit selection (U.S. vs metric) matches your uploaded files. If the problem persists, you can report this issue to developers at'
                       ' http://bit.ly/edwrd-issue', EDWRD_Output_Warning)
     #--END OF WARNING--#
 
@@ -211,12 +212,14 @@ def edwrd_input(infile,pfile):
     data['rhmin'].loc[data['rhmin'].isnull()] = param['rhmin'].at[len(param['rhmin']) - 1,'rhmin']
 
     #--WARNING--#
-    if 1.0 > data['wind'].any() > 6.0:
+    if (data['wind'] < 1.0).any() | (data['wind'] > 6.0).any():
         warnings.warn('Monthly average wind values are outside of the typical range (1-6 m/s [2-13 mph]).'
                     ' Low values lead to lower estimates of maximum potential evapotranspiration.'
-                    ' High values lead to higher estimates of maximum potential evapotranspiration.', EDWRD_Output_Warning)
+                    ' High values lead to higher estimates of maximum potential evapotranspiration.'
+                    'If you have uploaded your own files, check to make sure your' 
+                      ' unit selection (U.S. vs metric) matches your uploaded files.', EDWRD_Output_Warning)
 
-    if 20.0 > data['rhmin'].any() > 80.0:
+    if (data['rhmin'] < 20.0).any() | (data['rhmin'] > 80.0).any():
         warnings.warn('Monthly average minimum relative humidity values are outside of the typical range (20%-80%).'
                      ' Low values lead to higher estimates of maximum potential evapotranspiration.'
                      ' High values lead to lower estimates of maximum potential evapotranspiration.', EDWRD_Output_Warning)
@@ -269,25 +272,26 @@ def edwrd_input(infile,pfile):
     data['fc'].loc[np.logical_or(data.index.dayofyear<param['cstart'].at[0,'cstart'],data.index.dayofyear>param['cstage_doy'].at[3,'cstage_doy'])] = 0
 
     #--ERROR CHECK--#
-    if data['cht'].any() <= 0.0:
+    if (data['cht'] <= 0.0).any():
         raise ValueError('Daily calculated values for crop height must be greater than zero, even during the non-growing season.'
                          ' Check your input selections to ensure no zero or negative values occur.'
                          ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
-    if data['kcb'].any() < 0.0:
+    if (data['kcb'] < 0.0).any():
         raise ValueError('Daily calculated values for the basal crop coefficient cannot be negative.'
                          ' Check your input selections to ensure no zero or negative values occur.'
                          ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
-    if 0.0 > data['fc'].any() > 1.0:
+    if (data['fc'] < 0.0).any() | (data['fc'] > 1.0).any():
         raise ValueError('Daily calculated values for the fraction of vegetative cover must be between 0 and 1. You can report this'
                         ' issue to developers at [INSERT URL HERE]')
     #--END OF ERROR CHECK--#
 
     #--WARNING CHECK--#
-    if 1.05 > data['kcb_max'].any() > 1.3:
+    if (data['kcb_max'] < 1.05).any() | (data['kcb_max'] > 1.3).any():
         warnings.warn('One or more values for the estimated maximum potential crop coefficient fall outside the range of'
                       ' typical values (1.05 - 1.30). This could be caused by higher than normal wind speeds, lower than'
                       ' normal minimum relative humidities, or higher than normal crop coefficient values during portions'
                       ' of the year. Higher estimates of maximum potential crop coefficient allow for greater water use'
-                      ' through higher potential rates of evapotranspiration. Double check your input selections.', EDWRD_Output_Warning)
+                      ' through higher potential rates of evapotranspiration. Double check your input selections.'
+                      'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.', EDWRD_Output_Warning)
 
     return param,data,data_dic, output_dic
