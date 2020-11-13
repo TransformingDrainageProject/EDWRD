@@ -2,6 +2,7 @@ import './App.css';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Container } from 'reactstrap';
+import ReactGA from 'react-ga';
 
 import ChartsContainer from './Charts/ChartsContainer';
 import Header from './Header';
@@ -37,6 +38,10 @@ const App = () => {
   const formRef = useRef(null);
   const executeScrollToChart = () => scrollToRef(chartRef);
   const executeScrollToForm = () => scrollToRef(formRef);
+
+  useEffect(() => {
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+  }, []);
 
   useEffect(() => {
     const fetchClientID = async () => {
