@@ -102,84 +102,82 @@ const Map = (props) => {
   }
 
   return (
-    <div className="container">
-      <LeafletMap
-        center={[origin.lat, origin.lon]}
-        zoom={origin.zoom}
-        onClick={(e) => {
-          updateMarkerPosition([e.latlng.lat, e.latlng.lng]);
-          onDragend(e.latlng);
+    <LeafletMap
+      center={[origin.lat, origin.lon]}
+      zoom={origin.zoom}
+      onClick={(e) => {
+        updateMarkerPosition([e.latlng.lat, e.latlng.lng]);
+        onDragend(e.latlng);
+      }}
+    >
+      {type === 'selectFieldLocation' ? (
+        markerPosition ? (
+          <Marker
+            ref={refMarker}
+            position={markerPosition}
+            draggable={true}
+            onDragend={(e) => onDragend(e.target.getLatLng())}
+            icon={customMarkerIcon}
+          />
+        ) : null
+      ) : precompiledDataStations ? (
+        precompiledDataStations.map((station) => (
+          <Marker
+            key={station.id}
+            position={[station.lat, station.lon]}
+            icon={
+              station.id === selectedSite.id
+                ? customMarkerIconSelected
+                : customMarkerIcon
+            }
+            onClick={onPrecompiledStationClick}
+          >
+            <Popup>
+              <Row>
+                <strong>Site Name:&nbsp;</strong>
+                {station.name}
+              </Row>
+              <Row>
+                <strong>Location:&nbsp;</strong>
+                {station.location ? station.location : 'NULL'}
+              </Row>
+              <Row>
+                <strong>Soil Type:&nbsp;</strong>
+                {station.soil ? station.soil : 'NULL'}
+              </Row>
+              <Row>
+                <strong>Years:&nbsp;</strong>
+                {station.years ? station.years : 'NULL'}
+              </Row>
+              <Row>
+                <strong>Site Summary:&nbsp;</strong>
+                {station.site_summary ? station.site_summary : 'NULL'}
+              </Row>
+              <br />
+              <Row>
+                <a
+                  href={`/api/download_station_input?stationID=${station.id}&unit=${unitType}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download daily input (.txt)
+                </a>
+              </Row>
+            </Popup>
+          </Marker>
+        ))
+      ) : null}
+      <GeoJSON
+        data={regionalGrid}
+        style={() => {
+          return { color: '#ffac3a', weight: 2, fillOpacity: 0 };
         }}
-      >
-        {type === 'selectFieldLocation' ? (
-          markerPosition ? (
-            <Marker
-              ref={refMarker}
-              position={markerPosition}
-              draggable={true}
-              onDragend={(e) => onDragend(e.target.getLatLng())}
-              icon={customMarkerIcon}
-            />
-          ) : null
-        ) : precompiledDataStations ? (
-          precompiledDataStations.map((station) => (
-            <Marker
-              key={station.id}
-              position={[station.lat, station.lon]}
-              icon={
-                station.id === selectedSite.id
-                  ? customMarkerIconSelected
-                  : customMarkerIcon
-              }
-              onClick={onPrecompiledStationClick}
-            >
-              <Popup>
-                <Row>
-                  <strong>Site Name:&nbsp;</strong>
-                  {station.name}
-                </Row>
-                <Row>
-                  <strong>Location:&nbsp;</strong>
-                  {station.location ? station.location : 'NULL'}
-                </Row>
-                <Row>
-                  <strong>Soil Type:&nbsp;</strong>
-                  {station.soil ? station.soil : 'NULL'}
-                </Row>
-                <Row>
-                  <strong>Years:&nbsp;</strong>
-                  {station.years ? station.years : 'NULL'}
-                </Row>
-                <Row>
-                  <strong>Site Summary:&nbsp;</strong>
-                  {station.site_summary ? station.site_summary : 'NULL'}
-                </Row>
-                <br />
-                <Row>
-                  <a
-                    href={`/api/download_station_input?stationID=${station.id}&unit=${unitType}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Download daily input (.txt)
-                  </a>
-                </Row>
-              </Popup>
-            </Marker>
-          ))
-        ) : null}
-        <GeoJSON
-          data={regionalGrid}
-          style={() => {
-            return { color: '#ffac3a', weight: 2, fillOpacity: 0 };
-          }}
-        />
-        <TileLayer
-          attribution="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community"
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png"
-        />
-      </LeafletMap>
-    </div>
+      />
+      <TileLayer
+        attribution="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community"
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png"
+      />
+    </LeafletMap>
   );
 };
 

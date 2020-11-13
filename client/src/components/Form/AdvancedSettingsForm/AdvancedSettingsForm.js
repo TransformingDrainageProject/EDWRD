@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Field, useFormikContext } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   Button,
   Col,
@@ -45,17 +47,39 @@ const AdvancedSettings = (props) => {
 
   return (
     <div>
-      <Button
-        style={{ backgroundColor: '#edb229', height: '75px', width: '100%' }}
-        size="lg"
-        onClick={toggle}
-      >
-        <strong>Open Advanced Settings</strong>
-      </Button>
+      <Row>
+        <Col>
+          <Button
+            style={{
+              backgroundColor: '#edb229',
+              height: '75px',
+              width: '100%',
+            }}
+            size="lg"
+            onClick={toggle}
+          >
+            <strong>Open Advanced Settings</strong>
+          </Button>
+        </Col>
+      </Row>
       {values.userParam && values.userParamFile ? (
-        <div className="mt-3">
-          <strong>Parameter file:</strong> {values.userParamFile}
-        </div>
+        <Row className="mt-3">
+          <Col md={10}>
+            <strong>Parameter file:</strong> {values.userParamFile}
+          </Col>
+          <Col md={2}>
+            <FontAwesomeIcon
+              style={{ cursor: 'pointer' }}
+              icon={faTrashAlt}
+              size="sm"
+              title="Remove uploaded parameter file"
+              onClick={() => {
+                setFieldValue('userParam', false);
+                setFieldValue('userParamFile', '');
+              }}
+            />
+          </Col>
+        </Row>
       ) : null}
       <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Advanced Settings</ModalHeader>

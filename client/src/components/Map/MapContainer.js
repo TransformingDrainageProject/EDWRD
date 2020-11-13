@@ -47,7 +47,7 @@ function SelectStationLocationMap(props) {
       <Row>
         <Button
           className="mt-2"
-          color="danger"
+          style={{ backgroundColor: '#edb229' }}
           size="sm"
           onClick={() => toggleDisplayMap(!displayMap)}
         >

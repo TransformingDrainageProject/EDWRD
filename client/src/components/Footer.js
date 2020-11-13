@@ -12,7 +12,7 @@ const Footer = ({ clientID }) => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Button color="info">Send feedback</Button>
+          <Button style={{ backgroundColor: '#007cb3' }}>Send feedback</Button>
         </a>
       </Col>
       <Col className="text-center">
@@ -24,7 +24,7 @@ const Footer = ({ clientID }) => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Button color="danger">Report issue</Button>
+          <Button style={{ backgroundColor: '#edb229' }}>Report issue</Button>
         </a>
       </Col>
     </Row>

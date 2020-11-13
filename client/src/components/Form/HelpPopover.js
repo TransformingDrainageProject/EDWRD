@@ -14,11 +14,23 @@ const HelpPopover = (props) => {
       <FontAwesomeIcon
         style={
           position === 'top'
-            ? { position: 'absolute', top: top ? top : 0, right: '15px' }
-            : { position: 'absolute', bottom: 0, right: 0, margin: '5px' }
+            ? {
+                position: 'absolute',
+                top: top ? top : 0,
+                right: '15px',
+                cursor: 'pointer',
+              }
+            : {
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                margin: '5px',
+                cursor: 'pointer',
+              }
         }
         icon={faQuestionCircle}
         id={name}
+        title="Click for more information"
       />
       <Popover
         placement="bottom"
