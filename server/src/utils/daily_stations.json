@@ -4,8 +4,8 @@
       "id": 4,
       "name": "Davis Purdue Agricultural Center",
       "file": {
-        "input": "4_davis_purdue_input.txt",
-        "param": "4_davis_purdue_param.txt"
+        "input": "4_dpac_in_input.txt",
+        "param": "4_dpac_in_param.txt"
       },
       "lat": 40.266111,
       "lon": -85.159936,
@@ -17,7 +17,7 @@
     {
       "id": 5,
       "name": "Iowa State Southeast Research Farm",
-      "file": { "input": "5_iowa_input.txt", "param": "5_iowa_param.txt" },
+      "file": { "input": "5_serf_ia_input.txt", "param": "5_serf_ia_param.txt" },
       "lat": 41.193683,
       "lon": -91.483293,
       "years": "2007 - 2016",

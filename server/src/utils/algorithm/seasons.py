@@ -56,26 +56,32 @@ def psthrvst_pstfrz_evap(row, param, data, data_dic, irr_init, zedepl_init):
         if data.at[row.Index, column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + str(row.Index) + '.'
                              ' Check your location file and input selections to ensure no negative values occur.'
+                             'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                              ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index, 'kr'] > 1.0:
         raise ValueError('Daily calculated values for the evaporation reduction coefficient must be between 0 and 1.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index, 'ke'] > (data.at[row.Index, 'kcb_max'] - data.at[row.Index, 'kcb']):
         raise ValueError('Daily calculated values for the evaporation coefficient cannot exceed the available energy for evaporation.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if round(data.at[row.Index, 'kc'], 4) > round(data.at[row.Index, 'kcb_max'], 4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index, 'kcb'] > data.at[row.Index, 'kc']:
         raise ValueError('Daily calculated basal crop coefficient values cannot exceed the combined dual crop coefficient value.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index, 'zedepl'] > param['tew'].at[0, 'tew']:
         raise ValueError('Daily calculated values for water depletion in the evaporation layer must be between 0 and total evaporable water.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
 
@@ -111,26 +117,32 @@ def winter_evap(row, param, data, data_dic, irr_init, zedepl_init):
         if data.at[row.Index, column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + str(row.Index) + '.'
                              ' Check your location file and input selections to ensure no negative values occur.'
+                             'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                              ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index, 'kr'] > 1.0:
         raise ValueError('Daily calculated values for the evaporation reduction coefficient must be between 0 and 1.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index, 'ke'] > (data.at[row.Index, 'kcb_max'] - data.at[row.Index, 'kcb']):
         raise ValueError('Daily calculated values for the evaporation coefficient cannot exceed the available energy for evaporation.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if round(data.at[row.Index, 'kc'], 4) > round(data.at[row.Index, 'kcb_max'], 4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index, 'kcb'] > data.at[row.Index, 'kc']:
         raise ValueError('Daily calculated basal crop coefficient values cannot exceed the combined dual crop coefficient value.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index, 'zedepl'] > param['tew'].at[0, 'tew']:
         raise ValueError('Daily calculated values for water depletion in the evaporation layer must be between 0 and total evaporable water.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
 
@@ -173,25 +185,31 @@ def evap(row, param, data, data_dic, irr_init, zedepl_init):
         if data.at[row.Index, column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + str(row.Index) + '.'
                              ' Check your location file and input selections to ensure no negative values occur.'
+                             'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                              ' If the problem persists, you can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index, 'kr'] > 1.0:
         raise ValueError('Daily calculated values for the evaporation reduction coefficient must be between 0 and 1.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index, 'ke'] > (data.at[row.Index, 'kcb_max'] - data.at[row.Index, 'kcb']):
         raise ValueError('Daily calculated values for the evaporation coefficient cannot exceed the available energy for evaporation.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if round(data.at[row.Index, 'kc'], 4) > round(data.at[row.Index, 'kcb_max'], 4):
         raise ValueError('Daily calculated values for the crop coefficient cannot exceed the maximum potential crop coefficient.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if data.at[row.Index, 'kcb'] > data.at[row.Index, 'kc']:
         raise ValueError('Daily calculated basal crop coefficient values cannot exceed the combined dual crop coefficient value.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index, 'zedepl'] > param['tew'].at[0, 'tew']:
         raise ValueError('Daily calculated values for water depletion in the evaporation layer must be between 0 and total evaporable water.'
                          ' Error occurs at index value ' + str(row.Index) + '.'
+                         'If you have uploaded your own files, check to make sure your unit selection (U.S. vs metric) matches your uploaded files.'
                          ' You can report this issue to developers at http://bit.ly/edwrd-issue')
     #--END OF ERROR CHECK--#
