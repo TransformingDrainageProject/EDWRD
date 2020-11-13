@@ -130,11 +130,15 @@ def soilwater_calc(row,param,data,data_dic,irrdep_min,rdep_min,rarea,irr_init,up
     #--ERROR CHECK--#
     if data.at[row.Index,'raw'] <= 0.0:
         raise ValueError('Daily calculated readily available water cannot be less than or equal to 0. Error occurs at index value ' + 
-                         str(row.Index) + '. You can report this issue to developers at http://bit.ly/edwrd-issue')
+                         str(row.Index) + '. If you have uploaded your own files, check to make sure your unit '
+                         'selection (U.S. vs metric) matches your uploaded files. If this problem persists, you'
+                         'can report this issue to developers at http://bit.ly/edwrd-issue')
     for column in data[['irr','zrperc']]:
         if data.at[row.Index,column] < 0.0:
             raise ValueError(data_dic[column] + ' cannot contain negative values. Error occurs at index value ' + 
-                             str(row.Index) + '. You can report this issue to developers at http://bit.ly/edwrd-issue')
+                             str(row.Index) + '. If you have uploaded your own files, check to make sure your unit '
+                             'selection (U.S. vs metric) matches your uploaded files. If this problem persists, you'
+                             'can report this issue to developers at http://bit.ly/edwrd-issue')
     if 0.0 > data.at[row.Index,'upflx'] > data.at[row.Index,'max_upflx']:
         raise ValueError('Daily calculated upward flux must be between 0 and maximum potential upward flux for that specific day'
                          ' Error occurs at index value ' + str(row.Index) + '. If you have uploaded your own files, check to make sure' 
