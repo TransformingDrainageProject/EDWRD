@@ -9,7 +9,7 @@
   "author": "Ben Hancock <hancocb@purdue.edu>",
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^4.1.2",
+    "concurrently": "7.0.0",
     "connect-mongo": "^3.2.0",
     "csv-writer": "^1.6.0",
     "csvtojson": "^2.0.10",
