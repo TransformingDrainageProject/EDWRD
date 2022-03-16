@@ -9,7 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 const uniqid = require('uniqid');
 
 const app = express();
-const server = require('http').Server(app);
+const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
 
