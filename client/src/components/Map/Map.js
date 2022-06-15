@@ -21,12 +21,14 @@ const customMarkerIcon = divIcon({
   html: renderToStaticMarkup(
     <FontAwesomeIcon icon={faMapMarkerAlt} size="3x" color="#007cb3" />
   ),
+  iconAnchor: [13.5, 36],
 });
 
 const customMarkerIconSelected = divIcon({
   html: renderToStaticMarkup(
     <FontAwesomeIcon icon={faMapMarkerAlt} size="4x" color="#edb229" />
   ),
+  iconAnchor: [13.5, 36],
 });
 
 const Map = (props) => {
@@ -42,9 +44,8 @@ const Map = (props) => {
     unitType,
   } = props;
   const [markerPosition, updateMarkerPosition] = useState(null);
-  const [precompiledDataStations, setPrecompiledDataStations] = useState(
-    undefined
-  );
+  const [precompiledDataStations, setPrecompiledDataStations] =
+    useState(undefined);
   const refMarker = useRef(<Marker />);
 
   useEffect(() => {
