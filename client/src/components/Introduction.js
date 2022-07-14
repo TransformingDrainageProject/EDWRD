@@ -4,71 +4,30 @@ import { Col, Row } from 'reactstrap';
 const Introduction = () => (
   <Row>
     <Col>
+      <h3>
+        How to use this tool:
+      </h3>
+      
       <p>
-        EDWRD can be used to estimate the potential irrigation and water quality
-        benefits that result from drainage water recycling, which is a practice
-        where drained agricultural water is captured and stored in a water
-        storage reservoir for reuse as supplemental irrigation. This tool can be
-        used to evaluate multiple different scenarios and compare the influence
-        of different factors, such as reservoir size, crop, soil type, and
-        management, on the potential benefits of drainage water recycling. EDWRD
-        can be used to answer questions such as
+        EDWRD requires three primary sets of information:
       </p>
-      <ul>
+      
+      <ol>
         <li>
-          How large of a reservoir is needed to irrigate a particular field?
+          <b>Location</b> - Users will select their target field location in the map below. 
         </li>
+        
         <li>
-          If only a certain amount of land is available for a reservoir, how
-          many acres can be irrigated?
+          <b>Analysis Type and Field/Reservoir Properties</b> - Users can run EDWRD with U.S. Standard or Metric units. Also, users can choose to conduct a Quick Analysis with preset inputs to conduct a simple baseline analysis to view results and better understand the potential benefits of drainage water recycling, or run a more In-depth Analysis to customize input values describing the field, reservoir, and crop management characteristics. 
         </li>
+        
         <li>
-          What is the average annual amount of dissolved nutrients (e.g.,
-          nitrogen, phosphorus) that I can capture, store, and reuse, which will
-          also prevent those nutrients from being discharged downstream?
+          <b>Daily Weather, Drain Flow, and Nutrient Concentrations</b> - Precompiled datasets are available from research sites in east-central Indiana and southeast Iowa. Users can utilize either precompiled dataset or upload their own dataset. 
         </li>
-        <li>
-          How often will a certain reservoir size fully meet the irrigation
-          requirements at a certain site, or provide a certain level of nutrient
-          reduction?
-        </li>
-        <li>
-          What impact will a change in irrigation management have on the
-          irrigation sufficiency or nutrient load reduction from a given
-          reservoir size?
-        </li>
-      </ul>
+      </ol>
+      
       <p>
-        EDWRD conducts a daily water balance for a tile-drained field and
-        reservoir, and can incorporate water inflows from both surface runoff
-        and tile drainage. Crop evapotranspiration (ET) is calculated following
-        the FAO-56 dual crop coefficient approach using information about the
-        local weather, soils, crop, and drainage patterns. You can find out more
-        about methods used by EDWRD in the{' '}
-        <a
-          href="https://transformingdrainage.org/tools/edwrd/documentation"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          tool documentation
-        </a>{' '}
-        and the associated peer-reviewed articles (
-        <a
-          href="https://doi.org/10.1016/j.agwat.2019.105699"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Reinhart et al. 2019
-        </a>
-        ,{' '}
-        <a
-          href="https://elibrary.asabe.org/abstract.asp?aid=51797"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Reinhart et al. 2020
-        </a>
-        ).
+        After you complete each step, the next step to complete will appear. Once inputs have been entered, users will choose to “Run EDWRD”. Analysis takes approximately 1-2 minutes and results will show up below the input menus. 
       </p>
     </Col>
   </Row>
