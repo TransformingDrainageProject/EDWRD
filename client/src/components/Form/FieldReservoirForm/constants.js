@@ -12,7 +12,7 @@ export const soilTypeOptions = [
     value: 'silt',
   },
   {
-    name: 'Silt Clay Loam',
+    name: 'Silty Clay Loam',
     value: 'siltClayLoam',
   },
   {

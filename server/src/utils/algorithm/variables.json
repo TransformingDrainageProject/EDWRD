@@ -34,7 +34,7 @@
         {
           "key": "srpLoadReduction",
           "column": "Captured SRP Load (Tile)",
-          "label": "SRP Load Reduction",
+          "label": "Soluble Reactive Phosphorus Load Reduction",
           "label2": "Soluble Reactive Phosphorus Load Reduction",
           "description": "The annual amount of reactive phosphorus load that is captured and stored by the reservoir.",
           "unit": { "us": "lb/ac", "metric": "kg/ha" },
