@@ -77,7 +77,7 @@ const FormContainer = (props) => {
   const [processingStatus, updateProcessingStatus] = useState('');
 
   function makeSocketConnection(setSubmitting, setStatus) {
-    const socket = io('http://localhost:3000');
+    const socket = io('https://drainage.agriculture.purdue.edu');
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
     });
