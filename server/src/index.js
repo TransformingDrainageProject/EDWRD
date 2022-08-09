@@ -36,10 +36,7 @@ app.use(morgan('combined', { stream: winston.stream }));
 // connect to database
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(mongoURI, {
-      autoReconnect: true,
-      useNewUrlParser: true,
-    });
+    await mongoose.connect(mongoURI);
   } catch (err) {
     winston.error(err);
     setTimeout(() => {
