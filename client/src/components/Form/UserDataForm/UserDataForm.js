@@ -34,6 +34,11 @@ const UserDataForm = (props) => {
                   concentrations are required. You may upload your own data as a
                   .txt file and formatted following this{' '}
                   <a
+                    style={{
+                      color: '#ffffff',
+                      fontWeight: 'bold',
+                      textDecoration: 'underline',
+                    }}
                     href="https://raw.githubusercontent.com/TransformingDrainageProject/EDWRD/master/algorithm/example_datasets/dpac_in_input.txt"
                     rel="noopener noreferrer"
                     target="_blank"
