@@ -32,9 +32,16 @@ const UserDataForm = (props) => {
                 <p>
                   Daily measurements for weather, drain flow, and nutrient
                   concentrations are required. You may upload your own data as a
-                  .txt file and formatted following this example data file (link
-                  to example data file), or you may choose existing data from
-                  one of our research sites across the region.
+                  .txt file and formatted following this{' '}
+                  <a
+                    href="https://raw.githubusercontent.com/TransformingDrainageProject/EDWRD/master/algorithm/example_datasets/dpac_in_input.txt"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    example data file
+                  </a>
+                  , or you may choose existing data from one of our research
+                  sites across the region.
                 </p>
               </Col>
             </Row>
