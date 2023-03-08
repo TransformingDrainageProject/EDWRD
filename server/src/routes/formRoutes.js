@@ -199,7 +199,7 @@ module.exports = (app, io) => {
             let results = undefined;
             pyshell.on('message', (message) => {
               if ('msg' in message) {
-                io.to(req.session.client.socketID).emit('processing', message);
+                io.to(req.session.clientID).emit('processing', message);
               }
               if ('data' in message) {
                 results = message.data;
@@ -219,14 +219,14 @@ module.exports = (app, io) => {
               if (err || code !== 0) {
                 if (err) {
                   winston.error(err);
-                  io.to(req.session.client.socketID).emit('error', {
+                  io.to(req.session.clientID).emit('error', {
                     msg: err.stack.split('\n')[0].split(':')[2].trim(),
                   });
                   task.error = err.stack.split('\n')[0].split(':')[2].trim();
                   task.statusCode = 0;
                 } else {
                   winston.error('Unexpected error has occurred');
-                  io.to(req.session.client.socketID).emit('error', {
+                  io.to(req.session.clientID).emit('error', {
                     msg: 'Unexpected error has occurred',
                   });
                   task.error = 'Unexpected error has occurred';
@@ -234,10 +234,10 @@ module.exports = (app, io) => {
                 }
               } else {
                 winston.info(`edwrd took ${runtime} seconds`);
-                io.to(req.session.client.socketID).emit('processing', {
+                io.to(req.session.clientID).emit('processing', {
                   msg: `Task completed in ${runtime} seconds.`,
                 });
-                io.to(req.session.client.socketID).emit('chartDataReady', {
+                io.to(req.session.clientID).emit('chartDataReady', {
                   ...results,
                   sessionID: req.session.workspace.split('/')[2],
                 });
