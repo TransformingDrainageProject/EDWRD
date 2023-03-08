@@ -47,10 +47,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    connectToSocket(io('https://drainage.agriculture.purdue.edu'));
-  }, []);
-
-  useEffect(() => {
     const fetchClientID = async () => {
       try {
         const result = await axios.get('/api/get_clientid');
@@ -61,6 +57,16 @@ const App = () => {
     };
 
     fetchClientID();
+  }, [clientID]);
+
+  useEffect(() => {
+    if (clientID) {
+      connectToSocket(
+        io('https://drainage.agriculture.purdue.edu', {
+          query: { clientID: clientID },
+        })
+      );
+    }
   }, [clientID]);
 
   useEffect(() => {

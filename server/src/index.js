@@ -23,12 +23,13 @@ require('./models/Task');
 app.use(express.json());
 
 // listen for connections
-let socketID = null;
 io.on('connection', (socket) => {
-  socketID = socket.id;
   winston.info('a client connected');
+
+  const clientID = socket.handshake.query.clientID;
+  socket.join(clientID);
+
   socket.on('disconnect', () => {
-    socketID = null;
     winston.info('a client disconnected');
   });
 });
@@ -60,13 +61,6 @@ app.use(
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
 );
-
-app.use((req, res, next) => {
-  if (socketID) {
-    req.session.client = { socketID: socketID };
-  }
-  next();
-});
 
 // priority to serve any static files
 app.use(express.static(path.resolve(__dirname, '../../client/build')));
