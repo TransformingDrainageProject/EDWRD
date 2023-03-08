@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Alert, Button, Col, Row, Spinner } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
-import io from 'socket.io-client';
 import * as yup from 'yup';
 
 // forms
@@ -70,14 +69,14 @@ const FormContainer = (props) => {
     markerCoords,
     nearestStation,
     setChartData,
+    socket,
     unitType,
   } = props;
 
   const [errorMsg, setErrorMsg] = useState('');
   const [processingStatus, updateProcessingStatus] = useState('');
 
-  function makeSocketConnection(setSubmitting, setStatus) {
-    const socket = io('http://localhost:3000');
+  function listenOnSocketConnection(socket, setSubmitting, setStatus) {
     socket.on('processing', (data) => {
       updateProcessingStatus(data.msg);
     });
@@ -130,7 +129,7 @@ const FormContainer = (props) => {
             .then((response) => {
               if (response && response.data) {
                 setStatus(response.data);
-                makeSocketConnection(setSubmitting, setStatus);
+                listenOnSocketConnection(socket, setSubmitting, setStatus);
               }
             })
             .catch(async (err) => {

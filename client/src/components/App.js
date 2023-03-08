@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Container } from 'reactstrap';
 import ReactGA from 'react-ga';
+import io from 'socket.io-client';
 
 import ChartsContainer from './Charts/ChartsContainer';
 import Header from './Header';
@@ -33,6 +34,7 @@ const App = () => {
   });
   const [markerCoords, updateMarkerCoords] = useState(null);
   const [clientID, setClientID] = useState('');
+  const [socket, connectToSocket] = useState(null);
 
   const chartRef = useRef(null);
   const formRef = useRef(null);
@@ -42,6 +44,10 @@ const App = () => {
   useEffect(() => {
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview('/');
+  }, []);
+
+  useEffect(() => {
+    connectToSocket(io('http://localhost:3000'));
   }, []);
 
   useEffect(() => {
@@ -138,6 +144,7 @@ const App = () => {
             markerCoords={markerCoords}
             nearestStation={nearestStation}
             setChartData={setChartData}
+            socket={socket}
             unitType={unitType}
           />
         ) : null}
