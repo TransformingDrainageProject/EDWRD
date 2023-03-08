@@ -22,14 +22,6 @@ require('./models/Task');
 
 app.use(express.json());
 
-// listen for connections
-io.on('connection', (socket) => {
-  winston.info('a client connected');
-  socket.on('disconnect', () => {
-    winston.info('a client disconnected');
-  });
-});
-
 // log using morgan and winston
 app.use(morgan('combined', { stream: winston.stream }));
 

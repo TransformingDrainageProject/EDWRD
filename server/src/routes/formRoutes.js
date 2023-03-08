@@ -196,52 +196,62 @@ module.exports = (app, io) => {
 
             const pyshell = new PythonShell('run.py', options);
 
-            let results = undefined;
-            pyshell.on('message', (message) => {
-              if ('msg' in message) {
-                io.emit('processing', message);
-              }
-              if ('data' in message) {
-                results = message.data;
-              }
-            });
+            io.on('connection', (socket) => {
+              winston.info(`client ${socket.id} connected`);
 
-            pyshell.on('error', (err) => {
-              task.statusCode = 0;
-              task.error = err.stack;
-              endTask(task);
-              winston.error(err.stack);
-            });
-
-            pyshell.end((err, code, signal) => {
-              const runtime = process.hrtime(startTime)[0];
-              task.runtime = runtime;
-              if (err || code !== 0) {
-                if (err) {
-                  winston.error(err);
-                  io.emit('error', {
-                    msg: err.stack.split('\n')[0].split(':')[2].trim(),
-                  });
-                  task.error = err.stack.split('\n')[0].split(':')[2].trim();
-                  task.statusCode = 0;
-                } else {
-                  winston.error('Unexpected error has occurred');
-                  io.emit('error', { msg: 'Unexpected error has occurred' });
-                  task.error = 'Unexpected error has occurred';
-                  task.statusCode = 0;
+              let results = undefined;
+              pyshell.on('message', (message) => {
+                if ('msg' in message) {
+                  socket.emit('processing', message);
                 }
-              } else {
-                winston.info(`edwrd took ${runtime} seconds`);
-                io.emit('processing', {
-                  msg: `Task completed in ${runtime} seconds.`,
-                });
-                io.emit('chartDataReady', {
-                  ...results,
-                  sessionID: req.session.workspace.split('/')[2],
-                });
-              }
+                if ('data' in message) {
+                  results = message.data;
+                }
+              });
 
-              endTask(task);
+              pyshell.on('error', (err) => {
+                task.statusCode = 0;
+                task.error = err.stack;
+                endTask(task);
+                winston.error(err.stack);
+              });
+
+              pyshell.end((err, code, signal) => {
+                const runtime = process.hrtime(startTime)[0];
+                task.runtime = runtime;
+                if (err || code !== 0) {
+                  if (err) {
+                    winston.error(err);
+                    socket.emit('error', {
+                      msg: err.stack.split('\n')[0].split(':')[2].trim(),
+                    });
+                    task.error = err.stack.split('\n')[0].split(':')[2].trim();
+                    task.statusCode = 0;
+                  } else {
+                    winston.error('Unexpected error has occurred');
+                    socket.emit('error', {
+                      msg: 'Unexpected error has occurred',
+                    });
+                    task.error = 'Unexpected error has occurred';
+                    task.statusCode = 0;
+                  }
+                } else {
+                  winston.info(`edwrd took ${runtime} seconds`);
+                  socket.emit('processing', {
+                    msg: `Task completed in ${runtime} seconds.`,
+                  });
+                  socket.emit('chartDataReady', {
+                    ...results,
+                    sessionID: req.session.workspace.split('/')[2],
+                  });
+                }
+
+                endTask(task);
+              });
+
+              socket.on('disconnect', () => {
+                winston.info(`client ${socket.id} disconnected`);
+              });
             });
 
             return res.send(
