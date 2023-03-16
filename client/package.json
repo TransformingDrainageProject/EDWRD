@@ -20,7 +20,7 @@
     "react-scripts": "5.0.0-next.60",
     "reactstrap": "^8.0.1",
     "socket.io-client": "4.5.4",
-    "victory": "^35.0.3",
+    "victory": "^36.6.0",
     "yup": "0.32.11"
   },
   "scripts": {
