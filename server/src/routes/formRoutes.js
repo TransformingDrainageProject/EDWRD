@@ -219,10 +219,18 @@ module.exports = (app, io) => {
               if (err || code !== 0) {
                 if (err) {
                   winston.error(err);
+
+                  // Remove first two ":" splits, but keep fourth (a url) if present
+                  const errMsgSplit = err.stack.split('\n')[0].split(':');
+                  let errMsg = errMsgSplit[2].trim();
+                  if (errMsgSplit[3]) {
+                    errMsg += ':' + errMsgSplit[3].trim();
+                  }
+
                   io.to(req.session.clientID).emit('error', {
-                    msg: err.stack.split('\n')[0].split(':')[2].trim(),
+                    msg: errMsg,
                   });
-                  task.error = err.stack.split('\n')[0].split(':')[2].trim();
+                  task.error = errMsg;
                   task.statusCode = 0;
                 } else {
                   winston.error('Unexpected error has occurred');
